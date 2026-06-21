@@ -8,10 +8,12 @@ Each theme is published to [userstyles.world](https://userstyles.world) and
 
 ## Themes
 
-| Theme                                  | Site     | Type |
-| -------------------------------------- | -------- | ---- |
-| [PyPI Dark](themes/pypi/pypi.user.css) | pypi.org | Dark |
-| [ESPN Dark](themes/espn/espn.user.css) | espn.com | Dark |
+| Theme                                              | Site        | Type |
+| -------------------------------------------------- | ----------- | ---- |
+| [PyPI Dark](themes/pypi/pypi.user.css)             | pypi.org    | Dark |
+| [ESPN Dark](themes/espn/espn.user.css)             | espn.com    | Dark |
+| [Genius Dark](themes/genius/genius.user.css)       | genius.com  | Dark |
+| [Chefkoch Dark](themes/chefkoch/chefkoch.user.css) | chefkoch.de | Dark |
 
 ## Install
 
