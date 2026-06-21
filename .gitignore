@@ -1,0 +1,13 @@
+node_modules/
+.DS_Store
+*.log
+.playwright-mcp/
+.frames/
+
+# internal process notes / specs
+docs/
+
+# review artifacts
+review/
+*.png
+*.mp4
