@@ -11,6 +11,7 @@ Each theme is published to [userstyles.world](https://userstyles.world) and
 | Theme                                  | Site     | Type |
 | -------------------------------------- | -------- | ---- |
 | [PyPI Dark](themes/pypi/pypi.user.css) | pypi.org | Dark |
+| [ESPN Dark](themes/espn/espn.user.css) | espn.com | Dark |
 
 ## Install
 
