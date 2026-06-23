@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Avito Dark
 @namespace    github.com/RezaRahemtola/userstyles
-@version      1.0.0
+@version      1.0.1
 @description  A clean, modern dark theme for Avito — easy on the eyes for late-night browsing of listings, search and item pages. Comfortable dark surfaces, crisp readable text, and the familiar Avito blue kept bright. Report issues: https://github.com/RezaRahemtola/userstyles/issues
 @author       Reza Rahemtola
 @homepageURL  https://github.com/RezaRahemtola/userstyles
@@ -193,6 +193,41 @@
     background-color: var(--av-surface) !important;
   }
   ::placeholder { color: var(--av-text-muted) !important; opacity: 1; }
+
+  /* ---- Floating surfaces (dropdowns, popovers, menus) ---- */
+  /* These are DIV-based, so the neutraliser above wiped their backgrounds and
+     page content bled through (search autocomplete, sort menu, region picker,
+     "Ещё" nav menu). Re-establish an opaque elevated surface on every floating
+     panel via stable data-marker / class-prefix selectors. */
+  [data-marker="suggest/list/dropdown"],
+  [class*="suggest-dropdownItems"],
+  [class*="styles-module-dropdown"],
+  [class*="styles-module-dropdownScrollWr"],
+  [class*="styles-module-popup"],
+  [class*="styles-module-popover"],
+  [class*="styles-module-tooltip"],
+  [class*="popup-popup"],
+  [class*="popover-content"],
+  [data-marker="overlay"] [role="listbox"],
+  [role="listbox"], [role="menu"], [role="tooltip"], [role="dialog"] {
+    background-color: var(--av-surface) !important;
+    border-color: var(--av-border) !important;
+  }
+  /* Header nav fly-out menus ("Ещё", "Для бизнеса", "Каталоги") — hashed-class
+     absolutely-positioned panels nested in the nav. Stable hook: the
+     nav-container-HEADER wrapper. */
+  [class*="nav-container-HEADER"] li > div > div {
+    background-color: var(--av-surface) !important;
+    border-color: var(--av-border) !important;
+  }
+  /* Suggestion / menu rows stay readable on the panel. */
+  [data-marker="suggest/list/custom-option"],
+  [data-marker="suggest/list/custom-option"] * {
+    color: var(--av-text-soft) !important;
+  }
+  [data-marker="suggest/list/custom-option"]:hover {
+    background-color: var(--av-surface-2) !important;
+  }
 
   /* ---- Buttons ---- */
   [data-marker="search-form/submit-button"],

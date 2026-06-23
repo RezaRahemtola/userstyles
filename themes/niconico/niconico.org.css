@@ -194,20 +194,25 @@
   .RecommendAreaContainer, .RecommendVideoContainer, .ForYouRankingContainer,
   .NewArrivalVideosContainer, .NicoadVideosContainer, .OnTvAnimeVideosContainer,
   .TagPushVideosContainer, .HotTagsContainer, .NewsNotificationContainer,
-  .ViewHistoriesContainer, .FollowingVideosContainer, .BunsContainer,
-  .LivePlayerContainer, .VideoIntroductionAreaContainer, .FooterContainer,
+  .NicoNewsContainer, .ViewHistoriesContainer, .FollowingVideosContainer,
+  .BunsContainer, .LivePlayerContainer, .VideoIntroductionAreaContainer,
+  .FooterContainer,
   .RecommendAreaContainer *, .ForYouRankingContainer *, .NewArrivalVideosContainer *,
   .NicoadVideosContainer *, .OnTvAnimeVideosContainer *, .TagPushVideosContainer *,
-  .HotTagsContainer *, .NewsNotificationContainer *, .ViewHistoriesContainer *,
+  .HotTagsContainer *, .NewsNotificationContainer *, .NicoNewsContainer *,
+  .ViewHistoriesContainer *,
   .FollowingVideosContainer *, .VideoIntroductionAreaContainer *, .FooterContainer * {
     background-color: transparent !important;
   }
   /* The actual elevated cards in those sections */
   .NC-NegativeFeedbackedVideoCard, [class*="VideoCard"], [class*="MediaObject"],
   .NewsNotificationList-item, .TagWithVideoItem, .ForYouRankingContainer-videoItem,
-  .NewArrivalVideosContainer-list > *, .NicoadVideosContainer-list > * {
+  .NewArrivalVideosContainer-list > *, .NicoadVideosContainer-list > *,
+  .NicoNewsContainer-photoNews {
     background-color: #1c2128 !important;
   }
+  /* NicoNews featured "photo news" thumbnail well (light grey by default) */
+  .NicoNewsContainer-photoNewsThumbnail { background-color: #262c33 !important; }
   /* Empty thumbnail wells / skeletons */
   .NC-VideoCardSkeleton-barContainer, [class*="Skeleton"] { background-color: #262c33 !important; }
 
@@ -247,6 +252,7 @@
   .RankingMatrixVideoMediaObject-metaRow, [class*="-metaRow"],
   .TimelineItem-activityCreatedAt, .UserDetailsHeader-accountID,
   .UserDetailsHeader-accountRegisteredVersion,
+  .UserDetailsHeader-accountType, [class*="accountType"],
   [class*="-registeredAt"], [class*="-postedAt"], time,
   [class*="-count"], [class*="Meta"] { color: #8b949e !important; }
 
