@@ -28,6 +28,19 @@ sips -s format jpeg -Z 1366 -s formatOptions 62 in.png --out out-org.jpg
 ```
 Keep the full-res PNG for userstyles.world (no size limit). Note which file is which in `listing.md`.
 
+## walkthrough.mp4
+
+A smooth-scroll video of the themed site, written to `themes/<site>/docs/walkthrough.mp4`. Record with `playwright-cli` on the same injected session as the promos:
+
+```bash
+npx playwright-cli -s="$S" video-start themes/<site>/docs/walkthrough.mp4
+# for each page type: goto, then scroll smoothly top→bottom
+npx playwright-cli -s="$S" mousewheel 0 600   # repeat / pause between to pace it
+npx playwright-cli -s="$S" video-stop
+```
+
+Re-record after ANY CSS change (`verify-theme.sh` fails if the `.user.css` is newer than the mp4). Same freshness rule as promos.
+
 ## listing.md
 
 ```

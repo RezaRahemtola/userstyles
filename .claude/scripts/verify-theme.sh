@@ -40,5 +40,10 @@ else
   done
 fi
 
+# 5. walkthrough.mp4 freshness — if present, must be newer than user.css
+if [ -f "$docs/walkthrough.mp4" ] && [ "$user" -nt "$docs/walkthrough.mp4" ]; then
+  echo "FAIL: $site.user.css newer than walkthrough.mp4 — re-record it"; fail=1
+fi
+
 [ "$fail" = 0 ] && echo "OK: $site passes all gates"
 exit "$fail"

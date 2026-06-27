@@ -18,10 +18,12 @@ You are given exactly one `<site>`. Steps:
 
 4. **Compress oversized promos:** for any `promo-*.png` >700 KB, also produce `promo-<name>-org.jpg` <700 KB via `sips -s format jpeg -Z 1600 -s formatOptions 72 in.png --out out-org.jpg` (drop to `-Z 1366 -s formatOptions 62` if still over). Keep the full-res PNG.
 
-5. **Refresh `themes/<site>/docs/listing.md`** only if the `@description` or feature set materially changed (≤160-char user-facing Description; no internal jargon).
+5. **Re-record `themes/<site>/docs/walkthrough.mp4`** — a smooth-scroll video of the themed site on your injected session (`video-start` → `goto` each page + `mousewheel` scroll top→bottom → `video-stop`; see `userstyles-bundle`). Re-record on ANY CSS change — `verify-theme.sh` fails if the `.user.css` is newer than the mp4.
 
-6. **Close your session** (`playwright-cli -s="$S" close`). Don't run `close-all`/`kill-all` — that's the orchestrator's backstop once no agents are live.
+6. **Refresh `themes/<site>/docs/listing.md`** only if the `@description` or feature set materially changed (≤160-char user-facing Description; no internal jargon).
 
-7. **Gate:** run `bash .claude/scripts/verify-theme.sh <site>` and confirm exit 0 (it checks promo freshness — every promo newer than the `.user.css`).
+7. **Close your session** (`playwright-cli -s="$S" close`). Don't run `close-all`/`kill-all` — that's the orchestrator's backstop once no agents are live.
+
+8. **Gate:** run `bash .claude/scripts/verify-theme.sh <site>` and confirm exit 0 (it checks promo + walkthrough.mp4 freshness — every artifact newer than the `.user.css`).
 
 **Return:** the verify-theme.sh result, the list of promos you regenerated (+ which got an `-org.jpg`), and any caveat (e.g. a WebGL/radar surface that blanks under headless and needs a headed capture).

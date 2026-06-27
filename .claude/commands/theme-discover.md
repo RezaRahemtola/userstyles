@@ -15,6 +15,4 @@ You are the orchestrator. Load the `userstyles-factory` skill.
 
 4. **Append** the new verdict lines (🟢 built, plus 🟠/⚪/🧱/native-dark skips) to `.claude/registry/explored.md`.
 
-Run the global Playwright context sweep ONCE, only after no teammates are live.
-
 Report what was discovered (with verdicts + demand evidence) and what got built. **Never `git commit` or push** — Reza reviews and commits.

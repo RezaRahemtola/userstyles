@@ -15,6 +15,7 @@ You are given one published `<site>`. Read `themes/<site>/<site>.user.css` to kn
 2. **Hunt the audit-blind bug classes** from `userstyles-audits` — SVG/gauge fills, `-webkit-text-fill-color`, scroll-fade background-image gradients, pseudo-element white panels, layered `!important`, invisible placeholders, dark-on-dark, contrast against the real elevated bg, floating-surface bleed-through, white image containers.
 
 3. **For each real bug:** capture a BEFORE screenshot framed on the element into `themes/<site>/docs/review-<issue>-before.png`, fix the CSS with stable selectors (preserve brand/semantic colors), then capture an AFTER proving the fix into `themes/<site>/docs/review-<issue>-after.png`. Loop the audits to zero.
+   - **Naming (strict):** `review-<issue>-<before|after>.png` — `-before`/`-after` is ALWAYS the last segment, never mid-name (`review-before-<issue>.png` is wrong).
 
 4. **If you changed CSS:** bump `@version` by one patch (published theme = one bump per re-upload). Regenerate `.org.css` and SANITIZE it (forbidden-syntax list), re-check brace balance. If you found ZERO real bugs, do NOT bump and say so.
 

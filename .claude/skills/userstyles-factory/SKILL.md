@@ -85,7 +85,7 @@ Work through these in order; loop to zero audit fails:
 **Orchestrator responsibilities:**
 - Owns the candidate queue and selection (coverage gate + incumbent render-test)
 - Fan-out: dispatch one build subagent per site
-- Monitor: on idle-without-report, `SendMessage` the agent requesting its summary — or read `themes/<site>/` + `themes/<site>/docs/` on disk directly
+- Monitor: teammates **auto-notify on completion** — the harness re-invokes you when they finish, so NEVER poll/`sleep`/wait-loop for them. Only if one goes silent well past expected, `SendMessage` it for a summary — or read `themes/<site>/` + `docs/` on disk
 - Log each returned summary; move on
 
 **Subagent rules:**
@@ -94,7 +94,7 @@ Work through these in order; loop to zero audit fails:
 - Agents can't be force-killed: `SendMessage` a `shutdown_request` (processes at next yield; a long browser op delays it). Failsafe: `rm -rf themes/<site>/docs` to discard a bad bundle and restart cleanly
 - Each agent writes only its own `themes/<site>/` (+ `docs/`); orchestrator appends the README row after agents return (never concurrent)
 - **THROTTLE** — space requests between sites; don't fan many agents at the same site; retry "blocked" sites later, slowly before declaring unviable (a 403/CAPTCHA is almost always rate-limiting, not a permanent hard WAF block)
-- **Context sweep** — run ONCE, only after ALL agents are confirmed done: `for (const c of page.context().browser().contexts()) { try { await c.close(); } catch(e){} }`; don't sweep while any agent may still have a live context
+- **Session cleanup backstop** — each teammate owns and closes its own `playwright-cli` process. After ALL teammates are done, clear any stragglers: `npx playwright-cli list` → `close-all` (`kill-all` for zombies). Never `close-all` while a teammate is live. Unstick ONE wedged teammate by killing only its session: `npx playwright-cli -s=<session> kill`
 
 ## Verification gate (mandatory before declaring a theme done)
 

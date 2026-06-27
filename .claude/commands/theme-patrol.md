@@ -20,6 +20,6 @@ You are the orchestrator. Load the `userstyles-factory` skill.
 2. When it returns, dispatch a `theme-promoter` for that site.
 3. Run `bash .claude/scripts/verify-theme.sh <site>`; re-dispatch the promoter on stale-promo failure.
 
-Throttle between waves to avoid anti-bot trips. Start the next site only as a slot frees (keep ≤4 reviewers live). Run the global Playwright context sweep ONCE, only after no teammates are live.
+Throttle between waves to avoid anti-bot trips. Start the next site only as a slot frees (keep ≤4 reviewers live).
 
 Report a catalog table: site → bugs found → fixed? → version → verify status. **Never `git commit` or push** — Reza reviews and commits.

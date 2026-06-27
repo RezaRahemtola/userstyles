@@ -13,6 +13,4 @@ This command handles exactly ONE site. If more than one site was given, tell the
 2. When it returns, **dispatch a `theme-promoter`** for the site to regenerate every impacted promo from the final CSS.
 3. Run `bash .claude/scripts/verify-theme.sh <site>`; re-dispatch the promoter on a stale-promo failure, surface any other failure.
 
-Run the global Playwright context sweep ONCE, only after all teammates are done.
-
 Report the bug list (page/class/selector + before/after shots), the `@version` decision, and verify-theme.sh status. **Never `git commit` or push** — Reza reviews and commits.
