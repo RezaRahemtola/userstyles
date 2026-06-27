@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Investopedia Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.0
+@version        1.0.1
 @description    A complete dark theme for Investopedia — definitions, guides, search and the homepage in a comfortable dark look, with charts and finance colors kept clear.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -236,6 +236,17 @@
   }
   .mntl-universal-card:hover, .card:hover, .home-hero-card:hover,
   .mntl-carousel__card:hover { background-color: #21262d !important; }
+
+  /* Decorative card "fold" square: a 16px ::after the live site paints pure
+     white — invisible on the white card, but a glaring white speck on the dark
+     card body (home-hero card titles + card summaries). Merge it back into the
+     card surface so it disappears the way it does on the light original. */
+  .card__title-text::after, .card__summary::after,
+  .home-hero-card .card__title-text::after,
+  .mntl-universal-card .card__title-text::after,
+  .card .card__title-text::after, .card .card__summary::after {
+    background-color: #1c2128 !important;
+  }
 
   /* Card / figure image CONTAINERS (white bg behind/around images) */
   .card__media, .universal-image, .universal-image__image,
