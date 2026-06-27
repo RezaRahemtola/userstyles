@@ -56,6 +56,13 @@
   [class*="StickyNavSearch"] [class*="Input"]::placeholder { color: #8b949e !important; }
   [class*="StickyNavSearch-desktop__Icon"] svg,
   [class*="StickyNavSearch"] svg { fill: #c4cdd6 !important; color: #c4cdd6 !important; }
+  /* nav search autocomplete dropdown: a white floating panel by default. Its
+     result rows render in a same-origin genius.com/search/embed iframe, so the
+     card/text rules below also apply inside it via @-moz-document. */
+  [class*="PageHeaderDropdownMenu"],
+  [class*="SearchDropdown"], [class*="search_dropdown"],
+  .search_results, .quick_search-results {
+    background-color: #1c2128 !important; border-color: #2d333b !important; color: #e6edf3 !important; }
   /* sign-up pill keeps the brand red */
   [class*="StickyNavSignUp__Button"] {
     background-color: #ed4337 !important; color: #ffffff !important; border-color: #ed4337 !important; }
@@ -94,9 +101,41 @@
   [class*="RecommendedSong"] [class*="Title"],
   [class*="RecommendedSong"] [class*="Artist"] { color: #c4cdd6 !important; }
 
+  /* lyrics-header label row "<Song> Lyrics" sits right after the ⓘ info icon
+     and is a non-link title the site paints near-black via -webkit-text-fill
+     (defaults to currentColor) -> lift BOTH color and the webkit text-fill so it
+     stays legible on the dark bar even if the site ships an !important fill */
+  [class*="LyricsHeader__TitleContainer"], [class*="LyricsHeader__GroupContainer"],
+  [class*="LyricsHeader__Title"], [class*="LyricsHeader__TitleContainer"] * {
+    color: #c4cdd6 !important; -webkit-text-fill-color: #c4cdd6 !important; }
+
   /* ---- Links: keep the Genius periwinkle, lifted for dark contrast ---- */
   a, a span { color: #9aa7f0 !important; }
   a:hover { color: #c2cbff !important; }
+
+  /* ====================================================================
+     Action / UI icons (inline SVG) — black on the light site, invisible on
+     dark. Lift the action-icon families to a legible light fill. The GENIUS
+     wordmark, yellow IQ badges and brand-colored surfaces are handled
+     elsewhere and are NOT in these families, so they stay intact.
+     ==================================================================== */
+  [class*="Button__Container"] svg, [class*="Button__Container"] svg path,
+  [class*="ShareButtons__Container"] svg, [class*="ShareButtons__Container"] svg path,
+  [class*="LyricsFooter"] svg, [class*="LyricsFooter"] svg path,
+  [class*="VotingActions__Button"] svg, [class*="VotingActions__Button"] svg path,
+  [class*="DropdownList__Icon"] svg, [class*="DropdownList__Icon"] svg path,
+  [class*="Dropdown__Toggle"] svg, [class*="Dropdown__Toggle"] svg path,
+  [class*="ContributorsCreditSong__Label"] svg, [class*="ContributorsCreditSong__Label"] svg path,
+  [class*="InfoTooltip__Container"] svg, [class*="InfoTooltip__Container"] svg path,
+  [class*="MetadataTooltip"] svg, [class*="MetadataTooltip"] svg path,
+  [class*="LyricsHeader__Container"] svg, [class*="LyricsHeader__Container"] svg path,
+  [class*="RoleIcon__Container"] svg, [class*="RoleIcon__Container"] svg path,
+  [class*="InlineSvg__Wrapper"] svg, [class*="InlineSvg__Wrapper"] svg path {
+    fill: #c4cdd6 !important; color: #c4cdd6 !important; }
+  /* brand share glyphs (Facebook/Twitter) keep their own brand color, just
+     ensure they're not pure-black-on-dark — lift to a light neutral too */
+  [class*="ShareButtons__Container"] [aria-label*="Facebook"] svg path,
+  [class*="ShareButtons__Container"] [aria-label*="Twitter"] svg path { fill: #c4cdd6 !important; }
 
   /* ====================================================================
      Lyrics body + annotations (referents)
