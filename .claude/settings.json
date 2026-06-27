@@ -1,0 +1,17 @@
+{
+  "enabledPlugins": {
+    "playwright@claude-plugins-official": false
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/scripts/check-stale-promos.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

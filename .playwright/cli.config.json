@@ -1,0 +1,12 @@
+{
+    "browser": {
+        "contextOptions": {
+            "deviceScaleFactor": 2,
+            "colorScheme": "dark",
+            "viewport": {
+                "width": 1280,
+                "height": 800
+            }
+        }
+    }
+}

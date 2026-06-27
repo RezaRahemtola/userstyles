@@ -1,13 +1,17 @@
 node_modules/
 .DS_Store
 *.log
-.playwright-mcp/
 .frames/
 
 # internal process notes / specs
 docs/
+.claude/registry/explored.md
 
 # review artifacts
-review/
+themes/*/docs/
 *.png
 *.mp4
+
+# playwright
+.playwright-mcp/
+.playwright-cli/
