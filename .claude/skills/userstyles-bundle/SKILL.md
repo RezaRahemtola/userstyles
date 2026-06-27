@@ -5,12 +5,15 @@ description: Produce a userstyle theme's ship bundle — framed promos, ≤160-c
 
 ## Bundle layout
 
-All in `themes/<site>/docs/`:
+All in `themes/<site>/docs/`. These are the **only** keepers — `/theme-cleanup` removes anything else in `docs/` as scratch, so opportunity/proof images you want to keep MUST use the `incumbent-*` prefix and be cited by `rationale.md`:
 - `promo-*.png` — 2× viewport shots (1280×800 logical, deviceScaleFactor:2)
 - `promo-*-org.jpg` — compressed version for any promo >700 KB (see org.jpg recipe below)
 - `listing.md` — submission copy (Name, Description, optional Features block)
-- `rationale.md` — demand evidence + verdict + incumbent render-test screenshots
+- `rationale.md` — demand evidence + verdict; cites the `incumbent-*` evidence shots (don't cite scratch like `verify-*`/`review-*` — those get cleaned)
+- `incumbent-*.png/.jpg` — incumbent render-test + unstyled-baseline evidence images (the opportunity proof)
 - `walkthrough.mp4` — smooth-scroll Playwright video
+
+Transient review/verification shots (`review-<issue>-<before|after>.png`, `verify-*.png`) are fine to write during a build/review but are NOT bundle keepers — `/theme-cleanup` sweeps them.
 
 ## Promos
 

@@ -13,7 +13,7 @@ Pick a session name unique to THIS run and reuse it for every command:
 S="<flow>-<site>-$RANDOM"   # e.g. review-espn-28471 ; must be unique across concurrent agents
 ```
 
-Every command takes `-s="$S"`. Two agents with different `-s` never touch each other's browser. Always `close` your session when done.
+Pass `-s="$S"` on EVERY command (incl. `run-code`/`eval`/`screenshot`) — a unique `$S` keeps agents fully page-isolated; a missing or colliding `-s` falls back to the shared `default` session and is the only way pages bleed across agents. Always `close` your session when done.
 
 ## The standard capture config
 
