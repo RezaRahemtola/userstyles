@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Vinted Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.0
+@version        1.0.1
 @description    A clean, modern dark theme for Vinted — comfortable across the homepage, catalog and search, item pages, seller profiles and the filters. Covers every regional Vinted site (vinted.fr, .de, .com, .co.uk, .es, .it, .nl, .be, .pl and more), keeping prices, badges and the Vinted teal looking right in the dark.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -225,6 +225,17 @@
   .web_ui__Chip__selected, [class*="Chip__selected"],
   [class*="Chip__chip"][aria-pressed="true"] {
     background-color: #12363d !important; border-color: #1a7d88 !important; }
+
+  /* Pagination — the ACTIVE page baked a dark literal text colour that
+     was readable on the original light pill but vanishes on dark. Lift
+     it and give it a subtle elevated pill so it reads as "current". */
+  .web_ui__Pagination__pagination a, .web_ui__Pagination__item a,
+  [data-testid*="pagination--page-"], [data-testid="catalog-pagination"] a {
+    color: #c4cdd6 !important; }
+  .web_ui__Pagination__is-active, .web_ui__Pagination__is-active a,
+  [data-testid*="pagination--page-"][aria-current="true"] {
+    color: #e6edf3 !important; background-color: #1c2128 !important;
+    border-radius: 8px !important; }
 
   /* ============================================================
      Item page
