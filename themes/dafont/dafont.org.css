@@ -121,6 +121,13 @@
     border-color: #2d333b !important;
   }
   .titlebar .dffont2, .titlebar a, h1 a { color: #e6edf3 !important; }
+  /* Forum section-title band (h3.headerpage) is a light-grey bar like .titlebar,
+     with DaFont-red heading text — raise to an elevated dark surface, keep red. */
+  h3.headerpage {
+    background-color: #1c2128 !important;
+    color: #e86a64 !important;
+    border-color: #2d333b !important;
+  }
 
   /* ---- Body content text + form/control labels ---- */
   /* DaFont hardcodes black on much of its content (the "Note of the author"
@@ -131,6 +138,12 @@
   b, strong, label, .perso, .perso b {
     color: #c4cdd6 !important;
   }
+  /* DaFont's stylesheet sets `body,div,td,p,select {color:#000}` as the base
+     text color — our html/body override only reaches <body>, so plain content
+     text (FAQ paragraphs + headings, forum stats columns, login-form labels,
+     generic table cells) stays black-on-dark. Remap that whole set to readable.
+     Brand bars (.dfbg/.lv*) keep their own white via higher class specificity. */
+  p, td, i, blockquote, .librub { color: #c4cdd6 !important; }
   /* The "Note of the author" block is classless — its only stable hook is the
      quote-style left border DaFont sets inline. Recolor its text and that border. */
   div[style*="border-left:5px solid #eee"],
@@ -169,6 +182,13 @@
   ins.adsbygoogle, .adsbygoogle, iframe[id*="google_ads"],
   iframe[src*="googlesyndication"], iframe[src*="doubleclick"] {
     background-color: #14181d !important;
+  }
+
+  /* ---- "Back to top" strip (inline light-grey background) ---- */
+  /* A full-width clickable bar above the footer hardcodes background:#e6e6e6;
+     darken it to match the elevated surface (its white arrow icons stay visible). */
+  .tdn[style*="#e6e6e6"], [style*="background:#e6e6e6"] {
+    background: #1c2128 !important;
   }
 
   /* ---- Tables / generic light cells safety net ---- */
