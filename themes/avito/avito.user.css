@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Avito Dark
 @namespace    github.com/RezaRahemtola/userstyles
-@version      1.0.1
+@version      1.0.2
 @description  A clean, modern dark theme for Avito — easy on the eyes for late-night browsing of listings, search and item pages. Comfortable dark surfaces, crisp readable text, and the familiar Avito blue kept bright. Report issues: https://github.com/RezaRahemtola/userstyles/issues
 @author       Reza Rahemtola
 @homepageURL  https://github.com/RezaRahemtola/userstyles
@@ -237,6 +237,21 @@
   }
   [data-marker="search-form/submit-button"]:hover {
     background-color: var(--av-accent-hover) !important;
+  }
+
+  /* ---- Search-result card hover highlight (pseudo-element panels) ---- */
+  /* On card hover Avito paints a full-card light-grey backdrop via
+     `.iva-item-redesign…:hover::before` (inset:-8px, rgb(245,245,245)) plus a
+     light halo behind the floating action buttons via
+     `.iva-item-actions…::before` (box-shadow glow). Both are ::before panels —
+     invisible to element-bg scans — and flash bright on every hover. Repaint
+     them to the dark elevated surface and drop the light halo shadow. Classes
+     are hashed, so hook the stable `iva-item-` prefixes. */
+  [class*="iva-item-redesign"]:hover::before,
+  [class*="iva-item-redesign"]:hover [class*="iva-item-actions"]::before,
+  [class*="iva-item-actions"]::before {
+    background-color: var(--av-surface) !important;
+    box-shadow: none !important;
   }
 
   /* ---- Price (semantic, kept prominent and light) ---- */
