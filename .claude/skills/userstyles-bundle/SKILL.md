@@ -33,13 +33,23 @@ Keep the full-res PNG for userstyles.world (no size limit). Note which file is w
 
 ## walkthrough.mp4
 
-A smooth-scroll video of the themed site, written to `themes/<site>/docs/walkthrough.mp4`. Record with `playwright-cli` on the same injected session as the promos:
+A smooth-scroll video of the themed site, written to `themes/<site>/docs/walkthrough.mp4`. Record with `playwright-cli` on the same injected session as the promos.
+
+**IMPORTANT — `playwright-cli` records WebM, not MP4.** Recording straight to `walkthrough.mp4` produces a WebM-in-`.mp4` file, so ALWAYS record to a `.webm` temp, then transcode to a real H.264 MP4 with `ffmpeg`:
 
 ```bash
-npx playwright-cli -s="$S" video-start themes/<site>/docs/walkthrough.mp4
+# --size MUST be set: video-start otherwise downscales to fit 800x800, so a
+# 1280x800 viewport records at a tiny 800x500. Pin it to the full viewport.
+npx playwright-cli -s="$S" video-start --size 1280x800 themes/<site>/docs/walkthrough.webm
 # for each page type: goto, then scroll smoothly top→bottom
 npx playwright-cli -s="$S" mousewheel 0 600   # repeat / pause between to pace it
 npx playwright-cli -s="$S" video-stop
+
+# transcode WebM → real H.264 MP4 (QuickTime-compatible, web-streamable), then drop the webm
+ffmpeg -y -loglevel error -i themes/<site>/docs/walkthrough.webm \
+  -c:v libx264 -pix_fmt yuv420p -crf 23 -movflags +faststart -an \
+  themes/<site>/docs/walkthrough.mp4
+rm -f themes/<site>/docs/walkthrough.webm
 ```
 
 Re-record after ANY CSS change (`verify-theme.sh` fails if the `.user.css` is newer than the mp4). Same freshness rule as promos.

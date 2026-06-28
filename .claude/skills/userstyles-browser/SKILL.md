@@ -15,6 +15,8 @@ S="<flow>-<site>-$RANDOM"   # e.g. review-espn-28471 ; must be unique across con
 
 Pass `-s="$S"` on EVERY command (incl. `run-code`/`eval`/`screenshot`) — a unique `$S` keeps agents fully page-isolated; a missing or colliding `-s` falls back to the shared `default` session and is the only way pages bleed across agents. Always `close` your session when done.
 
+**NEVER persist `$S` to a shared/predictable scratchpad file** (e.g. a fixed `scratchpad/session` path). Keep `$S` in your shell env for the run, or hardcode the literal session string in each command. If you must write it to disk, use a path unique to your run (include `$S` in the filename).
+
 ## The standard capture config
 
 `.playwright/cli.config.json` (tracked) sets `deviceScaleFactor:2`, `colorScheme:dark`, `viewport 1280×800`. Pass it to `open`:

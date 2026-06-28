@@ -45,5 +45,11 @@ if [ -f "$docs/walkthrough.mp4" ] && [ "$user" -nt "$docs/walkthrough.mp4" ]; th
   echo "FAIL: $site.user.css newer than walkthrough.mp4 — re-record it"; fail=1
 fi
 
+# 5b. walkthrough.mp4 must be a REAL MP4, not a WebM with a .mp4 extension
+# (playwright-cli records WebM; it won't open in QuickTime/native players unless transcoded)
+if [ -f "$docs/walkthrough.mp4" ] && file -b "$docs/walkthrough.mp4" | grep -qi webm; then
+  echo "FAIL: walkthrough.mp4 is actually WebM — transcode to H.264 MP4 (ffmpeg -c:v libx264 -movflags +faststart)"; fail=1
+fi
+
 [ "$fail" = 0 ] && echo "OK: $site passes all gates"
 exit "$fail"
