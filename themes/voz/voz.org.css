@@ -255,13 +255,18 @@
     color: #e6edf3 !important;
     border-color: #2d333b !important;
   }
+  /* Menu header/footer carry a hardcoded light silver gradient
+     (linear-gradient(0deg, #273649, #dbe6f5)) that background-color
+     alone can't override — kill the image too */
   .menu-header {
+    background-image: none !important;
     background-color: #161b22 !important;
     color: #e6edf3 !important;
     border-color: #2d333b !important;
   }
   .menu-footer,
   .menu-footer-controls {
+    background-image: none !important;
     background-color: #161b22 !important;
     border-color: #2d333b !important;
   }
@@ -531,11 +536,13 @@
     border-color: #2d333b !important;
   }
 
-  /* Sticky form submit bar (login / search / post reply) */
+  /* Sticky form submit bar (login / search / post reply) + overlay
+     titles also ship the light XenForo gradient — neutralize the image */
   .formSubmitRow-bar,
   .formSubmitRow,
   .menu-footer,
   .overlay-title {
+    background-image: none !important;
     background-color: #161b22 !important;
     color: #e6edf3 !important;
     border-color: #2d333b !important;
