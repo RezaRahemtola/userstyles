@@ -40,15 +40,17 @@ else
   done
 fi
 
-# 5. walkthrough.mp4 freshness — if present, must be newer than user.css
-if [ -f "$docs/walkthrough.mp4" ] && [ "$user" -nt "$docs/walkthrough.mp4" ]; then
-  echo "FAIL: $site.user.css newer than walkthrough.mp4 — re-record it"; fail=1
-fi
-
-# 5b. walkthrough.mp4 must be a REAL MP4, not a WebM with a .mp4 extension
-# (playwright-cli records WebM; it won't open in QuickTime/native players unless transcoded)
-if [ -f "$docs/walkthrough.mp4" ] && file -b "$docs/walkthrough.mp4" | grep -qi webm; then
-  echo "FAIL: walkthrough.mp4 is actually WebM — transcode to H.264 MP4 (ffmpeg -c:v libx264 -movflags +faststart)"; fail=1
+# 5. walkthrough.mp4 must exist, be non-empty, be newer than user.css, and be a real MP4
+if [ ! -f "$docs/walkthrough.mp4" ]; then
+  echo "FAIL: missing walkthrough.mp4 in $docs — record it"; fail=1
+elif [ ! -s "$docs/walkthrough.mp4" ]; then
+  echo "FAIL: walkthrough.mp4 is empty (0 bytes) — re-record it"; fail=1
+else
+  # 5a. freshness — must be newer than user.css
+  [ "$user" -nt "$docs/walkthrough.mp4" ] && { echo "FAIL: $site.user.css newer than walkthrough.mp4 — re-record it"; fail=1; }
+  # 5b. must be a REAL MP4, not a WebM with a .mp4 extension
+  # (playwright-cli records WebM; it won't open in QuickTime/native players unless transcoded)
+  file -b "$docs/walkthrough.mp4" | grep -qi webm && { echo "FAIL: walkthrough.mp4 is actually WebM — transcode to H.264 MP4 (ffmpeg -c:v libx264 -movflags +faststart)"; fail=1; }
 fi
 
 [ "$fail" = 0 ] && echo "OK: $site passes all gates"
