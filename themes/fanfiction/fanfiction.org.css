@@ -1,5 +1,5 @@
 /*
-  FanFiction.Net Dark — report issues: https://github.com/RezaRahemtola/userstyles/issues
+  FanFiction.Net Dark — report issues: https://github.com/rezarahemtola/userstyles/issues
 */
 
 @-moz-document domain("fanfiction.net"), domain("m.fanfiction.net"), domain("fictionpress.com"), domain("m.fictionpress.com") {
@@ -280,6 +280,16 @@
   }
   tr:hover > td {
     background-color: var(--ff-surface-2) !important;
+  }
+
+  /* ---- Forum post quotes ----------------------------------------------- */
+  /* FFN styles quoted text with color:#535353 — readable on the old light
+     posts, dark-on-dark here. Lift to body text, keep the quote accent bar. */
+  blockquote,
+  blockquote.quoteStyle,
+  .quoteStyle {
+    color: var(--ff-body) !important;
+    border-color: var(--ff-border-2) !important;
   }
 
   /* ---- Badges / counters ----------------------------------------------- */

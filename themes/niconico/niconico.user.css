@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           niconico Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.3
+@version        1.0.4
 @description    A clean, modern dark theme for niconico (nicovideo.jp) — comfortable across the home, video and comment pages, rankings, search and profiles, keeping the niconico accent and view and comment counts looking right while thumbnails and videos stay true to their original colors.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -128,6 +128,16 @@
   aside#header-ad, aside#header-ad > div, aside#header-ad .ad-banner {
     background-color: #161b21 !important;
     border-color: #262c33 !important;
+  }
+
+  /* Live (live.nicovideo.jp) hover tooltip — its surface hardcodes a light
+     fill (#f2f2f2 / #1a1a1a text) that bypasses the tooltip token, so on the
+     dark cards it popped up as a white box. Repaint it to the dark tooltip
+     surface used everywhere else. */
+  .tooltip-layer .tooltip {
+    background-color: #2d333b !important;
+    color: #e6edf3 !important;
+    border-color: #3a424c !important;
   }
 
   /* ============================================================

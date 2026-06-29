@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           FanFiction.Net Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.0
+@version        1.0.1
 @description    A comfortable dark theme for FanFiction.Net and FictionPress — easy-on-the-eyes story reader, browse filters, profiles and forums.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -288,6 +288,16 @@
   }
   tr:hover > td {
     background-color: var(--ff-surface-2) !important;
+  }
+
+  /* ---- Forum post quotes ----------------------------------------------- */
+  /* FFN styles quoted text with color:#535353 — readable on the old light
+     posts, dark-on-dark here. Lift to body text, keep the quote accent bar. */
+  blockquote,
+  blockquote.quoteStyle,
+  .quoteStyle {
+    color: var(--ff-body) !important;
+    border-color: var(--ff-border-2) !important;
   }
 
   /* ---- Badges / counters ----------------------------------------------- */

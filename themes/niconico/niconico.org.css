@@ -122,6 +122,16 @@
     border-color: #262c33 !important;
   }
 
+  /* Live (live.nicovideo.jp) hover tooltip — its surface hardcodes a light
+     fill (#f2f2f2 / #1a1a1a text) that bypasses the tooltip token, so on the
+     dark cards it popped up as a white box. Repaint it to the dark tooltip
+     surface used everywhere else. */
+  .tooltip-layer .tooltip {
+    background-color: #2d333b !important;
+    color: #e6edf3 !important;
+    border-color: #3a424c !important;
+  }
+
   /* ============================================================
      Common top header bar (shared chrome) + campaign strip
      ============================================================ */
