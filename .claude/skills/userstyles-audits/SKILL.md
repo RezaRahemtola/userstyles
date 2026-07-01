@@ -7,15 +7,9 @@ description: The audit-blind dark-theme bug-class checklist plus the WCAG/contra
 
 Run this after injecting the theme. Loop until every check is clean. Never claim done without passing all checks.
 
-## Injection (CSP-proof)
+## Injection
 
-Many sites block `addStyleTag` via CSP. Use a constructable stylesheet:
-```js
-await page.evaluate((css) => {
-  const s = new CSSStyleSheet(); s.replaceSync(css);
-  document.adoptedStyleSheets = [s];
-}, CSS);
-```
+Inject the theme with `bash .claude/scripts/pw-inject.sh "$S" themes/<site>/<site>.user.css` — it unwraps every `@-moz-document` block, injects all same-origin frames, and auto-falls-back to a constructable `adoptedStyleSheets` sheet on CSP/hang (see `userstyles-browser`). Never hand-inject the theme. Before trusting any finding, confirm a LATE selector from the file actually applies (a raced/partial inject drops the back half of the CSS → phantom bugs).
 
 ---
 

@@ -14,9 +14,9 @@ You are given one `<site>` and the gate rationale (why it was approved). Steps:
 
 2. **Author** `themes/<site>/<site>.user.css` as a UserCSS `@-moz-document` file using the standard palette. Cover ALL domains/ccTLDs the site serves (geo-redirects, www vs apex, `m.`, regional subdomains). Work the full build coverage checklist. Preserve semantic colors; adapt brand/accent colors for dark (never dump raw saturated hex). Set `@version 1.0.0` (new theme) and a clean ≤160-char user-facing `@description`.
 
-3. **Verify** — inject the theme via constructable stylesheet and loop the `userstyles-audits` checklist to ZERO across every page type the `@-moz-document` claims. Hunt the audit-blind classes (SVG/gauge fills, `-webkit-text-fill-color`, scroll-fade gradients, pseudo-element panels, layered `!important`, placeholders, dark-on-dark, elevated-bg contrast, interactive states, floating-surface bleed-through).
+3. **Verify** — inject the theme with `bash .claude/scripts/pw-inject.sh "$S" <user.css>` (CSP/hang fallback is automatic; see `userstyles-browser`) and loop the `userstyles-audits` checklist to ZERO across every page type the `@-moz-document` claims. Hunt the audit-blind classes (SVG/gauge fills, `-webkit-text-fill-color`, scroll-fade gradients, pseudo-element panels, layered `!important`, placeholders, dark-on-dark, elevated-bg contrast, interactive states, floating-surface bleed-through).
 
-4. **Generate `.org.css`** with the awk command, then SANITIZE it (drop `" i]`, `:has(`, `:is(`, `:where(`, complex `:not(`, `oklch`, `color-mix`, `@layer`, `@container`) and re-check brace balance. Keep modern syntax in `.user.css` only.
+4. **Generate `.org.css`** with the awk command, then SANITIZE it per the forbidden-syntax list in `userstyles-bundle` (the canonical list) and re-check brace balance. Keep modern syntax in `.user.css` only.
 
 5. **DO NOT make promos.** That is `theme-promoter`'s job. End by stating the theme is built and ready for the promoter (the orchestrator dispatches it). Close every context you opened.
 

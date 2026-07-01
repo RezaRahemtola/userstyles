@@ -113,6 +113,9 @@ A hard WAF returns the block on the FIRST gentle request, consistent across UA/l
 ## 4. Parser snippets
 
 ### world parser (run via `playwright-cli run-code "async p => p.evaluate(async () => { … })"`)
+
+**Anubis anti-bot** userstyles.world now fronts a proof-of-work challenge — a headless `goto` gets "Oh noes! Access Denied". Workaround: plain `curl -s 'https://userstyles.world/search?q=TERM'` is unchallenged (fastest for search/style-page scraping and easy to parse with grep/node); or open the session `--headed` once to solve the PoW, after which the in-page same-origin `fetch` below works as written.
+
 ```js
 await page.goto('https://userstyles.world/', { waitUntil: 'domcontentloaded' });
 const data = await page.evaluate(async () => {

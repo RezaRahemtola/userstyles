@@ -78,7 +78,7 @@ Work through these in order; loop to zero audit fails:
 
 `@-moz-document` MUST cover ALL domains/ccTLDs the site serves (geo-redirects, www vs apex, `m.`, regional subdomains). Mirror the SAME domain list in the generated `.org.css`. Check for ccTLD variants (espn.co.uk, espn.com.au, etc.).
 
-`.org.css` must be sanitized: no `" i]`, `:has()`, `:is()`, `:where()`, complex `:not()`, `oklch()`, `@layer`. Check brace balance after stripping.
+`.org.css` must be sanitized per the forbidden-syntax list in `userstyles-bundle` (the canonical list, with the rewrite for each construct). Check brace balance after stripping.
 
 ## Team-orchestration model
 

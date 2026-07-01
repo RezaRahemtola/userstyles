@@ -17,7 +17,8 @@ for a in "$@"; do
   case "$a" in
     --apply) apply=1 ;;
     -*) echo "unknown flag: $a" >&2; exit 2 ;;
-    *) site="$a" ;;
+    *) [ -n "$site" ] && { echo "at most one site argument (got: $site $a)" >&2; exit 2; }
+       site="$a" ;;
   esac
 done
 
