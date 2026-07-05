@@ -39,39 +39,51 @@ npx playwright-cli open --persistent --profile .publish-profile --browser chromi
 `goto` the `orgStyleUrl`. `https://userstyles.org/styles/<id>/edit` **redirects to**
 `https://userstyles.org/create-style/<id>` — the CodeMirror-6 editor. Wait for `.cm-editor` to exist.
 
-## Step 3 — Replace the CSS source (CodeMirror 6)
-CM6 virtualizes (only visible lines in the DOM) and does not expose its `EditorView` on DOM nodes,
-so DOM select/read is unreliable. Use CM6's own select-all + a single `insertText` (proven):
+## Steps 3+4 — Replace the CSS source (CodeMirror 6) and Save
+`run-code` can't read files, so **generate a temp JS script that embeds the CSS as a JSON string
+literal** (json-encoding avoids all escaping bugs), then run it with `--filename`. Proven recipe —
+a Python generator that reads the on-disk `.org.css` and emits the driver:
 
-```js
-// scratchpad script, run with --filename; CSS is passed via a bound arg, NOT string-interpolated
-async (p) => {
-  const css = /* read themes/<site>/<site>.org.css from disk into the script's Node side, then */ CSS_STRING;
-  const c = await p.$('.cm-content');
-  await c.click();
-  await p.keyboard.press('Meta+a');       // CM6 selectAll on the FULL virtual doc (darwin)
-  await p.keyboard.insertText(css);        // one insertText replaces whole doc, no per-char autoindent
-}
+```python
+import json
+css = open(f'themes/{site}/{site}.org.css', encoding='utf-8').read()
+open(f'scratchpad/pub-{site}.js','w').write('''async (p) => {
+  const css = %s, id = '%s';
+  await p.goto('https://userstyles.org/styles/'+id+'/edit', { waitUntil: 'domcontentloaded' });
+  await p.waitForTimeout(3500);
+  await p.waitForSelector('.cm-content');
+  const c = await p.$('.cm-content'); await c.click();
+  await p.keyboard.press('Meta+a');            // CM6 selectAll on the FULL virtual doc (darwin)
+  await p.keyboard.insertText(css);            // one insertText replaces whole doc
+  await p.waitForTimeout(700);
+  await p.getByRole('button', { name: /Save and Publish/i }).click();   // NOT a bare button[type=submit] (that hits the nav search form)
+  await p.waitForTimeout(6000);
+  const stored = await p.evaluate(async i => (await fetch('https://userstyles.org/styles/'+i+'.css')).text(), id);
+  const norm = s => s.replace(/\\r\\n/g,'\\n').replace(/\\s+$/,'');
+  return JSON.stringify({ MATCH: norm(stored) === norm(css) });
+}''' % (json.dumps(css), sid))
 ```
-Load the CSS from disk in the driver (e.g. generate the script file with the CSS embedded, or read it
-in a wrapper and write a temp script) — `run-code` itself cannot read files.
-
-## Step 4 — Save
-Click the button whose text is **"Save and Publish Your Style!"** (scope to the editor form; the page
-has a nav search form too — do NOT click a bare `button[type=submit]`, it may hit search). Prefer
-`p.getByRole('button',{name:/Save and Publish/i}).click()`. Wait for the save to settle (success signal:
-redirect to the style page, or a toast — confirm once, then rely on Step 5).
+Run: `npx playwright-cli -s="$S" run-code --filename=scratchpad/pub-<site>.js`.
+CM6 virtualizes (only visible lines in the DOM) and doesn't expose its `EditorView` — so don't try to
+read the doc back from the DOM; the HTTP readback below is the truth.
 
 ## Step 5 — Verify (authoritative)
-Fetch the stored source and compare to on-disk, **normalizing CRLF→LF** (.org stores `\r\n`; on-disk is `\n`):
-```js
-const stored = await (await fetch('https://userstyles.org/styles/<id>.css')).text();
-```
+The `MATCH` above (readback vs on-disk, CRLF→LF normalized) is the success signal. Double-check out of band:
 ```bash
-# compare normalized
 diff <(curl -s "https://userstyles.org/styles/<id>.css" | tr -d '\r') themes/<site>/<site>.org.css
 ```
-PASS = identical after normalization. Otherwise report the diff (don't claim success).
+PASS = identical after normalization. If it differs, the save was REJECTED — do NOT claim success.
+
+## .org rejects invalid CSS on save (the browser tolerates it — .org does not)
+The save POSTs to `gateway.userstyles.org/styles/create`; a **502** with a `message` means rejected and
+NOTHING was saved (readback stays old → MATCH false). Capture it by listening for the POST response.
+Two real causes seen — fix the theme, don't work around:
+- **Stray `*/` inside a comment** prematurely closes it (e.g. `trc_*/videoCube` → `*/`), then the trailer
+  is parsed as CSS → `parse error`. Browsers silently drop the broken block; .org errors. Fix the comment.
+- **example-url domain not covered by the CSS `@-moz-document`** → `"example_url … does not match the
+  sites specified in the code."` The style's example URL (Style Info tab) must be a host the CSS matches
+  (e.g. CSS `domain("www.thingiverse.com")` needs example `https://www.thingiverse.com`, not bare). This
+  is a metadata field — surface it to Reza; the CSS-only skill does not edit it.
 
 ## Guards
 - One site per run. Never create a new style. Never edit name/description/preview.
