@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Divar Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.2
+@version        1.0.3
 @description    A sleek dark theme for Divar — easy on the eyes for late-night browsing, with the familiar Divar red kept intact. Homepage, listings and post pages.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -208,7 +208,19 @@
   [class*="overlay-content"],
   .kt-select__options,
   .kt-toast,
-  .kt-snackbar {
+  .kt-snackbar,
+  .kt-rich-tooltip,
+  .react-tooltip,
+  [role="tooltip"] {
+    background-color: #1c2128 !important;
+  }
+
+  /* KT rich tooltip (e.g. the "recently-seen" eye-badge popover on map/list cards)
+     is a react-tooltip that hardcodes a near-white surface (#f9fafb) with white
+     text — white-on-white, unreadable. The bubble is re-darkened above; its little
+     pointer arrow is a separate element that keeps the same light fill, so dark it
+     too so the pointer matches the bubble. */
+  .react-tooltip-arrow {
     background-color: #1c2128 !important;
   }
 

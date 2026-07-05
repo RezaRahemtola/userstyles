@@ -269,6 +269,14 @@
     background-color: #e6edf3 !important;
   }
 
+  /* "LIVE" session badge: a white pill (`bg-static-static-1`) carrying blue
+     `text-accent-bright-blue-60` label, shown on the blue live-race card.
+     Darkening the pill globally buried the blue text (blue-on-dark, ~2.7:1).
+     Restore a light pill for THIS badge so the blue LIVE label stays legible. */
+  [class*="bg-static-static-1"][class*="text-accent-bright-blue"] {
+    background-color: #e6edf3 !important;
+  }
+
   /* ====================================================================
      FOOTER
      ==================================================================== */

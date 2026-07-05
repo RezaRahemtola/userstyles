@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Thingiverse Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.1
+@version        1.0.2
 @description    A full dark theme for Thingiverse — the feed, model pages, search and profiles in comfortable dark, while model previews and 3D renders stay true to color.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -10,7 +10,7 @@
 @preprocessor   default
 ==/UserStyle== */
 
-@-moz-document domain("thingiverse.com"), domain("www.thingiverse.com") {
+@-moz-document domain("www.thingiverse.com") {
 
   /* ====================================================================
      Thingiverse drives nearly every surface, border, text and accent
@@ -90,7 +90,6 @@
     --tv-bg-accent-hover: #2f6fd6 !important;
     --tv-bg-accent-active: #1d51b0 !important;
     --tv-bg-accent-medium: #2563c9 !important;
-    --tv-bg-highlight-light: #1d2a3a !important;
 
     /* ---- Semantic colors: preserve meaning, just deepen surfaces ---- */
     --tv-bg-positive-light: #122a25 !important;
