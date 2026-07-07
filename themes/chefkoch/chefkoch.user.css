@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Chefkoch Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.4
+@version        1.0.5
 @description    A dark theme for Chefkoch — recipes, search, magazine and community forum in a comfortable dark look, with green accents and rating stars kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -577,6 +577,24 @@
   .ds-pagination__item--active, .ds-pagination__item--active a {
     color: #6fd382 !important;
   }
+
+  /* magazine article "Wie gefällt dir dieser Artikel?" feedback widget ships
+     a cream #f3f4f0 #thumb-voting panel — the headline (now light) turns
+     invisible on it and the thumb up/down split-buttons are solid white.
+     Darken the panel + repaint the split-buttons to the elevated surface. */
+  #thumb-voting {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+  .thumb-voting__headline { color: #e6edf3 !important; }
+  .ds-split-button__button {
+    background-color: #21262d !important;
+    color: #e6edf3 !important;
+    border-color: #2d333b !important;
+  }
+  .ds-split-button__button:hover { background-color: #2d333b !important; }
+  .ds-split-button__button svg, .ds-split-button__button .ck-icon,
+  .ds-split-button__button i { fill: #c4cdd6 !important; color: #c4cdd6 !important; }
 
   /* ====================================================================
      Legacy COMMUNITY / forum frontend (chefkoch.de/forum/* — a separate

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Neoseeker Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.4
+@version        1.0.5
 @description    A clean dark theme for Neoseeker — easy-on-the-eyes walkthroughs, guides, cheats and FAQs, plus the home, game hubs, wikis, search and forums.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -868,6 +868,51 @@
   .mw-parser-output div[style*="#b782c9" i],
   .mw-parser-output div[style*="#d2a7e0" i] {
     color: var(--neo-text-2) !important;
+  }
+
+  /* NeoWiki (neowiki.) main-page templates hardcode near-white inline
+     pastels — a big mintcream #f5fffa content TD plus green #cef2e0 and blue
+     #cedff2 section-header cells — which our light body text then washes out
+     light-on-light. Darken these specific light pastels to the elevated
+     surface and keep ALL their text light. The #mw-content-text ID prefix
+     out-specifies the saturated-cell dark-text rule above (which would
+     otherwise repaint the TD's own text + direct children dark → dark-on-
+     dark); the trailing link rule keeps in-cell links accent-blue. */
+  #mw-content-text td[style*="#f5fffa" i],
+  #mw-content-text th[style*="#f5fffa" i],
+  #mw-content-text td[style*="#f5faff" i],
+  #mw-content-text th[style*="#f5faff" i],
+  #mw-content-text h2[style*="#cef2e0" i],
+  #mw-content-text td[style*="#cef2e0" i],
+  #mw-content-text th[style*="#cef2e0" i],
+  #mw-content-text h2[style*="#cedff2" i],
+  #mw-content-text td[style*="#cedff2" i],
+  #mw-content-text th[style*="#cedff2" i] {
+    background-color: var(--neo-elev) !important;
+    background-image: none !important;
+    color: var(--neo-text-2) !important;
+  }
+
+  #mw-content-text td[style*="#f5fffa" i],
+  #mw-content-text td[style*="#f5fffa" i] *,
+  #mw-content-text td[style*="#f5faff" i],
+  #mw-content-text td[style*="#f5faff" i] *,
+  #mw-content-text td[style*="#cef2e0" i],
+  #mw-content-text td[style*="#cef2e0" i] *,
+  #mw-content-text td[style*="#cedff2" i],
+  #mw-content-text td[style*="#cedff2" i] *,
+  #mw-content-text h2[style*="#cef2e0" i],
+  #mw-content-text h2[style*="#cedff2" i] {
+    color: var(--neo-text-2) !important;
+    -webkit-text-fill-color: var(--neo-text-2) !important;
+  }
+
+  #mw-content-text td[style*="#f5fffa" i] a,
+  #mw-content-text td[style*="#f5faff" i] a,
+  #mw-content-text td[style*="#cef2e0" i] a,
+  #mw-content-text td[style*="#cedff2" i] a {
+    color: var(--neo-link) !important;
+    -webkit-text-fill-color: var(--neo-link) !important;
   }
 
   /* image thumb frames in wiki content (incl. gallery thumbs in the new

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Thingiverse Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.2
+@version        1.0.3
 @description    A full dark theme for Thingiverse — the feed, model pages, search and profiles in comfortable dark, while model previews and 3D renders stay true to color.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -147,6 +147,15 @@
   [class*="SearchFilterBar__searchFilterBarWrapper"],
   [class*="searchFilterBarWrapper"], [class*="SearchFilterBar__searchFilterBar"],
   [class*="SearchSort__searchSortWrapper"] {
+    background-color: #14181d !important; }
+
+  /* Home promo banner carousel: each 1268px slide centers a narrower (~970px)
+     promo image and paints its own slide background via an INLINE
+     `background-color:#fefefe`, so bright white side-bands frame the image on
+     the dark page. Inline styles beat the transparent neutralizer, so pin the
+     slide (and its container) to the dark page background — the promo <img>
+     keeps its true color, only the letterbox sides go dark. */
+  [class*="homeBannerSlide"], [class*="HomePageBanner__homeBanner"] {
     background-color: #14181d !important; }
 
   /* ====================================================================

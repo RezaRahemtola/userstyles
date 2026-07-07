@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           KHInsider Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.1
+@version        1.0.2
 @description    A clean, comfortable dark theme for KHInsider — easy on the eyes across album pages, song lists, the audio player, search and comments.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -366,8 +366,14 @@
     -webkit-text-fill-color: #c4d3e8 !important;
     border-color: #2d333b !important;
   }
+  /* hover AND keyboard/split-trigger focus + selected states — XenForo paints the
+     highlighted row a light #e8f4fc, so the focused first row was light-on-light */
   .menu-row:hover, .menu-linkRow:hover,
-  .menu-row > a:hover, .menu-linkRow:hover > a {
+  .menu-row > a:hover, .menu-linkRow:hover > a,
+  .menu-row:focus, .menu-linkRow:focus,
+  .menu-row > a:focus, .menu-linkRow:focus > a,
+  .menu-row.is-selected, .menu-linkRow.is-selected,
+  .menu-row--selected, a.menu-linkRow.menu-row--selected {
     background-color: #232a33 !important;
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;

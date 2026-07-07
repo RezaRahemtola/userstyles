@@ -141,6 +141,15 @@
   [class*="SearchSort__searchSortWrapper"] {
     background-color: #14181d !important; }
 
+  /* Home promo banner carousel: each 1268px slide centers a narrower (~970px)
+     promo image and paints its own slide background via an INLINE
+     `background-color:#fefefe`, so bright white side-bands frame the image on
+     the dark page. Inline styles beat the transparent neutralizer, so pin the
+     slide (and its container) to the dark page background — the promo <img>
+     keeps its true color, only the letterbox sides go dark. */
+  [class*="homeBannerSlide"], [class*="HomePageBanner__homeBanner"] {
+    background-color: #14181d !important; }
+
   /* ====================================================================
      Card / panel surfaces — Thingiverse wraps the model-page gallery,
      description and most content blocks in `Card__card` / `Card__layer--NN`

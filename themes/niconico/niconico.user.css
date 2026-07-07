@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           niconico Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.5
+@version        1.0.6
 @description    A clean, modern dark theme for niconico (nicovideo.jp) — comfortable across the home, video and comment pages, rankings, search and profiles, keeping the niconico accent and view and comment counts looking right while thumbnails and videos stay true to their original colors.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -169,6 +169,14 @@
      to the page base; the cards and text inside are already dark-correct. */
   .official-live-ts-ranking { background-color: #14181d !important; }
 
+  /* Live (live.nicovideo.jp) watch page — each program-description section heading
+     ("関連番組", "リンク", "初めてニコニコ生放送をご利用になる方"…) marks itself with a
+     10px light-grey (#d1d1d1) left accent bar plus a 1px underline that no token
+     reaches, so on the dark theme every heading grew a bright grey bar and rule.
+     Soften those dividers to the standard dark component border. Scoped to the
+     stable GA-namespace description class (the hashed sibling class is unstable). */
+  .ga-ns-description div { border-color: #2d333b !important; }
+
   /* Selected segmented-control pill — the search type tabs (動画 / ショート /
      シリーズ / マイリスト / ユーザー), the comment vs. tag search toggle and
      similar active "inverted" pills paint the active item with the site's
@@ -216,9 +224,18 @@
   #CommonHeader a[class*="common-header-"][href*="/service_list"] {
     background-color: #1c2128 !important; color: #c4cdd6 !important;
   }
+  /* Each service row's label sits in a nested div that hardcodes its own
+     near-black #333 color, which does NOT inherit the anchor color above, so
+     the labels (ブロマガ / コモンズ / NicoFT…) read dark-on-dark on the repainted
+     panel. Repaint the row's descendants to the light label, and drop the
+     bright #eee row dividers to the standard dark border. */
+  #CommonHeader a[class*="common-header-"]:has(svg) *,
+  #CommonHeader a[class*="common-header-"][href*="/service_list"] * {
+    color: #c4cdd6 !important; border-color: #262c33 !important;
+  }
   #CommonHeader div[class*="common-header-"]:has(> [class*="common-header-"] a[href*="commons.nicovideo.jp"]),
   #CommonHeader div[class*="common-header-"]:has(> a[href*="/service_list"]) {
-    background-color: #1c2128 !important;
+    background-color: #1c2128 !important; border-color: #262c33 !important;
   }
 
   /* ============================================================
@@ -436,6 +453,18 @@
   hr, .Divider, [class*="Divider"], [class*="Separator"] {
     border-color: #2d333b !important; background-color: #2d333b !important;
   }
+
+  /* Floating "back to top" button (legacy home / profile). It defaults to a
+     #f0f0f0 disc with a black chevron; at 48px it slips under the element-bg
+     audit's size filter, so on the dark theme it floated as a bright white
+     circle over the bottom-right corner. Repaint the disc to the elevated
+     surface and lift the arrow glyph to a light fill. */
+  .PageTopButton, .PageTopButtonContainer-pageTopButton {
+    background-color: #1c2128 !important;
+  }
+  .PageTopButton svg, .PageTopButton path,
+  .PageTopButtonContainer-pageTopButton svg,
+  .PageTopButtonContainer-pageTopButton path { fill: #c4cdd6 !important; }
 
   /* Keep media untinted; just give empty thumb wells a dark fill */
   .Thumbnail-image, .NC-Thumbnail-image, .UserIcon-image,
