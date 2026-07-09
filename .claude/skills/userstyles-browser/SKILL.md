@@ -1,6 +1,6 @@
 ---
 name: userstyles-browser
-description: Browser mechanics for this repo's userstyle theme work — drive a headless Chrome via playwright-cli, one isolated session per agent (parallel-safe), inject the theme from disk, run the audit-blind DOM scan, and capture true 2× dark screenshots. Load before automating any browser work on a theme.
+description: Browser mechanics for this repo's userstyle theme work — drive a headless Chrome via playwright-cli, one isolated session per agent (parallel-safe), inject the theme from disk, run the audit-theme.js DOM scan, and capture true 2× dark screenshots. Load before automating any browser work on a theme.
 ---
 
 Drive the browser with **`playwright-cli`** (`@playwright/cli`) via the `Bash` tool. Each agent opens its **own named session** (`-s=<unique>`) = its own browser process, so agents run in parallel with zero collision.
@@ -36,8 +36,8 @@ npx playwright-cli -s="$S" open --browser chromium --config .playwright/cli.conf
 npx playwright-cli -s="$S" click "Accept"   # or a run-code click; verify no fixed backdrop remains
 # inject the theme (strips the @-moz-document wrapper, reads CSS from disk — never in your tokens)
 bash .claude/scripts/pw-inject.sh "$S" themes/espn/espn.user.css
-# run the audit-blind DOM scan → JSON findings
-npx playwright-cli -s="$S" run-code --filename=.claude/scripts/audit-blind.js
+# run the theme DOM scan → JSON findings (14 buckets)
+npx playwright-cli -s="$S" run-code --filename=.claude/scripts/audit-theme.js
 # capture a framed 2× screenshot (see the scale gotcha)
 npx playwright-cli -s="$S" run-code "async p => { await p.evaluate(() => scrollTo(0,0)); await p.screenshot({ path: 'themes/espn/docs/promo-home.png', scale: 'device' }); return 'ok'; }"
 npx playwright-cli -s="$S" close
@@ -51,7 +51,7 @@ npx playwright-cli -s="$S" close
 - **`run-code` has NO `require`/`fs`/`process`** (and no global `setTimeout` — use `p.waitForTimeout(ms)`). Its function runs against the live `page`, but you cannot read files from inside it. Inject CSS with `pw-inject.sh` (Playwright's driver reads the file from disk). To run page JS, use `run-code "async p => p.evaluate(() => { …DOM code… })"`.
 - **Inject = inner rules only.** `pw-inject.sh` strips the `==UserStyle==` header and unwraps EVERY `@-moz-document … { }` block (Chromium ignores `@-moz-document`, so wrapped rules don't apply) — multi-block themes (e.g. khinsider's `/forums/` block) are fully covered. Don't `addStyleTag` the raw `.user.css` yourself.
 - **CSP/hang fallback is automatic.** `pw-inject.sh` injects each frame via a real `<style>` (`addStyleTag` — the faithful path) and, if that throws (CSP) or hangs past a per-frame timeout (ad-heavy frames never settle), auto-falls-back to a constructable `adoptedStyleSheets` sheet — no manual step. Its return string reports the split, e.g. `injected: 5 via <style>, 1 via adoptedStyleSheets (fallback)`. Tune the budget with `PW_INJECT_TIMEOUT_MS` (default 2500). Always confirm the result by reading `document.body` bg, not the return string alone.
-- **`audit-blind.js` is DOM-only** (light surfaces/borders, SVG white fills, dark-on-dark, `-webkit-text-fill-color`, light bg-image gradients, pseudo-element white bg, invisible placeholders). It does NOT catch `<canvas>`, raster gauges, or anything needing pixel luminance — still take screenshots and eyeball (see `userstyles-audits`). Trust the screenshot over the scan.
+- **`audit-theme.js` is DOM-only** (14 buckets: light surfaces/borders, SVG white fills, dark-on-dark, `-webkit-text-fill-color`, light bg-image gradients, pseudo-element white bg + pseudo TEXT, invisible placeholders, SVG gradient stops, `<symbol>` fills, sub-floor light surfaces, filled carets, flattened active borders). It does NOT catch `<canvas>`, raster gauges, blend modes, semantics, closed states, or anything needing pixel luminance — still take screenshots and eyeball (see `userstyles-audits`). **Trust the screenshot over the scan:** it has returned `total=0` on pages carrying six real bugs.
 
 ## Bot-challenge fallback → headed (Cloudflare Turnstile / DataDome / "Just a moment")
 

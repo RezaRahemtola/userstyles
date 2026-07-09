@@ -91,7 +91,16 @@ Work through these in order; loop to zero audit fails:
 **Subagent rules:**
 - Launch with `run_in_background: true` + a name
 - One agent per site — NEVER two for the same site (the Agent tool auto-suffixes duplicates as `build-khan-2`; that suffix is the tell one is already running; cancel the dupe)
-- Agents can't be force-killed: `SendMessage` a `shutdown_request` (processes at next yield; a long browser op delays it). Failsafe: `rm -rf themes/<site>/docs` to discard a bad bundle and restart cleanly
+- **ONE WRITER PER THEME, EVER.** A theme's CSS has exactly one owner at a time. A reviewer that has reported complete must never write again. Two writers on one file is the only thing that can silently destroy work — and it is what left `khan.org.css` a stale mirror, and what made a juejin fixer's honest "mirror verified" claim false ninety seconds after it was true.
+
+**Killing agents — read this before messaging one:**
+- **`TaskStop` force-kills. Use it.** `TaskStop({task_id: "<agent-name>"})` terminates immediately, and its error message lists who is actually still running — that list, not your recollection, is the source of truth for who is alive.
+- **`SendMessage` to a TERMINATED agent RESURRECTS it.** It does not error. The harness restarts it with no prior transcript and *your message as its new prompt* — so it opens a browser and starts writing theme files. Replying to a finished agent to thank it, correct it, or ask a follow-up is how "rogue writers" appear mid-capture. Never message an agent after sending it a shutdown, and never reply to a terminated agent's final report. If its report contains something important, act on it yourself.
+- A `shutdown_request` to a *live* agent only lands at its next yield, so a long browser op keeps running for a while afterwards. `TaskStop` doesn't wait.
+- **Verify agent state from evidence** (`TaskStop`'s running list, `stat`, `css-hash.sh`, `git`, `npx playwright-cli list`) — never by pinging.
+- **Sweep in the same tool block as the verification.** The moment a teammate is done: verify its work on disk AND kill it in one block. Every miss on the 2026-07-09 patrol came from batching reports and deferring the kill.
+- Failsafe for a bad bundle: `rm -rf themes/<site>/docs` and restart cleanly.
+
 - Each agent writes only its own `themes/<site>/` (+ `docs/`); orchestrator appends the README row after agents return (never concurrent)
 - **THROTTLE** — space requests between sites; don't fan many agents at the same site; retry "blocked" sites later, slowly before declaring unviable (a 403/CAPTCHA is almost always rate-limiting, not a permanent hard WAF block)
 - **Session cleanup backstop** — each teammate owns and closes its own `playwright-cli` process. After ALL teammates are done, clear any stragglers: `npx playwright-cli list` → `close-all` (`kill-all` for zombies). Never `close-all` while a teammate is live. Unstick ONE wedged teammate by killing only its session: `npx playwright-cli -s=<session> kill`
@@ -102,7 +111,9 @@ Work through these in order; loop to zero audit fails:
 bash .claude/scripts/verify-theme.sh <site>
 ```
 
-Require exit 0. The script checks: brace balance (both files), `.org.css` sanitization, `@version` present in `.user.css` only, and **promo freshness** (every promo newer than the `.user.css`). The audits-at-zero, the clean ≤160-char `@description`, and the full `@-moz-document` domain list are the agent's responsibility (`userstyles-audits` / `userstyles-bundle`), not this script — verify them before declaring done.
+Require exit 0. The script checks: brace balance (both files), `.org.css` sanitization, `@version` present in `.user.css` only, and **bundle freshness** — `docs/.bundle-hash` (stamped by `theme-promoter`) must equal `css-hash.sh` of the current `.user.css`, i.e. the bundle was captured from exactly these rules. Comment/`@version` edits don't invalidate it; any rule change does. Themes bundled before `.bundle-hash` existed fall back to an mtime test and print a WARN.
+
+**Exit 0 still proves less than it looks.** The script does NOT verify that `.org.css` mirrors `.user.css` (a fix can ship to Stylus and silently never reach userstyles.org — sanitization strips `:has()` and the gate only checks the file is *free* of it, never that your fix *survived*), does not check `@description` length, and **never looks at a pixel**. The audits-at-zero, the ≤160-char `@description`, the declaration-level mirror diff, and the full `@-moz-document` domain list are the agent's responsibility (`userstyles-audits` / `userstyles-bundle`) — verify them before declaring done. Never finalize a bundle you know contains a bug: a green gate on a known-bad artifact launders a defect into a certification.
 
 **Promos are made ONLY by `theme-promoter`.** If the verify script reports stale or missing promos, re-dispatch a `theme-promoter` agent; do NOT generate promos inline. Promos must be regenerated after ANY CSS change — never leave stale shots in the bundle.
 

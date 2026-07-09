@@ -33,26 +33,27 @@ Keep the full-res PNG for userstyles.world (no size limit). Note which file is w
 
 ## walkthrough.mp4
 
-A smooth-scroll video of the themed site, written to `themes/<site>/docs/walkthrough.mp4`. Record with `playwright-cli` on the same injected session as the promos.
+A smooth-scroll video of the themed site, written to `themes/<site>/docs/walkthrough.mp4`.
 
-**IMPORTANT — `playwright-cli` records WebM, not MP4.** Recording straight to `walkthrough.mp4` produces a WebM-in-`.mp4` file, so ALWAYS record to a `.webm` temp, then transcode to a real H.264 MP4 with `ffmpeg`:
+**Record it with `.claude/scripts/record-walkthrough.js`. Never with `playwright-cli video-start`.**
 
 ```bash
-# --size MUST be set: video-start otherwise downscales to fit 800x800, so a
-# 1280x800 viewport records at a tiny 800x500. Pin it to the full viewport.
-npx playwright-cli -s="$S" video-start --size 1280x800 themes/<site>/docs/walkthrough.webm
-# for each page type: goto, then scroll smoothly top→bottom
-npx playwright-cli -s="$S" mousewheel 0 600   # repeat / pause between to pace it
-npx playwright-cli -s="$S" video-stop
-
-# transcode WebM → real H.264 MP4 (QuickTime-compatible, web-streamable), then drop the webm
-ffmpeg -y -loglevel error -i themes/<site>/docs/walkthrough.webm \
-  -c:v libx264 -pix_fmt yuv420p -crf 23 -movflags +faststart -an \
-  themes/<site>/docs/walkthrough.mp4
-rm -f themes/<site>/docs/walkthrough.webm
+node .claude/scripts/record-walkthrough.js themes/<site>/<site>.user.css \
+     themes/<site>/docs/walkthrough.mp4 <url> [url ...]
 ```
 
-Re-record after ANY CSS change (`verify-theme.sh` fails if the `.user.css` is newer than the mp4). Same freshness rule as promos.
+Env knobs are documented in the script's header: `HEADED=1` (Cloudflare sites that block headless), `CONSENT_SELECTOR`/`CONSENT_TEXT`, `DISMISS_TEXT` (timed interstitials), `HIDE_SELECTORS`, `BLOCK_EXTRA`, `SCROLL_STEPS`.
+
+**Why the script exists** — three defects it works around, each of which shipped a bad video before it was written:
+- `video-start`'s screencast attaches ABOVE the level `-s=<session>` isolates, so with other agents live **it records their pages**. Two mp4s shipped containing another agent's session on 2026-07-09. The script launches its own browser process instead, and asserts exactly one webm exists.
+- Never select the output by file size or duration — the *contaminated* file was the longer one. The script takes `page.video().path()` for the page it drove.
+- `addInitScript` runs where `document.documentElement` can still be null, so the sheet silently fails to attach and the page paints unstyled white frames. The script pumps `ensureStyle()` on `requestAnimationFrame`.
+
+It also transcodes to a real H.264 MP4 — `playwright-cli` records WebM, and a WebM-in-`.mp4` won't open in QuickTime. `verify-theme.sh` rejects it.
+
+**Then LOOK at the result.** Extract several frames (`ffmpeg -ss <t> -frames:v 1 out.mp4 f.png`) and confirm each shows your site, themed. Every automated check we have passes on a well-formed H.264 of a Cloudflare block page, because our own theme paints the interstitial dark and the brightness sweep reports it clean. Guard on `document.title`, not luminance.
+
+**Freshness:** re-record after any change to the stylesheet's *rules*. `verify-theme.sh` compares `docs/.bundle-hash` (written by `theme-promoter` as its last action) against `css-hash.sh` of the current `.user.css`. Comment and `@version` edits no longer invalidate the bundle; any selector/property/value change does. Same rule for promos.
 
 ## listing.md
 

@@ -13,6 +13,28 @@ Inject the theme with `bash .claude/scripts/pw-inject.sh "$S" themes/<site>/<sit
 
 ---
 
+## The scanner
+
+ONE scanner covers every DOM-detectable class: **`.claude/scripts/audit-theme.js`**. (It was `audit-blind.js` plus a second-pass `audit-pseudo.js`; merged and renamed 2026-07-10 — a single element walk now feeds all 14 buckets. The *bug classes* are still called audit-blind classes; the *script* is the theme audit.)
+
+```bash
+npx playwright-cli -s="$S" run-code --filename=.claude/scripts/audit-theme.js
+```
+
+It returns `{ url, counts, <14 bucket arrays>, summary }`. The buckets: `lightSurfaces`, `lightBorders`, `svgWhiteFills`, `darkOnDark`, `placeholders`, `webkitFillMismatch`, `lightBgImages`, `pseudoWhite`, `pseudoText`, `gradientStops`, `symbolFills`, `smallLight`, `filledCarets`, `activeBorders`. Read the script's header for what each one means and its known false positives.
+
+**A CLEAN RUN IS NOT EVIDENCE — it is the *start* of the review, never the end.** The scanner reads the DOM, not the pixels. Measured on the 2026-07-09 patrol: it returned `0/0/0` on slashdot's front page, story page and 404 while those three carried **six real bugs**, and on a genius 404 carrying a giant pure-black magnifier. Of slashdot's 13 confirmed bugs, exactly 2 were ever surfaced by a scan. Both ship-blockers of that entire patrol (genius blanking the lyrics column when an annotation opened; khan showing no indicator for the selected answer) were found by *looking at a rendered page*.
+
+Three things it structurally cannot do, no matter how many buckets it grows:
+
+1. **It cannot see semantics.** A `.button--danger` flattened to neutral grey, a lost ad-disclosure tint, a disabled button that looks enabled — each is a legible dark control on a dark page, so every threshold passes. Catch these by reading the SITE's own stylesheet (`curl` it) and enumerating the modifier classes your rules may have swallowed.
+2. **It cannot see a state you did not open.** Portal, annotation, and flyout nodes do not exist in the DOM until opened. Open dropdowns, overflow/share menus, tooltips, modals, and the mobile nav, then re-run.
+3. **It cannot see pixels.** `<canvas>`, raster images, background sprites, and blend modes need screenshot luminance — and even that lies: our own theme paints a Cloudflare block page dark, so a brightness sweep reports it clean. Guard on `document.title`.
+
+Re-run at 390×844 as well; a desktop-only scan misses the mobile chrome entirely.
+
+---
+
 ## Audit-blind bug classes
 
 These are the failure classes a naive `getComputedStyle().backgroundColor` walk CANNOT see. Check each explicitly.
