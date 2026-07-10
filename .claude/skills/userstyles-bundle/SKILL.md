@@ -51,7 +51,7 @@ Env knobs are documented in the script's header: `HEADED=1` (Cloudflare sites th
 
 It also transcodes to a real H.264 MP4 — `playwright-cli` records WebM, and a WebM-in-`.mp4` won't open in QuickTime. `verify-theme.sh` rejects it.
 
-**Then LOOK at the result.** Extract several frames (`ffmpeg -ss <t> -frames:v 1 out.mp4 f.png`) and confirm each shows your site, themed. Every automated check we have passes on a well-formed H.264 of a Cloudflare block page, because our own theme paints the interstitial dark and the brightness sweep reports it clean. Guard on `document.title`, not luminance.
+**Then LOOK at the result.** Extract several frames into a fresh `mktemp -d` dir (`D="$(mktemp -d)"; for t in 2 6 10 14; do ffmpeg -y -i out.mp4 -ss "$t" -frames:v 1 "$D/f$t.png" >/dev/null 2>&1; done`) and confirm each shows your site, themed. Every automated check we have passes on a well-formed H.264 of a Cloudflare block page, because our own theme paints the interstitial dark and the brightness sweep reports it clean. Guard on `document.title`, not luminance. **Never `rm -f $VAR/*.png`** — a glob under a shell variable trips the sandbox's dangerous-delete guard and forces an approval that breaks the autonomous run; use a self-cleaning `mktemp -d` dir or `ffmpeg -y` overwrite, never a pre-delete.
 
 **Freshness:** re-record after any change to the stylesheet's *rules*. `verify-theme.sh` compares `docs/.bundle-hash` (written by `theme-promoter` as its last action) against `css-hash.sh` of the current `.user.css`. Comment and `@version` edits no longer invalidate the bundle; any selector/property/value change does. Same rule for promos.
 

@@ -12,6 +12,9 @@ themes/*/docs/
 *.png
 *.mp4
 
+# stray repo-root scratch (agents that wrote ./scratchpad instead of the session tmp dir)
+/scratchpad/
+
 # playwright
 .playwright-mcp/
 .playwright-cli/

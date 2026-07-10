@@ -17,6 +17,8 @@ Pass `-s="$S"` on EVERY command (incl. `run-code`/`eval`/`screenshot`) — a uni
 
 **NEVER persist `$S` to a shared/predictable scratchpad file** (e.g. a fixed `scratchpad/session` path). Keep `$S` in your shell env for the run, or hardcode the literal session string in each command. If you must write it to disk, use a path unique to your run (include `$S` in the filename).
 
+**Write ALL scratch to your absolute session scratchpad dir** (named in your prompt), never a bare relative `scratchpad/` — CWD is the repo root, so relative paths litter `userstyles/scratchpad/` into git. Only `themes/<site>/docs/` bundle files belong in the repo.
+
 ## The standard capture config
 
 `.playwright/cli.config.json` (tracked) sets `deviceScaleFactor:2`, `colorScheme:dark`, `viewport 1280×800`. Pass it to `open`:

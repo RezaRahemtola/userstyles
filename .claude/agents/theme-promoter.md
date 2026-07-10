@@ -28,7 +28,13 @@ You are given exactly one `<site>`. Steps:
         themes/<site>/docs/walkthrough.mp4 <url> [url ...]
    ```
    Read its header for the env knobs (`HEADED=1`, `CONSENT_SELECTOR`, `DISMISS_TEXT`, `HIDE_SELECTORS`, `BLOCK_EXTRA`).
-   **Then LOOK at the output.** Extract several frames (`ffmpeg -ss <t> -frames:v 1 out.mp4 f.png`) and confirm each shows YOUR site, themed. A well-formed H.264 of a bot-challenge page passes every automated check we have — our own theme paints Cloudflare's interstitial dark, so the brightness sweep reports clean. Check `document.title`, not luminance.
+   **Then LOOK at the output.** Extract several frames into a FRESH temp dir and confirm each shows YOUR site, themed. A well-formed H.264 of a bot-challenge page passes every automated check we have — our own theme paints Cloudflare's interstitial dark, so the brightness sweep reports clean. Check `document.title`, not luminance.
+   ```bash
+   D="$(mktemp -d)"   # fresh dir — no cleanup rm needed
+   for t in 2 6 10 14 18; do ffmpeg -y -i themes/<site>/docs/walkthrough.mp4 -ss "$t" -frames:v 1 "$D/f$t.png" >/dev/null 2>&1; done
+   ls "$D"   # then Read the frames
+   ```
+   **Never `rm -f $VAR/*.png`** (a glob under a shell variable): the sandbox treats a possibly-empty variable path as a dangerous delete and forces an interactive approval, which stalls the autonomous run. Extract into a `mktemp -d` dir (self-cleaning, no rm) or `ffmpeg -y` to overwrite fixed filenames — do not pre-delete a variable glob.
 
 6. **Refresh `themes/<site>/docs/listing.md`** only if the `@description` or feature set materially changed (≤160-char user-facing Description; no internal jargon).
 
