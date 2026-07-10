@@ -18,18 +18,47 @@ for f in "$user" "$org"; do
   [ "$o" = "$c" ] || { echo "FAIL: brace imbalance in $(basename "$f") ($o/$c)"; fail=1; }
 done
 
-# 2. .org.css sanitization
+# 2. .org.css sanitization — check CODE ONLY.
+#
+# Comments are stripped first. Grepping the raw file makes any comment that merely
+# NAMES a forbidden construct fail the gate: on 2026-07-10 a comment reading
+# "the previous :not(:has(iframe)) guard" failed sanitization on a file whose code
+# was clean, and a promoter (correctly) refused to stamp the bundle. The parser does
+# not care what a comment says; neither should this check.
+#
+# Line numbers are preserved by replacing each comment with an equal number of
+# newlines, so a real violation still reports its true line.
+strip_comments() {
+  perl -0777 -pe 's{/\*(.*?)\*/}{ my $c = $1; my $n = ($c =~ tr/\n//); "\n" x $n }ges' "$1"
+}
+org_code="$(strip_comments "$org")"
+
 bad='" i\]|:has\(|:is\(|:where\(|oklch|color-mix|@layer|@container'
-if grep -nE "$bad" "$org" >/dev/null; then
-  echo "FAIL: .org.css unsanitized syntax:"; grep -nE "$bad" "$org"; fail=1
+if printf '%s' "$org_code" | grep -nE "$bad" >/dev/null; then
+  echo "FAIL: .org.css unsanitized syntax:"; printf '%s' "$org_code" | grep -nE "$bad"; fail=1
 fi
-if grep -nE ':not\([^)]* [^)]*\)' "$org" >/dev/null; then
-  echo "FAIL: .org.css complex :not():"; grep -nE ':not\([^)]* [^)]*\)' "$org"; fail=1
+if printf '%s' "$org_code" | grep -nE ':not\([^)]* [^)]*\)' >/dev/null; then
+  echo "FAIL: .org.css complex :not():"; printf '%s' "$org_code" | grep -nE ':not\([^)]* [^)]*\)'; fail=1
 fi
 
 # 3. @version present in user.css only
 grep -qE '^@version' "$user" || { echo "FAIL: no @version in user.css"; fail=1; }
 grep -qE '^@version' "$org"  && { echo "FAIL: @version present in org.css"; fail=1; }
+
+# 3b. the CSS must actually PARSE.
+#
+# A rule can be present in the file and absent from the browser: a `*/` inside comment
+# prose truncates the sheet (ozon: 3 of 40 rules parsed), and a selector list mixing
+# ::-webkit- with ::-moz- is invalid in BOTH engines so the whole rule is discarded
+# (pepper's price-slider track). grep, brace balance and the mirror diff all pass on
+# these. Only the CSSOM knows. Skips silently if playwright isn't installed.
+if [ -f "$root/.claude/scripts/parse-check.js" ]; then
+  if ! node "$root/.claude/scripts/parse-check.js" "$site" >/tmp/parse-check-$$.txt 2>&1; then
+    echo "FAIL: $site has rules that do not survive the CSS parser:"
+    sed 's/^/      /' /tmp/parse-check-$$.txt
+    fail=1
+  fi
+fi
 
 # 4. bundle artifacts must exist
 if ! ls "$docs"/promo-*.png >/dev/null 2>&1; then
@@ -54,9 +83,18 @@ fi
 # in both directions: a comment/@version edit no longer invalidates 10 promos + a video,
 # and a rule edit can no longer hide behind a `touch`-fresh artifact.
 #
-# Themes bundled before .bundle-hash existed fall back to the mtime test and WARN.
+# A MISSING stamp is a hard FAIL. It used to WARN and fall back to an mtime test, so a
+# promoter that skipped its final step degraded the gate SILENTLY rather than loudly —
+# five did exactly that on 2026-07-10, and the mtime fallback passed several of them.
+# Every theme now carries a stamp, so the fallback is gone. `.bundle-hash` is the only
+# thing that certifies a bundle, and writing it must be the promoter's last action.
 hashfile="$docs/.bundle-hash"
-if [ -f "$hashfile" ]; then
+if [ ! -f "$hashfile" ]; then
+  echo "FAIL: no $docs/.bundle-hash — the bundle is NOT certified"
+  echo "      theme-promoter must write it as its LAST action:"
+  echo "        printf '%s\\n' \"\$(bash .claude/scripts/css-hash.sh $user)\" > $hashfile"
+  fail=1
+else
   cur="$(bash "$root/.claude/scripts/css-hash.sh" "$user")"
   rec="$(tr -d '[:space:]' < "$hashfile")"
   if [ "$cur" != "$rec" ]; then
@@ -66,14 +104,6 @@ if [ -f "$hashfile" ]; then
     echo "      → re-dispatch theme-promoter (promos + walkthrough.mp4)"
     fail=1
   fi
-else
-  echo "WARN: no $docs/.bundle-hash — falling back to mtime freshness (re-bundle to adopt content hashing)"
-  if ls "$docs"/promo-*.png >/dev/null 2>&1; then
-    for p in "$docs"/promo-*.png; do
-      [ "$user" -nt "$p" ] && { echo "FAIL: $site.user.css newer than $(basename "$p") — regenerate promos"; fail=1; }
-    done
-  fi
-  [ -f "$docs/walkthrough.mp4" ] && [ "$user" -nt "$docs/walkthrough.mp4" ] && { echo "FAIL: $site.user.css newer than walkthrough.mp4 — re-record it"; fail=1; }
 fi
 
 [ "$fail" = 0 ] && echo "OK: $site passes all gates"

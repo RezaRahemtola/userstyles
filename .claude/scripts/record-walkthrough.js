@@ -10,6 +10,8 @@
  *   BLOCK_EXTRA     extra regex source OR'd into the ad/tracker abort list
  *   SCROLL_STEPS    wheel steps per page (default 26)
  *   HEADED=1        launch headed (required for Cloudflare sites that block headless)
+ *   BYPASS_CSP=1    required where style-src blocks inline <style> (pypi.org): the node
+ *                   attaches, `styled` reports true, and the page still paints unstyled.
  *   CONSENT_SELECTOR / CONSENT_TEXT
  *                   click a consent button in the throwaway warm context so the accept
  *                   cookie lands in storageState. Without this the CMP modal re-opens in
@@ -46,6 +48,18 @@
  *    NOT help: the whole sheet is absent, not just the canvas colour.
  *    Measured on juejin with this pump: the first 12 frames sit at 28.7 grey mean, i.e.
  *    the document_start window is already dark.
+ *
+ * 4. Attaching at document_start puts our <style> FIRST, so the site's later sheets win
+ *    every equal-specificity `!important` tie (ties break on source order). The video then
+ *    shows a bug NO REAL USER HAS — `pw-inject.sh` (promos) and Stylus (users) both append
+ *    last. chefkoch: the site ships `.ds-bg-garlic { background-color: rgb(243,244,240)
+ *    !important }` and the theme ships the same selector with the same specificity; on film
+ *    the sponsored band rendered near-white with unreadable text, and the brightness sweep
+ *    (correctly) failed the take. Fix: `ensure()` re-appends the node whenever it is not
+ *    last in <head>, so our sheet always sits after the site's. Proven in-page: node last
+ *    -> rgb(28,33,40); node first -> rgb(243,244,240); re-appended -> dark again.
+ *    NOTE this also means a theme rule that only wins on source order is FRAGILE. The
+ *    recorder now matches production, but prefer raising specificity in the theme.
  *
  * ---------------------------------------------------------------------------
  * HOW TO VERIFY THE OUTPUT (do both — a well-formed webm of the wrong site looks fine)
@@ -191,6 +205,9 @@ async function isHardBlocked(pg) {
     recordVideo: { dir, size: { width: 1280, height: 800 } },
     colorScheme: 'dark',
     viewport: { width: 1280, height: 800 },
+    // BYPASS_CSP=1: sites whose style-src forbids inline <style> (pypi.org) attach the
+    // node but never apply it — `styled` reads true while every frame paints white.
+    ...(process.env.BYPASS_CSP ? { bypassCSP: true } : {}),
     // NO_STORAGE_STATE=1: some WAFs re-challenge a context that arrives carrying a
     // foreign cookie jar. Then hide the CMP via HIDE_SELECTORS instead of seeding consent.
     ...(process.env.NO_STORAGE_STATE ? {} : { storageState }),
@@ -207,12 +224,18 @@ async function isHardBlocked(pg) {
       try {
         const root = document.head || document.documentElement; // may be null at document_start
         if (root) {
-          const cur = document.getElementById(ID);
+          let cur = document.getElementById(ID);
           if (!cur || !cur.isConnected) {
-            const s = document.createElement('style');
-            s.id = ID;
-            s.textContent = cssText;
-            root.appendChild(s);
+            cur = document.createElement('style');
+            cur.id = ID;
+            cur.textContent = cssText;
+            root.appendChild(cur);
+          } else if (cur.parentNode !== root || cur.nextElementSibling) {
+            // KEEP OUR SHEET LAST — see defect 4. addInitScript runs at document_start, so
+            // our <style> lands BEFORE every stylesheet the site later adds. Where our rule
+            // and the site's have EQUAL specificity and both use !important, the tie breaks
+            // on SOURCE ORDER and the site wins. Moving an existing node does not re-parse it.
+            root.appendChild(cur);
           }
         }
       } catch (e) {}

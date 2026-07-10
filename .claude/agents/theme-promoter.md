@@ -42,6 +42,16 @@ You are given exactly one `<site>`. Steps:
    ```
    If the hashes differ, **do not write `.bundle-hash`** and do not claim success — report the race so the orchestrator can re-dispatch you against a quiet file. Writing the stamp is what certifies the bundle; it is your last action.
 
-9. **Gate:** run `bash .claude/scripts/verify-theme.sh <site>` and confirm exit 0. It compares `.bundle-hash` against the stylesheet's current rule content, so a bundle can only pass if it was captured from exactly the CSS on disk now.
+9. **Gate — this is your EXIT CONDITION, not a formality.** Run `bash .claude/scripts/verify-theme.sh <site>` and require exit 0. It compares `.bundle-hash` against the stylesheet's current rule content, so a bundle can only pass if it was captured from exactly the CSS on disk now.
 
-**Return:** the verify-theme.sh result, `H_PRE`/`H_POST` (and whether they matched), the list of promos you regenerated (+ which got an `-org.jpg`), which video frames you eyeballed, and any caveat (e.g. a WebGL/radar surface that blanks under headless and needs a headed capture). If you saw a rendering bug, describe it — **do not fix it**.
+   **You are not done until that command exits 0. Do not stop, and do not go idle, while it exits non-zero.** Run it, read every FAIL line, fix exactly what it names, run it again. Two promoters on 2026-07-10 ended their turn with a `WARN: no .bundle-hash` and several artifacts still older than the CSS — each believed it had finished. The gate had already told them otherwise.
+
+   Common FAIL lines and what they mean:
+   - `no .bundle-hash` → you skipped step 8. The stamp is what certifies the bundle.
+   - `<site>.user.css newer than promo-X.png` → you did not regenerate that promo. Reshoot it.
+   - `newer than walkthrough.mp4` → you did not re-record the video.
+   - `bundle is stale — rules changed since capture` → someone wrote the CSS while you worked. Report the race; do not stamp.
+
+   **If something genuinely blocks you** (a bot wall, a page that will not render), say so explicitly: name the artifact, name the obstacle, leave the old file in place, and report the gate as still failing. An unfinished bundle reported honestly is fine. An unfinished bundle reported as done is a defect laundered into a certification.
+
+**Return:** the verify-theme.sh result **and its exit code**, `H_PRE`/`H_POST` (and whether they matched), the list of promos you regenerated (+ which got an `-org.jpg`), which video frames you eyeballed and what they showed, and any caveat (e.g. a WebGL/radar surface that blanks under headless and needs a headed capture). If you saw a rendering bug, describe it — **do not fix it**.

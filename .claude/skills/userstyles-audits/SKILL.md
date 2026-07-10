@@ -25,6 +25,22 @@ It returns `{ url, counts, <14 bucket arrays>, summary }`. The buckets: `lightSu
 
 **A CLEAN RUN IS NOT EVIDENCE — it is the *start* of the review, never the end.** The scanner reads the DOM, not the pixels. Measured on the 2026-07-09 patrol: it returned `0/0/0` on slashdot's front page, story page and 404 while those three carried **six real bugs**, and on a genius 404 carrying a giant pure-black magnifier. Of slashdot's 13 confirmed bugs, exactly 2 were ever surfaced by a scan. Both ship-blockers of that entire patrol (genius blanking the lyrics column when an annotation opened; khan showing no indicator for the selected answer) were found by *looking at a rendered page*.
 
+## The semantic scanner — run this too
+
+`audit-theme.js` cannot see **semantics**. A `.button--danger` flattened to neutral grey, a stock gain and a stock loss painted the same grey, a selected tab that looks unselected — each is a legible dark control on a dark page, so every contrast and luminance threshold passes. This was the single dominant bug class across the 2026-07-09/10 patrols.
+
+```bash
+npx playwright-cli -s="$S" run-code --filename=.claude/scripts/audit-chroma.js
+```
+
+It snapshots the themed page, **detaches our sheet**, re-reads the native computed styles, restores the sheet, and diffs. Returns two buckets:
+- `flattened` — the site painted a chromatic colour and we collapsed it to grey/transparent. **A lost signal.** Ranked by how saturated the native colour was.
+- `painted` — the element was natively bare and we filled it (a blanket `* { border-color }` boxing in `border: 1px solid transparent` controls). Our deliberate dark chrome shows up here too — check each against the palette.
+
+Validated by known-answer test on sohu: against the pre-fix CSS it reported **7 flattened** hits naming `div.rate.stock-red`, `div.price.stock-red` and the green index; against the fixed CSS, **0**. It also caught a *half-applied* fix that had already shipped — `.rate.stock-red` was corrected while `.price.stock-red` beside it was still grey.
+
+**Limits:** it only sees the states currently rendered (open your flyouts first), and it cannot see `<canvas>` or SVG paint. A colour we *intentionally* re-tuned appears in `flattened` — verify each hit against the palette before "fixing" it.
+
 Three things it structurally cannot do, no matter how many buckets it grows:
 
 1. **It cannot see semantics.** A `.button--danger` flattened to neutral grey, a lost ad-disclosure tint, a disabled button that looks enabled — each is a legible dark control on a dark page, so every threshold passes. Catch these by reading the SITE's own stylesheet (`curl` it) and enumerating the modifier classes your rules may have swallowed.
