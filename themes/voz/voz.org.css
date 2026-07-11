@@ -837,8 +837,10 @@
     background-color: #0d1117 !important;
   }
 
-  /* Avatar / image wrappers (avoid white tiles behind images) */
-  .avatar,
+  /* Avatar / image wrappers (avoid white tiles behind images). Exclude the
+     letter avatars (.avatar--default--dynamic): their per-user inline
+     background-color IS the disc, with a matching dark letter colour. */
+  .avatar:not(.avatar--default),
   .avatarWrapper,
   .contentRow-figure,
   .structItem-iconContainer {

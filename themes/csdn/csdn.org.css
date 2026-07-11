@@ -586,7 +586,7 @@
   }
 
   /* Inline code inside prose. Written WITHOUT `:not(pre code)` — a complex
-     :not() is stripped from this file, so userstyles.org only ever received the
+     :not() is stripped from .org.css, so userstyles.org only ever received the
      `p code` / `li code` arms and left inline code in tables, headings and
      blockquotes unstyled. Matching every `code` under the article roots and then
      re-asserting the block appearance below is equivalent and survives sanitizing.
@@ -1122,6 +1122,14 @@
      The Q&A subdomain ships a light active channel pill, a white
      leaderboard header, and a selected filter tag whose dark text
      (driven by -webkit-text-fill-color) goes dark-on-dark. */
+  /* every channel-list row turns a light rgb(245,246,247) on :hover (audit-blind:
+     the light bg only exists while hovered, and each row is 160×32, under the big()
+     floor). Left the hovered row a bright light-grey box with pale text on dark.
+     Recolor the hover state to a dark tint; declared BEFORE .cur/.active (equal
+     specificity) so the selected row keeps its brighter active surface while hovered. */
+  .channelList li:hover {
+    background-color: var(--csdn-elev) !important;
+  }
   .channelList li.cur,
   .channelList li.active {
     background-color: var(--csdn-elev2) !important;

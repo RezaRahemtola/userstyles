@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Neoseeker Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.6
+@version        1.0.7
 @description    A clean dark theme for Neoseeker — easy-on-the-eyes walkthroughs, guides, cheats and FAQs, plus the home, game hubs, wikis, search and forums.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -499,12 +499,19 @@
        The band's `style` attribute is now WRITTEN BY the ad-shift script, which
      serializes the colour as `background: rgb(239, 239, 239)` — an attribute
      substring match on the hex silently stops matching. Match the rgb() form
-     too; the hex forms stay for the statically-authored slots. */
+     too; the hex forms stay for the statically-authored slots.
+       The game-hub description (`article#wiki-description`) embeds the SAME
+     `- Advertisement -` band, but that container is neither `#wiki-content` nor
+     `#mw-content-text`, so the band shipped as a bright #efefef panel (~740x373)
+     mid-hub. Cover it with the same three attribute forms. */
   #ad336_atf,
   div.alt,
   #wiki-content div[style*="#efefef"],
   #wiki-content div[style*="#EFEFEF"],
   #wiki-content div[style*="rgb(239, 239, 239)"],
+  #wiki-description div[style*="#efefef"],
+  #wiki-description div[style*="#EFEFEF"],
+  #wiki-description div[style*="rgb(239, 239, 239)"],
   #mw-content-text div[style*="#efefef"],
   #mw-content-text div[style*="#EFEFEF"],
   #mw-content-text div[style*="rgb(239, 239, 239)"] {
@@ -620,6 +627,17 @@
   .label,
   .badge {
     color: #ffffff !important;
+  }
+
+  /* The game-hub product-info well (`.well.product-info.well-dark`) heads each
+     field group with a GOLD `span.list-header` (#ffc40d) — the site accent that
+     sets "Release Dates"/"Developer"/… apart from the data rows beneath. Our
+     generic `span` text rule flattened it to grey, collapsing that hierarchy.
+     Restore the gold; scoped to the dark wells so it never lands on a light
+     surface (reads ~10:1 on our elevated well). */
+  .well-dark .list-header,
+  .product-info .list-header {
+    color: #ffc40d !important;
   }
 
   /* A badge/label whose content is a LINK: `a:link` (0,1,1) out-specifies

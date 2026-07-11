@@ -235,8 +235,14 @@
     color: var(--wu-text-muted) !important;
   }
 
-  /* Astronomy sunrise/sunset accent (#cc5500 / #e59900) -> readable amber. */
+  /* Astronomy sunrise/sunset accent (#cc5500 / #e59900) -> readable amber. WU now
+     colours these by CLASS (.sunrise-icon / .sunset-icon) instead of the old inline
+     style, so the [style*="204"] catch no longer matches and the generic .astro-data
+     grey lift flattened the sunrise/sunset TIMES to plain grey. Match the classes so
+     the amber reads; moonrise/moonset stay grey (they are natively grey). */
   .astro-data[style*="204"],
+  .astro-data.sunrise-icon,
+  .astro-data.sunset-icon,
   .sun-data,
   .moon-data {
     color: #ffb454 !important;
@@ -494,6 +500,22 @@
   .button:hover,
   a.button:hover {
     background-color: #2a93cf !important;
+    color: #ffffff !important;
+  }
+  /* Brand CTA buttons INSIDE a .data-module (e.g. health "Buy Your Sensor Now" and
+     "Learn more about air pollution") are flattened to a transparent fill by the
+     `.data-module *:not(img):not(svg):not(canvas):not(picture):not(.module-header)`
+     neutralizer, whose four element :not()s + .module-header put it at (0,2,4) --
+     it out-specifies the generic `.button` brand rule, so the cyan fill vanishes and
+     the button reads as bare white text with a thin border. Re-assert the brand fill
+     with a three-class prelude that clears (0,2,4). */
+  .data-module a.button.radius,
+  .data-module .content a.button,
+  .data-module .content .button,
+  .current-container .content a.button,
+  .list-container .content a.button {
+    background-color: #1f7fb8 !important;
+    border-color: #1f7fb8 !important;
     color: #ffffff !important;
   }
 
@@ -1215,5 +1237,16 @@
      all three swatches looked identically unselected. */
   .uv-index .skin-types li.active {
     border-color: #15aadc !important;
+  }
+
+  /* (e) wind-chill/heat "feels like" scale: a three-band bar reading cold DANGER
+     (blue gradient) -> OK (green) -> heat DANGER (orange gradient). The chill/heat
+     bands paint their gradients via background-IMAGE (untouched), but the middle
+     .scale-ok band is a solid green (#5b9f49) background-COLOR the `.data-module *`
+     neutralizer flattened to transparent -- leaving a dark gap where the "you're in
+     the safe zone" reading should be. Restore the green; this (0,3,0) prelude clears
+     the (0,2,4) blanket. */
+  .data-module .feels-like-scale .scale-ok {
+    background-color: #5b9f49 !important;
   }
 }

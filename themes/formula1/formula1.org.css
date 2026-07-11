@@ -358,6 +358,11 @@
   #f1-age-gate-modal li {
     color: #e6edf3 !important;
   }
+  /* The Terms/Cookie disclaimer fine-print is a bare <div> (not p/span/a), so it
+     slipped past the rule above and kept its hardcoded #606066 — dark-on-dark
+     (~1.5:1) once the panel went dark. Lift to a muted but legible grey; the
+     inline links keep their own light colour from the rule above. */
+  #f1-age-gate-modal div { color: #9aa4af !important; }
   [id*="onetrust"] .ot-sdk-container { color: #e6edf3 !important; }
 
   /* ====================================================================

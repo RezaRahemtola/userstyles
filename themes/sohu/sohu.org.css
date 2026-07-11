@@ -1358,6 +1358,23 @@
     background-image: none !important;
   }
 
+  /* Taboola's newer "reco-reel" widget ships its own CTA buttons: the bordered
+     "En savoir plus" (.video-cta-button) hardcodes black text, which lands
+     dark-on-dark on our darkened widget, and the "Discover" / "Read More" pills
+     (.tbl-rr-discover-button / .tbl-rr-read-more-button) ship a white
+     rgb(255,255,255) box with black text. Darken the white pills and lift every
+     CTA's text to the readable body color. */
+  .tbl-rr-discover-button,
+  .tbl-rr-read-more-button {
+    background-color: #262c33 !important;
+  }
+
+  .video-cta-button,
+  .tbl-rr-discover-button,
+  .tbl-rr-read-more-button {
+    color: #c8d0d9 !important;
+  }
+
   /* ============================================================
      Search results (search.sohu.com) — its own template:
      body.channel-index > .wrap-box, a white header band, white

@@ -201,6 +201,12 @@
     border-color: #2d333b !important;
   }
   .comment_message a { color: #5fb0e6 !important; }
+  /* Commenter online/offline status ships an inline `color:red` (Offline) /
+     `color:green` (Online). Our broad `#pageContent span` colour is !important and
+     outranks the inline pair, so the status flattened to the same grey as the meta
+     text, erasing the signal. Restore both with dark-friendly hues. */
+  #pageContent .comment_meta span.status[style*="color:red"] { color: #ff7b72 !important; }
+  #pageContent .comment_meta span.status[style*="color:green"] { color: #3fb950 !important; }
   /* speech-bubble pointer is a white raster triangle — tint it to the bubble color */
   .comment_graphic { filter: brightness(0.14) !important; }
   /* Commenters with no avatar get an opaque raster placeholder: a #c5c5c5 tile

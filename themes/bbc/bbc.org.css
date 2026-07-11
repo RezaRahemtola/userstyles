@@ -408,6 +408,15 @@
   [class*="HeaderWrapper"], [class*="HeaderWrapper"] div {
     background-color: transparent !important;
   }
+  /* The fixtures reset above matches PersistentHeaderWrapper too (substring
+     over-match): the position:fixed z-1004 live sticky header (LIVE dot,
+     "Watch as…" strip, Listen-live) is natively opaque rgb(24,24,24) but got
+     flattened to transparent, so the left-rail "Key moments" list bled through
+     and overlapped its text. Re-opaque it to a dark surface (source order
+     wins the equal-specificity tie against the reset). */
+  [class*="PersistentHeaderWrapper"] {
+    background-color: var(--ctp-mantle) !important;
+  }
   [class*="HeadToHeadWrapper"],
   [class*="StyledHeadToHead"] {
     background-color: var(--ctp-surface0) !important;
@@ -566,12 +575,52 @@
     background-color: var(--ctp-surface0) !important;
     color: var(--ctp-text) !important;
   }
+  /* The numbered page tiles inside the live-feed pagination are bare <a>s that
+     keep a hardcoded #f8f8f8 fill (40×40 → under the audit big() floor) — our
+     light number on it read white-on-white. Darken every tile; keep the
+     aria-current page a lighter surface so it still reads as selected. */
+  [class*="PageButtonContainer"] a {
+    background-color: var(--ctp-surface0) !important;
+    color: var(--ctp-text) !important;
+    border-color: var(--ctp-surface1) !important;
+  }
+  [class*="PageButtonContainer"] a[aria-current="page"] {
+    background-color: var(--ctp-surface1) !important;
+    color: var(--ctp-text) !important;
+  }
   /* Each live post wraps its title in a bare <header>, which our global
      masthead rule painted mantle → a dark band behind every post headline. */
   [class*="ContentPost"] header,
   [class*="PostWrapper"] header {
     background-color: transparent !important;
   }
+  /* Reader "Get Involved" comment bubbles (both news + sport live streams) ship
+     a solid #fff SpeechBubble with a downward #fff ::after tail, plus a #f8f8f8
+     reaction pill and a #f8f8f8 "Send us your…" uploader form. Our text rules
+     lightened the copy → light-on-white, unreadable, and the DOM-bg scan flags
+     the white panels. Darken the bubble (and its pseudo tail, which `*` never
+     reaches) and the pill/form. */
+  [class*="SpeechBubble"] {
+    background-color: var(--ctp-mantle) !important;
+    color: var(--ctp-subtext1) !important;
+    border-color: var(--ctp-surface0) !important;
+  }
+  [class*="SpeechBubble"] * { color: var(--ctp-subtext1) !important; }
+  [class*="SpeechBubble"]::after,
+  [class*="SpeechBubble"]::before {
+    border-top-color: var(--ctp-mantle) !important;
+    border-bottom-color: var(--ctp-mantle) !important;
+  }
+  [class*="PostReactionWrapper"],
+  [class*="UploaderWrapper"] {
+    background-color: var(--ctp-mantle) !important;
+  }
+  /* Live-match commentary timeline: the minute markers (StyledPeriod) and the
+     connecting VerticalLine ship BBC-Sport live teal #00ccc7; our generic text
+     rule + blanket `* { border-color }` flattened both to grey, dropping the
+     live cue. Restore the readable Mocha teal (matching the LivePulse). */
+  [class*="StyledPeriod"] { color: var(--ctp-teal) !important; }
+  [class*="VerticalLine"] { border-color: var(--ctp-teal) !important; }
 
   /* ---- Live MATCH page (ssrcss) ----
      A distinct surface from the live news stream above. Three solid light

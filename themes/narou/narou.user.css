@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Syosetu (Narou) Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.4
+@version        1.0.5
 @description    Comfortable dark theme for Syosetu (小説家になろう). Easy-on-the-eyes reading for novel chapters, plus the home, rankings, search and bookmark controls.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -739,10 +739,19 @@
   .c-novel-item__info {
     color: #c4cdd6 !important;
   }
+  /* The portal ranking cards (週間/短編ランキング, 更新された連載作品…) wrap the
+     WHOLE item in one <a> and render the title as a bare .c-novel-item__title
+     DIV nested inside .c-novel-item__info — so the `… a` form below is a no-op
+     there and the title inherited the info grey, flattening every ranking title
+     to plain body text (yomou's differently-marked ranking still shows orange).
+     Target the element itself so the title keeps the Narou orange; the ` a`
+     form stays for the list markup that does nest an anchor. */
+  .c-novel-item__title,
   .c-novel-item__title a {
     color: #f0954a !important;
   }
-  .c-novel-item__title a:hover {
+  .c-novel-item__title a:hover,
+  .c-novel-item:hover .c-novel-item__title {
     color: #ffb877 !important;
   }
 

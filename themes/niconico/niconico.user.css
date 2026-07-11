@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           niconico Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.7
+@version        1.0.8
 @description    A clean dark theme for niconico — easy on the eyes across home, videos, comments, rankings, search and profiles. Keeps the accent; thumbnails stay true.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -188,7 +188,56 @@
     background-color: #1a1a1a !important;
     border-color: #3a424c !important;
   }
-  [class*="menu-area"] { border-bottom-color: #262c33 !important; }
+  /* The divider between the card thumbnail and its info row is the menu-area's
+     border-TOP (#c4cdd6), not its bottom — the earlier bottom-only rule missed it,
+     so a bright light line ran across all 28 program cards. Soften every side. */
+  [class*="menu-area"] { border-color: #262c33 !important; }
+
+  /* Live (live.nicovideo.jp) program-card provider-type badges ("公式" / "CH").
+     The site colours them by data-provider-type — official = azure, channel =
+     gold — but our broad legacy `-label` text pass flattened both to the same
+     grey, erasing the official-vs-channel distinction. Restore the two type
+     colours (both clear AA on the badge's dark #1a1a1a pill). The tag prefix
+     lifts specificity to 0,1,1 so this beats the broad `[class*="-label"]`
+     flatten (0,1,0) that lands LATER in the file. */
+  span[data-provider-type="official"] { color: #559cff !important; }
+  span[data-provider-type="channel"] { color: #d9a300 !important; }
+
+  /* The nicoad-support point count ("22.6万") is painted gold to mark it as an
+     ad-support metric; the meta-grey pass flattened it to look like a plain view
+     count. Restore the gold, lifted to #d9a300 for AA on the dark card. Tag
+     prefixes beat the later `[class*="-count"]` grey rule on specificity. */
+  li[class*="nicoad-count"], li[class*="nicoad-count"] span { color: #d9a300 !important; }
+
+  /* The nicoad supporter strip ("提供：〇〇さん") is a 44%-white frosted caption bar
+     over the card with near-black text — on the dark card the white went muddy and
+     the #1a1a1a text read dark-on-dark. Repaint the strip to a dark frosted bar and
+     lift its text to a legible light. */
+  [class*="nicoad-frame"] [class*="message"] {
+    background-color: rgba(20, 24, 29, 0.6) !important;
+  }
+  [class*="nicoad-frame"] [class*="message"],
+  .advatisor, .advatisor [class*="name"] { color: #e6edf3 !important; }
+
+  /* Live (live.nicovideo.jp) watch page — the "ニコニ広告" and "ギフト" buttons in
+     the comment/interaction bar (and the program-application menu) default to a
+     solid #fff square, so two white tiles glared on the dark control bar. Their
+     glyph is a mask-image whose own background-color (#666) IS the fill. Repaint
+     the tile to a dark elevated surface and lift the glyph to a light fill —
+     darkening the glyph bg (the reflex for a "background") would erase it. */
+  button[class*="nicoad-button"], button[class*="gift-button"] {
+    background-color: #2d333b !important;
+  }
+  button[class*="nicoad-button"] [class*="symbol-mark"],
+  button[class*="gift-button"] [class*="symbol-mark"] {
+    background-color: #c4cdd6 !important;
+  }
+  /* The scheduled-program start-time pill ("5時間後 開始（10分前開場）") in the
+     player's watch-rejected overlay is a 90%-white badge with #252525 text — a
+     bright blob on the dark stage. Repaint it to a dark pill with a light label. */
+  [class*="watch-rejected"] [class*="value-area"] {
+    background-color: #2d333b !important; color: #e6edf3 !important;
+  }
 
   /* Live (live.nicovideo.jp) watch page — the "アニメ公式生放送タイムシフト
      ランキング" column (.official-live-ts-ranking) hardcodes a near-white
@@ -640,6 +689,14 @@
      them to the muted meta grey so the section markers stay readable. */
   .Timeline-divider, .Timeline-divider span,
   [class*="Timeline-divider"] { color: #8b949e !important; }
+  /* Ranking / recommendation "posted N ago" timestamps are painted with the
+     site's own --recentTimeColor (#e61a1a) to flag a RECENT upload — a real
+     signal. The broad `time { color:#8b949e }` meta rule above flattened all 51
+     of them to the same grey as every other date, erasing the distinction. The
+     class is a Panda atomic (c_[var(--recentTimeColor)]); restore the red,
+     lifted to the AA-clear #ff5c5c we use for the "lust" accent. Must stay AFTER
+     the meta grey rule (same specificity, later wins). */
+  [class*="recentTimeColor"] { color: #ff5c5c !important; }
 
   /* Active nav tab + internal accent links */
   .MainMenuItem.NC-Tab_active, .NC-Tab_active { color: #e6edf3 !important; }
@@ -647,6 +704,14 @@
   .UserDetailsStatusItem-linkLabel, a[class*="SubMenuLink"] {
     background-color: transparent !important; color: #5fb0e6 !important;
   }
+  /* The profile/mylist "サポート" button is an <a>, so the broad `.BaseUniLayout a`
+     grey rule (no !important, spec 0,1,1) flattened its label to #c4cdd6 — while
+     the "フォロー" button beside it is a <button> we never touch and kept the site's
+     blue. A blue star next to a grey "サポートする" read as broken. Restore the
+     site's blue on the whole support CTA so the pair matches (specificity + the
+     !important both beat the anchor rule and make it deterministic). */
+  a.CreatorSupportButton, a.CreatorSupportButton .CreatorSupportButton-text,
+  a.CreatorSupportButton .CreatorSupportButton-icon { color: #0080ff !important; }
 
   /* Search box (legacy header) */
   .SearchInput, .CrossSearch input, .SearchField input,

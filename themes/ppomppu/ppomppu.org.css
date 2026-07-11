@@ -84,6 +84,14 @@
     border-color: #2d333b !important;
   }
 
+  /* Ranked-keyword hover: the site highlights the hovered keyword row with a light
+     #f1f1f1 background, so on dark the hovered item shows a bright white band and
+     its light label washes out light-on-white. Hover-only, invisible to a
+     load-time scan. Darken the hover fill so the highlighted keyword reads. */
+  .hot-keyword-wrapper a:hover {
+    background-color: #21262d !important;
+  }
+
   /* ---- Nav / tab strips ---------------------------------------------------- */
   .nav,
   .post_nav,
@@ -124,6 +132,16 @@
     color: #e6edf3 !important;
   }
 
+  /* Sub-menu link hover: the site highlights the hovered forum link with a light
+     #f1f1f1 background (a subtle grey on the original white). On dark that hover
+     ships as a bright white band and our light label lands light-on-white =
+     unreadable. Hover-only, so no load-time scan sees it. Darken the hover fill so
+     the highlighted link reads. */
+  .top-nav .sub-menu a:hover,
+  #favorite-forum-panel a:hover {
+    background-color: #21262d !important;
+  }
+
   /* Mega-menu 분류 / ㄱㄴㄷ sort toggle: the SELECTED segment is `span.on`, which
      the site fills with its accent blue (#3a66a4) and white bold text. The
      generic `span.on` pill rule further down flattens it to a neutral dark chip,
@@ -157,6 +175,14 @@
   #navlist a mark {
     color: #5fb0e6 !important;
     background-color: transparent !important;
+  }
+
+  /* …but the "핫" half of that chip is a separate <em> the site paints pure red
+     (#ff0000) to flag the hot-deal filter, while "/인기" stays the blue above. The
+     generic body-text `em` rule flattens it to grey, so the two-state 핫/인기 toggle
+     loses its hot signal. Restore the refined report-red so 핫 reads warm. */
+  #navlist a mark em {
+    color: #ff7b72 !important;
   }
 
   /* Home 이슈 news-keyword chips (li.cate-keyword > a — the tappable person /
@@ -335,6 +361,20 @@
   thead th {
     background-color: #21262d !important;
     color: #e6edf3 !important;
+  }
+
+  /* Board-list status labels in the number column: the site marks 공지 (notice)
+     rows with a blue `#notice_con` label and 알림 (alert) rows with an orange
+     `#alert_con` label — the row-type signal. The generic body-text `span` rule
+     flattens both to the same neutral grey, so notice and alert become
+     indistinguishable. Restore each in the theme accent / warm accent. (Duplicate
+     IDs in the legacy markup — the selector matches every instance.) */
+  #notice_con {
+    color: #5fb0e6 !important;
+  }
+
+  #alert_con {
+    color: #f0883e !important;
   }
 
   /* Notice rows (lightly tinted) */
@@ -636,6 +676,15 @@
     background-color: #2d333b !important;
     color: #e6edf3 !important;
     border-color: #2d333b !important;
+  }
+
+  /* Post / comment pagination current page (font.page_inert — the non-linked
+     "you are here" number in .pagelist_han): the site paints it red to stand out
+     from the grey page links; the generic body-text `font` rule flattens it to the
+     same grey as the links, so the current page is no longer marked. Re-assert an
+     accent tone so the active page reads distinct from the neutral page links. */
+  font.page_inert {
+    color: #5fb0e6 !important;
   }
 
   /* List comment-count badge (span.baseList-c next to deal / board titles): the
@@ -997,6 +1046,31 @@
   .recommendArea,
   .topTitle-rec {
     color: #c4cdd6 !important;
+  }
+
+  /* Vote / recommend count numerals. The site colour-codes these across page types
+     to signal positive vs negative: the post recommend count (span.up-numb) is
+     blue; the search-result 추천 count (span.like) and news gain count
+     (span.gcon.up) are orange; the search 비추 count (span.dislike) and news loss
+     count (span.gcon.down) are blue. The generic body-text `span` rule flattens
+     every one to the same grey, erasing the up/down signal. Restore each in its
+     native hue, brightened for dark. */
+  span.up-numb,
+  span.gcon.down,
+  span.dislike {
+    color: #5fb0e6 !important;
+  }
+
+  span.like,
+  span.gcon.up {
+    color: #f0883e !important;
+  }
+
+  /* News-hub "HOT" flag (span.nav_hot_ico beside the ranked-post header and hot
+     tabs) is a red brand badge the site paints #e80505; the body-text rule drops
+     it to grey. Restore the refined red. */
+  .nav_hot_ico {
+    color: #ff7b72 !important;
   }
 
   /* Link blue used for in-content links / counts / comment counts / tabs

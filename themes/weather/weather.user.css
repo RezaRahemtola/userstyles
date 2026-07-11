@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Weather.com Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.6
+@version        1.0.7
 @description    A clean dark theme for weather.com. Darkens forecasts, charts, tables and menus while keeping radar maps, weather icons, alerts and temperature colors intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -449,6 +449,22 @@
   [style*="color: rgb(141, 141, 141)"] {
     color: var(--wx-text-muted) !important;
   }
+  /* the Sunrise / Sunset markers in the Hourly graph (and the Today outlook
+     strip) carry a SEMANTIC inline colour on both the label and its icon: a warm
+     burnt-orange rgb(37,36,34)-style sunrise (rgb(203,74,20)) and a dusky-mauve
+     sunset (rgb(163,81,112)). Our `.text-gray-900` !important rule flattened both
+     to plain light, so sunrise/sunset read like every other hour label and lost
+     the warm/cool signal. The native hues are too dark for our surface (~2.2:1),
+     so restore a LIGHTENED warm tint for sunrise and a cool mauve for sunset --
+     the icon fill is currentColor, so setting the colour recolours it too. */
+  [style*="color: rgb(203, 74, 20)"] {
+    color: #ec9a5c !important;
+    -webkit-text-fill-color: #ec9a5c !important;
+  }
+  [style*="color: rgb(163, 81, 112)"] {
+    color: #d891ac !important;
+    -webkit-text-fill-color: #d891ac !important;
+  }
 
   /* ---- Air Quality page (All Pollutants list + AQI status heading) ------ */
   /* The Air Quality page colors its key headings with a NEAR-BLACK Tailwind
@@ -820,6 +836,35 @@
   [role="menuitem"]:hover {
     background-color: var(--wx-surface-2) !important;
     color: var(--wx-text) !important;
+  }
+  /* the LEGACY header (radar / monthly / allergy / health pages) opens its
+     units + language/region picker from the "US °F" control as a full-width
+     ExpandableMenu that ships a WHITE panel (ExpandableMenu--inner). Its unit
+     tabs are already lifted light (so they read invisibly on the white panel)
+     and its region list ships 170+ near-black rgb(37,36,34) ListItem names plus
+     near-black expander/"Add" SVG icons -> the whole dropdown rendered as a
+     bright sheet of dark-on-white / light-on-white text. Darken the panel and
+     lift the near-black list text + icons; the active-unit tab keeps its light
+     underline (handled by the TabList--tabSelected rule above). The stable
+     module-name prefixes are matched by substring (only the build-hash rotates).
+     This ExpandableMenu is the legacy component only -- the new SPA header's
+     units popover is a Radix popper handled above, and its mobile nav drawer is
+     dark already, neither of which carries ExpandableMenu--inner. */
+  [class*="ExpandableMenu--inner"] {
+    background-color: var(--wx-surface) !important;
+  }
+  /* the panel is a neutral units/region/language picker with no semantic colours,
+     so lift ALL of its text + icons to readable body light: the region-section
+     headers (Disclosure--SummaryDefault) and expander "+" icons ship near-black
+     rgb(43,43,43), the country ListItem rows ship rgb(37,36,34), all dark-on-dark
+     once the panel is darkened. The active-unit tab is marked by its light
+     underline (TabList--tabSelected), not colour, so a blanket lift keeps it. */
+  [class*="ExpandableMenu--inner"] * {
+    color: var(--wx-text-2) !important;
+  }
+  [class*="ExpandableMenu--inner"] svg,
+  [class*="ExpandableMenu--inner"] svg * {
+    fill: var(--wx-text-2) !important;
   }
 
   /* ---- footer ----------------------------------------------------------- */

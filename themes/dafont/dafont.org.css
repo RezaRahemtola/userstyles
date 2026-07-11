@@ -45,6 +45,12 @@
      verbatim; the neutral #d4d4d4 stays the softened grey from the reset above. */
   div.thumb_cont[style*="#fc3"] { border-color: #fc3 !important; }
   div.thumb_cont[style*="#3d6"] { border-color: #3d6 !important; }
+  /* The .square swatches (forum-list legend + the per-page status boxes in the
+     pagination) repeat those same three hues, but as a BACKGROUND, not a border —
+     the reset above only softens borders, so the neutral #d4d4d4 swatch stayed a
+     bright light-grey square glaring on dark AND no longer matched its softened-grey
+     ring. Bring it in line; the two chromatic swatches keep their inline #fc3/#3d6. */
+  span.square[style*="#d4d4d4"] { background-color: #2d333b !important; }
 
   /* ---- Links ---- */
   a { color: #5fb0e6 !important; }

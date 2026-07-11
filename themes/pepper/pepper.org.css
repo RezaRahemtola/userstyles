@@ -363,6 +363,16 @@
      #f7641b fill only reaches ~3:1) -> dark text for a readable, on-brand chip */
   .circle--primary, .circle--primary * { color: #1a1205 !important; }
 
+  /* Red notification/alert count badge on the header bell (span.circle--alert).
+     The header layout blanket `header span[class] { background: transparent }`
+     (0,0,1,2) stripped its native red fill, so the indicator vanished. Restore a
+     vivid red dot; `header .circle--xxs.circle--alert` is (0,0,2,1) so it wins. */
+  header .circle--xxs.circle--alert,
+  .circle--alert {
+    background-color: #da3633 !important;
+    color: #ffffff !important;
+  }
+
   /* Active/selected segmented-control tab (e.g. "Auto"/sort segments, and the
      "Powiązane dyskusje" tab on a deal page). Natively it's a pale-peach bg
      (rgb(252,230,217)) + orange text; the dark equivalent is a dark brand-muted
@@ -538,12 +548,42 @@
     color: #e6edf3 !important;
   }
   .thread-title a:hover { color: #ffffff !important; }
-  /* Deal price (orange) + struck-through old price */
-  .thread-price, .threadItemCard-price, [class*="text-AccentPrice"] {
+  /* Deal price (orange) + struck-through old price.
+     `span.threadItemCard-price` raises specificity to (0,0,1,1): the deal-detail
+     card rule `[class*="threadItemCard"]` (0,0,1,0, later in source) was a
+     substring match on `threadItemCard-price` and greyed every price in the
+     "Podobne okazje" strip — this beats it so prices stay orange. */
+  .thread-price, .threadItemCard-price, span.threadItemCard-price,
+  [class*="text-AccentPrice"] {
     color: #ff8a4d !important;
   }
   .mute--text, .text--strikethrough, del, s {
     color: #8b949e !important;
+  }
+
+  /* Coupon-code "voucher" ticket (the dashed pill holding a copyable code like
+     "SLC26" beside "Pobierz kod"): its dashed BRAND-ORANGE border is the
+     copy-the-code affordance. The `* { border-color: #2d333b }` reset flattened
+     it to a plain grey box. `.voucher.border--dash` (0,0,2,0) restores the hue. */
+  .voucher.border--dash, div.aGrid.voucher {
+    border-color: #f7641b !important;
+  }
+
+  /* Rating stars (App Store / merchant ratings) are SVG <use href="…#star">
+     glyphs that paint from `color`/`fill`; a broad neutral rule greyed them so a
+     "4,6 ★★★★★" read as neutral grey stars. Keep them gold. */
+  svg.icon--star, svg.icon--star use,
+  .icon--star, .icon--star use {
+    color: #f3a21c !important;
+    fill: #f3a21c !important;
+  }
+
+  /* Active carousel-pagination dot (the "••••" nav on merchant/coupon rails)
+     is brand-orange natively; a neutral rule collapsed it to grey, erasing the
+     current-slide indicator. `.dot.color--graphic-AccentBrand` (0,0,2,0) wins. */
+  .dot.color--graphic-AccentBrand {
+    background-color: #ff8a4d !important;
+    color: #ff8a4d !important;
   }
 
   /* ============================================================
@@ -569,6 +609,15 @@
   .vote-temp--hot, .vote-temp--burn, .vote-temp-chip--hot { color: #f0857d !important; }
   .vote-box--muted .vote-temp { color: #9aa6b0 !important; }
   .vote-button, .cept-vote-button { color: #9aa6b0 !important; }
+  /* The two vote arrows carry the hot/cold affordance: "colder" (down) is blue,
+     "hotter" (up) is red — both coloured natively (the arrow glyph is an SVG
+     <use> whose fill = currentColor). The flat `.vote-button {color}` above
+     greyed both, so they read identically. Restore per mode; the icon selector
+     is (0,0,2,0) so it also beats the button-level grey via the glyph. */
+  .vote-button--mode-down, .vote-button--mode-down .vote-icon,
+  .cept-vote-button--mode-down { color: #5fb0e6 !important; }
+  .vote-button--mode-up, .vote-button--mode-up .vote-icon,
+  .cept-vote-button--mode-up { color: #f0857d !important; }
 
   /* ============================================================
      Buttons (secondary / shaped)

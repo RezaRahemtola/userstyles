@@ -856,6 +856,17 @@
     color: #8fdc9e !important;
   }
 
+  /* The count NUMBER inside the "answered" pill has its own
+     .s-post-summary--stats-item-number rule (muted grey) that beat the
+     green above, so the pill rendered a grey "1" next to a green "answer"
+     — the green signal only half-applied (the accepted pill's number was
+     already pinned white; this outline variant was missed). Lift the
+     number back to the pill's green so the whole pill reads as one. */
+  .s-post-summary--stats-item.has-answers:not(.has-accepted-answer) .s-post-summary--stats-item-number,
+  .s-post-summary--stats-item.has-answers:not(.has-accepted-answer) .s-post-summary--stats-item-unit {
+    color: #8fdc9e !important;
+  }
+
   /* Filter / sort tabs (segmented controls) */
   .s-btn-group .s-btn,
   .s-btn.s-btn__muted.s-btn__outlined,
@@ -1750,7 +1761,7 @@
   /* Hide blank ad slots so they don't leak white frames. `.js-ad-zone` is
      unconditional: a FILLED zone is covered by its own iframe, so a transparent
      parent is invisible there. The previous iframe-presence guard used a relational
-     selector, which sanitization strips from this file — so userstyles.org never
+     selector, which sanitization strips from .org.css — so userstyles.org never
      received that arm at all. (Measured 2026-07-10: `.js-ad-zone` currently matches
      0 elements on a live question page; `.js-zone-container` and
      `.everyonelovesstackoverflow` are natively transparent and 0px tall. This rule

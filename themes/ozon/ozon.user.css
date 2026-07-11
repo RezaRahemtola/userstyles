@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Ozon Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.3
+@version        1.0.4
 @description    A clean dark theme for Ozon: easy on the eyes across home, catalog, search, product pages and cart, with prices, ratings and the Ozon blue kept right.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -847,6 +847,17 @@
      raw brand blue #005bff (~2.9:1 on the base); lift to our blue. */
   [data-widget="contextQuestionsStatistic"] span {
     color: var(--d-blue) !important;
+  }
+
+  /* "Есть дешевле" cross-sell label (data-widget="webBestSeller") ships a
+     literal `color: rgba(0,26,51,.6)` navy on its descriptor span — ~1.1:1
+     on the base, so on dark the label went fully invisible while only its
+     "от 294 ₽" price (token-coloured, already light) remained. The navy is a
+     hardcoded literal the tokens never reach; lift the widget's text to the
+     muted scale so the label reads (the price stays legible muted grey, in
+     keeping with this compact secondary cross-sell). */
+  [data-widget="webBestSeller"] span {
+    color: var(--d-text-3) !important;
   }
 
   /* Carousel next/prev arrows float over the shelf as a disc painted

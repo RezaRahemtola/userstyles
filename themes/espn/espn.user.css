@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ESPN Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.7
+@version        1.0.8
 @description    Dark theme for ESPN (espn.com, espn.co.uk, espn.com.au, espn.in): dark homepage, sport sections, scores and stories, with team and score colors preserved.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -173,12 +173,16 @@
   .button--primary:hover, .Button--primary:hover { background-color: #e01b3c !important; }
   /* The neutral .button rule above swallows ESPN's filled brand CTAs, which are the
      ONLY thing separating a primary action from a dropdown pill. Restore them.
-     .button--flagship is the ESPN+ subscribe CTA (site: #3772df/white); on dark we
-     reuse ESPN's own [data-appearance="dark"] pairing (#588ae4 on near-black). */
-  .button.button--flagship {
+     .button--flagship WAS the ESPN+ subscribe CTA; the ESPN-on-Disney+ rebrand
+     renamed it to .button--disneyPlus-watch (site: #3772df/white) and left our
+     flagship rule matching nothing → the Subscribe conversion button shipped as an
+     anonymous grey pill beside Create Account / Log In. Cover both class names; on
+     dark we reuse ESPN's own [data-appearance="dark"] pairing (#588ae4 on near-black). */
+  .button.button--flagship, .button.button--disneyPlus-watch {
     background-color: #588ae4 !important; border-color: #588ae4 !important;
     color: #121213 !important; -webkit-text-fill-color: #121213 !important; }
-  .button.button--flagship:hover { background-color: #7aa1ea !important; }
+  .button.button--flagship:hover, .button.button--disneyPlus-watch:hover {
+    background-color: #7aa1ea !important; }
   /* Fantasy sign-up rail: already dark by design, with a per-sport brand fill on the
      first CTA and white-outline secondaries. We flattened all three to one grey pill. */
   .fantasySignupV2 .button {
@@ -251,6 +255,13 @@
   .clr-gray-01, .clr-gray-02 { color: #e6edf3 !important; } /* #151617 / darkest → primary text (numbers, names) */
   .clr-gray-03 { color: #c4cdd6 !important; }               /* #48494a → body */
   .clr-gray-04, .clr-gray-05 { color: #9aa4ae !important; } /* #6c6d6f → muted metadata (still ≥4.5 on cards) */
+  /* ESPN semantic colour utilities: .clr-negative (#dd0000 — live match minute on the
+     scoreboard, down movement, losses) and .clr-positive (green — up movement, wins)
+     are a live/gain-loss signal. The .ScoreCell__Time grey rule + generic text rules
+     flatten them to grey, so a live "71'" reads identical to a scheduled kickoff. Lift
+     both to readable-on-dark equivalents so the signal survives. */
+  .clr-negative { color: #ff5a5a !important; -webkit-text-fill-color: #ff5a5a !important; }
+  .clr-positive { color: #4ac76a !important; -webkit-text-fill-color: #4ac76a !important; }
   /* Module / section / panel titles ESPN colors with a dark grey (#2b2c2d) */
   .Stats__LeadersTitle, .Table__Title, .Card__Header__Title, .module-header,
   .headerCell__title, .pageHeader__title, .Wrapper__Header, .ContentList__Title,
@@ -672,6 +683,16 @@
   .bg-clr-gray-03, .bg-clr-gray-04, .bg-clr-gray-05 { background-color: #21262d !important; }
   .bg-clr-gray-06, .bg-clr-gray-07, .bg-clr-gray-08,
   .bg-clr-gray-09, .bg-clr-gray-10 { background-color: #1c2128 !important; }
+  /* Mobile hamburger flyout (#global-nav-mobile): the dark left icon rail is ul.tier-1
+     (rides the bg-clr-gray utilities above), but the sport-list panel that slides out
+     — ul.tier-2 (and the nested ul.tier-3 league list) — ships a solid WHITE panel.
+     Closed at load + only on a narrow viewport = audit-blind twice over. Dark the tier
+     panels + their rows; the sport links are already our readable blue. ---- */
+  #global-nav-mobile ul.tier-2, #global-nav-mobile ul.tier-3,
+  #global-nav-mobile ul.tier-2 li, #global-nav-mobile ul.tier-3 li {
+    background-color: #14181d !important; border-color: #262c33 !important; }
+  #global-nav-mobile ul.tier-2 a:hover, #global-nav-mobile ul.tier-3 a:hover {
+    background-color: #1c2128 !important; }
 
   /* ---- Taboola "why this ad" fade / popover panels are solid white and only exist
        once the widget's exclude control is used — invisible to a load-time scan. ---- */

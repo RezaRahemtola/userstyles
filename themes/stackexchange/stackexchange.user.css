@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           StackExchange Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.3
+@version        1.0.4
 @description    Dark theme for Stack Overflow and the whole Stack Exchange network: easy-on-the-eyes questions, answers, code blocks, comments and sidebar.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -861,6 +861,17 @@
   .s-post-summary--stats-item.has-answers:not(.has-accepted-answer),
   .status.answered {
     border-color: #2b6e44 !important;
+    color: #8fdc9e !important;
+  }
+
+  /* The count NUMBER inside the "answered" pill has its own
+     .s-post-summary--stats-item-number rule (muted grey) that beat the
+     green above, so the pill rendered a grey "1" next to a green "answer"
+     — the green signal only half-applied (the accepted pill's number was
+     already pinned white; this outline variant was missed). Lift the
+     number back to the pill's green so the whole pill reads as one. */
+  .s-post-summary--stats-item.has-answers:not(.has-accepted-answer) .s-post-summary--stats-item-number,
+  .s-post-summary--stats-item.has-answers:not(.has-accepted-answer) .s-post-summary--stats-item-unit {
     color: #8fdc9e !important;
   }
 

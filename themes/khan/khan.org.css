@@ -644,10 +644,28 @@
   /* Articles render their math through MathJax v3, which carries a highlight
      colour as an INLINE `color` on an <mjx-mstyle> and paints the glyphs in
      `mjx-c::before` pseudo-elements that inherit it — so neither the `mathcolor`
-     block above nor a text-colour audit of real elements sees it. Khan's purple
-     (#8351e8) lands at 3.66:1 on the dark page. Lift it to the same light purple
-     the worked-example set uses so the "this is the purple term" pairing holds. */
+     block above nor a text-colour audit of real elements sees it. This is the
+     inline-style twin of the `mathcolor` remaps above: the SAME worked-example
+     palette (the grey annotation label "Replace a with 1.", the muted
+     red/blue/green/purple term highlights) is emitted here as inline `color`
+     values, and left raw they land dark-on-dark (the grey annotation at ~2.8:1,
+     the blue variable term dimmer than the mathcolor path renders it). Remap each
+     inline value to the same light shade its `mathcolor` sibling uses so the
+     pedagogical colour pairing holds and the annotation stays legible. */
+  #main-content [style*="color: rgb(93, 95, 102)"] { color: #9aa4af !important; }
+  #main-content [style*="color: rgb(217, 41, 22)"] { color: #ff7b72 !important; }
+  #main-content [style*="color: rgb(61, 117, 134)"] { color: #6cb6d9 !important; }
+  #main-content [style*="color: rgb(12, 127, 153)"] { color: #6cb6d9 !important; }
+  #main-content [style*="color: rgb(17, 172, 205)"] { color: #79c0ff !important; }
+  #main-content [style*="color: rgb(32, 129, 112)"] { color: #7ee787 !important; }
+  #main-content [style*="color: rgb(13, 146, 63)"] { color: #7ee787 !important; }
   #main-content [style*="color: rgb(131, 81, 232)"] { color: #d2a8ff !important; }
+  #main-content [style*="color: rgb(120, 84, 171)"] { color: #d2a8ff !important; }
+  #main-content [style*="color: rgb(157, 56, 189)"] { color: #d2a8ff !important; }
+  #main-content [style*="color: rgb(202, 51, 124)"] { color: #ff8ac4 !important; }
+  #main-content [style*="color: rgb(224, 125, 16)"] { color: #f0a868 !important; }
+  #main-content [style*="color: rgb(68, 122, 83)"] { color: #7ee787 !important; }
+  #main-content [style*="color: rgb(178, 80, 113)"] { color: #ff8ac4 !important; }
 
   /* The "Level N … 0 /1 skill" mastery bar (shown above every article, video and
      exercise) puts its numerator in a <b>, which Khan hardcodes to the light-page

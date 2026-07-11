@@ -502,6 +502,19 @@
     color: #6fe3da !important;
     -webkit-text-fill-color: #6fe3da !important;
   }
+  /* The delivery pills sit under #mainContent / #searchmain-container, where the
+     blanket neutraliser (`#mainContent div`, 1,0,1) out-specifies the bare
+     [data-testid] fill above (0,1,0) and strips it to transparent — so on the
+     listing the badge lost its dark-accent pill and rendered as naked mint text
+     floating on the card photo (contrast then depends on the user's photo).
+     Re-assert the pill scoped under the page containers so it wins the cascade. */
+  #mainContent [data-testid="free-delivery-tag"],
+  #mainContent [data-testid="card-delivery-badge"],
+  #searchmain-container [data-testid="free-delivery-tag"],
+  #searchmain-container [data-testid="card-delivery-badge"] {
+    background-color: #103c3b !important;
+    border-color: #1fcabf !important;
+  }
 
   /* "Wyróżnione" (Featured/highlighted-ad) badge sits over the dark card
      thumbnail carrying its own near-black #02282c -webkit-text-fill token, so
@@ -943,10 +956,17 @@
      primary button; on our #1c2128 card it is a 1.3:1 slab with no visible
      edge, sitting right next to the mint "Pokaż". Give it the same accent fill
      as its twin in the right rail so the two contact CTAs match. */
+  /* The "Kup" safe-deal buy button ([data-testid="go-to-delivery-options"]) is
+     OLX's near-black #02282c primary — the STRONGEST CTA on the light site. On
+     our #1c2128 card that near-black sits at ~1.1:1, so the most important action
+     on the page rendered as a near-invisible slab that reads as disabled next to
+     the vivid teal message/call CTAs. It isn't in the accent group below, so give
+     it the same accent fill as the other purchase CTAs. */
   #mainContent [data-testid="ad-contact-message-button"],
   #mainContent [data-testid="ad-contact-phone"],
   #mainContent [data-testid="show-phone"],
   #mainContent [data-testid="chat-button"],
+  #mainContent [data-testid="go-to-delivery-options"],
   #mainContent [data-testid="phones-container"] button,
   #mainContent [data-testid="login-button"],
   #mainContent button[data-testid*="contact"] {
@@ -957,6 +977,7 @@
   #mainContent [data-testid="login-button"] span,
   #mainContent [data-testid="ad-contact-message-button"] span,
   #mainContent [data-testid="chat-button"] span,
+  #mainContent [data-testid="go-to-delivery-options"] span,
   #mainContent [data-testid="phones-container"] button span {
     color: #07232a !important;
     -webkit-text-fill-color: #07232a !important;
@@ -1059,6 +1080,34 @@
   .n-modal-portal [role="dialog"] [data-testid="ad-posted-at"] {
     color: #9aa6b0 !important;
     -webkit-text-fill-color: #9aa6b0 !important;
+  }
+  /* The lightbox also duplicates the offer's login-nudge + contact CTAs, but every
+     offer-page contact rule is #mainContent-scoped and this dialog lives in the
+     .n-modal-portal OUTSIDE #mainContent. So inside the lightbox the login card
+     kept its native OLX blue (#1d3c81) and the "Wyślij wiadomość" button its native
+     grey secondary fill — both glare on the dark lightbox. Mirror the offer
+     treatment for the portal so it matches the main page. */
+  .n-modal-portal [data-testid="ad-login-dialog"] {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+  /* Its prompt copy carries the near-black #14181d fill (designed for the light
+     card), so once the card goes dark it drops to ~1:1 — lift it like the offer
+     page does for #mainContent [data-testid="prompt-message"]. */
+  .n-modal-portal [data-testid="prompt-message"] {
+    color: #c4cdd6 !important;
+    -webkit-text-fill-color: #c4cdd6 !important;
+  }
+  .n-modal-portal [data-testid="ad-contact-message-button"],
+  .n-modal-portal [data-testid="chat-button"] {
+    background-color: #1fcabf !important;
+    color: #07232a !important;
+    border-color: #1fcabf !important;
+  }
+  .n-modal-portal [data-testid="ad-contact-message-button"] span,
+  .n-modal-portal [data-testid="chat-button"] span {
+    color: #07232a !important;
+    -webkit-text-fill-color: #07232a !important;
   }
 
   /* ============================================================

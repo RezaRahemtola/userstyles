@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Thingiverse Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.4
+@version        1.0.5
 @description    A full dark theme for Thingiverse — the feed, model pages, search and profiles in comfortable dark, while model previews and 3D renders stay true to color.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -197,6 +197,12 @@
   [class*="AuthCard__authCard"] {
     background-color: #1c2128 !important; }
   .gsi-material-button { background-color: #ffffff !important; }
+  /* AuthPage titles ("Welcome back!", "Continue with email") are drawn by
+     EntryView header/title classes in the site's dark-navy heading colour
+     (#12226b) — not h1-h6 and not token-driven, so they render dark-on-dark on
+     the now-dark card. Lift to the primary light ink. */
+  [class*="EntryView__header"], [class*="EntryView__introTitle"] {
+    color: #e6edf3 !important; }
 
   /* ====================================================================
      Semantic fills the neutralizer eats. `#react-app [class]` outranks every
@@ -221,6 +227,10 @@
 
   [class*="filterSectionIndicator"], [class*="detailSidebarButtonCounter"],
   [class*="indicatorBar"], [class*="Badge__primary"] { background-color: #2563c9 !important; }
+  /* Sort-bar "New" pill (marks the Fresh Makes tab): a filled brand-blue badge
+     with white text natively; the neutralizer ate the fill, leaving bare white
+     text with no pill, so the "new" emphasis is lost. */
+  [class*="SearchSort__newBadge"] { background-color: #2563c9 !important; color: #ffffff !important; }
   [class*="thingCardAIBadge"] { background-color: #6200ee !important; }
   [class*="PageHeader__counter"] { background-color: #ff385c !important; border-color: #ff385c !important; }
 

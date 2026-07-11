@@ -705,6 +705,19 @@
      hardcoded to the olive #595852 -> 2.5:1 on the dark page */
   spark-ad::before, spark-ad::after { color: #8b949e !important; }
   ins.adsbygoogle, [id^="google_ads"], [id*="div-gpt-ad"] { background-color: #14181d !important; }
+  /* mobile sticky "anchor" ad (Google DFP): the collapsible frame + its collapse
+     toggle carry an inline WHITE *shorthand* background (background: rgb(255,255,255)),
+     which the background-COLOR safety net at the foot of the file does not match, so
+     the frame band + toggle glare white on the dark page. Darken the frame like every
+     other ad surround — the ad iframe inside keeps its own creative. */
+  [id^="mob_anchor_ad"], [id^="box_anchor"], [id^="border_box_anchor"],
+  [id^="arrow_box_anchor"] {
+    background-color: #14181d !important;
+    border-color: #262c33 !important;
+  }
+  /* the collapse chevron is a CSS-border arrow; the blanket border rule greyed it to
+     #262c33, which vanishes on the now-dark toggle -> lift it to a light caret */
+  [id^="arrow_anchor"] { border-color: #c4cdd6 !important; }
   /* Taboola "Empfehlungen für dich" recommendation feed: its section header
      ("tbl-feed-header-text") ships hardcoded black and renders in the MAIN
      document (not an iframe) so it reads black-on-dark — lift to light. The

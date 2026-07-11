@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Genius Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.7
+@version        1.0.8
 @description    Turns Genius dark: lyrics, annotations, the homepage, artist and album pages, charts and search — with the familiar red accents and links kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -508,6 +508,13 @@
 
   /* periwinkle count chips: keep accent bg, dark label for contrast */
   .profile_contributions_group-count, .profile_contributions_group-count * { color: #14181d !important; }
+
+  /* legacy contribution vote score ("+1793" between the thumb buttons): the site paints
+     it green when net-positive and red when negative — a real sentiment cue. It carries
+     "square_button", so the neutral .square_button color rule above flattens both to grey
+     and the up/down signal is lost. Restore it, lifted for contrast on the dark card. */
+  .voting-total--positive, .voting-total--positive * { color: #3fb950 !important; }
+  .voting-total--negative, .voting-total--negative * { color: #f85149 !important; }
 
   /* legacy active header tab: yellow underline -> brand red */
   .header-primary.active, .header_with_login .active {

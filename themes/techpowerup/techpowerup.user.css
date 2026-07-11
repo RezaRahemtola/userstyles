@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           TechPowerUp Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.4
+@version        1.0.5
 @description    A clean, neutral dark theme for TechPowerUp — news, reviews, the GPU/CPU spec databases and forums, with readable tables and code, TPU blue intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1348,6 +1348,34 @@
   .message-name a,
   .username {
     color: #cfe2f3 !important;
+  }
+
+  /* XenForo colours usernames by member group — administrator red, moderator
+     blue, super-moderator green and a staff blue — through its own CSS vars.
+     The broad `span` / `.username` rules above flattened every group to one
+     grey, so a staff/mod name in the members-online list (a bare span, no title
+     beside it) read LESS prominent than a regular blue link. Re-assert the group
+     colours, reusing XenForo's vars so a config change carries through. */
+  .username--staff {
+    color: #79c0ff !important;
+  }
+
+  .username--style3 {
+    color: hsl(var(--xf-userTitleColorAdministrator)) !important;
+  }
+
+  .username--style4 {
+    color: hsl(var(--xf-userTitleColorModerator)) !important;
+  }
+
+  .username--style24 {
+    color: hsl(var(--xf-userTitleColorSuperModerator)) !important;
+  }
+
+  /* Thread-prefix labels ship a dark-navy plate with a coloured label; the broad
+     `label` rule greyed the "primary" (blue) variant's text into the plate. */
+  .label--primary {
+    color: #79c0ff !important;
   }
 
   .message-userTitle,

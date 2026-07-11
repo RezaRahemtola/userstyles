@@ -312,9 +312,13 @@
   [data-qa="title"], [data-qa$="-title"], [data-qa="company-header-title-name"],
   [data-qa="bloko-header-1"], [data-qa="bloko-header-2"], [data-qa="bloko-header-3"] {
     color: #e6edf3 !important; }
-  p, li, span, dd, dt, td, th, label, figcaption, time, small, b, strong, em,
+  p, li, span:not(.metro-point), dd, dt, td, th, label, figcaption, time, small, b, strong, em,
   div, [class*="magritte-text"] {
     color: #c4cdd6 !important; }
+  /* metro-line dots in vacancy addresses: an empty <span class="metro-point">
+     whose inline `color:#<line>` paints a ::before "●" in the Moscow/SPb metro
+     line colour. The blanket span rule above flattened every dot to grey,
+     erasing the line coding; excluding it lets the inline colour win. */
   /* secondary / muted text used widely (#768694, #6a7885, #aabbca, #1b1b1b legacy) */
   [class*="secondary"], [class*="muted"], [data-qa$="-secondary"],
   [data-qa="vacancy-serp__vacancy-address"], [data-qa="vacancy-label-remote"],
@@ -732,6 +736,7 @@
      pager into a row of identical chips and erased the "you are here" cue.
      Keep the links bare and give the selected page its own pill. */
   [class*="magritte-number-pages-wrapper"],
+  [class*="magritte-number-pages-container"],
   [class*="magritte-number-pages-item"],
   [class*="magritte-number-pages-ellipsis"],
   [class*="magritte-number-pages-action"] {

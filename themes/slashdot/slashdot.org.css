@@ -80,8 +80,15 @@
   h2.story a, .story a, .story-title, .story-title a,
   h2.story span, .story span.no,
   h2.firehose a, h2.firehose span.story-title { color: #e6edf3 !important; }
-  /* source link inside the green bar */
-  a.story-sourcelnk, .story-sourcelnk { color: #8fd9c8 !important; }
+  /* source link inside the green bar — the "(source.com)" flag that follows the
+     title. `h2.story a` / `h2.firehose a` above are (0,1,2) and outrank a bare
+     `a.story-sourcelnk` (0,1,1), so the link flattened to the same near-white as
+     the title on every card. Match the bar-scoped specificity so its distinct
+     teal survives (covers the submission page's .submission-sourcelnk too). */
+  a.story-sourcelnk, .story-sourcelnk,
+  h2.story a.story-sourcelnk, h2.firehose a.story-sourcelnk,
+  h2.story a.submission-sourcelnk, h2.firehose a.submission-sourcelnk,
+  .story a.story-sourcelnk, .story a.submission-sourcelnk { color: #8fd9c8 !important; }
 
   /* comment-count bubble */
   .comment-bubble { background: #0d1117 !important; color: #e6edf3 !important; }
@@ -402,7 +409,11 @@
   .bq *, blockquote.msg *, .msg, td, label, .legend, h3 {
     color: #c4cdd6 !important;
   }
-  .thisday-yr { background-color: #0a2826 !important; color: #cdd9d6 !important; }
+  /* the year column keeps a subtle teal accent (native #006666). The td-neutralizer
+     `table.thisday-tb td` (0,1,2) above outranks a bare `.thisday-yr` (0,1,0), so the
+     year cell flattened to the base grey; match its specificity to restore the tint. */
+  .thisday-yr,
+  table.thisday-tb td.thisday-yr { background-color: #0a2826 !important; color: #cdd9d6 !important; }
 
   /* comment-filter / "Comments Filter:" bar + its links */
   .commentControlBox, .commentControlBox *, #commentControlBox,

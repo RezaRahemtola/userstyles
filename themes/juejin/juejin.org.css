@@ -348,9 +348,16 @@
 
   /* Left category rail: the selected row keeps its blue-tinted `.active-nav` fill,
      but our blanket `.nav-item-text` literal remap greyed the label that native
-     paints #1e80ff — the tint alone read as a hover, not a selection. */
+     paints #1e80ff — the tint alone read as a hover, not a selection. The 热榜 page's
+     SUB-category rail (综合/后端/前端…) marks the selected row with `.active-sub-nav` /
+     `.router-link-exact-active` on a `.sub-nav-item` (NOT `.active-nav`), so the
+     generic `.nav-item-text` grey won there and the current category read identical
+     to its siblings — no selection indicator. Restore the accent for that state too. */
   .nav-item-content.active-nav .nav-item-text,
-  .active-nav .nav-item-text {
+  .active-nav .nav-item-text,
+  .sub-nav-item.active-sub-nav .nav-item-text,
+  .sub-nav-item.router-link-exact-active .nav-item-text,
+  .active-sub-nav .nav-item-text {
     color: #5fb0e6 !important;
   }
 
@@ -1318,6 +1325,19 @@
   .course-header .tag-item.active {
     background-color: #21262d !important;
     color: #e6edf3 !important;
+  }
+
+  /* The course-card "新品" badge is a `span.new-tag-wrap.tag` — a `.tag`, so the
+     blanket chip rule above flattened its native red (`--juejin-danger-1-normal`
+     #f64242) fill to the grey chip surface, erasing the "new" signal. It carries a
+     white label, so restore a deepened danger red (white reads 5.6:1, same move the
+     header HOT badge makes). Higher specificity than `.tag` so it wins outright. */
+  span.new-tag-wrap,
+  .new-tag-wrap.tag,
+  .new-tag-wrap {
+    background-color: #c62633 !important;
+    color: #ffffff !important;
+    border-color: transparent !important;
   }
 
   /* Booklet prices: `.price` keeps juejin's red (#f64242) but its `¥` sign is a
