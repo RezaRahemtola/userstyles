@@ -1207,6 +1207,26 @@
     color: var(--neo-text-2) !important;
   }
 
+  /* Postbit usergroup role labels/usernames. The site colours them to signal
+     authority (`.mod` #990000 "supermod", `.crs` #276a99 "quality team",
+     `.admin` #000066) — every one is dark-on-dark here, and our blanket
+     `b, strong { color }` rule flattened them all to plain light text, erasing
+     the staff/mod/admin distinction from the author column. Remap each to a
+     readable light tone that keeps its hue family (red / cyan / indigo). Scoped
+     to `strong` (the site's only carrier) so a generic `.mod`/`.admin` node on
+     another page is untouched. */
+  strong.mod {
+    color: #f08b80 !important;
+  }
+
+  strong.crs {
+    color: #5ccfe6 !important;
+  }
+
+  strong.admin {
+    color: #9db4ff !important;
+  }
+
   blockquote,
   .quote,
   .bbcode_quote,

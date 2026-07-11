@@ -1244,6 +1244,14 @@
   .c-panel__list-item:hover {
     background-color: #1c2128 !important;
   }
+  /* The レビュー作品 tag (.c-label--review) is a light #e9ecef pill whose label
+     inherits our body colour — light-on-light, glaring and unreadable. Darken it
+     to an elevated chip; the sibling status badges (連載 pink --long, 短編 blue
+     --short, masterpiece green outline) keep their own brand fills. */
+  .c-label--review {
+    background-color: #21262d !important;
+    color: #c4cdd6 !important;
+  }
 
   /* ============================================================
      Footer
