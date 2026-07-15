@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Vinted Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.6
+@version        1.0.7
 @description    A clean, modern dark theme for Vinted. Easy on the eyes across the homepage, search, item pages, profiles and filters — on every regional Vinted site.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -361,6 +361,13 @@
   .profile [class*="u-background-white"] > [class*="Cell__cell"],
   .profile [class*="Item__item"] [class*="Cell__cell"] {
     background-color: transparent !important; }
+  /* Each item card's favourite button is a `u-background-white` pill, so the
+     flatten above (specificity 0,2,0) strips it to transparent and the light
+     heart floats bare on the photo. Re-assert the dark pill on the profile
+     grid — ties the flatten's specificity but wins on source order, and the
+     --favourite testid never appears in the header. */
+  .profile [data-testid$="--favourite"] {
+    background-color: rgba(13, 17, 23, 0.55) !important; }
 
   /* ============================================================
      Footer

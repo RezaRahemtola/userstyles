@@ -449,6 +449,16 @@
   .menu-linkRow:hover {
     background-color: #232a33 !important;
   }
+  /* The style-variation chooser previews each variation by re-scoping the XenForo
+     palette on its rows, so the currently-selected row resolves
+     --xf-contentHighlightBg against the LIGHT variation (l=96%) and paints a
+     bright band our :root token override never reaches. Paint the selected row
+     directly; the VOZ-orange text stays as the "selected" signal. */
+  .menu-row.is-selected,
+  a.menu-linkRow.is-selected,
+  .menu-linkRow.is-selected {
+    background-color: #232a33 !important;
+  }
   .tooltip-content {
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.6) !important;
   }

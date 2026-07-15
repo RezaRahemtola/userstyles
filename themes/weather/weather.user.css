@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Weather.com Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.9
+@version        1.0.10
 @description    A clean dark theme for weather.com. Darkens forecasts, charts, tables and menus while keeping radar maps, weather icons, alerts and temperature colors intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -402,6 +402,17 @@
   .bg-muted,
   .bg-secondary,
   .bg-accent {
+    background-color: var(--wx-surface-2) !important;
+  }
+  /* the MOBILE header nav drawer paints each expanded section's sub-item list
+     (Weather Forecasts -> Today / Hourly / 10 Day, Radar & Maps -> ..., etc.) as a
+     `<ul>` carrying the Tailwind ARBITRARY class `bg-[#ebecee]` -- a light grey none
+     of the named `.bg-gray-*` utilities above match. Our link/text rules already lift
+     the sub-item labels (text-gray-*) to light, so on the #ebecee list they rendered
+     light-on-light (~1.3:1) and every expanded submenu was unreadable. Only appears
+     after a section is expanded on a narrow viewport, so a load-time scan never sees
+     it. Darken the list to the elevated surface; the lifted labels then read. */
+  [class*="bg-[#ebecee]"] {
     background-color: var(--wx-surface-2) !important;
   }
   /* the NEW SPA location-search flyout (the "New location selector") ends its

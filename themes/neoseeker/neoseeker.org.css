@@ -880,6 +880,23 @@
     background-color: transparent !important;
   }
 
+  /* The `.btn-primary *` / `.btn-info *` group above also carries
+     `border-color: #265572` (it tints nested spans), so it repaints a dropdown
+     button's `span.caret` — whose two side borders must stay transparent to
+     form the CSS triangle — and the arrow renders as a solid #265572 rectangle
+     ("Contribute" dropdown on every game hub). Re-assert the caret geometry;
+     `.btn-info .caret` (0,2,0) beats `.btn-info *` (0,1,1). White arrow to match
+     the button's white label. */
+  .btn-primary .caret,
+  .btn-info .caret,
+  .btn-success .caret,
+  .btn-danger .caret {
+    border-top-color: #ffffff !important;
+    border-right-color: transparent !important;
+    border-bottom-color: transparent !important;
+    border-left-color: transparent !important;
+  }
+
   .btn-primary:hover,
   .btn-info:hover {
     background-color: #387ba6 !important;

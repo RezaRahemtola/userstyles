@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           DaFont Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.7
+@version        1.0.8
 @description    A comfortable dark theme for DaFont. Font previews and character maps stay crisp and readable on the dark background, and the signature red is kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -59,6 +59,14 @@
      "solved" signal; keep the green edge (and its amber #fc3 twin, if present). */
   div[style*="solid #3d6"] { border-color: #3d6 !important; }
   div[style*="solid #fc3"] { border-color: #fc3 !important; }
+  /* The empty-state notice ("No font with the limits you chose:") on author/listing
+     pages is a bare inline-styled div framed top AND bottom with `10px solid #cc0000`
+     brand red. The blanket reset greys that frame, dropping the alert's entire visual
+     emphasis (its white bg is darkened and its heading stays salmon, but the box reads
+     as a flat dark strip). Give the red edge back, softened for dark. */
+  div[style*="solid #cc0000"], div[style*="solid #CC0000"] {
+    border-color: #b3322f !important;
+  }
   /* The .square swatches (forum-list legend + the per-page status boxes in the
      pagination) repeat those same three hues, but as a BACKGROUND, not a border —
      the reset above only softens borders, so the neutral #d4d4d4 swatch stayed a

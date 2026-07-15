@@ -835,6 +835,16 @@
     color: #ffffff !important;
   }
 
+  /* Severe-weather alert banner (.DF1 red / .DF2 orange / .DF3 amber / .DF4-5
+     grey) keeps its saturated severity background; WU paints ALL its text --
+     including the inline alert link (.alert-inner a) -- white on that band. Our
+     generic `a` lift repaints the "Heat Advisory (See More)" link the dark-page
+     link blue, which drops to ~1.9:1 on the amber/orange banners. Restore white. */
+  .alert-inner a,
+  .alert-wrapper .alert-inner a {
+    color: #ffffff !important;
+  }
+
   /* ---- wundermap page --------------------------------------------------- */
   /* #inner-wrap is a white page wrapper (flashes white while leaflet tiles
      load); the top ad slot (#top-banner-ad-browser) is a light-grey band; the
