@@ -430,14 +430,20 @@
      Newer consult-style boards (상담실 / 보험상담) ship the same labels under
      hyphenated IDs (#notice-icon / #alert-icon) instead of the underscore form,
      so they escaped the rule and rendered flat grey — cover both spellings. */
+  /* Both labels are outlined pills whose 1px border natively MATCHES their text
+     colour (blue for 공지, orange for 알림). The blanket `* { border-color }` reset
+     flattens that frame to the generic line grey, leaving a coloured label inside a
+     mismatched grey box, so re-assert the border to match the restored text. */
   #notice_con,
   #notice-icon {
     color: #5fb0e6 !important;
+    border-color: #5fb0e6 !important;
   }
 
   #alert_con,
   #alert-icon {
     color: #f0883e !important;
+    border-color: #f0883e !important;
   }
 
   /* Notice rows (lightly tinted) */

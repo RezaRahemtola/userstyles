@@ -125,6 +125,14 @@
   html, body { background-color: #14181d !important; color: #c4cdd6 !important; }
   #react-app, .react-app { background-color: #14181d !important; }
 
+  /* Cookiebot injects bare sync <iframe>s with no width/height set, so they
+     render at the browser default 304×154 with a 2px `inset` border drawn in
+     `currentColor`. Our light body `color` makes that default border glow as
+     two white boxes at the top of every page (native they inherit the site's
+     dark-navy text, so they hide against white). Mute the border to the page
+     background — the site's own consent DIALOG is left untouched. */
+  iframe.CybotCookiebotHiddenIframe { border-color: #14181d !important; }
+
   /* ====================================================================
      Content-area neutralizer — Thingiverse's React shell renders most
      panels, cards and bars through HASHED styled-component classnames

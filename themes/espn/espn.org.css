@@ -524,6 +524,25 @@
   .game-details.header.sm .cscore_notes_game {
     color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
 
+  /* ---- Live-game "AutoGameBlock" (.game-strip.live "LAST PLAY" panel on section
+       pages): the top team strip is themed via .game-strip, but the LAST PLAY sub-panel
+       ships a solid WHITE container + a white/#f1f2f3 image well with white MASK overlays
+       (fading a team-jersey watermark), and the play description hardcodes #1d1e1f via
+       .AutoGameBlock__Text (a class, so the inline-#1d1e1f catch-all misses it) → black
+       on white. Dark the panels; lift the play text. The "Last Play" title is already
+       our light heading colour. Audit-blind: each cell is <90px tall. ---- */
+  .AutoGameBlock, .AutoGameBlock--in, .AutoGameBlock__Body, .AutoGameBlock__Image,
+  .AutoGameBlock__Mask, .AutoGameBlock__Mask--opaque {
+    background-color: #1c2128 !important; border-color: #2d333b !important; }
+  .AutoGameBlock__Text { color: #c4cdd6 !important; }
+  /* Live-game clock in the strip header (.game-strip.live .game-time, "0:32 - 2nd") is
+     ESPN's live-red #dd0000 — the same in-progress signal the theme reds on the legacy
+     scoreboard (.cscore--live) and one-feed (.scoreEvent--live). Our a-span link rule
+     flattened it to blue, so a live game read identical to a scheduled kickoff. Scope to
+     .live so scheduled/final strips keep their neutral time. */
+  header.game-strip.live .game-time, .game-strip.live .game-time {
+    color: #ff5a5a !important; -webkit-text-fill-color: #ff5a5a !important; }
+
   /* ---- Next-gen "prism" design system (espnDS_v2): gamecast / match / newer layouts.
        Fully token-driven — remap surface tokens (white -> dark) and text tokens
        (dark -> light). Deploy-stable: targets the design-system theme wrappers, not
@@ -808,7 +827,9 @@
        this label native red #dd0000 to flag the currently-playing clip in a video rail;
        our generic li/span text rule flattened it to grey so it read as ordinary
        metadata. Restore the red state signal (matching the theme's clr-negative /
-       cscore--live live-red treatment). ---- */
-  .MediaList__item__playing {
+       cscore--live live-red treatment). .mediaList__phase is the LEGACY homepage
+       "Top Videos" rail's equivalent marker (span "Now Playing" inside an anchor, so
+       our a span blue rule — not the grey one — flattened it); same native #dd0000. */
+  .MediaList__item__playing, .mediaList__phase {
     color: #ff5a5a !important; -webkit-text-fill-color: #ff5a5a !important; }
 }

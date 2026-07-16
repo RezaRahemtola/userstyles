@@ -1021,6 +1021,21 @@
   [class*="LayerDetail--"]:not(a):not(button) {
     color: var(--wx-text) !important;
   }
+  /* ...but the InsightPanel :not(a):not(button) rule above (specificity 0,1,2 thanks to
+     its two :not()s) also swallowed the insight card's two SEMANTIC accents: the
+     alert warning icon is an <svg> that inherits currentColor from the amber
+     `InsightPanel--alertIcon` (#ffb900), and the "Read details" CTA is a <span>
+     (InsightPanel--alertsLink) coloured brand blue -- so the alert lost its amber
+     warning tint (rendered a neutral white circle-i) and the link lost its blue
+     affordance (plain white, inconsistent with the blue "...Alert until..." line right
+     above it). Restore both, scoped under npContainer (0,2,0) to out-rank the broad
+     rule; amber reads on the dark card, blue is the theme link. */
+  [class*="InsightPanel--npContainer"] [class*="InsightPanel--alertIcon"] {
+    color: #ffb900 !important;
+  }
+  [class*="InsightPanel--npContainer"] [class*="InsightPanel--alertsLink"] {
+    color: var(--wx-link) !important;
+  }
 
   /* The radar map's CONTAINER card now ships its white fill via a higher-specificity
      doubled-class Helios rule ([dir] .Wrapper--radarWrapper--<hash>.Wrapper--radarWrapper--<hash>

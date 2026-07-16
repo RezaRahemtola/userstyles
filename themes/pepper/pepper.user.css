@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pepper.pl Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.6
+@version        1.0.7
 @description    A clean, modern dark theme for Pepper.pl. Comfortable browsing across the deal feed, deal pages, coupons and search, with prices and deal heat kept clear.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -901,6 +901,14 @@
      a grey arrow. Scope the accent to chevrons INSIDE a brand link (1,0,2) so the
      two read as one control; standalone l2mvoc chrome icons stay neutral. */
   #__next a[class*="_188gvwx"] [class*="l2mvoc"] { color: #ff8a4d !important; }
+  /* "Czytaj więcej" SEO-text expand toggle (button.ekdzs0): its LABEL is a native
+     brand-orange button-color, but the trailing arrow-drop is an icon-FONT glyph in
+     the `l2mvoc` class, which our coupon icon rule `#__next [class*="l2mvoc"]` (1,0,1)
+     — and `.nalu span` on the merchant shell — greyed to #c4cdd6, so an orange
+     "Czytaj więcej" sat beside a grey arrow. Match the arrow to its label; the class
+     is unique to this toggle. (1,0,2)/(0,0,3) beats those rules. */
+  #__next button[class*="ekdzs"] [class*="l2mvoc"],
+  .nalu button[class*="ekdzs"] [class*="l2mvoc"] { color: #ff8a4d !important; }
   /* The white search field inside the coupons hero */
   #__next input { background-color: #21262d !important; color: #e6edf3 !important; }
 

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           niconico Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.10
+@version        1.0.11
 @description    A clean dark theme for niconico — easy on the eyes across home, videos, comments, rankings, search and profiles. Keeps the accent; thumbnails stay true.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -857,6 +857,13 @@
      lifted to the AA-clear #ff5c5c we use for the "lust" accent. Must stay AFTER
      the meta grey rule (same specificity, later wins). */
   [class*="recentTimeColor"] { color: #ff5c5c !important; }
+  /* The profile timeline stamps a RECENT activity's "N時間前" time with the site's own
+     #d0021b red (the `_new` modifier) to flag it as new; the meta-grey pass above
+     (which matches the base `-activityCreatedAt` class) flattened it to the same grey as
+     older entries, erasing the recency signal — the exact miss the recentTimeColor fix
+     corrects for the ranking timestamps. Restore the red, lifted to the AA-clear #ff5c5c.
+     Same specificity as the meta rule, so it must stay AFTER it (later wins). */
+  .TimelineItem-activityCreatedAt_new { color: #ff5c5c !important; }
 
   /* Active nav tab + internal accent links */
   .MainMenuItem.NC-Tab_active, .NC-Tab_active { color: #e6edf3 !important; }

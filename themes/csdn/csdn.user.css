@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           CSDN Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.8
+@version        1.0.9
 @description    Dark theme for CSDN (csdn.net & blog.csdn.net): comfortable dark articles, homepage and search, with fully dark code blocks and a readable syntax palette.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -943,6 +943,19 @@
     color: var(--csdn-link) !important;
     border-color: var(--csdn-border) !important;
   }
+  /* article aside "TA的精选" recommend-list badges (span.tag in .his-selection-box):
+     新 ships a solid brand-red rgb(252,85,49) pill and 热 a pale-pink rgb(255,238,234)
+     pill — both 19×17, under the audit big() floor. Our muted `.tag` rule greyed both
+     labels (grey-on-red for 新, and grey-on-pale-pink for 热 — the latter a bright
+     washed-out spot on dark). Keep 新's red pill with a white label; darken 热's pill to
+     a red tint with brand-red text. The (0,2,1)/(0,3,1) selectors beat the `.tag` rule. */
+  .his-selection-box span.tag {
+    color: #ffffff !important;
+  }
+  .his-selection-box span.tag.active {
+    background-color: rgba(240, 121, 92, 0.16) !important;
+    color: var(--csdn-red) !important;
+  }
   /* author-card "博客等级" blog-level badge (.profile-intro-name-leve) ships a
      light-grey rgb(245,246,247) pill; our lightened text then goes light-on-
      light (audit-blind: 84×21 pill). Darken it. */
@@ -973,11 +986,13 @@
     color: var(--csdn-text-2) !important;
     border-color: var(--csdn-border) !important;
   }
-  /* article aside "分类专栏" list: the "付费" paid marker (span.pay-tag) is a
-     brand-red rgb(252,85,49) label with a matching red border — the blanket text
-     rule greyed the label and `* { border-color }` greyed the border, erasing the
-     paid-content signal. Restore a dark-tuned brand red on both. */
-  span.pay-tag {
+  /* article aside "分类专栏" list: the "付费" paid marker is a brand-red rgb(252,85,49)
+     label with a matching red border — the blanket text rule greyed the label and
+     `* { border-color }` greyed the border, erasing the paid-content signal. On the
+     user profile / blog-home the same marker ships as a `div.pay-tag` (the article
+     aside variant is a `span`), so cover both tags. Restore a dark-tuned brand red. */
+  span.pay-tag,
+  div.pay-tag {
     color: var(--csdn-red) !important;
     border-color: var(--csdn-red) !important;
   }

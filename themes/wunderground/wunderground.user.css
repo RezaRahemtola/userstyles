@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Weather Underground Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.9
+@version        1.0.10
 @description    A clean dark theme for Weather Underground. Darkens forecasts, hourly and 10-day pages and data tables while keeping radar, maps and weather icons intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -870,6 +870,24 @@
   .layers-container .accordion-content,
   .accordion-content {
     background-color: var(--wu-surface) !important;
+  }
+  /* The redesigned layers/legend flyout no longer uses .accordion-content: its
+     body is now <ul.map-accordion> (WU's native #3d3d3d medium grey) inside
+     wm-layers/wm-legend, and each group header is a <span.section> band painted
+     WU's #696969 -- neither reached by the .accordion-content rule above, so the
+     whole panel shipped in native greys, lighter than the dark theme. Darken the
+     body to a card surface and the header bands to the elevated tone; the row
+     labels are already lifted to light text by the rules above. */
+  .map-accordion,
+  .menu-content .item-content,
+  wm-layers,
+  wm-legend {
+    background-color: var(--wu-surface) !important;
+  }
+  .map-accordion .section,
+  .menu-content .section {
+    background-color: var(--wu-surface-2) !important;
+    color: var(--wu-text) !important;
   }
   /* The Layers/Save Pref/Share/Settings/Legend rail gives EACH tab its own
      identity colour as a 3px left border, keyed by :nth-child (red, orange,
