@@ -5,6 +5,7 @@ node_modules/
 
 # internal process notes / specs
 docs/
+themes/*/publish.json
 .claude/registry/explored.md
 
 # review artifacts
