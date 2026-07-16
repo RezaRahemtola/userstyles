@@ -57,6 +57,8 @@ Dark themes and clean site redesigns for popular websites, published to [usersty
 | [Weather Underground Dark](themes/wunderground/wunderground.user.css) | wunderground.com  | [![Install](https://img.shields.io/badge/Install-238b8b)](https://raw.githubusercontent.com/RezaRahemtola/userstyles/main/themes/wunderground/wunderground.user.css)   |
 | [Weather.com Dark](themes/weather/weather.user.css)                   | weather.com       | [![Install](https://img.shields.io/badge/Install-238b8b)](https://raw.githubusercontent.com/RezaRahemtola/userstyles/main/themes/weather/weather.user.css)             |
 | [BBC Catppuccin Mocha](themes/bbc/bbc.user.css)                       | bbc.com           | [![Install](https://img.shields.io/badge/Install-238b8b)](https://raw.githubusercontent.com/RezaRahemtola/userstyles/main/themes/bbc/bbc.user.css)                     |
+| [Substack Dark](themes/substack/substack.user.css)                    | substack.com      | [![Install](https://img.shields.io/badge/Install-238b8b)](https://raw.githubusercontent.com/RezaRahemtola/userstyles/main/themes/substack/substack.user.css)           |
+| [itch.io Dark](themes/itchio/itchio.user.css)                         | itch.io           | [![Install](https://img.shields.io/badge/Install-238b8b)](https://raw.githubusercontent.com/RezaRahemtola/userstyles/main/themes/itchio/itchio.user.css)               |
 
 ## Maintainer automation
 
