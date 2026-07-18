@@ -293,6 +293,16 @@
      Soften those dividers to the standard dark component border. Scoped to the
      stable GA-namespace description class (the hashed sibling class is unstable). */
   .ga-ns-description div { border-color: #2d333b !important; }
+  /* Broadcasters author the program description as free HTML and commonly wrap
+     section headings in a light pastel pill (`<h2 style="background-color:#ffeaff">`
+     …「●プレゼントキャンペーン●」/「●出演●」…) that relies on the site's dark default
+     text. Our broad `[class*="-description"]` light-text pass reaches those spans, so
+     the heading rendered near-white on near-white (~1.4:1). Restore a dark label on any
+     description element that carries its OWN inline background — keeping the broadcaster's
+     colour and fixing the contrast — while the plain description body (no inline bg) keeps
+     the light text it needs on the dark page. Scoped to the live GA-namespace description. */
+  .ga-ns-description [style*="background-color"],
+  .ga-ns-description [style*="background-color"] * { color: #1a1a1a !important; }
 
   /* Live (live.nicovideo.jp) watch page — the player's "promotion panel"
      ("プレミアム会員になって番組をより高画質で見よう…") tags its row with an INFO
@@ -567,6 +577,17 @@
     background-color: #262c33 !important;
   }
 
+  /* live.nicovideo.jp listing cards — a SCHEDULED program's start-time badge
+     (.state, "○○開始") floats on the card thumbnail as a 90%-white pill that no
+     token reaches, so it glared as a bright blob over the dark card and its own
+     start-time read grey-on-white. Repaint the pill to a dark overlay and lift the
+     time to a light label; the child LIVE badge keeps its red. A LIVE-now card's
+     .state is sized exactly to that red badge (no exposed background), so the same
+     rule is invisible there — no need for a relational selector the .org.css
+     sanitizer would strip. */
+  .preview [class*="state___"] { background-color: rgba(20, 24, 29, 0.85) !important; }
+  .preview [class*="start-at___"] { color: #e6edf3 !important; }
+
   /* ---- TopPage (2026 home) surfaces the token/legacy passes miss ----
      The home "stage" paints a light faceted texture image behind the
      whole page — drop it so the dark base shows through. The pickup-live,
@@ -708,6 +729,18 @@
   .MylistSideContainer-infiniteList, .VideoSideContainer-infiniteList {
     background-color: transparent !important;
   }
+  /* The rail is an infinite-scroll list: only the loaded rows carry the site's own
+     transparent link surface; every not-yet-loaded row is a #f5f5f5 placeholder <li>
+     that the container reset above never reaches. Loading keeps pace with a slow
+     scroll, but jumping the rail's inner scrollbar into an unloaded region paints the
+     whole sidebar a solid white column until the labels arrive. Neutralise the row
+     placeholders too — the loaded rows are already transparent, so this only darkens
+     the skeleton state (the selected row's highlight lives on its anchor, untouched). */
+  .MylistSideContainer-infiniteList li, .VideoSideContainer-infiniteList li,
+  [class*="MylistSideContainer"] [class*="SubMenuLinkList"] li,
+  [class*="VideoSideContainer-seriesList"] li {
+    background-color: transparent !important;
+  }
   /* The "N件" count badge stamped on a mylist's thumbnail strip colours itself
      #252525 for the light theme; on the repainted dark strip it vanished. */
   .NC-MylistMediaObject-itemCount { color: #c4cdd6 !important; }
@@ -719,6 +752,12 @@
      the body text colour and the per-item timestamps to the standard meta grey. */
   .MylistHeader-metaItemValue { color: #c4cdd6 !important; }
   .MylistItemAddition-addedAt { color: #8b949e !important; }
+  /* A user page's 動画・シリーズ tab prints its total-count VALUE ("81" of "81件")
+     in the site's #555 — darker than its own grey unit, so the number read
+     dark-on-dark on the card while "件" beside it stayed legible. It is a plain
+     span the meta passes miss (the class carries "Count", not the "-count" the
+     grey rule matches). Lift it to the standard meta grey. */
+  .VideoContainer-headerTotalCountValue { color: #8b949e !important; }
   /* Each mylist item's owner memo ("EditableField") is a #f5f5f5 box with #252525
      text — a white note tile with dark text on every annotated item of a public
      mylist. Repaint the tile to an elevated surface and lift its text to a light. */
@@ -731,11 +770,25 @@
      opened sort list was light-grey-on-white, and the "2" / next-page tiles were
      white with near-invisible light labels. Repaint them to the input / elevated
      surfaces; keep the selected page a lighter chip so "which page" still reads. */
-  .MylistMenu .Selectbox-button { background-color: #0d1117 !important; color: #e6edf3 !important; }
+  /* The sort control is a `.Selectbox-button` with a #fff fill and #fff label
+     (white-on-white); the site uses it on the mylist AND on a user page's
+     動画・シリーズ tab (.VideoContainer-headerMenu) and its シリーズ sub-list. The
+     old `.MylistMenu` scope missed the VideoContainer copies, so those sort pills
+     shipped as bright white boxes with an invisible label. Drop the scope — the
+     class is only ever this legacy white sort pill (the modern search/ranking sort
+     is a Panda token control, not `.Selectbox-button`). */
+  .Selectbox-button { background-color: #0d1117 !important; color: #e6edf3 !important; }
   .SortSelectbox { background-color: #1c2128 !important; border-color: #2d333b !important; }
   .SortSelectbox-item:hover { background-color: #262c33 !important; }
   .PaginationItem { background-color: #1c2128 !important; border-color: #2d333b !important; }
   .PaginationItem_selected { background-color: #3a424c !important; color: #e6edf3 !important; }
+  /* The series page's own pager is a DIFFERENT component (NC-PaginationItem, in the
+     SeriesDetailContainer header AND footer) that the .PaginationItem rule never
+     reached: every inactive page disc kept a #fff fill, so "2 / 3 / >" rendered as
+     white tiles with a near-invisible light label. The selected disc is a native #505050
+     that already reads on dark. Match the mylist pager treatment. */
+  .NC-PaginationItem { background-color: #1c2128 !important; border-color: #2d333b !important; }
+  .NC-PaginationItem_selected { background-color: #3a424c !important; color: #e6edf3 !important; }
   /* The mylist header's bottom separator is a #ddd ::after bar (same pattern as the
      series / profile header dividers already softened below). */
   .MylistHeader::after { background-color: #262c33 !important; }

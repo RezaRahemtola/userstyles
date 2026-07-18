@@ -1324,11 +1324,20 @@
   }
   /* The レビュー作品 tag (.c-label--review) is a light #e9ecef pill whose label
      inherits our body colour — light-on-light, glaring and unreadable. Darken it
-     to an elevated chip; the sibling status badges (連載 pink --long, 短編 blue
-     --short, masterpiece green outline) keep their own brand fills. */
+     to an elevated chip; the sibling filled badges (連載 pink --long, 短編 blue
+     --short) keep their own brand fills. */
   .c-label--review {
     background-color: #21262d !important;
     color: #c4cdd6 !important;
+  }
+  /* The 代表作 badge (.c-label--masterpiece) is the lone OUTLINE label — a
+     transparent chip whose identity is its green #0ca678 border + matching
+     text, not a fill. The blanket `* { border-color }` reset flattened the
+     border to the dark divider grey, so beside the crisp filled pink/blue
+     status pills it read as an unframed floating label. Restore the green
+     edge (the text is already green) so the outlined chip reads again. */
+  .c-label--masterpiece {
+    border-color: #0ca678 !important;
   }
 
   /* ============================================================
@@ -1475,6 +1484,21 @@
     border-color: #2d333b !important;
   }
   .fc-consent-root .fc-faq-header .fc-faq-icon svg {
+    fill: #c4cdd6 !important;
+  }
+  /* The compact "choice" dialog variant (.fc-choice-dialog, served on some
+     visits instead of the full modal) frames its close button in a header
+     strip painted rgba(255,255,255,.9) — a bright white bar across the top of
+     the otherwise-dark dialog — and the close × sits on a white #fff cutout
+     disc with a grey #5f6368 glyph. The first-dialog rules key on
+     .fc-dialog-header / .fc-cutout defaults and never reach this variant. The
+     CMP's own rules are .fc-consent-root .fc-choice-dialog-header /
+     .fc-cutout-background (0,2,0 !important), so qualify one level deeper to win. */
+  .fc-consent-root .fc-choice-dialog .fc-choice-dialog-header,
+  .fc-consent-root .fc-close .fc-cutout-background {
+    background-color: #1c2128 !important;
+  }
+  .fc-consent-root .fc-choice-dialog-header .fc-close svg {
     fill: #c4cdd6 !important;
   }
   /* The dialog's body copy is painted by the CMP's OWN high-specificity

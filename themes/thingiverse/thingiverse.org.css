@@ -131,7 +131,8 @@
      two white boxes at the top of every page (native they inherit the site's
      dark-navy text, so they hide against white). Mute the border to the page
      background — the site's own consent DIALOG is left untouched. */
-  iframe.CybotCookiebotHiddenIframe { border-color: #14181d !important; }
+  iframe.CybotCookiebotHiddenIframe,
+  iframe.CybotCookiebotOffscreenIframe { border-color: #14181d !important; }
 
   /* ====================================================================
      Content-area neutralizer — Thingiverse's React shell renders most

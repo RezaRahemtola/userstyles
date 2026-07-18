@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Investopedia Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.6
+@version        1.0.7
 @description    A complete dark theme for Investopedia — definitions, guides, search and the homepage in a comfortable dark look, with charts and finance colors kept clear.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -454,6 +454,26 @@
     color: #8f9dfb !important;
     -webkit-text-fill-color: #8f9dfb !important;
   }
+  /* "Top Stories" ticker kicker above the article's related-stories strip: a real
+     .carousel-preheading element the site paints brand indigo rgb(44,64,208) as a
+     kicker. The blanket body rule flattens it to grey, so it reads as plain label
+     text and loses the eyebrow identity every other kicker keeps. */
+  .carousel-preheading, li.carousel-preheading, .comp.carousel-preheading {
+    color: #8f9dfb !important;
+    -webkit-text-fill-color: #8f9dfb !important;
+  }
+  /* Category-hub "five-post" featured-module heading ("A Beginner's Guide to
+     Investing"). The site marks it with a highlight box painted the recurring
+     brand light-blue — here as rgba(197,220,255,.5), so its alpha slips the
+     light-surface audit while every solid rgb(197,220,255) box the theme meets
+     (keyterms nav, newsletter link) is darkened. Left alone it renders a pale
+     lavender slab floating on the dark hero. Remap to a subtle periwinkle-tinted
+     box so the highlight identity survives on dark. */
+  .mntl-five-post__title, h2.comp.mntl-five-post__title {
+    background-color: rgba(143, 157, 251, 0.16) !important;
+    color: #e6edf3 !important;
+  }
+
   /* Key-term carousel card: the "DEFINITION" kicker is a ::after label painted
      rgba(0,0,0,.65) — 1.3:1 on the dark card, and pseudo-element text is invisible
      to the color audit. */
@@ -1066,6 +1086,16 @@
     color: #c4cdd6 !important;
   }
 
+  /* Mid-article "Related Articles" recirculation module heading. It is a
+     .mntl-text-block (not a .mntl-block), so the layout-wrapper neutralizer never
+     reached it, and the site paints its own background pure WHITE — our heading
+     rule then puts white text on it, so the "Related Articles" label renders
+     white-on-white and vanishes. Only its cards below are dark. Clear the surface
+     so the dark body shows through and the (light) heading reads. */
+  .midcirc__heading, .comp.midcirc__heading, [id^="midcirc__heading"] {
+    background-color: transparent !important;
+  }
+
   /* ====================================================================
      Buttons / CTAs (refined Investopedia blue)
      ==================================================================== */
@@ -1216,6 +1246,21 @@
   }
   hr, .divider, .mntl-divider { border-color: #2d333b !important; background-color: #2d333b !important; }
   ::selection { background-color: #2563a8 !important; color: #ffffff !important; }
+
+  /* Breaking/"LIVE" coverage badge (homepage + article live blogs). The site
+     paints a vermilion rgb(200,13,0) dot + "LIVE" label to signal live coverage.
+     The dot is a bare .mntl-block, so the layout-wrapper transparent neutralizer
+     at the top blanked it, and the blanket body rule flattened the label to white
+     — the whole breaking-news red signal is lost with no contrast gate to catch
+     it. Restore a lifted vermilion that keeps the identity and reads on dark. */
+  .live-coverage-icon__dot, div.live-coverage-icon__dot {
+    background-color: #ff5c52 !important;
+  }
+  .live-coverage-banner__text, .live-coverage-button__text,
+  div.live-coverage-banner__text, div.live-coverage-button__text {
+    color: #ff5c52 !important;
+    -webkit-text-fill-color: #ff5c52 !important;
+  }
 
   /* Semantic finance colors — keep green up / red down readable on dark */
   .is-positive, .positive, .up, .gain, .price-up, [class*="--positive"],

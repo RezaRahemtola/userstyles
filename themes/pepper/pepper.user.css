@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Pepper.pl Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.7
+@version        1.0.8
 @description    A clean, modern dark theme for Pepper.pl. Comfortable browsing across the deal feed, deal pages, coupons and search, with prices and deal heat kept clear.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -682,11 +682,35 @@
     color: #e6edf3 !important;
     border-color: #2d333b !important;
   }
+  /* The sidebar-widget sort dropdowns ("Popularne ▾" on the "Do obejrzenia" /
+     "Dyskusje" rails) are a `.plainSelect` whose brand-orange affordance is the
+     `color--text-AccentBrand` utility. Its visible label sits in a
+     `.plainSelect-fake` child carrying `box--all-b`, and the wrapper itself
+     carries `lbox--v-1` — both match the deal-detail blanket
+     `main [class*="box--"]` (0,0,1,1, !important), which greyed the label + caret
+     to neutral, so a branded sort control read as inert grey. Restore the accent
+     on the control, its fake label and the caret glyph. */
+  .plainSelect.color--text-AccentBrand,
+  .plainSelect.color--text-AccentBrand .plainSelect-fake,
+  .plainSelect.color--text-AccentBrand select {
+    color: #ff8a4d !important;
+  }
+  .plainSelect.color--text-AccentBrand svg,
+  .plainSelect.color--text-AccentBrand use {
+    color: #ff8a4d !important;
+    fill: #ff8a4d !important;
+  }
   /* Checkbox + radio surfaces */
   input[type="checkbox"], input[type="radio"] {
     background-color: #21262d !important;
     border-color: #3a424c !important;
   }
+  /* Selected filter radio (search sidebar): the checked `.radio-icon` shows an
+     orange RING as its selected affordance. The `* { border-color: #2d333b }`
+     reset greyed that ring so a selected option's outer edge read the same as an
+     unselected one (only the inner dot still differed). Restore the orange ring on
+     the checked radio; `.radio-input:checked + .radio-icon` (0,0,2,0) beats `*`. */
+  .radio-input:checked + .radio-icon { border-color: #f7641b !important; }
   /* ---- Price range slider (Cena) ----
      Markup: a .rangeSlider-container holds two <input type=range>
      (.rangeSlider--from / --to) overlaid on .rangeSlider-line (the visual
@@ -757,6 +781,11 @@
     color: #c4cdd6 !important;
   }
   .userHtml a { color: #5fb0e6 !important; }
+  /* StatusInfo callout (e.g. deal-expiry "Ta okazja kończy się…"): the container
+     paints info-blue text + muted-blue bg, but `.userHtml *` greyed the message,
+     leaving a blue icon beside grey text. Keep the info-blue on its inner userHtml. */
+  .color--text-StatusInfo .userHtml,
+  .color--text-StatusInfo .userHtml * { color: #5fb0e6 !important; }
   /* Comments / discussion */
   .comment, .cept-comment, [class*="comment--"] {
     background-color: #1c2128 !important;
@@ -1086,6 +1115,34 @@
     color: #ff8a4d !important;
   }
   .nalu a[class*="_188gvwxj"] { border-color: rgba(247, 100, 27, 0.5) !important; }
+  /* The "offer-verified" seal beside the "Kod"/"Promocja" tag is a single-colour
+     icon-font glyph (a `l2mvoc` child of the `_1bnyxcg` wrapper) painted brand
+     orange natively. The wrapper rule above lights the wrapper, but the coupon
+     icon rule `#__next [class*="l2mvoc"]` / `.nalu span` greyed the actual glyph,
+     so the seal shipped neutral grey instead of orange. Match the glyph to the
+     wrapper on both the merchant shell and the /kupony listing. */
+  .nalu [class*="_1bnyxcg"] [class*="l2mvoc"],
+  #__next [class*="_1bnyxcg"] [class*="l2mvoc"] {
+    color: #ff8a4d !important;
+    fill: #ff8a4d !important;
+  }
+  /* "CASHBACK" offer-type badge (`e1pdso0` variant of the `_1l9o1jz` tag): unlike
+     the "Kod"/"Promocja" tags — an outlined icon + orange TEXT — cashback offers
+     ship a SOLID orange PILL with a dark label + icon, a more prominent highlight.
+     The `.nalu div { background: transparent }` neutralizer blanked the fill and
+     the `_1l9o1jz` colour rule painted the label orange, so it collapsed to plain
+     orange text and lost the filled-badge distinction. Restore the orange pill +
+     dark label/icon on both the merchant shell and the /kupony listing. */
+  .nalu [class*="e1pdso0"], #__next [class*="e1pdso0"] {
+    background-color: #ff8a4d !important;
+    border-radius: 10px !important;
+  }
+  .nalu [class*="e1pdso0"], .nalu [class*="e1pdso0"] *,
+  #__next [class*="e1pdso0"], #__next [class*="e1pdso0"] * {
+    color: #1a1205 !important;
+  }
+  .nalu [class*="e1pdso0"] svg, .nalu [class*="e1pdso0"] svg *,
+  #__next [class*="e1pdso0"] svg, #__next [class*="e1pdso0"] svg * { fill: #1a1205 !important; }
 
   /* Header nav pills on the merchant coupon shell (Kategorie / Kupony /
      Za darmo / Okazje / Dyskusje / Club): these pages render the header with a

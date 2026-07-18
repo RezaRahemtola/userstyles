@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Divar Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.6
+@version        1.0.7
 @description    A sleek dark theme for Divar — easy on the eyes for late-night browsing, with the familiar Divar red kept intact. Homepage, listings and post pages.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -829,13 +829,20 @@
   }
 
   /* ---- Mapbox GL basemap ----
-     Divar's Mapbox GL map (the large left-hand slab on the map-search view) now
-     honours `color-scheme: dark` and renders a NATIVE dark basemap on its own
-     <canvas> — dark land, blue roads, green parks, red price-cluster pins. So we
-     must NOT touch it: an `invert()` filter would flip that already-dark map back
-     to a bright light slab. Leave the GL canvas alone. (The post-detail STATIC
-     raster map below is a different element that is still served light, so it
-     still needs the filter.) */
+     Divar's Mapbox GL map (the large left-hand slab on the map-search view) picks its
+     basemap STYLE from the site theme: under `<html data-theme="light">` it draws a
+     LIGHT basemap (pale land, blue roads, green parks, canvas-painted red price-cluster
+     pins) that welds a glaring white slab to our dark UI; under `data-theme="dark"` the
+     site already draws a NATIVE dark basemap. A <canvas> is unthemable via CSS, so scope
+     the invert+hue-rotate(180) darkening to the LIGHT branch ONLY — the double transform
+     cancels on chroma (red pins stay red, parks green, roads blue) while flipping the
+     pale land dark. Applying it under `data-theme="dark"` would invert the already-dark
+     map straight back into a bright slab, so it MUST stay light-branch-scoped. The pins
+     are painted on the canvas (no DOM markers), so this filter is the only lever that
+     darkens the land without erasing them. */
+  html[data-theme="light"] .mapboxgl-canvas {
+    filter: invert(0.92) hue-rotate(180deg) brightness(0.9) contrast(0.9) !important;
+  }
 
   /* Post-detail location map is NOT the Mapbox canvas — it's a static raster PNG
      served from mapimage.divarcdn.com, so it stays a bright light slab on the dark

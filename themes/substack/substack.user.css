@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Substack Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.0
+@version        1.0.1
 @description    A clean, comprehensive dark theme for Substack — the hub, discovery, and every publication and post — that keeps each newsletter's own accent color intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -12,7 +12,9 @@
 
 @-moz-document domain("substack.com") {
 
-  :root {
+  :root,
+  [class*="pubTheme"],
+  [class*="headerTheme"] {
     color-scheme: dark;
 
     /* --- Neutral background scale -> dark --- */
@@ -88,6 +90,21 @@
     --cover_print_secondary: #c4cdd6 !important;
     --cover_print_tertiary: #8b949e !important;
 
+    /* --- Publication header surface family (--header_*).
+       Neutral header backgrounds and their contrast/print scale -> dark, mirroring
+       the cover family. Branded (saturated) headers darken the same way covers do. --- */
+    --header_bg_color: #14181d !important;
+    --header_bg_elevated: #1c2128 !important;
+    --header_bg_elevated_secondary: #262c33 !important;
+    --header_bg_elevated_tertiary: #363b42 !important;
+    --header_bg_contrast_1: #1c2128 !important;
+    --header_bg_contrast_2: #262c33 !important;
+    --header_bg_contrast_3: #363b42 !important;
+    --header_bg_contrast_4: #4a515a !important;
+    --header_detail_color: #2d333b !important;
+    --print_on_header_bg_color: #e6edf3 !important;
+    --print_secondary_on_header_bg_color: #8b949e !important;
+
     /* Slightly deeper scrim on dark */
     --color-utility-modal: rgba(0, 0, 0, 0.65) !important;
   }
@@ -138,6 +155,40 @@
   /* --- Welcome / intro popup (hardcoded white container) --- */
   .intro-popup {
     background-color: #1c2128 !important;
+  }
+
+  /* --- Discover/explore selected category tab ---
+     The active category pill (Radix tab styled as a filled secondary button)
+     ships a bright white background with dark text. Darken to an elevated
+     surface so it reads as "selected" without a white block on the dark bar.
+     Scoped to priority_secondary so accent/underline pub nav tabs are untouched. --- */
+  [role="tab"][aria-selected="true"][class*="priority_secondary"] {
+    background-color: #363b42 !important;
+    color: #e6edf3 !important;
+  }
+
+  /* --- Sticky publication nav spacer (inline-styled hardcoded white block
+     reserving the header's layout height) --- */
+  .main-menu > div {
+    background-color: #14181d !important;
+  }
+
+  /* --- www marketing footer (global site footer ships a hardcoded light-grey
+     block with dark-brown column headings) --- */
+  .www-footer {
+    background-color: #14181d !important;
+  }
+  .www-footer h1,
+  .www-footer h2,
+  .www-footer h3,
+  .www-footer h4 {
+    color: #e6edf3 !important;
+  }
+
+  /* --- Discover / not-found marketing landing hero (hardcoded dark-brown
+     display heading, not token-driven) --- */
+  .new-landing-page .display-type {
+    color: #e6edf3 !important;
   }
 
   /* --- Text selection --- */

@@ -133,7 +133,8 @@
   /* The logo is a web_ui Image; the item-photo placeholder fill below would
      otherwise paint a light box behind it on the darker header. */
   .l-header__logo-container [class*="Image__image"],
-  .l-header__logo [class*="Image__image"] { background-color: transparent !important; }
+  .l-header__logo [class*="Image__image"],
+  [class*="l-header__logo"] [class*="Image__image"] { background-color: transparent !important; }
   .l-header__main { border-bottom: 1px solid #262c33 !important; }
   .nav-links, .header-nav, [data-testid="nav-tabs"] { background-color: #0d1117 !important; }
   .nav-links a, .header-nav a, [data-testid="nav-tabs"] a,
@@ -186,6 +187,21 @@
     background-color: #1c2128 !important; }
   .web_ui__Cell__cell.web_ui__Cell__transparent,
   [class*="Cell__transparent"] { background-color: transparent !important; }
+  /* Prominent status cells (the green "Vendu"/Sold banner on a sold item,
+     plus error/warning notices) are solid-colour web_ui Cells: a saturated
+     background carrying white text drawn from greyscale-level-6. The blanket
+     Cell rule above flattened the fill to #1c2128 and our level-6 remap
+     darkened the label to the same #1c2128 — the banner went invisible
+     dark-on-dark. Re-assert a dark-legible status fill and force the label
+     light (these variants are solid banners, so every child reads white). */
+  [class*="Cell__success"] { background-color: #218056 !important; }
+  [class*="Cell__error"], [class*="Cell__danger"] { background-color: #a5343f !important; }
+  [class*="Cell__warning"] { background-color: #8a6a1e !important; }
+  [class*="Cell__success"], [class*="Cell__success"] *,
+  [class*="Cell__error"], [class*="Cell__error"] *,
+  [class*="Cell__danger"], [class*="Cell__danger"] *,
+  [class*="Cell__warning"], [class*="Cell__warning"] * {
+    color: #ffffff !important; fill: #ffffff !important; }
 
   /* web_ui Text colours are baked as literal light-theme hex inside
      the (cross-origin) component CSS, so the token ramp can't reach
@@ -202,6 +218,14 @@
   /* Teal text links — lift for AA contrast on the dark surfaces */
   .web_ui__Text__clickable, [class*="Text__clickable"] { color: #4db8c4 !important; }
   .web_ui__Text__clickable:hover, [class*="Text__clickable"]:hover { color: #7fd2da !important; }
+  /* Text__primary is web_ui's BRAND-teal text variant — the baked literal teal
+     is what paints the buyer-protection "X€ incl." total under every item card
+     (beside the teal shield glyph) plus other brand-highlighted labels. The
+     token ramp can't reach the literal, so the generic subtitle/caption rules
+     above flattened it to neutral grey, dropping the highlight and leaving a
+     teal shield next to grey text. Restore the lifted link teal. Declared
+     after subtitle/caption so it wins the source-order tie on dual-class spans. */
+  .web_ui__Text__primary, [class*="Text__primary"] { color: #4db8c4 !important; }
 
   /* Ghost / outlined / tertiary buttons render teal text on a dark
      surface — lift it for AA. Filled CTAs keep white-on-teal. */
@@ -248,6 +272,13 @@
     [class*="Button__label"] { color: #f2707a !important; }
   [class*="Button__inverse"][class*="Button__filled"][class*="Button__muted"]
     [class*="Button__label"] { color: #9ca7b0 !important; }
+
+  /* The Apple social-login glyph is an SVG <path fill="#000"> baked black, so it
+     vanishes on our dark outlined button. Google/Facebook logos are multicolour
+     and keep their brand fills — scope the lift to black-filled icon paths only. */
+  [class*="Button__icon"] svg path[fill="#000"],
+  [class*="Button__icon"] svg path[fill="#000000"],
+  [class*="Button__icon"] svg path[fill="black"] { fill: #e6edf3 !important; }
 
   /* Tabs (seller profile, item page sections) bake the dark literal */
   .web_ui__Tabs__title, [class*="Tabs__title"] { color: #c4cdd6 !important; }
@@ -332,7 +363,11 @@
   [data-testid="item-shipping-banner"],
   [data-testid="buyer-protection-info-title"] ~ *,
   .item-shipping-banner { background-color: #1c2128 !important; }
-  [data-testid="item-price"], [data-testid="total-combined-price"] { color: #e6edf3 !important; }
+  /* The base item price is natively muted grey; lift it to prominent white.
+     The buyer-protection TOTAL ("X€ incl.") is natively brand teal (a
+     Text__primary span) — leave it to the Text__primary rule above so it
+     stays teal here and on every card, instead of flattening to white. */
+  [data-testid="item-price"] { color: #e6edf3 !important; }
 
   /* ============================================================
      Seller / member profile

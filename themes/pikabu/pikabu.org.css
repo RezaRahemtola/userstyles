@@ -83,6 +83,12 @@
     --s-text-label-secondary: var(--pk-text-muted);
     --s-text-label-tertiary: var(--pk-text-muted);
     --user-name-text: var(--pk-text);
+    /* Neutral secondary-link token. Pikabu's light default is a near-black #37393d;
+       it lifts it to #ced1d9 in its own dark theme. We never remapped it, so every
+       element that reads it stayed dark-on-dark — most visibly the topic NAME heading
+       (.page-topics__topic-name) on /themes, which rendered ~1.3:1 while its own note
+       below sat bright. Also feeds a right-sidebar username and footer links. */
+    --c-link-secondary-default: var(--pk-text-soft);
 
     /* ---- Inputs / textareas / comboboxes / selects ---- */
     --c-input-bgDefault: var(--pk-surface-2);

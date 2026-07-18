@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           KHInsider Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.5
+@version        1.0.6
 @description    A clean, comfortable dark theme for KHInsider — easy on the eyes across album pages, song lists, the audio player, search and comments.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -132,6 +132,14 @@
   #songlist .material-icons:hover,
   .playlistDownloadSong .material-icons:hover,
   .playlistAddTo .material-icons:hover { color: #9bd4ff !important; }
+  /* The song-row "add to playlist" flyout ships a #cccccc panel; our body-text
+     colours then left its rows light-on-light. Click-only, so load scans miss it. */
+  .playlistPopup {
+    background-color: #1c2128 !important;
+    color: #c4cdd6 !important;
+    border-color: #2d333b !important;
+  }
+  .playlistPopup a { color: #5fb0e6 !important; }
 
   /* ---- Pagination (album lists, search, comment threads) ----
      The current page is a `span.pagenav` sitting on the site's own blue chip with
@@ -363,6 +371,11 @@
   .structItem--thread:hover, .structItem.is-selected { background-color: #1c232c !important; }
   .structItem-minor, .structItem-parts,
   .structItem-cell--latest .structItem-minor { color: #aab4bf !important; }
+  /* the "· " middot between meta parts is a `.structItem-parts > li::before` glyph
+     the site colours #4f4f4f — fine on its native white row, a dark-on-dark blob on
+     ours. Our `.structItem-parts` colour sets the ul but the pseudo keeps the site's
+     own hue, so lift the separator to a muted-but-visible grey. */
+  .structItem-parts > li::before { color: #8b949e !important; }
   .node-extra, .node-meta, .node-statsMeta,
   .node-description, .node-descriptionText { color: #aab4bf !important; }
   .pairs dt { color: #8b949e !important; }

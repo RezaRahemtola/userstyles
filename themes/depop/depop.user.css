@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Depop Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.3
+@version        1.0.4
 @description    A clean dark theme for Depop: easy on the eyes across home, search, categories and product pages, with prices, sale tags and the Depop red kept readable.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -101,6 +101,24 @@
   [role="banner"] [style*="--textColor"],
   [role="banner"] [style*="--textColor"] * {
     color: #ff6b7d !important;
+  }
+
+  /* When the Sale category is hovered/open the site fills its trigger with a
+     solid red pill (its inline --hoverBg:#E20020) and flips the label white —
+     the one emphasised nav affordance. Our generic menuitem/expanded hover
+     (grey #262c33) outranks the banner-button reset and flattened it, so
+     hovering Sale looked identical to hovering Women/Men. Restore a toned red
+     fill; the higher-specificity selector beats [role="menuitem"]:hover. */
+  [role="banner"] [style*="--hoverBg:#E20020"]:hover,
+  [role="banner"] [style*="--hoverBg:#E20020"][aria-expanded="true"] {
+    background-color: #d1304a !important;
+  }
+
+  [role="banner"] [style*="--hoverBg:#E20020"]:hover,
+  [role="banner"] [style*="--hoverBg:#E20020"]:hover *,
+  [role="banner"] [style*="--hoverBg:#E20020"][aria-expanded="true"],
+  [role="banner"] [style*="--hoverBg:#E20020"][aria-expanded="true"] * {
+    color: #ffffff !important;
   }
 
   /* The header's icon for the page you are ON (Likes / Bag) is tinted
@@ -463,6 +481,23 @@
     background-color: transparent !important;
   }
 
+  /* Loading skeletons — the PDP buy-box renders its CTA pills (Buy now /
+     Make offer / Add to bag) and the two wishlist/share circles over the
+     image as shimmer placeholders during hydration, and the same component
+     skins the breadcrumb, gallery, attribute and grid-card placeholders.
+     Every one carries a "shimmerStyles" module class and paints a LIGHT
+     animated gradient (#d3d3d3 → #eee) as a background-IMAGE over a
+     transparent background-color — so it survives every bg-COLOUR reset and
+     flashes bright white on the dark page. Repaint the sweep in elevated
+     dark tones; the placeholderShimmer keyframes animate background-position,
+     which we leave intact, so the shimmer still moves. */
+  [class*="shimmerStyles"],
+  [class*="Skeleton"],
+  [class*="skeleton"] {
+    background-image: linear-gradient(90deg, #1c2128 0px, #2d333b 20%, #1c2128 40%, #1c2128) !important;
+    background-color: #1c2128 !important;
+  }
+
   /* Price */
   [data-testid="productPrimaryAttributes"],
   [data-testid="productPrimaryAttributes"] * {
@@ -540,9 +575,11 @@
 
   /* The TikTok badge is the exception in that row: its path carries a literal
      fill="black" ATTRIBUTE rather than currentColor, so re-lighting the svg's
-     colour leaves it a black glyph on the black footer. */
-  footer [class*="socialLink"] path[fill="black"],
-  [data-testid="footerV2"] [class*="socialLink"] path[fill="black"] {
+     colour leaves it a black glyph on the dark surface. The same social row
+     appears both in the footer and in the MOBILE nav drawer (its own
+     socialLink module hash, outside <footer>/<nav>) — scope to the class, not
+     the footer, so the drawer's TikTok is lit too. */
+  [class*="socialLink"] path[fill="black"] {
     fill: #c4cdd6 !important;
   }
 

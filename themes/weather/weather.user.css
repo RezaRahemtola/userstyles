@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Weather.com Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.11
+@version        1.0.12
 @description    A clean dark theme for weather.com. Darkens forecasts, charts, tables and menus while keeping radar maps, weather icons, alerts and temperature colors intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -529,6 +529,18 @@
     color: #d891ac !important;
     -webkit-text-fill-color: #d891ac !important;
   }
+  /* the precipitation-chance percentages plotted on the Today's Outlook hourly
+     graph carry an inline SEMANTIC teal (rgb(63,81,...)->rgb(63,149,178)) on both
+     the label and, via -webkit-text-fill-color, its rendered glyphs -- weather.com's
+     rain tint. They also ship the `text-gray-900` class, so our `.text-gray-900`
+     !important flattened them to plain light and the "45%" under a storm icon read
+     like any neutral label, losing the rain signal (the Sunrise/Sunset markers in
+     the same strip were restored just above, but this teal was missed). Restore a
+     lightened rain teal that keeps the identity and passes AA on the dark card. */
+  [style*="color: rgb(63, 149, 178)"] {
+    color: #5cb3d1 !important;
+    -webkit-text-fill-color: #5cb3d1 !important;
+  }
 
   /* ---- Air Quality page (All Pollutants list + AQI status heading) ------ */
   /* The Air Quality page colors its key headings with a NEAR-BLACK Tailwind
@@ -672,7 +684,13 @@
   a:visited,
   .text-blue-500,
   .text-blue-600,
-  .text-blue-700 {
+  .text-blue-700,
+  /* the video-playlist rail marks the active item with brand-blue "Now Playing" /
+     "Next Up" kicker <p>s carrying the named `text-brand-light` utility (#3a61cc).
+     The generic `p` text rule flattened them to body grey, so the active clip read
+     like every other title and lost its accent. #3a61cc is only ~2.9:1 on our base,
+     so restore the theme's link blue (as the subnav/rail active markers do). */
+  .text-brand-light {
     color: var(--wx-link) !important;
   }
   a:hover,
@@ -1078,7 +1096,14 @@
   [class*="LayerDetail--layerDetailContainer"] [class*="LayerDetail--selectedLayerTypeTitle"] {
     color: var(--wx-link) !important;
   }
-  [class*="LayerDetail--selectedLayerType"] [class*="LayerDetail--layerDetailImage"] {
+  /* the selected layer's thumbnail ring: the expanded list marks it with the blue
+     `layerDetailImage` border, but the COLLAPSED control-panel round thumbnails
+     (Radar / Clouds / Temperatures) mark it with a blue border on a newer
+     `layersIconContainer` element the blanket `* { border-color }` flattens to grey
+     -- so the round thumbnail lost its selection ring. Restore both, scoped under
+     the `selectedLayerType` ancestor so only the active layer is ringed. */
+  [class*="LayerDetail--selectedLayerType"] [class*="LayerDetail--layerDetailImage"],
+  [class*="LayerDetail--selectedLayerType"] [class*="LayerDetail--layersIconContainer"] {
     border-color: var(--wx-link) !important;
   }
   /* the layer thumbnails sit on an #e8e8e8 placeholder that shows through until

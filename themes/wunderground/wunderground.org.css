@@ -703,6 +703,17 @@
   text[style*="fill: rgb(76, 76, 76)"] {
     fill: var(--wu-text-muted) !important;
   }
+  /* The AQ "Air Quality Index" and UV "Daytime UV" caption <text> nodes carry NO
+     inline fill, so they inherit the SVG default black (#000) and vanish on the
+     dark tile -- the #4c4c4c catch above only matches captions styled that hue.
+     Lift every tile caption that has no inline fill; the value <text> keeps its
+     inline semantic fill (purple/red/cyan/orange), which this :not() excludes. */
+  lib-precip-tile text:not([style*="fill"]),
+  lib-pollen-tile text:not([style*="fill"]),
+  lib-air-quality-tile text:not([style*="fill"]),
+  lib-uv-tile text:not([style*="fill"]) {
+    fill: var(--wu-text-muted) !important;
+  }
 
   /* ====================================================================== */
   /* Page-type fixes found in deep review (calendar, hourly, news,          */
@@ -1035,6 +1046,19 @@
   .geolocate-wrap .material-icons,
   #wuSearch-contain .geolocate-wrap i {
     color: var(--wu-link) !important;
+  }
+
+  /* ---- header settings / units quick dropdown --------------------------- */
+  /* The gear icon opens a Foundation .dropdown-pane (#wuSettings-quick) that
+     WU paints #fff -- a glaring white units panel on the dark page. It is
+     click-gated, so no load-time scan sees it. Darken the pane to a card
+     surface; the °F/°C toggle (WU blue) and the "More Settings" link already
+     read on it. */
+  #wuSettings-quick,
+  .wu-settings-quick,
+  .dropdown-pane {
+    background-color: var(--wu-surface) !important;
+    color: var(--wu-text-2) !important;
   }
 
   /* ---- sponsored "You May Like" widget (Taboola) ------------------------ */

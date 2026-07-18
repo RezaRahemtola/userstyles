@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ESPN Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.12
+@version        1.0.13
 @description    Dark theme for ESPN (espn.com, espn.co.uk, espn.com.au, espn.in): dark homepage, sport sections, scores and stories, with team and score colors preserved.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -258,6 +258,15 @@
      segment. */
   a.Button--filter.Button--active, .Button--filter.Button--active {
     color: #ff5a5a !important; -webkit-text-fill-color: #ff5a5a !important; }
+  /* The active-segment red above matches the standings segmented control (ESPN paints
+     it #dd0000), but the gamecast "Last Five Matches" team selector reuses the SAME
+     .Button--filter.Button--active class while ESPN paints its active tab neutral
+     near-black (#101113). The red bled onto the selected TEAM abbreviation, so an
+     active "FRA" read as loss/negative red instead of "selected". Restore a neutral
+     high-contrast label on the LastGames team name only. */
+  button.Button--filter.Button--active .LastGames__TeamName,
+  .Button--filter.Button--active .LastGames__TeamName {
+    color: #e6edf3 !important; -webkit-text-fill-color: #e6edf3 !important; }
 
   /* ---- Promos / callouts / banners ---- */
   .promo, .scorePromo, .premiumEngagement, .callout, .alert, .notification-bar,
@@ -412,6 +421,13 @@
   .TypeaheadControls__Submit, .TypeaheadControls__Clear,
   .TypeaheadControls__Submit *, .TypeaheadControls__Clear * {
     background-color: transparent !important; fill: #c4cdd6 !important; }
+  /* The open search field's backdrop is a WHITE .Typeahead__Wrapper::before (306×40),
+     not the input's own bg (which we dark) — the input covers most of it, but the strip
+     to the left of the input, behind the magnifier, and the sliver past its right edge
+     show the white ::before as a glaring box on our dark nav. Native ESPN's white nav hid
+     it. Doubly audit-blind: a pseudo-element (no box bg, no text node) that only exists
+     once the search is opened. Dark it to the field surface. */
+  .Typeahead__Wrapper::before { background-color: #1c2128 !important; }
 
   /* ---- Account flyout (li.user > .global-user): white panel + a lighter
        #f1f2f3 "Favourites" pane whose copy is a pale grey → invisible on white
@@ -447,6 +463,14 @@
 
   /* ---- Misc surfaces that default to white ---- */
   .bg-clr-white, .bg-white, [class*="bg-clr-white"] { background-color: #1c2128 !important; }
+  /* Sport "Teams" index page (Football/NBA/NFL > Teams): the whole team-directory
+     panel is a hardcoded-white .TeamsWrapper (.Wrapper is transparent; the white is
+     on .TeamsWrapper) filling the main column — our already-light team names + section
+     heading then render light-on-white, near-invisible, while the header/scoreboard/
+     sidebar around it stay dark. Not a bg-clr-white class, so the white-surface rule
+     misses it; audit-blind because the SPA route strips the inject on the Teams click,
+     so a load-time scan of the re-injected page is the only way to see it. */
+  .TeamsWrapper { background-color: #1c2128 !important; }
   /* Schedule group header band (team page left rail) hardcodes a near-white
      bg-clr-gray-10 (#f9f9fb) under our already-light title text → light-on-light. */
   .Schedule__Group__Title { background-color: #1c2128 !important; }
@@ -686,6 +710,15 @@
   /* empty base-indicator square (.FieldView__Square--hidden) was white-on-white
      and camouflaged; darking the widget exposes it → let the dark panel show. */
   .FieldView__Square--hidden { background-color: transparent !important; }
+  /* Pitch-count balls/strikes/outs indicator (.PitchCount__Orb): the EMPTY orb ships a
+     solid WHITE fill (invisible against ESPN's white panel — reads as a hollow red-ringed
+     slot) while the --filled orb is a coloured disc. On our dark panel the white empty orb
+     glares as a solid disc that reads as LIT, so a 0-0 count renders like a full 4-3 count.
+     Blank the empty orb to a hollow dark slot with a muted ring; leave --filled to ESPN's
+     own count colour so the lit orbs stay the signal. Audit-blind: 8px orbs slip the size
+     filter and the white was masked on the native white panel. ---- */
+  .PitchCount__Orb:not(.PitchCount__Orb--filled) {
+    background-color: transparent !important; border-color: #4a525b !important; }
   /* the StatusBar carousel transition panes paint a full-size white ::before */
   .StatusBar__TransitionPane::before, .StatusBar__TransitionPane::after {
     background-color: #1c2128 !important; }
@@ -813,6 +846,15 @@
      load-time scan can't see. Scope to the mobile nav so the transparent desktop
      .global-search is untouched. ---- */
   #global-nav-mobile .global-search { background-color: #14181d !important; }
+  /* Mobile favourites/sport-shortcut strip (ul.fav-menu.strip.mobile, "favorites_mgmt"):
+     the espnfitt mobile frontend paints a solid WHITE 390×64 nav band right below the
+     header carrying the sport shortcut icons + blue labels → a glaring white strip on the
+     dark mobile home. Only the mobile variant exists (`.fav-menu.strip` is mobile-only),
+     the icons are transparent-PNG league logos + blue icon-font glyphs (survive on dark).
+     Only visible on the mobile frontend (needs a mobile UA), so a desktop-viewport scan
+     misses it. Dark to the page base. ---- */
+  ul.fav-menu.strip, .fav-menu.strip.mobile { background-color: #14181d !important; }
+  ul.fav-menu.strip li:hover, .fav-menu.strip.mobile li:hover { background-color: #1c2128 !important; }
 
   /* ---- Taboola "why this ad" fade / popover panels are solid white and only exist
        once the widget's exclude control is used — invisible to a load-time scan. ---- */
@@ -839,5 +881,19 @@
        "Top Videos" rail's equivalent marker (span "Now Playing" inside an anchor, so
        our a span blue rule — not the grey one — flattened it); same native #dd0000. */
   .MediaList__item__playing, .mediaList__phase {
+    color: #ff5a5a !important; -webkit-text-fill-color: #ff5a5a !important; }
+
+  /* ---- Form-guide result badges (.GameResults — "Last Five Matches" table + the
+       head-to-head "Last 5 Matchups" panel on a match report): ESPN paints each W/L/D
+       its outcome colour — win green (#108915), loss red (#b80000), draw grey (#444) —
+       as a form signal. The badge is a span inside an .AnchorLink, so our a / a span blue
+       rule flattened all three to identical link-blue, erasing the signal (a win read the
+       same as a loss). The span carries BOTH .GameResults and its --win/--loss modifier,
+       so a two-class selector clears the `a span` specificity tie. Restore readable-on-dark
+       win-green / loss-red, draw a muted grey. ---- */
+  span.GameResults { color: #9aa4ae !important; -webkit-text-fill-color: #9aa4ae !important; }
+  .GameResults.GameResults--win {
+    color: #4ac76a !important; -webkit-text-fill-color: #4ac76a !important; }
+  .GameResults.GameResults--loss {
     color: #ff5a5a !important; -webkit-text-fill-color: #ff5a5a !important; }
 }

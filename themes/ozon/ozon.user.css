@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Ozon Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.7
+@version        1.0.8
 @description    A clean dark theme for Ozon: easy on the eyes across home, catalog, search, product pages and cart, with prices, ratings and the Ozon blue kept right.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -429,6 +429,17 @@
      text becomes legible. ---------------------------------------- */
   [mountto="body"] div[class*="uw_"] {
     background-color: var(--d-surface) !important;
+  }
+  /* The B2B "юридическое лицо" modal (and its siblings) list their benefit
+     bullets ("Регистрация за 1 минуту", "Возврат до 20% НДС" …) in a literal
+     near-black navy (rgb(8,27,43)) hardcoded outside the token system, so on the
+     darkened panel the whole bullet column goes dark-on-dark (invisible) while the
+     blue icons and CTA stay visible. tsBody500 is the bullet body copy; the
+     tsBodyControl "Добавить компанию" CTA (white-on-blue) and the tsHeadline
+     banner title are deliberately NOT matched, so they keep their colour. The
+     modal only mounts on interaction, so a load-time scan never sees it. */
+  [mountto="body"] div[class*="uw_"] span[class*="tsBody500"] {
+    color: var(--d-text-2) !important;
   }
 
   /* ============================================================
@@ -995,6 +1006,24 @@
     color: var(--d-blue) !important;
   }
 
+  /* VIDEO-DURATION TIMECODE PILL ("00:46") on review (and gallery) video
+     thumbnails — Ozon renders it with an INLINE
+     `background: var(--clearDarkKey600); color: var(--layerFloor1)`: the
+     "…DarkKey" scrim is a translucent near-black (rgba(7,7,7,.48)) laid over
+     the video, and --layerFloor1 (a card SURFACE token, natively #fff) is
+     reused here as WHITE TEXT on that scrim. Our :root remap of --layerFloor1
+     to the dark surface (correct for its background role) turns the timecode
+     dark-on-scrim, near-invisible over the video. Rebind the text to white on
+     the pill, keyed on BOTH inline tokens so it hits only this scrim+layerFloor1
+     pattern — never the elements that use --layerFloor1 as a background-color
+     (e.g. the "Ozon Express" badge, whose brand text must stay). The scrim
+     itself is left native (translucent black), so white reads exactly as it
+     did on the light site. Mounts only with review/gallery video, so a
+     load-time scan never sees it. */
+  [style*="clearDarkKey600"][style*="var(--layerFloor1)"] {
+    color: #ffffff !important;
+  }
+
   /* "Новинка" marketing chip — Ozon ships it as an INLINE pale-green plate with
      green text (`background:#E4FDEC; color:#10C44C`). The inline guard on the
      gallery reset above (correctly) stops flattening inline fills, but this one
@@ -1004,6 +1033,16 @@
   [data-widget="webMarketingLabels"] div[style*="#E4FDEC"] {
     background: var(--bgOpaquePositiveSecondary) !important;
     color: var(--d-green) !important;
+  }
+  /* "250 баллов за отзыв" points pill — Ozon ships it with an INLINE
+     `background: var(--bgOpaqueMarketingSecondary); color: #5B51DE`. We invert the
+     plate to dark violet via the token (correct), but the inline label colour is a
+     hardcoded dark violet the token remap cannot reach, so on the darkened plate it
+     drops to ~2.7:1 (natively ~4.7:1 on the pale plate). Match the pill by its stable
+     bg-token name and lift the label to our marketing violet (~4.8:1). The chevron /
+     "Б" badge carry their OWN inline colour, so they are untouched. */
+  [data-widget="webMarketingLabels"] div[style*="bgOpaqueMarketingSecondary"] {
+    color: var(--textMarketing) !important;
   }
 
   /* SCROLL-TO-TOP DISC (data-widget="homeButton") — a position:fixed

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Genius Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.9
+@version        1.0.10
 @description    Turns Genius dark: lyrics, annotations, the homepage, artist and album pages, charts and search — with the familiar red accents and links kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -38,6 +38,26 @@
   /* Annotation portal grid: transparent overlay, must never be painted. */
   [class*="AnnotationPortal-desktop__Grid"] {
     background-color: transparent !important; }
+
+  /* Mobile annotation reader: tapping a referent opens a ReactModal whose outer
+     "Modal-mobile__Contents" is already darkened, but the inner annotation panel
+     "BaseAnnotation-mobile__Container" ships pure white. Our typography lifts its
+     body copy to light, so the whole annotation reads as light-on-white — nearly
+     invisible. Darken the panel to the modal tone. The DESKTOP counterpart
+     ("BaseAnnotation-desktop__Container") is natively transparent (it sits in the
+     dark sidebar) and must stay untouched, so this is scoped to the mobile class. */
+  [class*="BaseAnnotation-mobile__Container"] {
+    background-color: #14181d !important; }
+  /* The same mobile annotation reader shows the annotated lyric at the top as an
+     "AnnotationLyrics__FragmentHighlight" — a pure-white highlight box with a light
+     outline. Our ReferentFragment rules use a different class, so it stays white and the
+     lifted light lyric text lands on white. Match the elevated referent tone, lift the
+     text, and drop the light outline the modal draws around the lyric block. */
+  [class*="AnnotationLyrics__FragmentHighlight"] {
+    background-color: #21262d !important; color: #e6edf3 !important; }
+  [class*="AnnotationLyrics__Container"],
+  [class*="AnnotationLyrics__FragmentHighlight"] {
+    outline-color: #2d333b !important; }
 
   /* Sign-in / Sign-up modal (nav "Sign Up", mobile menu): the panel is a brand-yellow
      card with black copy. Our lifted light text lands on the yellow at ~1.5:1, so the
@@ -115,6 +135,11 @@
   [class*="StickyNavSearch"] [class*="Input"]::placeholder { color: #8b949e !important; }
   [class*="StickyNavSearch-desktop__Icon"] svg,
   [class*="StickyNavSearch"] svg { fill: #c4cdd6 !important; color: #c4cdd6 !important; }
+  /* Pageview eye icon (song rows / mini-cards / charts): eye.svg ships no fill on
+     its paths, so it defaults to black and vanishes on the dark card. It sits right
+     next to the pageview count; follow currentColor so it matches that count. */
+  svg[src="eye.svg"], svg[src="eye.svg"] path {
+    fill: currentColor !important; }
   /* nav search autocomplete dropdown: a white floating panel by default. Its
      result rows render in a same-origin genius.com/search/embed iframe, so the
      card/text rules below also apply inside it via @-moz-document. */
@@ -273,6 +298,18 @@
   [class*="CommentForm__FakeTextField"],
   [class*="SongCommentsWithAds__CTA"] {
     background-color: #1c2128 !important; color: #c4cdd6 !important; border-color: #2d333b !important; }
+  /* "This song bio is unreviewed" banner (SongDescription / annotation): the site flags
+     pending content with a white + light-pink candy-stripe background, a pink border and a
+     pink "unreviewed" explainer toggle. The stripe's white bands glare as a light slab on
+     the dark page, and the blanket border reset + the shared span rule grey out the pink
+     border and the toggle, erasing the pending signal. Re-stripe on the dark base with a
+     faint pink tint and restore the pink accent (lifted to clear 4.5:1). */
+  [class*="UnreviewedAnnotation__Unreviewed"] {
+    background-image: repeating-linear-gradient(45deg, #14181d, #14181d 7px, #2a1a22 7px, #2a1a22 14px) !important;
+    border-color: #ff3d7f !important; }
+  [class*="UnreviewedAnnotation__Unreviewed"],
+  [class*="UnreviewedAnnotation__Unreviewed"] * {
+    color: #ff3d7f !important; -webkit-text-fill-color: #ff3d7f !important; }
 
   /* ---- Apple Music player strip / media ---- */
   [class*="AppleMusicPlayer"] { background-color: #1c2128 !important; }
