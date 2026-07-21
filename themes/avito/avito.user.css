@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Avito Dark
 @namespace    github.com/RezaRahemtola/userstyles
-@version      1.0.9
+@version      1.0.10
 @description  A clean dark theme for Avito — comfortable dark surfaces across home, search and listing pages, with crisp prices and the familiar Avito blue kept bright.
 @author       Reza Rahemtola
 @homepageURL  https://github.com/RezaRahemtola/userstyles
@@ -137,10 +137,15 @@
     fill: var(--av-text) !important;
   }
 
-  /* Top notification banner ("how to keep using Avito on iOS", etc.) */
+  /* Top notification banner ("how to keep using Avito on iOS", etc.) and the
+     full-width home hero-promo (`top-notification/hero-banner-main-page/…`).
+     The hero variant paints a light lavender→pink gradient as background-IMAGE,
+     which layers over any background-color — background-image must be cleared
+     too. The banner's 3D illustration is a separate child <img>, untouched. */
   [data-marker^="top-notification"],
   [data-marker^="top-banner"] {
     background-color: var(--av-surface-2) !important;
+    background-image: none !important;
     border-color: var(--av-border) !important;
   }
 

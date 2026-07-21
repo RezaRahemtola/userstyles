@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           DaFont Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.8
+@version        1.0.9
 @description    A comfortable dark theme for DaFont. Font previews and character maps stay crisp and readable on the dark background, and the signature red is kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -162,6 +162,15 @@
   div[style*="border-top:1px solid #CC0000"][style*="background:#f0f0f0"] {
     background: #1c2128 !important;
     border-top-color: #b3322f !important;
+  }
+  /* Author-profile "User comment" box: a classless inline-styled div
+     `border-left:5px solid #ddd; background:#f0f0f0` holding the author's
+     free-text bio, present only when they filled the field. The light-grey
+     panel leaves our remapped light body text reading light-on-light (~1.45:1).
+     Raise it to the elevated dark surface like the header panel above; its #ddd
+     quote bar is already softened by the global border reset. */
+  div[style*="border-left:5px solid #ddd"] {
+    background: #1c2128 !important;
   }
   /* Listing option-bar checkbox pill ("Show variants") — DaFont wraps it in a
      hardcoded light-grey (#ebebeb) .form_elt_bg box. Left alone it glares on the

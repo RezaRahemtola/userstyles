@@ -165,6 +165,19 @@
     background-color: #14181d !important;
   }
 
+  /* --- www marketing nav "Sign in" button (a bg-white Pencraft pill in the
+     landing header; its text takes our light fg, so it reads near-invisible on
+     white). Darken the pill to an elevated surface. --- */
+  .homepage-nav [class*="bg-white"] {
+    background-color: #262c33 !important;
+  }
+
+  /* --- www marketing mobile slide-in menu (hardcoded white drawer; its links
+     take our light fg and read near-invisible on white) --- */
+  .homepage-nav-mobile-menu {
+    background-color: #14181d !important;
+  }
+
   /* --- www marketing footer (global site footer ships a hardcoded light-grey
      block with dark-brown column headings) --- */
   .www-footer {

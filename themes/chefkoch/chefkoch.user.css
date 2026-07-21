@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Chefkoch Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.10
+@version        1.0.11
 @description    Dark theme for Chefkoch — recipes, search, magazine and forum in a comfortable dark look, green accents and rating stars kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1075,6 +1075,11 @@
   #cmpbox .ck-legal-section li { color: #9aa5af !important; }
   #cmpbox .ck-link, #cmpbox a.ck-link, #cmpbox .ck-link-vendor,
   #cmpbox .ck-btn-outline, #cmpbox .ck-btn-tertiary { color: #4cae5e !important; }
+  /* the "oder [hat] PUR abonnieren" heading carries the PUR wordmark as a
+     baked-olive image (CK-Pur-olive.svg) — dark-on-dark and near-invisible on
+     the modal. Its colour is inside the asset, so lift it with a filter to a
+     light grey that matches the surrounding "oder"/"abonnieren" ink. */
+  img[src*="CK-Pur-olive"] { filter: brightness(0) invert(0.82) !important; }
 
   /* ====================================================================
      Safety nets
