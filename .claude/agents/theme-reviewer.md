@@ -19,7 +19,7 @@ You are given one published `<site>`. Read `themes/<site>/<site>.user.css` to kn
    ```bash
    npx playwright-cli -s="$S" run-code --filename=.claude/scripts/audit-chroma.js
    ```
-   It detaches our sheet, re-reads the NATIVE computed colours, restores, and diffs. `flattened` = a colour the site meant to paint that we collapsed to grey (a lost signal: gain vs loss, danger vs neutral, selected vs unselected). `painted` = something natively bare that we filled. Investigate every `flattened` hit; a deliberate re-tune is fine, but say so. It caught a half-applied sohu fix that had already shipped — `.rate.stock-red` corrected while `.price.stock-red` beside it stayed grey.
+   It detaches our sheet, re-reads the NATIVE computed colours, restores, and diffs. `flattened` = a colour the site meant to paint that we collapsed to grey (a lost signal: gain vs loss, danger vs neutral, selected vs unselected). `painted` = something natively bare that we filled. Investigate every `flattened` hit; a deliberate re-tune is fine, but say so — half-applied fixes (one selector corrected while its sibling stays grey) have shipped before.
 
 4. **For each real bug:** capture a BEFORE screenshot framed on the element into `themes/<site>/docs/review-<issue>-before.png`, fix the CSS with stable selectors (preserve brand/semantic colors), then capture an AFTER proving the fix into `themes/<site>/docs/review-<issue>-after.png`. Loop the audits to zero.
    - **Naming (strict):** `review-<issue>-<before|after>.png` — `-before`/`-after` is ALWAYS the last segment, never mid-name (`review-before-<issue>.png` is wrong).

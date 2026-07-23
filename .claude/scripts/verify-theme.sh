@@ -49,8 +49,8 @@ grep -qE '^@version' "$org"  && { echo "FAIL: @version present in org.css"; fail
 #
 # A rule can be present in the file and absent from the browser: a `*/` inside comment
 # prose truncates the sheet (ozon: 3 of 40 rules parsed), and a selector list mixing
-# ::-webkit- with ::-moz- is invalid in BOTH engines so the whole rule is discarded
-# (pepper's price-slider track). grep, brace balance and the mirror diff all pass on
+# ::-webkit- with ::-moz- is invalid in BOTH engines so the whole rule is discarded.
+# grep, brace balance and the mirror diff all pass on
 # these. Only the CSSOM knows. Skips silently if playwright isn't installed.
 if [ -f "$root/.claude/scripts/parse-check.js" ]; then
   if ! node "$root/.claude/scripts/parse-check.js" "$site" >/tmp/parse-check-$$.txt 2>&1; then

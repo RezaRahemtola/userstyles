@@ -37,7 +37,7 @@ It snapshots the themed page, **detaches our sheet**, re-reads the native comput
 - `flattened` — the site painted a chromatic colour and we collapsed it to grey/transparent. **A lost signal.** Ranked by how saturated the native colour was.
 - `painted` — the element was natively bare and we filled it (a blanket `* { border-color }` boxing in `border: 1px solid transparent` controls). Our deliberate dark chrome shows up here too — check each against the palette.
 
-Validated by known-answer test on sohu: against the pre-fix CSS it reported **7 flattened** hits naming `div.rate.stock-red`, `div.price.stock-red` and the green index; against the fixed CSS, **0**. It also caught a *half-applied* fix that had already shipped — `.rate.stock-red` was corrected while `.price.stock-red` beside it was still grey.
+Validated by known-answer test: against a pre-fix CSS it reported **7 flattened** hits naming the exact gain/loss selectors; against the fixed CSS, **0**. It also caught a *half-applied* fix that had already shipped — one selector corrected while its sibling beside it was still grey.
 
 **Limits:** it only sees the states currently rendered (open your flyouts first), and it cannot see `<canvas>` or SVG paint. A colour we *intentionally* re-tuned appears in `flattened` — verify each hit against the palette before "fixing" it.
 

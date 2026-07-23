@@ -34,20 +34,16 @@
 //                         with NO TEXT NODE, so every getComputedStyle(el).color walk
 //                         misses it. Reports colour vs backdrop + contrast ratio.
 //                         Flags <4.5:1 normal, <3:1 large (>=24px, or >=18.66px bold).
-//                         [investopedia: card eyebrow via content:attr(data-tag) @2.1:1,
-//                          "DEFINITION" kicker @1.3:1 | pypi: 30 FAQ icons @3.2:1]
+//                         [pypi: 30 FAQ icons @3.2:1]
 //  10. gradientStops      SVG paint-servers: fill="url(#g)" whose <stop stop-color> runs
 //                         near-black/near-white. DOUBLY blind: the fill reads as
 //                         `url(...)` so the fill scan skips it, and there is no `color`.
-//                         [investopedia: "Investopedia Answers" logotype #303FC8->#0F1864]
 //  11. symbolFills        <symbol>/<use> sprite instances whose SOURCE paths are painted
 //                         near-black by an inline <style> INSIDE the symbol. The rendered
 //                         <use> inherits our light `fill`; the source paths do not.
-//                         [investopedia: "People Inc." wordmark, .st1{fill:#131920}]
 //  12. smallLight         light surfaces UNDER big()'s floor: progress-bar tracks,
 //                         pagination discs, chips, short pills, table headers.
-//                         [investopedia: 2px #efefef scroll-progress track; 36x36 discs
-//                          | slashdot: 11x14 slider thumbs | pypi: 57x36 "Older" button]
+//                         [slashdot: 11x14 slider thumbs | pypi: 57x36 "Older" button]
 //  13. filledCarets       CSS-triangle carets flattened by a blanket `* { border-color }`
 //                         reset: a tiny box whose side borders should be transparent now
 //                         has >=3 opaque sides, so it renders as a solid rectangle.

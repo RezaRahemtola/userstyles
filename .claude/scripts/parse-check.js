@@ -2,7 +2,7 @@
 /**
  * parse-check.js <site> [...] — prove a theme's CSS actually PARSES.
  *
- *   node .claude/scripts/parse-check.js pepper
+ *   node .claude/scripts/parse-check.js genius
  *   node .claude/scripts/parse-check.js            # every theme
  *
  * Exit 0 = every rule survives the CSS parser. Exit 1 = at least one rule does not
@@ -26,7 +26,7 @@
  *          input::-webkit-slider-runnable-track,
  *          input::-moz-range-track { ... }
  *      is dead in Chromium (rejects -moz-) AND in Firefox (rejects -webkit-).
- *      pepper's price-slider track was unstyled in every browser. Split by engine.
+ *      Split by engine.
  *
  * A pure `-moz-` / `-ms-` rule legitimately fails to parse in Chromium — it is valid
  * in its own engine. Those are EXPECTED and reported as `firefoxOnly`, not failures.

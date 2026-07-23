@@ -8,8 +8,6 @@
 // ============================================================================
 // The dominant bug class across the 2026-07-09/10 patrols was OUR OWN broad rules
 // flattening the site's meaningful colours:
-//   sohu   `#Index *` painted a stock GAIN and a LOSS the identical grey.
-//   pepper a base-class `!important` swallowed .button--mode-{expired,danger,success}.
 //   khan   `button[class]` erased the selected answer AND the correct-answer green.
 //   thingiverse  badges, flairs, the selected dot, a primary CTA's blue fill.
 //
@@ -135,9 +133,9 @@ async (page) => {
   const isChromatic = (c) => opaque(c) && chroma(c) >= CHROMA_MIN;
 
   // "Flattened" is RELATIVE, not absolute. Our neutral text grey #c4cdd6 has chroma 18,
-  // so an absolute `< 12` cutoff misses it — and that grey is exactly what sohu's stock
-  // gain and loss were both repainted to (native chroma 182 → 18). Flag when the hue has
-  // collapsed to a small fraction of what the site painted, or vanished entirely.
+  // so an absolute `< 12` cutoff misses a native chroma-182 gain/loss pair both repainted
+  // to it (182 → 18). Flag when the hue has collapsed to a small fraction of what the
+  // site painted, or vanished entirely.
   const FLAT_RATIO = 0.25;
   const isFlat = (nc, tc) => !opaque(tc) || chroma(tc) <= Math.max(12, FLAT_RATIO * chroma(nc));
 
