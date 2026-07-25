@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           StackExchange Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.9
+@version        1.0.10
 @description    Dark theme for Stack Overflow and the whole Stack Exchange network: easy-on-the-eyes questions, answers, code blocks, comments and sidebar.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1631,6 +1631,19 @@
     border-color: #262c33 !important;
   }
 
+  /* The help dropdown's footer row ("About Us") is a featured item SE paints
+     a light #e3e6e8 highlight — a glaring light panel at the bottom of the
+     otherwise-dark help menu, only present while the dropdown is open. The
+     row is unclassed (no state hook), so darken every help-dialog li and
+     re-elevate the featured footer item with `:last-child`. */
+  #topbar-help-dialog .modal-content ul li {
+    background-color: transparent !important;
+  }
+
+  #topbar-help-dialog .modal-content ul li:last-child {
+    background-color: #20262d !important;
+  }
+
   /* autocomplete / search suggestions dropdown */
   .js-search-dropdown,
   .acp-dropdown,
@@ -2043,5 +2056,26 @@
   .site-header {
     background-color: #0d1117 !important;
     border-bottom: 1px solid #262c33 !important;
+  }
+}
+
+/* ============================================================
+   Ask Ubuntu only — keep the brand-orange header logo readable
+   ------------------------------------------------------------
+   Ask Ubuntu keeps its brand-orange `header.site-header` (we don't
+   darken it — see the Server Fault note above). Its logo.svg is a
+   WHITE wordmark baked for that orange band, and is already legible.
+   The network-wide logo-invert rule exists for the DARK wordmarks on
+   the transparent/white-header sites; applied here it turns the white
+   logo BLACK, which is low-contrast on the orange. Ask Ubuntu's header
+   stays light, so its logo must NOT be inverted — reset it to none.
+   Placed after the main block so it wins the !important tie.
+   ============================================================ */
+@-moz-document domain("askubuntu.com") {
+  .site-header--link img,
+  a.site-header--link img,
+  #hlogo img,
+  .-logo img {
+    filter: none !important;
   }
 }

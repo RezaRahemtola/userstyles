@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           CSDN Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.11
+@version        1.0.12
 @description    Dark theme for CSDN (csdn.net & blog.csdn.net): comfortable dark articles, homepage and search, with fully dark code blocks and a readable syntax palette.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1709,6 +1709,36 @@
   body div.channel-select-title {
     background-color: var(--csdn-elev2) !important;
     color: var(--csdn-text-2) !important;
+  }
+
+  /* bbs.csdn.net 积分榜/荣誉榜 leaderboard range chips (.floor-user-right-rank-score-tabs
+     li — 近7日 / 近30日 / 至今): each is a light rgb(240,240,242) pill and the SELECTED one
+     a light-blue rgb(235,242,247) pill, 22px tall so under the audit big() floor. Our
+     lifted labels shipped light-on-light — the whole range selector read as blank pale
+     boxes on the dark leaderboard. Darken to a recessed dark pill, mute the inactive
+     labels, and keep the selected chip brighter with a blue label (native marks it with
+     a muted-blue rgb(80,121,153) label) so the active range still reads. */
+  .floor-user-right-rank-score-tabs li {
+    background-color: var(--csdn-elev2) !important;
+    color: var(--csdn-muted) !important;
+    border-color: var(--csdn-border) !important;
+  }
+  .floor-user-right-rank-score-tabs li.active {
+    background-color: #30363d !important;
+    color: var(--csdn-link) !important;
+  }
+  /* the leaderboard "查看更多榜单" show-more button ships a light rgb(245,246,247) bar
+     under a blue link label — darken the surface, keep the blue label. */
+  .floor-user-right-rank-common a.show-more {
+    background-color: var(--csdn-elev2) !important;
+    color: var(--csdn-link) !important;
+    border-color: var(--csdn-border) !important;
+  }
+  /* the floor author-card "加入" (join) button paints a light rgb(232,232,237) ::after
+     sliver (a decorative corner, audit-blind pseudo) on the dark card — dark it. */
+  .cloud-left-floor .join.clearTpaErr::after,
+  .join.clearTpaErr::after {
+    background-color: var(--csdn-elev2) !important;
   }
 
   /* ---------- 问答 (ask.csdn.net) question-card meta pills ----------

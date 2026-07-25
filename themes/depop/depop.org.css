@@ -326,6 +326,14 @@
     background-color: #262c33 !important;
   }
 
+  /* The category filter's collapsible group headers (Men / Women / Kids /
+     Everything else) paint a light #eaeaea hover fill — a click-only nested
+     surface no load-time scan reaches. On dark, the pale label then sits
+     light-on-light. Give the row a dark elevated hover instead. */
+  [class*="collapsibleRow"]:hover {
+    background-color: #262c33 !important;
+  }
+
   /* The mobile "Filter" drawer is a position:fixed, full-viewport
      panel painted #fff — and it lives inside <main>, so the blanket
      `main div` transparent reset above makes it fully see-through:

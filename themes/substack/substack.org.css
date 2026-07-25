@@ -177,6 +177,13 @@
   .homepage-nav-mobile-menu {
     background-color: #14181d !important;
   }
+  /* Its item dividers ship a hardcoded light-grey section band (#f8f8f8) and
+     colourless 1px link hairlines that fall back to currentColor (our light
+     fg) — both render as bright white lines on the dark drawer. --- */
+  .homepage-nav-mobile-menu .mobile-menu-section,
+  .homepage-nav-mobile-menu .mobile-menu-section > a {
+    border-color: #2d333b !important;
+  }
 
   /* --- www marketing footer (global site footer ships a hardcoded light-grey
      block with dark-brown column headings) --- */

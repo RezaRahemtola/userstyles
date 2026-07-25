@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           OLX Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.11
+@version        1.0.12
 @description    Comfortable dark theme for OLX — home, search, listings and sign-in across the Polish, Ukrainian, Romanian, Portuguese, Bulgarian, Kazakh and Uzbek sites.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1132,7 +1132,9 @@
   #mainContent [data-testid="login-button"][data-button-variant="tertiary"],
   #mainContent [data-testid="phones-container"] button[data-button-variant="secondary"],
   .n-modal-portal [data-testid="ad-contact-message-button"][data-button-variant="secondary"],
-  .n-modal-portal [data-testid="chat-button"][data-button-variant="secondary"] {
+  .n-modal-portal [data-testid="chat-button"][data-button-variant="secondary"],
+  .n-modal-portal [data-testid="ad-contact-phone"][data-button-variant="secondary"],
+  .n-modal-portal [data-testid="show-phone"][data-button-variant="secondary"] {
     background-color: transparent !important;
     border-color: #5fd0c6 !important;
   }
@@ -1149,7 +1151,11 @@
   #mainContent [data-testid="phones-container"] button[data-button-variant="secondary"],
   #mainContent [data-testid="phones-container"] button[data-button-variant="secondary"] span,
   .n-modal-portal [data-testid="ad-contact-message-button"][data-button-variant="secondary"],
-  .n-modal-portal [data-testid="ad-contact-message-button"][data-button-variant="secondary"] span {
+  .n-modal-portal [data-testid="ad-contact-message-button"][data-button-variant="secondary"] span,
+  .n-modal-portal [data-testid="ad-contact-phone"][data-button-variant="secondary"],
+  .n-modal-portal [data-testid="ad-contact-phone"][data-button-variant="secondary"] span,
+  .n-modal-portal [data-testid="show-phone"][data-button-variant="secondary"],
+  .n-modal-portal [data-testid="show-phone"][data-button-variant="secondary"] span {
     color: #5fd0c6 !important;
     -webkit-text-fill-color: #5fd0c6 !important;
   }
