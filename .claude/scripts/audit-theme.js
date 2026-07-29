@@ -34,7 +34,6 @@
 //                         with NO TEXT NODE, so every getComputedStyle(el).color walk
 //                         misses it. Reports colour vs backdrop + contrast ratio.
 //                         Flags <4.5:1 normal, <3:1 large (>=24px, or >=18.66px bold).
-//                         [pypi: 30 FAQ icons @3.2:1]
 //  10. gradientStops      SVG paint-servers: fill="url(#g)" whose <stop stop-color> runs
 //                         near-black/near-white. DOUBLY blind: the fill reads as
 //                         `url(...)` so the fill scan skips it, and there is no `color`.
@@ -43,7 +42,7 @@
 //                         <use> inherits our light `fill`; the source paths do not.
 //  12. smallLight         light surfaces UNDER big()'s floor: progress-bar tracks,
 //                         pagination discs, chips, short pills, table headers.
-//                         [slashdot: 11x14 slider thumbs | pypi: 57x36 "Older" button]
+//                         [slashdot: 11x14 slider thumbs]
 //  13. filledCarets       CSS-triangle carets flattened by a blanket `* { border-color }`
 //                         reset: a tiny box whose side borders should be transparent now
 //                         has >=3 opaque sides, so it renders as a solid rectangle.
@@ -53,8 +52,8 @@
 //  14. activeBorders      "you are here" indicators (thick single-side border on an
 //                         active/current/selected/aria-current element) flattened to the
 //                         generic line colour instead of the accent.
-//                         [pypi: .vertical-tabs__tab--is-active — and note its
-//                          border-width was 0, so a colour-only override never painted]
+//                         [a colour-only override never paints when the active tab's
+//                          border-width is 0 — set the width too]
 //
 // WHAT IT CANNOT FIND
 //   - <canvas>, raster images, background sprites: needs screenshot luminance.

@@ -106,7 +106,7 @@ A hard WAF returns the block on the FIRST gentle request, consistent across UA/l
 - ⚪ **LOW-CEILING** — best incumbent tiny installs over years → skip (even with zero competition)
 - 🧱 **WALLED / UNBUILDABLE** — hard WAF OR meaningful pages login/bot-gated → shelve, don't retry
 - **NATIVE-DARK** — OS-dark or logged-out manual toggle → treat as served, skip (account-only = judgment call)
-- **PORTFOLIO** — modest demand but dev-relevant (PyPI, DaFont, Khan Academy) — flag explicitly, don't inflate ceiling
+- **PORTFOLIO** — modest demand but dev-relevant (DaFont, Khan Academy) — flag explicitly, don't inflate ceiling. Dev-reference sites (PyPI, CSDN, Juejin) all delisted at <0.2 installs/day: "devs would like this" is not demand
 
 ---
 
