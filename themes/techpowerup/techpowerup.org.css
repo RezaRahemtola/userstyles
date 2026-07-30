@@ -621,6 +621,26 @@
     color: #ffffff !important;
   }
 
+  /* Every news headline is prefixed by a vendor-logo PNG in an 87px `.newsicon`
+     plate the site paints #fafafa — 30+ of the brightest squares on the page.
+     The logos are transparent PNGs whose ink runs from pure black (AMD, MSI,
+     Steam) through full colour (NVIDIA green, Xbox, Microsoft), so a dark plate
+     erases the black ones and no filter keeps the coloured ones honest. The
+     plate has to stay light; mute it to the theme's light-ink tone instead,
+     which drops its luminance ~40% and leaves every logo legible. */
+  .newsicon {
+    background-color: #c9d1d9 !important;
+  }
+
+  /* The Patreon strip's category tag falls back to a #848484 plate when the
+     entry has no category, and TPU sets the per-category colour INLINE. Match
+     the `.flags .flag` treatment: deepen the fallback WITHOUT !important at
+     (0,1,0) so we beat the site's own default by source order while the inline
+     category colour still shows through. The tag's white ink is the site's. */
+  .patreon-previews__tag {
+    background-color: #3d4450;
+  }
+
   /* The Patreon strip's scrollbar is painted white by a ::-webkit-scrollbar rule
      (the `scrollbar-color` shorthand at the end of this sheet is Firefox-only) */
   .patreon-previews__list-wrapper::-webkit-scrollbar {
@@ -860,6 +880,21 @@
     color: #8b949e !important;
   }
 
+  /* The DESKTOP generation header paints its #e8e8e8 band as a background-IMAGE
+     (`linear-gradient(to right, transparent 7px, #e8e8e8 7px)` — the 7px transparent
+     lead-in is the gap the row's vendor colour stripe shows through), so the
+     background-COLOR rule above never clears it and the band renders white with our
+     near-white heading text on it. Rebuild the same gradient in the button tone and
+     keep the stripe gap. Two classes so this also outranks `table.items-desktop-table
+     th` (0,1,2) above, which is what actually paints these cells today. */
+  .items .generation-header,
+  .items-desktop-table .generation-header,
+  .processors .generation-header {
+    background-color: transparent !important;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 7px, #21262d 7px) !important;
+    color: #8b949e !important;
+  }
+
   /* "Recent changes" / sidebar info widgets on spec pages (light inner box) */
   aside.changes,
   aside.changes > div,
@@ -919,6 +954,13 @@
   .gpudb-relative-performance-entry--primary .gpudb-relative-performance-entry__title,
   .gpudb-relative-performance-entry--highlight .gpudb-relative-performance-entry__title {
     color: #e6edf3 !important;
+  }
+
+  /* The percentage beside each bar is the chart's one readable number and the
+     site hardcodes it #888 — under 4.5:1 on the card, worse on the amber
+     highlight row. It is a <div>, so no broad text rule ever reached it. */
+  .gpudb-relative-performance-entry__number {
+    color: #c4cdd6 !important;
   }
 
   /* The row for the card you are actually viewing carries `--highlight` (NOT
@@ -1129,6 +1171,12 @@
     color: #ffffff !important;
   }
 
+  /* Its label is a nested <span>, so the broad `span` body rule wins on the
+     child and greys it to ~4:1 on the gold face. */
+  .downloads-details .notification > .button span {
+    color: #ffffff !important;
+  }
+
   .downloads-mirrors .mirrorlist > button:hover {
     background-color: #2d333b !important;
   }
@@ -1150,8 +1198,9 @@
     color: #c4cdd6 !important;
   }
 
-  /* Hardcoded #555 secondary labels on download cards (file size, total
-     downloads) go invisible on the now-dark surface */
+  /* Hardcoded #555/#777 secondary labels on download cards (file name, file
+     size, total downloads) go invisible on the now-dark surface */
+  .filename,
   .filesize,
   .downloaded {
     color: #8b949e !important;
@@ -1276,6 +1325,14 @@
   .button.startbutton:hover,
   input.startbutton:hover {
     background-color: #2f74c0 !important;
+  }
+
+  /* The review pager's "Next Page »" CTA carries the next section's name in a
+     nested <small>, which the blanket `small` rule (0,0,1) paints muted grey —
+     ~2:1 on the blue CTA face. Claim it at (0,1,1) with a tint that clears 4.5:1
+     on both the blue CTA and the neutral button. */
+  .button small {
+    color: #cfe2f3 !important;
   }
 
   /* Destructive variant: the base `.button` rule above would otherwise erase
@@ -1451,6 +1508,47 @@
     color: #e6edf3 !important;
   }
 
+  /* XenForo paints its heading BANDS with a `linear-gradient(0deg, #e8f4fc, #fff)`
+     background-IMAGE, so the background-COLOR reads transparent and no colour-only
+     override clears them. `.overlay-title` is handled further down; the same gradient
+     also carries the thread-list "Filters" bar and every popup menu's header and tab
+     strip — all of which shipped as white bands with our near-white heading text.
+     `.filterBar-menuTrigger` keeps a pale plate of its own while its menu is open. */
+  .block-filterBar,
+  .menu-header,
+  .menu-tabHeader {
+    background-color: #161d27 !important;
+    background-image: none !important;
+    color: #e6edf3 !important;
+    border-color: #262c33 !important;
+  }
+
+  .filterBar-filterToggle,
+  .filterBar-menuTrigger.is-menuOpen,
+  .filterBar-menuTrigger:hover {
+    background-color: #21303f !important;
+    color: #ffffff !important;
+  }
+
+  /* The remaining members of the same --xf-contentHighlightBg family: hover and
+     selected states that no rule above claims, so each still flashes the light
+     style's #e8f4fc plate. The menu/autocomplete rows also re-assert the dark
+     --xf-textColor ink the site pins on them. */
+  .menu-row--highlighted,
+  .menu-row--clickable:hover,
+  .autoCompleteList > li.is-selected {
+    background-color: #21303f !important;
+    color: #ffffff !important;
+  }
+
+  .formRow-linkList > li > a:hover,
+  .actionBar-action--mq.is-selected,
+  .actionBar-action--view:hover,
+  .blockLinkSplitToggle:hover,
+  .blockLinkSplitToggle.is-selected {
+    background-color: #21303f !important;
+  }
+
   /* Notable-members page (/forums/members/): the column footers
      (.memberOverviewBlock-seeMore) ship a #f5f5f5 plate and the selected sidebar
      nav row is XenForo's #e8f4fc `.blockLink.is-selected` highlight (the light
@@ -1602,15 +1700,69 @@
     color: #c4cdd6 !important;
   }
 
-  /* The "Staff member" user banner under a username is XenForo's class-based
-     `.userBanner--staff`, shipping the light style's pale #e8f4fc plate with
-     dark-blue ink — a bright unthemed speck on the dark post for a light-OS
-     user. Retint to a dark-blue info plate; custom Patreon "Supporter" banners
-     set their gold identity INLINE and are deliberately left untouched. */
-  .userBanner--staff {
+  /* User banners under a username are `<a>` (or `<span>`) elements, so the blanket
+     `a:link` (0,1,1) and `span` (0,0,1) colour rules above beat every banner's own
+     ink — both the class variants' (XenForo sets those WITHOUT !important) and the
+     custom ones' (a usergroup sets plate + ink INLINE). TPU's gold Patreon
+     "Supporter" banner therefore rendered link-blue on pale gold at ~1.6:1.
+     Each XenForo colour variant gets the tint its `.label--*` twin already has, at
+     two classes so it outranks `a:link`. A CUSTOM banner keeps its inline identity
+     plate and takes a dark ink that reads on it — which assumes the pale plate TPU
+     ships; its inline border-color is greyed by the blanket `*` reset, so follow the
+     ink instead. Both custom rules are (0,1,1), i.e. they tie `a:link` and win only
+     because this block is later in the sheet. */
+  a.userBanner,
+  span.userBanner {
+    color: #3d2f05 !important;
+    border-color: currentColor !important;
+  }
+
+  .userBanner.userBanner--staff,
+  .userBanner.userBanner--primary,
+  .userBanner.userBanner--accent,
+  .userBanner.userBanner--blue,
+  .userBanner.userBanner--royalBlue,
+  .userBanner.userBanner--skyBlue {
     background-color: #16242e !important;
     border-color: #2970a3 !important;
     color: #79c0ff !important;
+  }
+
+  .userBanner.userBanner--green,
+  .userBanner.userBanner--olive,
+  .userBanner.userBanner--lightGreen {
+    background-color: #182a1a !important;
+    border-color: #2a5c2d !important;
+    color: #7ee787 !important;
+  }
+
+  .userBanner.userBanner--red,
+  .userBanner.userBanner--pink,
+  .userBanner.userBanner--hotPink {
+    background-color: #2d1a1a !important;
+    border-color: #7d2a2c !important;
+    color: #ff7b72 !important;
+  }
+
+  .userBanner.userBanner--orange,
+  .userBanner.userBanner--yellow {
+    background-color: #2b2412 !important;
+    border-color: #6b5a12 !important;
+    color: #e3c46a !important;
+  }
+
+  .userBanner.userBanner--purple,
+  .userBanner.userBanner--deepPurple {
+    background-color: #2a1e33 !important;
+    border-color: #4c3a5e !important;
+    color: #d2a8ff !important;
+  }
+
+  .userBanner.userBanner--gray,
+  .userBanner.userBanner--silver {
+    background-color: #21262d !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
   }
 
   .message-userTitle,
@@ -1654,6 +1806,27 @@
   .reactionSummary li,
   .reactionsBar .reactionSummary li {
     background-color: transparent !important;
+  }
+
+  /* Members with no uploaded photo get a generated letter tile whose plate AND
+     ink XenForo writes INLINE per user (`background-color:#66cccc; color:#206060`
+     — a pastel plate with a darkened same-hue initial). Our blanket `a:link`
+     !important beats the inline `color`, so the initial renders our link blue at
+     ~1.2:1 on the plate, and the plate stays a bright pastel square (125px on a
+     post, 48px on mobile). The generated palette spans #66cccc to #1f7a3d, so no
+     single ink works across it — replace the whole chip with the neutral button
+     tone. Match the site's own three-class chain so we also outrank its
+     `--text` rule (0,3,0 !important) that resolves from light-style vars.
+     The OP badge keeps its own darkened-hue ::before background. */
+  .avatar.avatar--default.avatar--default--dynamic,
+  .avatar.avatar--default.avatar--default--text,
+  .avatar.avatar--default.avatar--default--image {
+    background-color: #21262d !important;
+  }
+
+  .avatar.avatar--default.avatar--default--dynamic,
+  .avatar.avatar--default.avatar--default--text {
+    color: #c4cdd6 !important;
   }
 
   /* Avatar online-status marker: a #f5f5f5 ring around a green ::before dot;

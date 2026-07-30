@@ -24,9 +24,22 @@
      Colors are compiled literal hex on stable Stacks classes
      (.s-prose, .s-card, .s-input, .s-tag, .s-code-block,
      .s-sidebarwidget, #sidebar, #left-sidebar, .comment, .vote,
-     .accepted-answer, .hljs-* syntax tokens). No design tokens
-     are exposed on :root, so we override per-component. No
-     hashed/obfuscated class names are used.
+     .accepted-answer, .hljs-* syntax tokens). No hashed/obfuscated
+     class names are used.
+
+     Stacks DOES expose custom properties, in two layers, and both
+     matter here:
+       - a global palette on :root (--black-050 … --black-600,
+         --bc-light, --white). We deliberately do NOT remap these —
+         the same token paints text and surfaces, so flipping one
+         would invert unrelated components. Class-level rules instead.
+       - per-component tokens on the component itself (--_bl-* on
+         .s-block-link, --_av-* on .s-avatar, --_se-arrow-bc on
+         .s-select, --_me-* on .s-menu). These take a raw token and
+         are NOT reachable by any .fc- or .bg- utility remap, so a
+         component whose colour is only defined this way must be fixed
+         by redefining ITS token — that also preserves the geometry the
+         token feeds (triangle sides, avatar radius, selected accent).
 
      Palette (GitHub-dark family):
        base bg        #14181d
@@ -361,6 +374,17 @@
     color: #e6edf3 !important;
   }
 
+  /* The wrapper's up/down caret is a pair of CSS triangles drawn by
+     `.s-select:before/:after` from `--_se-arrow-bc: var(--bc-dark) transparent`
+     — a two-value border-color shorthand (opaque top/bottom, transparent
+     sides) that resolves to #0c0d0e, 1.3:1 on the darkened control, so the
+     control looks like it has no caret at all. Redefine the token keeping the
+     two-value form: a flat colour would fill the transparent sides and turn
+     each triangle into a solid rectangle. */
+  .s-select {
+    --_se-arrow-bc: #9198a1 transparent !important;
+  }
+
   .s-input:focus,
   .s-textarea:focus,
   input:focus,
@@ -435,27 +459,43 @@
     background-color: transparent !important;
   }
 
-  /* Selected nav item: SE marks it with aria-current="page" (the
-     legacy .youarehere class is gone), and paints a full white
-     pill (#f1f2f3). Recolor to a dark elevated surface with light
-     text + a tasteful SO-orange left accent. */
-  .left-sidebar .nav-links--link.youarehere,
-  .left-sidebar .nav-links--link.youarehere .-link,
-  .nav-links--link[aria-current="page"],
-  .nav-links--link[aria-current="true"],
-  #left-sidebar .nav-links--link[aria-current="page"],
-  .left-sidebar .nav-links--link[aria-current="page"],
+  /* Hover surface. The at-rest reset above carries an ID
+     (`#left-sidebar .nav-links--link`, 1-0-1-0), so every state rule below it
+     must ALSO carry that ID or the reset out-ranks it and the state never
+     paints — the sibling `.s-block-link` nav rows (Home, AI Assist, Chat) do
+     highlight on hover via their `--_bl-bg` token, so the `.nav-links--link`
+     rows (Questions, Tags, Users, Companies) were the only ones in the rail
+     with no hover feedback at all. */
+  .nav-links--link:hover,
   .left-sidebar .nav-links--link:hover,
-  .nav-links--link:hover {
+  #left-sidebar .nav-links--link:hover,
+  #left-sidebar .nav-links .nav-links--link:hover {
     background-color: #21262d !important;
     color: #e6edf3 !important;
   }
 
+  /* Selected nav item: SE marks it with aria-current="page" (the
+     legacy .youarehere class is gone), and paints a full white
+     pill (#f1f2f3). Recolor to a dark elevated surface with light
+     text + a tasteful SO-orange left accent. Must out-rank BOTH the
+     ID-carrying at-rest reset and the hover rule above, so it repeats the
+     `#left-sidebar` prefix and sits after them. */
   .left-sidebar .nav-links--link.youarehere,
+  .left-sidebar .nav-links--link.youarehere .-link,
   .nav-links--link[aria-current="page"],
-  .left-sidebar .nav-links--link[aria-current="page"] {
+  .nav-links--link[aria-current="true"],
+  .left-sidebar .nav-links--link[aria-current="page"],
+  #left-sidebar .nav-links--link[aria-current="page"],
+  #left-sidebar .nav-links--link[aria-current="true"],
+  #left-sidebar .nav-links .nav-links--link[aria-current="page"] {
     background-color: #1c2128 !important;
     border-left: 3px solid #d98b3a !important;
+    color: #e6edf3 !important;
+  }
+
+  #left-sidebar .nav-links .nav-links--link[aria-current="page"]:hover,
+  #left-sidebar .nav-links--link[aria-current="page"]:hover {
+    background-color: #21262d !important;
   }
 
   /* keep the selected item's label text bright (overrides the
@@ -472,11 +512,36 @@
      (.bc-purple-200 = #dfe1fb). That pale ring is invisible on SE's
      white page but reads as a glaring WHITE HALO on dark. Keep the
      purple disc + white glyph (the brand identity) and only retone
-     the ring to a dark, harmonized purple so the halo disappears. */
+     the ring to a dark, harmonized purple so the halo disappears.
+     The disc FILL is pinned to the same #555bce it already computes to on the
+     light site: a no-op there, and it keeps the white glyph legible for a
+     reader who also has SE's own account-level dark mode on, where
+     var(--purple-400) flips to a pale lavender #bdc1fe. */
   .nav-links--link .bg-purple-400.bar-circle,
   .nav-links--link div.bg-purple-400,
   .left-sidebar .nav-links--link .bg-purple-400 {
+    background-color: #555bce !important;
     border-color: #3b3f73 !important;
+  }
+
+  /* Nav item GLYPHS (Home / Questions / Unanswered / Tags / Users /
+     Companies, desktop rail and mobile drawer alike). SE paints them via
+     `.nav-links--link.-link__with-icon .svg-icon { color: var(--black-500) }`
+     — a raw token, not an `.fc-black-*` utility, so the utility remap above
+     never reaches them: they render #3b4045 at 1.7:1, and the SELECTED item
+     takes var(--black-600) #0c0d0e at 1.1:1 (invisible). The glyph is an
+     inheriting `fill:currentColor` path, so setting `color` is enough.
+     `:not(.fc-white)` spares the white glyphs on the purple brand discs. */
+  .nav-links--link .svg-icon:not(.fc-white),
+  .nav-links--link.-link__with-icon .svg-icon:not(.fc-white),
+  .left-sidebar .nav-links--link .svg-icon:not(.fc-white) {
+    color: #9198a1 !important;
+  }
+
+  .nav-links--link:hover .svg-icon:not(.fc-white),
+  .nav-links--link[aria-current="page"] .svg-icon:not(.fc-white),
+  .left-sidebar .nav-links--link[aria-current="page"] .svg-icon:not(.fc-white) {
+    color: #e6edf3 !important;
   }
 
   /* ============================================================
@@ -546,6 +611,18 @@
 
   .s-prose strong, .s-prose b { color: #e6edf3 !important; }
 
+  /* …but not when the bold text IS the link (`<a><strong>title</strong></a>`,
+     the usual shape for a cited paper or a linked heading in an answer). The
+     bright-prose rules are !important and land on the inner element, so the
+     anchor's accent never reaches the rendered text and a bold link becomes
+     bold body copy. Same trap for the metadata `strong` rules further down,
+     hence the .post-layout / .grid--cell arms. */
+  .s-prose a strong, .s-prose a b,
+  .comment-copy a strong, .comment-copy a b,
+  .post-layout a strong, .grid--cell a strong {
+    color: inherit !important;
+  }
+
   .s-prose blockquote {
     border-left-color: #2d333b !important;
     color: #9198a1 !important;
@@ -560,6 +637,19 @@
   .s-card hr {
     background-color: #262c33 !important;
     border-color: #262c33 !important;
+  }
+
+  /* Section rules drawn as a BORDER instead of an <hr>: `.s-page-title`
+     underlines its heading with #d6d9dc and each help-center category <h3>
+     with #e3e6e8. Both are light-theme greys SE never re-tones, so the Help
+     Center ships a bright rule under "Help center" and under every category
+     ("Asking", "Our model", "Reputation & Moderation", …). */
+  .s-page-title,
+  div.s-page-title,
+  .help-category-box h3,
+  .help-center-index h3,
+  .help-category-box > h3 {
+    border-color: #2d333b !important;
   }
 
   /* Accepted answer highlight */
@@ -761,6 +851,17 @@
   .hljs-emphasis { font-style: italic; }
   .hljs-strong { font-weight: bold; color: #e6edf3 !important; }
   .hljs-doctag, .hljs-params { color: #c4cdd6 !important; }
+  /* Tokens the palette above did not name. SE's own rules for these are more
+     specific than `.hljs` (`pre.s-code-block>code .hljs-subst`, 0,2,2), so an
+     unlisted token silently keeps its LIGHT-theme colour: `--highlight-color`
+     #0c0d0e (1.3:1 — a Python f-string's `{n}` vanishes), `--highlight-*`
+     punctuation #3b4045, keyword #01508f, variable #5a7a0d, namespace #b84b01.
+     Grouped with the palette entry each one shares its meaning with. */
+  .hljs-subst { color: #d9e0e7 !important; }
+  .hljs-code { color: #c4cdd6 !important; }
+  .hljs-link, .hljs-meta-string { color: #a5d6ff !important; }
+  .hljs-meta-keyword, .hljs-selector-class { color: #ff7b72 !important; }
+  .hljs-selector-id { color: #79c0ff !important; }
 
   /* Stacks prettify-style spans (older code) */
   .prettyprint .pln { color: #d9e0e7 !important; }
@@ -881,19 +982,18 @@
     color: #8cc6f0 !important;
   }
 
-  /* Linked/Related sidebar vote-count pills: `.answer-votes.default` is a
-     SIZE class (default/large/extra-large), NOT a state. The plain no-accept
-     pill keeps SE's white #f1f2f3 fill with near-black #3b4045 text — a
-     glaring light pill on dark, short enough (38x21) to slip the audit height
-     filter — so we darken it. But an ACCEPTED (green) or ANSWERED (blue) pill
-     that happens to be default-sized ALSO carries `.default`, and this rule's
-     `#sidebar .answer-votes.default` (1,2,0) out-specifies the state rules
-     below (`#sidebar .answered-accepted` 1,1,0) — flattening the accepted
-     green "63"/"22" Linked pills to identical grey (a lost signal). Exclude
-     the two state classes so only the genuine plain white pill is darkened. */
-  .answer-votes.default:not(.answered):not(.answered-accepted),
-  #sidebar .answer-votes.default:not(.answered):not(.answered-accepted),
-  .module .answer-votes.default:not(.answered):not(.answered-accepted) {
+  /* Linked/Related sidebar vote-count pills. `default`/`large`/`extra-large`
+     are SIZE classes, NOT states: match on the STATE only, never the size, or
+     the same white pill comes back one size up (a `.large` "236" shipped
+     glaring white while the `.default` siblings beside it were correct). The
+     plain no-accept pill keeps SE's white #f1f2f3 fill with near-black
+     #3b4045 text, and it is short (38x21) so it slips the audit height
+     filter — darken it. An ACCEPTED (green) or ANSWERED (blue) pill must keep
+     its fill, and these selectors would out-specify the state rules below, so
+     exclude the two state classes explicitly. */
+  .answer-votes:not(.answered):not(.answered-accepted),
+  #sidebar .answer-votes:not(.answered):not(.answered-accepted),
+  .module .answer-votes:not(.answered):not(.answered-accepted) {
     background-color: #20262d !important;
     color: #9198a1 !important;
   }
@@ -1108,6 +1208,21 @@
     color: #9198a1 !important;
   }
 
+  /* Stacks also link-styles a button by adding `.s-link` ALONGSIDE the button
+     classes — SE's link colour then wins natively, but our 1-class
+     `.s-btn__muted` / `.s-btn` rules out-rank it and paint the control body
+     grey. The "Add a comment" control under every post is the live case: it
+     moved from `.js-add-link` (which this file already accents) to
+     `button.s-link.s-btn__muted.s-btn__outlined.comments-link`, so it stopped
+     reading as an action at all. Match on the `.s-link` pairing, not the one
+     renamed class, so the whole shape is covered. */
+  .s-link.s-btn,
+  .s-link.s-btn__muted,
+  .s-link.s-btn__outlined,
+  .comments-link {
+    color: #5fb0e6 !important;
+  }
+
   /* Outlined CTAs ("Log in", "Ask question") are the accent colour; only
      the muted variant is grey. */
   .s-btn.s-btn__outlined {
@@ -1148,6 +1263,43 @@
     background-color: #2d333b !important;
     color: #e6edf3 !important;
     border-color: #3d444d !important;
+  }
+
+  /* `__featured` is the last unhandled `.s-btn__<variant>`: a purple
+     (--purple-400/500) promo CTA that the base `.s-btn` grey flattened like
+     the rest of the family. Keep the purple identity, retoned for dark. */
+  .s-btn.s-btn__featured {
+    color: #a8abf2 !important;
+  }
+
+  .s-btn.s-btn__featured.s-btn__outlined {
+    color: #a8abf2 !important;
+    border-color: #5a5fc0 !important;
+  }
+
+  .s-btn.s-btn__featured.s-btn__filled {
+    background-color: #4a4fa8 !important;
+    color: #ffffff !important;
+    border-color: #5a5fc0 !important;
+  }
+
+  /* The count chip inside a sort tab ("Bountied 3"). Stacks fills
+     `.s-btn .s-btn--badge` from `background-color: currentColor`, and Stack
+     Overflow additionally stamps the element with the `.bg-blue-500` utility
+     — which our announcement-banner retone of `.bg-blue-*` swallowed, leaving
+     a near-invisible #14222e chip. The legacy `.bounty-indicator*` chip that
+     renders the SAME control on the other network sites was untouched and
+     stayed brand blue, so one component had two looks. Pin both to the
+     theme's accent fill. `.bounty-indicator-tab.flagbg` (red) is 2 classes
+     and !important in SE's own sheet, so it still wins. */
+  .s-btn-group .s-btn .s-btn--badge,
+  .s-btn--badge.bg-blue-500,
+  .s-btn--badge.bg-blue-400,
+  .s-btn--badge.bg-blue-600,
+  .bounty-indicator,
+  .bounty-indicator-tab {
+    background-color: #2f6f9f !important;
+    color: #ffffff !important;
   }
 
   /* "Ask Question" big button */
@@ -1299,6 +1451,66 @@
     border-color: #3a2f55 !important;
   }
 
+  /* The rest of the `.s-badge__*` family, same BEM trap. Stacks currently
+     ships 22 variants; the block above named 13, so these seven still fell
+     through to the base blue chip:
+       __votes   a post's score pill on a profile's "Top posts" rows. SE
+                 paints it WHITE with black-500 text unless it also carries
+                 __answered (green) — so the blue chip read as a second
+                 positive state next to the green one. Mirror SE's own
+                 `:not(.s-badge__answered)` guard so the green survives, and
+                 use the same neutral chip `.answer-votes` already gets.
+       __muted / __muted.__filled   neutral greys (black-200 / black-500).
+       __danger.__filled            red-400 fill: the 2-class __danger rule
+                                    above sets background-color directly, so
+                                    it beat SE's 3-class token rule and
+                                    flattened the solid red to the tint.
+       __info    blue-200 info chip; explicit so it does not drift.
+       __ai      orange-500 uppercase label, border = the text colour.
+       __bot     black-300 outline (the "Community Bot" author chip).
+     Each keeps the size/shape modifiers (__sm, __xs) untouched. */
+  .s-badge.s-badge__votes:not(.s-badge__answered) {
+    background-color: #20262d !important;
+    color: #9198a1 !important;
+    border-color: #2d333b !important;
+  }
+
+  .s-badge.s-badge__muted {
+    background-color: #20262d !important;
+    color: #9198a1 !important;
+    border-color: #3d444d !important;
+  }
+
+  .s-badge.s-badge__muted.s-badge__filled {
+    background-color: #3d444d !important;
+    color: #ffffff !important;
+    border-color: #3d444d !important;
+  }
+
+  .s-badge.s-badge__danger.s-badge__filled {
+    background-color: #a03a40 !important;
+    color: #ffffff !important;
+    border-color: #a03a40 !important;
+  }
+
+  .s-badge.s-badge__info {
+    background-color: #14222e !important;
+    color: #8cc6f0 !important;
+    border-color: #234055 !important;
+  }
+
+  .s-badge.s-badge__ai {
+    background-color: #2a2114 !important;
+    color: #e0913f !important;
+    border-color: #e0913f !important;
+  }
+
+  .s-badge.s-badge__bot {
+    background-color: #20262d !important;
+    color: #c4cdd6 !important;
+    border-color: #3d444d !important;
+  }
+
   /* reputation / badge counts on user cards */
   .reputation-score, .user-info .reputation-score {
     color: #c4cdd6 !important;
@@ -1313,6 +1525,17 @@
   .post-signature,
   .user-info {
     color: #c4cdd6 !important;
+  }
+
+  /* Avatar TILES. `.s-avatar` fills its box from `--_av-bg: var(--_white-static)`
+     — pure white. A gravatar covers the box exactly so the fill never shows,
+     but SE's default avatar (`Content/Img/user.svg`) is a #6a737c silhouette
+     on a TRANSPARENT canvas: every user without a gravatar, plus deleted and
+     anonymous users, renders a solid white rounded square. Retone the token
+     (not `background-color`) so the rounded-corner geometry and the size
+     modifiers 16/24/32/48/64/96/128 all keep working. */
+  .s-avatar {
+    --_av-bg: #262c33 !important;
   }
 
   /* In the legacy signature block the display name is a BARE <a> (no class)
@@ -1330,8 +1553,12 @@
     color: #9bd4ff !important;
   }
 
+  /* SE tints ONLY the post OWNER's signature card (`.post-signature.owner`,
+     #edf5fd) — that tint is the sole marker of which of the "edited by" /
+     "asked by" cards belongs to the author. Tinting `.user-info` too painted
+     every signature on the page the same blue and erased the signal. */
   .post-signature.owner,
-  .post-signature .user-info {
+  .post-signature.owner .user-info {
     background-color: #16202c !important;
     border-radius: 5px;
   }
@@ -1636,6 +1863,71 @@
     background-color: #20262d !important;
   }
 
+  /* The topbar dropdown rows' SECONDARY line (`.item-summary` — "Start here
+     for a quick overview of the site" under Tour, and the sibling blurbs
+     under Help Center / Meta / About Us). SE paints it from the raw
+     var(--black-500) token, not an `.fc-black-*` utility, so it stays
+     #3b4045 at 1.46:1 on the dark pane — the whole explanatory half of the
+     help menu is unreadable. Only reachable with the dropdown OPEN. */
+  .item-summary,
+  .topbar-dialog .item-summary,
+  #topbar-help-dialog .item-summary {
+    color: #9198a1 !important;
+  }
+
+  /* Site-switcher community blurbs ("For 3D printing enthusiasts"). Unclassed
+     <p class="site-desc"> on SE's #636b74 — 2.82:1 on the switcher pane. */
+  .site-desc,
+  p.site-desc,
+  .siteSwitcher-dialog .site-desc {
+    color: #9198a1 !important;
+  }
+
+  /* ============================================================
+     Stacks `.s-menu` dropdown menus (`.s-block-link` rows)
+     ------------------------------------------------------------
+     The component every network flyout is built from: the questions-list
+     "More" sort popover, the user-page "Profiles" flyout, post action menus.
+     It is driven ENTIRELY by component custom properties, so class-level
+     colour rules never reach it:
+       --_bl-fc        row label      var(--black-500)  #3b4045 -> 1.5:1
+       --_bl-bg        .is-selected   var(--black-150)  #f1f2f3 -> a full
+                                       WHITE row with #0c0d0e text
+       --_me-divider-bg  separator    var(--bc-light)   #e3e6e8 -> a bright bar
+     Redefining the tokens keeps the component's own shape, hover behaviour
+     and the `__right.is-selected` accent bar intact. These nodes only exist
+     while the menu is OPEN, so no load-time scan can see them.
+     ============================================================ */
+  .s-block-link {
+    --_bl-fc: #c4cdd6 !important;
+    --_bl-fc-hover: #e6edf3 !important;
+    --_bl-fc-visited: #c4cdd6 !important;
+  }
+
+  .s-block-link:hover {
+    --_bl-bg: #222831 !important;
+  }
+
+  .s-block-link.is-selected {
+    --_bl-bg: #2d333b !important;
+    --_bl-fc: #e6edf3 !important;
+  }
+
+  /* `__danger` ("Delete", destructive menu items) is a SEMANTIC variant that
+     sets --_bl-fc to var(--red-400). The blanket !important above would
+     out-rank it and flatten the destructive red, so restore it (lifted for
+     dark) rather than letting the neutral label win. */
+  .s-block-link.s-block-link__danger {
+    --_bl-fc: #f85149 !important;
+    --_bl-fc-hover: #ff7b72 !important;
+    --_bl-fc-visited: #f85149 !important;
+  }
+
+  .s-menu {
+    --_me-divider-bg: #2d333b !important;
+    --_me-label-btc: #2d333b !important;
+  }
+
   /* autocomplete / search suggestions dropdown */
   .js-search-dropdown,
   .acp-dropdown,
@@ -1932,6 +2224,50 @@
     background-color: #14222e !important;
     border-color: #234055 !important;
     color: #cfe0ef !important;
+  }
+
+  /* Post /revisions diff highlights. SE marks changed text with light-theme
+     highlighter fills — `span.diff-add` green-300 #94ccae on green-600 text,
+     `span.diff-delete` red-300 #eeaaaa on red-600 — the biggest bright
+     surfaces anywhere in the theme, and a bg-COLOR audit misses them because
+     the red channel (148 / 238) straddles the near-white threshold. The
+     whole family needs the same treatment, not just the two inline spans:
+     the side-by-side view paints WHOLE LINES from `.full-diff .inserted>div`
+     / `.deleted>div`, its `.skip` marker is a black-150 band framed by 4px
+     WHITE borders, and its `td.content` body text is black-350 (3.5:1 once
+     the page is dark). Retone to saturated-dark tints that still read as
+     highlighter marks. */
+  span.diff-add,
+  .diff-add {
+    background-color: #1c4229 !important;
+    color: #c7f0d3 !important;
+  }
+
+  span.diff-delete,
+  .diff-delete {
+    background-color: #4a1d20 !important;
+    color: #f6c8c8 !important;
+  }
+
+  .full-diff .inserted > div {
+    background-color: #16221a !important;
+  }
+
+  .full-diff .deleted > div {
+    background-color: #2a1718 !important;
+  }
+
+  .full-diff .skip {
+    background-color: #20262d !important;
+    color: #9198a1 !important;
+    border-top-color: #262c33 !important;
+    border-bottom-color: #262c33 !important;
+  }
+
+  .full-diff td.content,
+  .full-html-diff th,
+  .suggested-edit .body-diffs .full-html-diff th {
+    color: #c4cdd6 !important;
   }
 
   /* Diff "skipped lines" separator on /revisions (inline diff view):

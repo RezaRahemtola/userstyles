@@ -356,6 +356,256 @@
     --magritte-color-component-segmented-item-icon-state-unselected-hovered-v24-7-3: #c4cdd6;
     --magritte-color-component-switch-background-container-unchecked-v24-7-3: #3a424c;
     --magritte-color-component-switch-background-state-container-unchecked-hovered-v24-7-3: #4a545f;
+
+    /* --- Button STATE + semantic-variant surfaces (v24-7-3 only) -------------
+       The block above covers a button's resting neutral/accent surfaces, but the
+       component reads a separate token for every hovered / pressed / disabled
+       state and for each semantic style — and those still ship light. A tertiary
+       button (the header icon buttons, the auth back chevron, inline expanders)
+       is transparent at rest, so nothing looks wrong until the pointer lands:
+       `state-neutral-tertiary-hovered` is #f4f6fb, and the pill flashes near-white
+       under the cursor with our light grey glyph on it. A disabled button ships a
+       #dce3eb / #f4f6fb pill, and the positive / negative / special secondary
+       buttons ship pale tints (#e8f9ec / #fef2ef / #f7f4ff). None of it is visible
+       to a load-time scan — hover and disabled are states, not markup.
+       Mapped onto the same tinted surfaces this theme already uses for the tag
+       variants, with each label/icon lifted to the matching readable hue.
+       v24-7-3 only: the live token set no longer declares v24-7-2 at all
+       (getComputedStyle(:root) now returns v24-7-3 + legacy v21-1-0). */
+    /* tertiary hover / press */
+    --magritte-color-component-button-background-state-neutral-tertiary-hovered-v24-7-3: #2d333b;
+    --magritte-color-component-button-background-state-neutral-tertiary-pressed-v24-7-3: #3a424c;
+    --magritte-color-component-button-background-state-accent-tertiary-hovered-v24-7-3: #1f3550;
+    --magritte-color-component-button-background-state-accent-tertiary-pressed-v24-7-3: #24406b;
+    --magritte-color-component-button-background-state-positive-tertiary-hovered-v24-7-3: #16301f;
+    --magritte-color-component-button-background-state-positive-tertiary-pressed-v24-7-3: #1b3d28;
+    --magritte-color-component-button-background-state-negative-tertiary-hovered-v24-7-3: #3a231e;
+    --magritte-color-component-button-background-state-negative-tertiary-pressed-v24-7-3: #4a2c25;
+    --magritte-color-component-button-background-state-special-tertiary-hovered-v24-7-3: #241d33;
+    --magritte-color-component-button-background-state-special-tertiary-pressed-v24-7-3: #2d2440;
+    /* semantic secondary surfaces + their hover / press */
+    --magritte-color-component-button-background-positive-secondary-v24-7-3: #16301f;
+    --magritte-color-component-button-background-negative-secondary-v24-7-3: #3a231e;
+    --magritte-color-component-button-background-special-secondary-v24-7-3: #241d33;
+    --magritte-color-component-button-background-state-positive-secondary-hovered-v24-7-3: #1b3d28;
+    --magritte-color-component-button-background-state-positive-secondary-pressed-v24-7-3: #1b3d28;
+    --magritte-color-component-button-background-state-negative-secondary-hovered-v24-7-3: #4a2c25;
+    --magritte-color-component-button-background-state-negative-secondary-pressed-v24-7-3: #4a2c25;
+    --magritte-color-component-button-background-state-special-secondary-hovered-v24-7-3: #2d2440;
+    --magritte-color-component-button-background-state-special-secondary-pressed-v24-7-3: #2d2440;
+    --magritte-color-component-button-background-state-accent-secondary-pressed-v24-7-3: #24406b;
+    /* disabled pills */
+    --magritte-color-component-button-background-state-neutral-disabled-v24-7-3: #21262d;
+    --magritte-color-component-button-background-state-accent-disabled-v24-7-3: #21262d;
+    --magritte-color-component-button-background-state-positive-disabled-v24-7-3: #21262d;
+    --magritte-color-component-button-background-state-negative-disabled-v24-7-3: #21262d;
+    --magritte-color-component-button-background-state-special-disabled-v24-7-3: #21262d;
+    --magritte-color-component-button-background-state-neutral-secondary-disabled-v24-7-3: #1c2128;
+    --magritte-color-component-button-background-state-accent-secondary-disabled-v24-7-3: #1c2128;
+    --magritte-color-component-button-background-state-positive-secondary-disabled-v24-7-3: #1c2128;
+    --magritte-color-component-button-background-state-negative-secondary-disabled-v24-7-3: #1c2128;
+    --magritte-color-component-button-background-state-special-secondary-disabled-v24-7-3: #1c2128;
+    /* semantic labels/icons, lifted for the dark tints above */
+    --magritte-color-component-button-text-positive-secondary-v24-7-3: #57d98a;
+    --magritte-color-component-button-text-positive-tertiary-v24-7-3: #57d98a;
+    --magritte-color-component-button-icon-positive-secondary-v24-7-3: #57d98a;
+    --magritte-color-component-button-icon-positive-tertiary-v24-7-3: #57d98a;
+    --magritte-color-component-button-text-negative-secondary-v24-7-3: #ff8a7a;
+    --magritte-color-component-button-text-negative-tertiary-v24-7-3: #ff8a7a;
+    --magritte-color-component-button-icon-negative-secondary-v24-7-3: #ff8a7a;
+    --magritte-color-component-button-icon-negative-tertiary-v24-7-3: #ff8a7a;
+    --magritte-color-component-button-text-special-secondary-v24-7-3: #c3a6f5;
+    --magritte-color-component-button-text-special-tertiary-v24-7-3: #c3a6f5;
+    --magritte-color-component-button-icon-special-secondary-v24-7-3: #c3a6f5;
+    --magritte-color-component-button-icon-special-tertiary-v24-7-3: #c3a6f5;
+
+    /* --- Magritte v24-8-0 (current live suffix) -------------------------------
+       hh re-versioned the whole token set again (v24-7-3 -> v24-8-0). Every name
+       above is unchanged, only the suffix moved, and the live :root now declares
+       ONLY v24-8-0 + legacy v21-1-0 — so the entire block above resolves to
+       nothing and the site falls back to its light values (the header "Войти"
+       pill renders a white slab with a near-white label). Same 177 tokens,
+       re-declared verbatim under the new suffix.
+       NB for the next patrol: probe the live suffix FIRST —
+       getComputedStyle(document.documentElement) filtered on --magritte-color-.
+       The set re-versions periodically and the buttons break first. */
+    --magritte-color-background-primary-v24-8-0: #14181d;
+    --magritte-color-background-body-v24-8-0: #14181d;
+    --magritte-color-background-secondary-v24-8-0: #1c2128;
+    --magritte-color-background-tertiary-v24-8-0: #21262d;
+    --magritte-color-background-state-primary-hovered-v24-8-0: #14181d;
+    --magritte-color-background-state-primary-pressed-v24-8-0: #14181d;
+    --magritte-color-background-state-secondary-hovered-v24-8-0: #21262d;
+    --magritte-color-background-state-secondary-pressed-v24-8-0: #2d333b;
+    --magritte-color-background-state-tertiary-hovered-v24-8-0: #2d333b;
+    --magritte-color-background-state-tertiary-pressed-v24-8-0: #2d333b;
+    --magritte-color-background-accent-secondary-v24-8-0: #1f3550;
+    --magritte-color-background-positive-secondary-v24-8-0: #16301f;
+    --magritte-color-background-negative-secondary-v24-8-0: #3a231e;
+    --magritte-color-background-warning-secondary-v24-8-0: #33261a;
+    --magritte-color-background-special-secondary-v24-8-0: #241d33;
+    --magritte-color-background-dreamy-secondary-v24-8-0: #16303c;
+    --magritte-color-background-lovely-secondary-v24-8-0: #3a1c24;
+    --magritte-color-background-vivid-secondary-v24-8-0: #332c14;
+    --magritte-color-text-primary-v24-8-0: #e6edf3;
+    --magritte-color-text-secondary-v24-8-0: #8b949e;
+    --magritte-color-text-dense-v24-8-0: #c4cdd6;
+    --magritte-color-text-accent-v24-8-0: #5fb0e6;
+    --magritte-color-text-accent-secondary-v24-8-0: #5fb0e6;
+    --magritte-color-text-state-primary-hovered-v24-8-0: #ffffff;
+    --magritte-color-text-state-primary-pressed-v24-8-0: #e6edf3;
+    --magritte-color-icon-primary-v24-8-0: #c4cdd6;
+    --magritte-color-icon-secondary-v24-8-0: #8b949e;
+    --magritte-color-icon-accent-v24-8-0: #5fb0e6;
+    --magritte-color-icon-accent-secondary-v24-8-0: #5fb0e6;
+    --magritte-color-icon-state-primary-hovered-v24-8-0: #e6edf3;
+    --magritte-color-icon-state-primary-pressed-v24-8-0: #ffffff;
+    --magritte-color-icon-state-secondary-hovered-v24-8-0: #c4cdd6;
+    --magritte-color-stroke-neutral-v24-8-0: #2d333b;
+    --magritte-color-stroke-neutral-heavy-v24-8-0: #3a424c;
+    --magritte-color-stroke-phantom-v24-8-0: #2d333b;
+    --magritte-color-stroke-state-neutral-hovered-v24-8-0: #3a424c;
+    --magritte-color-stroke-state-neutral-pressed-v24-8-0: #3a424c;
+    --magritte-color-component-drop-background-content-v24-8-0: #1c2128;
+    --magritte-color-component-modal-background-content-v24-8-0: #1c2128;
+    --magritte-color-component-input-background-field-v24-8-0: #1c2128;
+    --magritte-color-component-input-background-state-field-hovered-v24-8-0: #1c2128;
+    --magritte-color-component-input-background-state-field-focused-v24-8-0: #1c2128;
+    --magritte-color-component-input-background-state-field-invalid-v24-8-0: #1c2128;
+    --magritte-color-component-input-background-state-field-disabled-v24-8-0: #181d23;
+    --magritte-color-component-input-text-content-v24-8-0: #e6edf3;
+    --magritte-color-component-input-text-label-v24-8-0: #8b949e;
+    --magritte-color-component-input-text-placeholder-v24-8-0: #8b949e;
+    --magritte-color-component-input-text-postfix-v24-8-0: #8b949e;
+    --magritte-color-component-input-icon-content-v24-8-0: #8b949e;
+    --magritte-color-component-input-stroke-field-v24-8-0: #2d333b;
+    --magritte-color-component-button-background-neutral-v24-8-0: #30363d;
+    --magritte-color-component-button-background-neutral-secondary-v24-8-0: #21262d;
+    --magritte-color-component-button-background-accent-v24-8-0: #2f81f7;
+    --magritte-color-component-button-background-accent-secondary-v24-8-0: #1f3550;
+    --magritte-color-component-button-background-state-neutral-hovered-v24-8-0: #3a424c;
+    --magritte-color-component-button-background-state-neutral-pressed-v24-8-0: #3a424c;
+    --magritte-color-component-button-background-state-neutral-secondary-hovered-v24-8-0: #2d333b;
+    --magritte-color-component-button-background-state-neutral-secondary-pressed-v24-8-0: #2d333b;
+    --magritte-color-component-button-background-state-accent-hovered-v24-8-0: #4c9bff;
+    --magritte-color-component-button-background-state-accent-pressed-v24-8-0: #4c9bff;
+    --magritte-color-component-button-background-state-accent-secondary-hovered-v24-8-0: #24406040;
+    --magritte-color-component-button-text-neutral-secondary-v24-8-0: #e6edf3;
+    --magritte-color-component-button-text-neutral-tertiary-v24-8-0: #c4cdd6;
+    --magritte-color-component-button-text-accent-secondary-v24-8-0: #5fb0e6;
+    --magritte-color-component-button-text-accent-tertiary-v24-8-0: #5fb0e6;
+    --magritte-color-component-button-icon-neutral-secondary-v24-8-0: #e6edf3;
+    --magritte-color-component-button-icon-neutral-tertiary-v24-8-0: #c4cdd6;
+    --magritte-color-component-button-icon-accent-secondary-v24-8-0: #5fb0e6;
+    --magritte-color-component-button-icon-accent-tertiary-v24-8-0: #5fb0e6;
+    --magritte-color-component-tag-background-neutral-v24-8-0: #21262d;
+    --magritte-color-component-tag-background-accent-v24-8-0: #1f3550;
+    --magritte-color-component-tag-background-positive-v24-8-0: #16301f;
+    --magritte-color-component-tag-background-negative-v24-8-0: #3a231e;
+    --magritte-color-component-tag-background-warning-v24-8-0: #33261a;
+    --magritte-color-component-tag-background-special-v24-8-0: #241d33;
+    --magritte-color-component-tag-background-on-surface-neutral-v24-8-0: #21262d;
+    --magritte-color-component-tag-background-on-surface-accent-v24-8-0: #1f3550;
+    --magritte-color-component-tag-background-on-surface-positive-v24-8-0: #16301f;
+    --magritte-color-component-tag-background-on-surface-negative-v24-8-0: #3a231e;
+    --magritte-color-component-tag-background-on-surface-warning-v24-8-0: #33261a;
+    --magritte-color-component-tag-background-on-surface-special-v24-8-0: #241d33;
+    --magritte-color-component-chips-background-unchecked-neutral-v24-8-0: #21262d;
+    --magritte-color-component-chips-background-unchecked-neutral-secondary-v24-8-0: #21262d;
+    --magritte-color-component-chips-background-unchecked-accent-v24-8-0: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-v24-8-0: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-secondary-v24-8-0: #21262d;
+    --magritte-color-component-chips-background-checked-accent-v24-8-0: #2f81f7;
+    --magritte-color-component-chips-background-state-unchecked-neutral-hovered-v24-8-0: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-neutral-secondary-hovered-v24-8-0: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-accent-hovered-v24-8-0: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-hovered-v24-8-0: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-secondary-hovered-v24-8-0: #2d333b;
+    --magritte-color-component-chips-text-unchecked-neutral-v24-8-0: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-neutral-secondary-v24-8-0: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-accent-v24-8-0: #5fb0e6;
+    --magritte-color-component-chips-text-checked-neutral-secondary-v24-8-0: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-hovered-v24-8-0: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-secondary-hovered-v24-8-0: #e6edf3;
+    --magritte-color-component-chips-text-state-checked-neutral-secondary-hovered-v24-8-0: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-accent-hovered-v24-8-0: #9bd4ff;
+    --magritte-color-component-chips-icon-unchecked-neutral-v24-8-0: #c4cdd6;
+    --magritte-color-component-chips-icon-unchecked-accent-v24-8-0: #5fb0e6;
+    --magritte-color-component-chips-icon-checked-neutral-secondary-v24-8-0: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-neutral-hovered-v24-8-0: #e6edf3;
+    --magritte-color-component-chips-icon-state-checked-neutral-secondary-hovered-v24-8-0: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-accent-hovered-v24-8-0: #9bd4ff;
+    --magritte-color-component-chips-stroke-unchecked-neutral-secondary-v24-8-0: #2d333b;
+    --magritte-color-component-chips-stroke-checked-neutral-secondary-v24-8-0: #3a424c;
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-hovered-v24-8-0: #3a424c;
+    --magritte-color-component-chips-stroke-state-checked-neutral-secondary-hovered-v24-8-0: #3a424c;
+    --magritte-color-component-checkable-background-unchecked-v24-8-0: #1c2128;
+    --magritte-color-component-checkable-background-state-unchecked-hovered-v24-8-0: #21262d;
+    --magritte-color-component-checkable-background-checked-v24-8-0: #2f81f7;
+    --magritte-color-component-checkable-stroke-unchecked-v24-8-0: #3a424c;
+    --magritte-color-component-checkable-stroke-state-unchecked-hovered-v24-8-0: #4a545f;
+    --magritte-color-component-checkable-icon-state-unchecked-hovered-v24-8-0: #2d333b;
+    --magritte-color-component-checkable-card-background-unchecked-v24-8-0: #1c2128;
+    --magritte-color-component-checkable-card-background-state-unchecked-hovered-v24-8-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-tone-hovered-v24-8-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-hovered-v24-8-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-tone-hovered-v24-8-0: #21262d;
+    --magritte-color-component-checkable-card-stroke-unchecked-v24-8-0: #2d333b;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-hovered-v24-8-0: #3a424c;
+    --magritte-color-component-segmented-background-content-v24-8-0: #1c2128;
+    --magritte-color-component-segmented-stroke-content-v24-8-0: #2d333b;
+    --magritte-color-component-segmented-item-background-selected-v24-8-0: #30363d;
+    --magritte-color-component-segmented-item-background-state-unselected-hovered-v24-8-0: #2d333b;
+    --magritte-color-component-segmented-item-text-selected-v24-8-0: #e6edf3;
+    --magritte-color-component-segmented-item-text-unselected-v24-8-0: #8b949e;
+    --magritte-color-component-segmented-item-text-state-unselected-hovered-v24-8-0: #c4cdd6;
+    --magritte-color-component-segmented-item-icon-selected-v24-8-0: #e6edf3;
+    --magritte-color-component-segmented-item-icon-unselected-v24-8-0: #8b949e;
+    --magritte-color-component-segmented-item-icon-state-unselected-hovered-v24-8-0: #c4cdd6;
+    --magritte-color-component-switch-background-container-unchecked-v24-8-0: #3a424c;
+    --magritte-color-component-switch-background-state-container-unchecked-hovered-v24-8-0: #4a545f;
+    --magritte-color-component-button-background-state-neutral-tertiary-hovered-v24-8-0: #2d333b;
+    --magritte-color-component-button-background-state-neutral-tertiary-pressed-v24-8-0: #3a424c;
+    --magritte-color-component-button-background-state-accent-tertiary-hovered-v24-8-0: #1f3550;
+    --magritte-color-component-button-background-state-accent-tertiary-pressed-v24-8-0: #24406b;
+    --magritte-color-component-button-background-state-positive-tertiary-hovered-v24-8-0: #16301f;
+    --magritte-color-component-button-background-state-positive-tertiary-pressed-v24-8-0: #1b3d28;
+    --magritte-color-component-button-background-state-negative-tertiary-hovered-v24-8-0: #3a231e;
+    --magritte-color-component-button-background-state-negative-tertiary-pressed-v24-8-0: #4a2c25;
+    --magritte-color-component-button-background-state-special-tertiary-hovered-v24-8-0: #241d33;
+    --magritte-color-component-button-background-state-special-tertiary-pressed-v24-8-0: #2d2440;
+    --magritte-color-component-button-background-positive-secondary-v24-8-0: #16301f;
+    --magritte-color-component-button-background-negative-secondary-v24-8-0: #3a231e;
+    --magritte-color-component-button-background-special-secondary-v24-8-0: #241d33;
+    --magritte-color-component-button-background-state-positive-secondary-hovered-v24-8-0: #1b3d28;
+    --magritte-color-component-button-background-state-positive-secondary-pressed-v24-8-0: #1b3d28;
+    --magritte-color-component-button-background-state-negative-secondary-hovered-v24-8-0: #4a2c25;
+    --magritte-color-component-button-background-state-negative-secondary-pressed-v24-8-0: #4a2c25;
+    --magritte-color-component-button-background-state-special-secondary-hovered-v24-8-0: #2d2440;
+    --magritte-color-component-button-background-state-special-secondary-pressed-v24-8-0: #2d2440;
+    --magritte-color-component-button-background-state-accent-secondary-pressed-v24-8-0: #24406b;
+    --magritte-color-component-button-background-state-neutral-disabled-v24-8-0: #21262d;
+    --magritte-color-component-button-background-state-accent-disabled-v24-8-0: #21262d;
+    --magritte-color-component-button-background-state-positive-disabled-v24-8-0: #21262d;
+    --magritte-color-component-button-background-state-negative-disabled-v24-8-0: #21262d;
+    --magritte-color-component-button-background-state-special-disabled-v24-8-0: #21262d;
+    --magritte-color-component-button-background-state-neutral-secondary-disabled-v24-8-0: #1c2128;
+    --magritte-color-component-button-background-state-accent-secondary-disabled-v24-8-0: #1c2128;
+    --magritte-color-component-button-background-state-positive-secondary-disabled-v24-8-0: #1c2128;
+    --magritte-color-component-button-background-state-negative-secondary-disabled-v24-8-0: #1c2128;
+    --magritte-color-component-button-background-state-special-secondary-disabled-v24-8-0: #1c2128;
+    --magritte-color-component-button-text-positive-secondary-v24-8-0: #57d98a;
+    --magritte-color-component-button-text-positive-tertiary-v24-8-0: #57d98a;
+    --magritte-color-component-button-icon-positive-secondary-v24-8-0: #57d98a;
+    --magritte-color-component-button-icon-positive-tertiary-v24-8-0: #57d98a;
+    --magritte-color-component-button-text-negative-secondary-v24-8-0: #ff8a7a;
+    --magritte-color-component-button-text-negative-tertiary-v24-8-0: #ff8a7a;
+    --magritte-color-component-button-icon-negative-secondary-v24-8-0: #ff8a7a;
+    --magritte-color-component-button-icon-negative-tertiary-v24-8-0: #ff8a7a;
+    --magritte-color-component-button-text-special-secondary-v24-8-0: #c3a6f5;
+    --magritte-color-component-button-text-special-tertiary-v24-8-0: #c3a6f5;
+    --magritte-color-component-button-icon-special-secondary-v24-8-0: #c3a6f5;
+    --magritte-color-component-button-icon-special-tertiary-v24-8-0: #c3a6f5;
   }
 
   /* ---- Base surfaces ---- */
@@ -502,6 +752,21 @@
      we can't recolour, but both read on the dark square. */
   li[class*="tmpl_hh_navigation__item"] > span {
     background-color: #21262d !important; }
+  /* Employers highlight phrases inside chameleon blocks with a bare, class-LESS
+     inline tag carrying a pale fill from the employer's own stylesheet (e.g. the
+     `tmpl-hh-footer__work-item__text > span` "well-being-программа" pills at
+     #f0f0ff). The blanket `[class*="tmpl-hh"]` surface rule only reaches tags that
+     CARRY a tmpl class, so these keep the pale fill while our forced light body
+     text sits on top → light-on-white, unreadable. Same class as the highlight
+     fills already neutralised inside `vacancy-branded-user-content`; clear them
+     the same way. `:not([class])` keeps this to the bare inline tags, so every
+     tmpl-classed span (captions/headings whose dark box carries their own text
+     over a photo) and the navigation chevron square above are untouched. */
+  [class*="tmpl-hh"] span:not([class]), [class*="tmpl_hh"] span:not([class]),
+  [class*="tmpl-hh"] strong:not([class]), [class*="tmpl_hh"] strong:not([class]),
+  [class*="tmpl-hh"] b:not([class]), [class*="tmpl_hh"] b:not([class]),
+  [class*="tmpl-hh"] em:not([class]), [class*="tmpl_hh"] em:not([class]) {
+    background-color: transparent !important; }
   /* SERP "branded snippet" promo cards ship the employer's OWN brand colour as an
      INLINE background-color on the outer wrapper (e.g. a light-blue #deeaff). The
      inner content is a dark magritte-card, but the wrapper's frame + the wide
@@ -556,10 +821,23 @@
      accent link read as plain prose, its clickable affordance gone (chroma: native
      #0070ff → grey). Colour the ACCENT variant's own text/icon spans blue; the
      NEUTRAL variant (the bulk — footer/nav links) is deliberately primary/grey and
-     stays untouched. */
-  [class*="magritte-link_style_accent"] span:not(.metro-point),
-  [class*="magritte-link_style_accent"] [class*="magritte-text"] {
+     stays untouched.
+     Both arms are compounded with `magritte-link___` (the component's own base
+     class, on the same element) to reach 0-3-1: an expander rendered INSIDE a
+     `magritte-text_style-secondary` block — the home "Работа в России" one — is
+     also matched by the muted rule below at 0-2-1, which comes later in the file
+     and would otherwise win, greying that one link while its siblings stay blue. */
+  [class*="magritte-link___"][class*="magritte-link_style_accent"] span:not(.metro-point),
+  [class*="magritte-link___"][class*="magritte-link_style_accent"] [class*="magritte-text"]:not(.metro-point) {
     color: #5fb0e6 !important; }
+  /* Magritte marks muted metadata with `magritte-text_style-secondary`, but the
+     rendered words often live in a bare class-LESS child span. Inside an <a> the
+     link arm above (0-1-2) outranks the muted rule (0-1-0) on that span, so a
+     tile whose whole body is a link came out with a BLUE "40140 вакансий" beside
+     three identical grey siblings, and the SERP card's "Без опыта работы" turned
+     link-blue too (native #768694 in both). Keep the site's muted grey. */
+  [class*="magritte-text_style-secondary"] span:not(.metro-point) {
+    color: #8b949e !important; }
   /* header nav items are anchors whose label is a span: they must stay primary
      text, not turn link-blue */
   .supernova-navi a span:not(.metro-point),
@@ -697,6 +975,25 @@
   [class*="magritte-chip"] [class*="magritte-content___"],
   [data-qa="chip"] [class*="magritte-content___"] {
     background-color: transparent !important; }
+  /* …but the RADIO chips in the mobile "Фильтры" sheet (Сортировка, Время
+     публикации, Искать только) are the opposite shape: the <label> is natively
+     transparent and that SAME inner `magritte-content___` span IS the pill —
+     #f1f4f9 unchecked vs a solid #000 + white label when checked. The rule above
+     clears both, so every chip rendered as one identical grey slab and the sheet
+     showed no current sort, no current period, nothing selected. State lives on a
+     sibling `input:checked`, never on a class, so `[class*="checked"]` above
+     matches nothing here and no DOM colour scan can see the loss.
+     Re-establish both states on the span. `>` from the label lifts the resting
+     arm to 0-2-1 to clear the transparent rule; the `:checked` arm follows it.
+     Both arms stay anchored on `label[class*="magritte-chip___"] >`: the
+     `input:checked + content` shape alone also matches the selectable role CARD
+     on /account/login, which would flood it accent-blue. */
+  label[class*="magritte-chip___"] > [class*="magritte-content___"] {
+    background-color: #21262d !important; }
+  label[class*="magritte-chip___"] > input:checked + [class*="magritte-content___"] {
+    background-color: #2f81f7 !important; }
+  label[class*="magritte-chip___"] > input:checked + [class*="magritte-content___"] [class*="magritte-text"] {
+    color: #ffffff !important; }
   /* On the SERP, once you scroll the filter-chip bar re-mounts as a FIXED
      glass strip (CSS-module `sticky--<hash>`) with a hardcoded near-white
      `color(srgb 1 1 1 / 0.68)` background + backdrop blur — a white band under
@@ -704,6 +1001,15 @@
      hashed class + srgb() make it audit-blind. Pin it to the page base so the
      stuck bar matches the SERP behind it. */
   div[class*="sticky--"] {
+    background-color: #14181d !important; }
+  /* The EMPLOYER page's "Вакансии" tab runs the same stuck filter bar through a
+     DIFFERENT CSS module, whose stuck state is `root--<hash> root-transparent--<hash>`
+     — and despite the name it is `rgba(255,255,255,.8)`, so a bright grey band
+     spans the full width behind the dark chips. Same class of miss as the SERP
+     bar above: it is in flow and transparent at scroll 0, so nothing sees it
+     until you scroll. Match on `root-transparent--` only — a bare `root--` is a
+     generic CSS-module name that would hit unrelated component roots. */
+  div[class*="root-transparent--"] {
     background-color: #14181d !important; }
 
   /* ---- Magritte tags: each style variant carries meaning ----
@@ -796,6 +1102,13 @@
      hardcoded white. Both are audit-blind-ish (the backing is occluded, the glass
      square is a small control). Dark the glass + backing and lift the glyph. */
   [class*="magritte-pane-background"] {
+    background-color: #1c2128 !important; }
+  /* the mobile bottom-sheet's sticky header (the "Фильтры" title bar on the SERP
+     filter sheet) is a `magritte-background-container` painted hardcoded WHITE —
+     a bright strip across the top of an otherwise dark sheet, with our light title
+     text on it, unreadable. Only exists while the sheet is open, so no load-time
+     scan reaches it. */
+  [class*="magritte-background-container"] {
     background-color: #1c2128 !important; }
   [data-qa="select-modal-close"] [class*="magritte-view"] {
     background-color: #21262d !important; }
@@ -914,6 +1227,19 @@
     color: #e6edf3 !important; border-bottom-color: #2f81f7 !important; }
   [class*="magritte-tab"]:not([class*="selected"]), .bloko-tabs-item:not(.bloko-tabs-item_active) {
     color: #c4cdd6 !important; }
+  /* A tab's LABEL is a `magritte-text_style-primary` span whichever state the tab
+     is in — the component, not the class, carries the state (selected #fff /
+     unselected #6a7885). Our heading rule matches `magritte-text` + `primary` and
+     painted BOTH the same #e6edf3, so on the search tab bar "Резюме" and
+     "Компании" read exactly as bright as the current "Вакансии": only the pill
+     was left to say where you are. Mute the unselected label.
+     Anchored on `magritte-tab___` (triple underscore = the tab button itself):
+     a bare `magritte-tab` prefix would also match the inner `magritte-tab-content`
+     wrapper, which carries no state class, so the SELECTED label would match too
+     and every tab would grey out. */
+  [class*="magritte-tab___"]:not([class*="selected"]) [class*="magritte-tab-label"],
+  [class*="magritte-tab___"]:not([class*="selected"]) [class*="magritte-tab-label"] [class*="magritte-text"] {
+    color: #8b949e !important; }
 
   /* ---- Tables (within descriptions) ---- */
   table { background-color: transparent !important; }
@@ -922,9 +1248,13 @@
 
   /* ---- Login / auth page ---- */
   /* the full-page auth backdrop is a decorative illustration baked on WHITE
-     (wrapper-image, a background-IMAGE — invisible to a bg-color scan); drop it
-     so the dark base shows behind the centred sign-in card */
-  [class*="wrapper-image"], [class*="account-login-page"] {
+     (a background-IMAGE — invisible to a bg-color scan, and `lightBgImages` only
+     flags gradients, so audit-theme returns total=0 on a fully white login page);
+     drop it so the dark base shows behind the centred sign-in card.
+     Both spellings ship: the CSS-module wrapper is `wrapper-with-image--<hash>`,
+     which does NOT contain the older `wrapper-image` substring. */
+  [class*="wrapper-image"], [class*="wrapper-with-image"],
+  [class*="account-login-page"] {
     background-image: none !important; background-color: #14181d !important; }
   /* the mobile standalone auth layout wraps the whole page in a full-viewport
      "light-page" div (hardcoded #f4f6fb). It sits BEHIND the dark auth overlay so
@@ -980,6 +1310,29 @@
   /* ---- Banners / ad surrounds: dark, no bright leaks (don't theme iframe content) ---- */
   [class*="banner-place"], [class*="footer-app-banner-redesign"], .HH-Banners {
     background-color: #14181d !important; border-color: #2d333b !important; }
+  /* App-download QR codes (the footer "Мобильное приложение" block and the
+     footer app banner) are transparent images of BLACK modules — natively they
+     sit on hh's white page. Once the surrounding surface goes dark the modules
+     are black-on-dark: invisible to the eye and unreadable to a scanner, while
+     every audit passes (the element's own background-color IS our dark value, and
+     the module art is raster/SVG paint). A QR needs a light quiet zone to scan, so
+     give these two containers a white backing. NB: the "Вакансии в мессенджере"
+     card's QR is a .webp with white already baked in and needs nothing. */
+  [class*="footer-app-banner-redesign-qr-image"], [class*="qr-code--"] {
+    background-color: #ffffff !important; }
+  /* Both QR blocks now nest the code inside a Magritte CARD, and the generic card
+     rule paints that card #21262d — an opaque dark tile laid ON TOP of the white
+     backing above, so the black modules render on dark grey and the code cannot be
+     scanned at all. Every audit still passes: the `qr-code--` element's own
+     background-color IS #ffffff, the card is a legitimately-dark card, and the
+     modules are image paint. Give the card the same white quiet zone. The card
+     holds nothing but the code (the "Мобильное приложение" caption and the app-
+     banner copy are siblings, outside it), so no text lands on the white.
+     `-qr--` keeps the app-banner arm to the base wrapper — the sibling
+     `-qr-image--` never contains the double dash. */
+  [class*="qr-code--"] [class*="magritte-card"],
+  [class*="footer-app-banner-redesign-qr--"] [class*="magritte-card"] {
+    background-color: #ffffff !important; }
 
   /* ---- "Vacancies on map" button (shipped light) ---- */
   [class*="map-button"] {
