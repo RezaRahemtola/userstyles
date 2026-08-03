@@ -147,6 +147,12 @@
      (dark-grey) via .Byline__Meta--publishDate → ~3.1:1 dark-on-dark on the card. The
      .Byline rule above only colors the section; the child meta overrides it. Lift it. */
   .Byline__Meta, .Byline__Meta--publishDate, .Byline__TimestampWrapper { color: #9aa4ae !important; }
+  /* When .author is an ANCHOR (one-feed shortstop cards link the name to the
+     contributor page) the blanket metadata grey above swallowed ESPN's #3772df link
+     colour, so the byline name became typographically identical to the timestamp
+     beside it and lost every hint that it is clickable. A muted link blue restores the
+     affordance without competing with the headline. Plain-span bylines stay grey. */
+  a.author { color: #8ab4d8 !important; }
   /* Story pullquotes carry a 4px ESPN-red (#dd0000) left bar as a brand accent; the
      generic grey border-left flattened it to an invisible #2d333b strip on dark. Keep the
      panel dark but restore the brand-red bar (decorative, so the vivid ESPN red is fine). */
@@ -360,6 +366,14 @@
   .footer, .Footer { background-color: #0d1117 !important; border-color: #2d333b !important; }
   .PageFooter a, .PageFooter__QuickLinks a, .Footer a { color: #8ab4d8 !important; }
   .PageFooter__Footer span, .PageFooter small, .copyright { color: #8b949e !important; }
+  /* Legacy story pages append their own legal strip as an unclassed-by-our-rules
+     <footer class="article-legal-footer">. The --bottom-fixed variant is a #f9f9fb bar
+     pinned to the viewport bottom, held off-screen by translateY(100%) until a `.show`
+     class slides it up mid-article — invisible to any load-time scan — and the --gray
+     variant is the same fill inline in the article body. Its own `ul` ink is #1d1e1f. */
+  .article-legal-footer--bottom-fixed, .article-legal-footer--gray {
+    background-color: #14181d !important; border-color: #2d333b !important; }
+  .article-legal-footer, .article-legal-footer ul { color: #8b949e !important; }
 
   /* ---- Ad surrounds: dark, no bright leaks (don't theme iframe content).
        Match "ad-" only at a CLASS-NAME BOUNDARY: a bare [class*="ad-"] also hits
@@ -458,6 +472,15 @@
   #global-header li.user a::before, #global-header li.user a::after,
   #global-header li.search a::before, #global-header li.search a::after {
     border-bottom-color: #1c2128 !important; border-top-color: #1c2128 !important; }
+  /* The SELECTED sport's caret is a different pseudo: li.active (no flyout involved), and
+     it is filled with the SECONDARY bar's colour, not the flyout's — natively #fff against
+     the white per-sport nav below, so it reads as a notch rather than a marker. Against
+     our dark secondary bar the untouched white triangle is the loudest thing in the
+     header. ESPN's own [data-appearance='dark'] half paints it #252627, i.e. matched to
+     the dark bar; mirror that with our bar colour. Only rendered on a sport page. */
+  #global-nav > ul > li.active::before,
+  #global-nav > ul > li.submenu-parent-active::before {
+    border-bottom-color: #0d1117 !important; }
 
   /* ---- Per-sport SECONDARY nav (#global-nav-secondary "Scores / Teams / Stats /
        Odds / More") dropdowns: the panel is a bare unclassed <div> holding a
@@ -488,6 +511,11 @@
   .search_results__header { color: #e6edf3 !important; }
   .search_results__cat { color: #9aa4ae !important; }
   .search_results__item:hover, .search_results__link:hover { background-color: #21262d !important; }
+  /* The panel's "View all results for '<q>'" strip is an UNCLASSED <footer> (#f9f9fb) —
+     no search_results__* class reaches it, and the footer rule above deliberately drops
+     the bare `footer` selector, so it is the one light band left in the flyout. */
+  .search_results > footer, .global-search footer, #global-search footer {
+    background-color: #1c2128 !important; border-color: #2d333b !important; }
   /* Autocomplete result avatars are the same transparent-cutout-on-a-solid-white-disc
      component the theme already darks as .headshot — but the list variant is classed
      .headshot-sm, which that rule never matched, so every player row shipped a glaring
@@ -1121,6 +1149,28 @@
     background-color: #1c2128 !important; border-color: #2d333b !important; }
   .DateCarousel__MonthTrigger svg, .DateCarousel__MonthTrigger path,
   .DateCarousel__MonthTrigger use { fill: #c4cdd6 !important; }
+  /* The month-picker popover the trigger above opens (every scoreboard/fixtures page,
+     desktop AND mobile): .DatePicker__MonthContainer is a 375×415 solid-white card with
+     a near-white #edeef0 halo box-shadow. Closed at load, so no load-time scan sees it.
+     Its "August 2026" caption is a hardcoded near-black (#151617) that survives our
+     token remaps, and ESPN separates the SELECTED day from the rest by tone (#000 bold
+     vs #48494a) — our broad text rule paints both the same grey, leaving weight as the
+     only cue. Dark the card, lift the caption, restore the selected day's brighter ink. */
+  .DatePicker__MonthContainer, .DatePicker__MonthContainer.calendar--embedded {
+    background-color: #1c2128 !important; border-color: #2d333b !important;
+    box-shadow: 0 0 3px 3px #14181d !important; }
+  .MonthContainer__MonthYear { color: #e6edf3 !important; }
+  .MonthContainer__Day--selected {
+    color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
+  /* The popover's own chrome is drawn by two pseudo-elements the `*` border reset cannot
+     reach: ::before is the CSS-triangle pointer (border-bottom #fff) and ::after is the
+     rotated #edeef0 rule under the caption. Both were invisible while the card was white
+     and glare once it darks. The trigger's ::before is the same story — a 1px #edeef0
+     divider beside the calendar icon. */
+  .MonthContainer__Header::before { border-bottom-color: #1c2128 !important; }
+  .MonthContainer__Header::after { border-color: #2d333b !important; }
+  .DateCarousel__MonthTrigger::before {
+    background-color: #2d333b !important; border-color: #2d333b !important; }
   /* Mobile favourites/sport-shortcut strip (ul.fav-menu.strip.mobile, "favorites_mgmt"):
      the espnfitt mobile frontend paints a solid WHITE 390×64 nav band right below the
      header carrying the sport shortcut icons + blue labels → a glaring white strip on the

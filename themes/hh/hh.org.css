@@ -910,6 +910,12 @@
   .supernova-dropdown, .supernova-dropdown-section, .supernova-dropdown-list,
   [class*="supernova-dropdown"], .supernova-overlay {
     background-color: #1c2128 !important; border-color: #2d333b !important; }
+  /* `supernova-dropdown-anchor` is the TRIGGER sitting in the header bar, not the
+     panel, and it is natively transparent — the prefix match above filled it, so
+     at 390px (where the role switcher uses this anchor) a lighter square block sat
+     behind "Ищу работу", flush with the top edge. Panels keep their surface. */
+  .supernova-dropdown-anchor {
+    background-color: transparent !important; }
   /* The header role menu ("Ищу работу" / "Ищу сотрудника") is portaled into a
      legacy `bloko-drop_theme-light` panel that keeps a hardcoded WHITE surface.
      The dark supernova sections paint over most of it, so on desktop it hides —
@@ -1091,6 +1097,15 @@
   a, a span:not(.metro-point), .bloko-link, [class*="magritte-link"], [data-qa$="-link"] {
     color: #5fb0e6 !important; }
   a:hover, .bloko-link:hover, [class*="magritte-link"]:hover { color: #9bd4ff !important; }
+  /* the hover arm above only repaints the <a>; the words are in an inner span the
+     resting arm pins, so every link on the site answered the pointer with nothing.
+     Kept at `span` (no `:not()`) on purpose — the extra 0-0-1 that `:not(.metro-point)`
+     would add is enough to outrank the button-label and muted-metadata arms further
+     down, which would light a CTA's white label and a card's grey metadata blue
+     whenever the pointer entered their anchor. At this weight the muted, nav,
+     card-title and button arms all still win; each link family that needs a hover
+     of its own carries one beside its resting rule. */
+  a:hover span, [class*="magritte-link"]:hover span { color: #9bd4ff !important; }
   /* `magritte-link` is a BUTTON component (the "Развернуть" section expander, inline
      action links), so the `a span:not(.metro-point)` arm above never reaches its
      label — the innermost `magritte-text` span kept the blanket body-grey and the
@@ -1106,6 +1121,8 @@
   [class*="magritte-link___"][class*="magritte-link_style_accent"] span:not(.metro-point),
   [class*="magritte-link___"][class*="magritte-link_style_accent"] [class*="magritte-text"]:not(.metro-point) {
     color: #5fb0e6 !important; }
+  [class*="magritte-link___"][class*="magritte-link_style_accent"]:hover span {
+    color: #9bd4ff !important; }
   /* Magritte marks muted metadata with `magritte-text_style-secondary`, but the
      rendered words often live in a bare class-LESS child span. Inside an <a> the
      link arm above (0-1-2) outranks the muted rule (0-1-0) on that span, so a
@@ -1119,6 +1136,8 @@
   .supernova-navi a span:not(.metro-point),
   .supernova-navi-item span:not(.metro-point) {
     color: #e6edf3 !important; }
+  .supernova-navi a:hover span, .supernova-navi-item:hover span {
+    color: #ffffff !important; }
   /* card/headline links should read as bright primary text, blue on hover */
   [data-qa="serp-item__title"], [data-qa="serp-item__title-text"],
   [data-qa="vacancy-serp__vacancy-title"], [data-qa="bloko-header-2"] a,
@@ -1128,7 +1147,8 @@
   [data-qa="vacancy-serp__vacancy-title"] span:not(.metro-point),
   [data-qa="vacancy-company-name"] span:not(.metro-point) {
     color: #e6edf3 !important; }
-  [data-qa="serp-item__title"]:hover, [data-qa="vacancy-serp__vacancy-title"]:hover {
+  [data-qa="serp-item__title"]:hover, [data-qa="vacancy-serp__vacancy-title"]:hover,
+  [data-qa="serp-item__title"]:hover span, [data-qa="vacancy-serp__vacancy-title"]:hover span {
     color: #5fb0e6 !important; }
 
   /* ---- Search block (home + supernova + SERP) ---- */
@@ -1292,12 +1312,15 @@
   div[class*="sticky--"] {
     background-color: #14181d !important; }
   /* The EMPLOYER page's "Вакансии" tab runs the same stuck filter bar through a
-     DIFFERENT CSS module, whose stuck state is `root--<hash> root-transparent--<hash>`
-     — and despite the name it is `rgba(255,255,255,.8)`, so a bright grey band
-     spans the full width behind the dark chips. Same class of miss as the SERP
-     bar above: it is in flow and transparent at scroll 0, so nothing sees it
-     until you scroll. Match on `root-transparent--` only — a bare `root--` is a
-     generic CSS-module name that would hit unrelated component roots. */
+     DIFFERENT CSS module. Its resting class is a bare `root--<hash>` painted
+     opaque `rgb(255,255,255)` — a full-width white band behind the dark chips,
+     visible from scroll 0; `root-transparent--<hash>` is ADDED past ~400px and is
+     the translucent state. So both states need darkening, and a probe at a single
+     scroll position sees only whichever half it landed on.
+     A bare `root--` is a generic CSS-module name (icon chips, layout roots), so
+     anchor on position instead: the bar is the only `root--` that is a grandchild
+     of <main>. */
+  main > div > div[class*="root--"],
   div[class*="root-transparent--"] {
     background-color: #14181d !important; }
 
@@ -1635,6 +1658,15 @@
   [data-qa="accredited-it-employer-icon"] svg,
   [data-qa="accredited-it-employer-icon"] svg path {
     color: #b8c0c9 !important; fill: currentColor !important; }
+  /* the "hh карьера" lockup on the /services cards is an external SVG loaded as a
+     background-IMAGE, and its wordmark is `fill="#000"` — invisible on our dark
+     card while every scan passes (the element's own bg is transparent, and the
+     black lives inside image paint). The art cannot be recoloured per-shape from
+     CSS, so invert it: the wordmark comes back white and the hue-rotate returns
+     the brand disc to red, the saturate deepening it from the salmon a bare
+     inversion leaves. */
+  [class*="careerhhru--"] {
+    filter: invert(1) hue-rotate(180deg) saturate(3) !important; }
 
   /* ---- Cookie / consent informer (kill the bright bar; click-dismiss in real use) ---- */
   [data-qa="cookies-policy-informer"], .cookies-policy-informer {

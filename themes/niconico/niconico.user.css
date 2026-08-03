@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           niconico Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.17
+@version        1.0.18
 @description    A clean dark theme for niconico — easy on the eyes across home, videos, comments, rankings, search and profiles. Keeps the accent; thumbnails stay true.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -322,6 +322,13 @@
     color: #e6edf3 !important;
     border-color: #3a424c !important;
   }
+  /* The broadcaster's 百 (nicopedia) badge raises the SAME #f2f2f2 / #1a1a1a box as
+     an ::after instead of via .tooltip-layer, so it stayed white. Hover-only and a
+     pseudo — no load-time scan reaches it. */
+  a.nicopedia-article-anchor::after {
+    background-color: #2d333b !important;
+    color: #e6edf3 !important;
+  }
 
   /* Live (live.nicovideo.jp) program-card badges. The "有料" (paid) badge keeps
      a white pill background while our broad legacy label rule lightens its text,
@@ -368,10 +375,17 @@
      solid #fff square, so two white tiles glared on the dark control bar. Their
      glyph is a mask-image whose own background-color (#666) IS the fill. Repaint
      the tile to a dark elevated surface and lift the glyph to a light fill —
-     darkening the glyph bg (the reflex for a "background") would erase it. */
+     darkening the glyph bg (the reflex for a "background") would erase it.
+     All four tiles in that row carry the shared ___secondary-button___ modifier, so
+     key on it rather than on the individual names — naming only nicoad/gift left the
+     "エントリー中のイベント" (audition-ranking) tile white beside two fixed siblings.
+     The 放送ネタ tile is a real img thumbnail with a white-baked plate: raster
+     policy, left alone. */
+  button[class*="secondary-button"],
   button[class*="nicoad-button"], button[class*="gift-button"] {
     background-color: #2d333b !important;
   }
+  button[class*="secondary-button"] [class*="symbol-mark"],
   button[class*="nicoad-button"] [class*="symbol-mark"],
   button[class*="gift-button"] [class*="symbol-mark"] {
     background-color: #c4cdd6 !important;
@@ -962,6 +976,15 @@
   .ExpandBoxButton-overlay {
     background-image: linear-gradient(rgba(28, 33, 40, 0) 0px, #1c2128) !important;
   }
+  /* Same scroll-fade shape, but HORIZONTAL and on a pseudo: a mylist row shows at
+     most three thumbnails and fades the last one out under its "…N件" count with
+     a 90deg transparent→#fafafa gradient on .NC-MylistMediaObject-thumbnail::before.
+     A pseudo's background-IMAGE is invisible to both the element-bg walk and the
+     pseudo-background-COLOR probe, so every row on /user/<id>/mylist ended in a
+     bright white tile. Fade to the card surface instead. */
+  .NC-MylistMediaObject-thumbnail::before {
+    background-image: linear-gradient(90deg, rgba(28, 33, 40, 0), #1c2128) !important;
+  }
 
   /* Profile popovers. Both are closed at audit time and both keep a #fff root that
      no token reaches: the "他サービスのユーザーページ" panel (.Dropdown) rendered a
@@ -1049,6 +1072,10 @@
   .Dialog-content, .NC-Dialog-content {
     background-color: #1c2128 !important;
   }
+  /* .ModalContent_with-footer adds a transparent→#fff scroll-shadow as a
+     background-IMAGE on the same body we repaint above, so the dark panel keeps a
+     white bar across its lower 40px. The colour rule alone cannot clear it. */
+  .ModalContent-body { background-image: none !important; }
   .ModalActionButton { background-color: #2d333b !important; }
   .NC-CopyForm-copy:hover { background-color: #262c33 !important; }
 
@@ -1379,6 +1406,92 @@
   button.FollowButton.FollowButton_following:hover,
   a.CreatorSupportButton.CreatorSupportButton_supporting:hover {
     background-color: #3a424c !important;
+  }
+
+  /* ---- Google Funding Choices consent manager ----
+     Mounted in the page (not an iframe) as .fc-consent-root, and on live.nicovideo.jp
+     it is the FIRST thing a logged-out visitor sees. Every surface is hardcoded #fff
+     with #000 / #3c4043 / #5f6368 ink, so the whole sheet — plus the "Manage options"
+     and vendor sub-panels behind it, and the persistent recall chip parked at the
+     bottom-left corner — glared white over the dark player. Repaint the sheets and
+     preference cards to the elevated surface and re-rank the ink. The #1967d2 primary
+     CTA keeps its brand fill (white label, ~5:1); the SAME blue used as link ink only
+     reaches ~2.6:1 on the dark sheet, so links move to the theme azure.
+     EVERY Funding Choices declaration is !important and scoped as
+     ".fc-consent-root <class>", so a bare .fc-dialog arm loses on specificity — each
+     arm below restates the ancestor (and, for the headline/title, the h1.fc-…
+     compound) to tie it and win on source order. */
+  .fc-consent-root div, .fc-consent-root p, .fc-consent-root h1,
+  .fc-consent-root h2, .fc-consent-root span, .fc-consent-root li,
+  .fc-consent-root ul, .fc-consent-root button {
+    color: #c4cdd6 !important;
+  }
+  .fc-consent-root a:link, .fc-consent-root a:visited { color: #5fb0e6 !important; }
+  .fc-consent-root .fc-dialog,
+  .fc-consent-root .fc-dialog-header,
+  .fc-consent-root .fc-choice-dialog-header,
+  .fc-consent-root .fc-faq-contents,
+  .fc-consent-root .fc-preference-container,
+  .fc-consent-root .fc-help-dialog,
+  .fc-consent-root .fc-faq-header .fc-faq-icon,
+  .fc-consent-root .fc-data-preferences-dialog .fc-navigation-button,
+  .fc-consent-root .fc-help-dialog .fc-help-dialog-button-container,
+  #__ap_gfc_consent_box_btn__ {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+  .fc-consent-root .fc-dialog .fc-header h1,
+  .fc-consent-root .fc-dialog .fc-header h1.fc-dialog-headline,
+  .fc-consent-root .fc-help-dialog h1,
+  .fc-consent-root .fc-stacks .fc-stack-name,
+  .fc-consent-root .fc-faq-header .fc-faq-label,
+  .fc-consent-root .fc-preference-container .fc-preference-title h2 {
+    color: #e6edf3 !important;
+  }
+  .fc-consent-root .fc-header-text,
+  .fc-consent-root .fc-dialog .fc-header .fc-header-text,
+  .fc-consent-root .fc-dialog-header p,
+  .fc-consent-root .fc-dialog .fc-header h2,
+  .fc-consent-root .fc-dialog .fc-header h2.fc-dialog-title,
+  .fc-consent-root .fc-dialog .fc-footer p,
+  .fc-consent-root .fc-faq-contents .fc-faq-item,
+  .fc-consent-root .fc-faq-contents .fc-faq-item-title,
+  .fc-consent-root .fc-preference-divider p,
+  .fc-consent-root .fc-preference-container .fc-preference-description,
+  .fc-consent-root .fc-preference-container .fc-preference-slider-label,
+  .fc-consent-root .fc-data-preferences-dialog .fc-body p,
+  .fc-consent-root .fc-data-preferences-dialog .fc-noneditable-body p,
+  .fc-consent-root .fc-help-dialog .fc-help-dialog-contents div,
+  .fc-consent-root .fc-help-dialog .fc-help-dialog-contents li,
+  .fc-consent-root .fc-help-dialog .fc-help-dialog-contents p,
+  .fc-consent-root .fc-preference-container .fc-preference-description ul,
+  .fc-consent-root .fc-preference-container .fc-preference-description ul > li,
+  .fc-consent-root .fc-preference-container .fc-preference-description ul > li b {
+    color: #8b949e !important;
+  }
+  .fc-consent-root .fc-dialog .fc-footer a,
+  .fc-consent-root .fc-dialog .fc-footer a:visited,
+  .fc-consent-root .fc-dialog .fc-footer a.fc-footer-link-v2,
+  .fc-consent-root .fc-dialog .fc-footer a.fc-footer-link-v2:visited,
+  .fc-consent-root .fc-navigation-button .fc-navigation-button-label,
+  .fc-consent-root .fc-manage-options-third-button-label,
+  .fc-consent-root .fc-preference-container .fc-preference-description a,
+  .fc-consent-root .fc-preference-container .fc-preference-description a:visited,
+  .fc-consent-root .fc-help-dialog .fc-help-dialog-contents a,
+  .fc-consent-root .fc-help-dialog-close-button .fc-help-dialog-close-button-label {
+    color: #5fb0e6 !important;
+  }
+  .fc-consent-root .fc-footer-buttons-divider,
+  .fc-consent-root .fc-preference-divider,
+  .fc-consent-root .fc-faq-contents .fc-faq-item-dot,
+  .fc-consent-root .fc-preference-container .fc-preference-container-divider {
+    background-color: #2d333b !important;
+  }
+  /* The recall chip's glyph is a base64 raster, so its fill is unreachable — but the
+     image measures perfectly achromatic (max channel spread 0 across all 2500 px),
+     so inverting it is hue-lossless and turns the light disc into a dark one. */
+  #__ap_gfc_consent_box_btn__ img {
+    filter: invert(1) !important; border-color: #2d333b !important;
   }
 
   /* Search box (legacy header) */

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Depop Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.8
+@version        1.0.9
 @description    A clean dark theme for Depop: easy on the eyes across home, search, categories and product pages, with prices, sale tags and the Depop red kept readable.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -368,8 +368,39 @@
     background-color: transparent !important;
   }
 
+  /* The homepage's "Shop by price" tiles (Under £10 / £20 / £50 / £100) take
+     their fill from an inline `--background` custom property holding the same
+     light linear-gradient as the hero thumb (#FBF6F1 → #E2E8F7). It arrives as
+     a background-IMAGE, so every bg-COLOUR reset leaves it: four near-white
+     slabs across the dark page, each with a #262626 label our text rules re-light
+     to #c4cdd6 — light-on-light. Hook BOTH the module fragment and the inline
+     property: a CSS-modules reshuffle breaks one, a data change breaks the other.
+     `--background:` with the colon does not match the colour swatches'
+     `--background-color:` / `--background-image:`, which must keep their fill. */
+  [class*="tileWrapper"] [class*="background"],
+  main [style*="--background:"] {
+    background-image: none !important;
+    background-color: #1c2128 !important;
+  }
+
   button {
     color: #e6edf3 !important;
+  }
+
+  /* Carousel prev/next arrows on the homepage promo rail are 40px discs the site
+     paints `background:#fff; border:1px solid #fff` with a #262626 chevron drawn
+     as a currentColor STROKE. They are <button>s, so the `main div` transparent
+     reset never reached them: the disc stays pure white on the dark page while
+     the `button` colour rule above re-lights the chevron to #e6edf3 — a white
+     arrow on a white disc, ~1.1:1. Elevate the disc and ring it so the arrow the
+     rule already lights has something to sit on. */
+  button[class*="navButton"] {
+    background-color: #1c2128 !important;
+    border-color: #4a525b !important;
+  }
+
+  button[class*="navButton"]:hover {
+    background-color: #262c33 !important;
   }
 
   /* Filter / sort trigger pills and dropdown buttons.

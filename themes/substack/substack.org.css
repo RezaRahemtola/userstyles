@@ -229,9 +229,15 @@
     background-color: #1c2128 !important;
     color: #e6edf3 !important;
   }
-  input:not([class*="emailInput"]):not([class*="email-input"]),
-  textarea,
-  select {
+  /* The `:not(:focus)` guard is load-bearing: Pencraft paints the focus ring as
+     `border: var(--border-focus)` (the pub accent inside a pub scope, the select
+     blue in the app shell). A blanket `border-color` override outranks it and
+     leaves only a 20%-alpha glow as the focus cue. Skipping the focused state
+     hands the border back to the site rather than restating it — elements the
+     site leaves border-less on focus (the comment textarea) stay border-less. */
+  input:not([class*="emailInput"]):not([class*="email-input"]):not(:focus),
+  textarea:not(:focus),
+  select:not(:focus) {
     border-color: #2d333b !important;
   }
   input:not([class*="emailInputOnAccentBackground"])::placeholder,

@@ -381,6 +381,21 @@
     border-color: #2d333b !important;
   }
 
+  /* form validation messages: `.error`/`.notice`/`.success` are one site rule block
+     shipping a light pastel fill with dark ink (#FBE3E4/#8a1f11, #FFF6BF/#514721,
+     #E6EFC2/#264409). Every instance is `display:none` until a form fails, so no
+     load-time scan walks one — the live case is `div.replyto_msg.notice` in the
+     comment reply form. `.forums .*` are the same panels on the forum skin. */
+  .error, .notice, .success, .replyto_msg,
+  .forums .error, .forums .notice, .forums .success {
+    background: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+  .error, .error p, .forums .error { color: #ff9492 !important; }
+  .notice, .notice p, .replyto_msg, .replyto_msg p, .forums .notice { color: #e3b341 !important; }
+  .success, .success p, .forums .success { color: #6fd8be !important; }
+  .error a, .notice a, .success a, .replyto_msg a { color: #9bd4ff !important; }
+
   /* ---------- story submission form ---------- */
   /* header + subtitle were near-black (#2e2e2e / #676767) on the dark bg */
   .sd-form-header, .sd-brand-color { color: #6fd8be !important; }
@@ -742,6 +757,13 @@
     color: #9bd4ff !important;
     border-color: #2d333b !important;
   }
+  /* the id above is (1,0,0) and outranks the generic `.btn:hover`, so this control —
+     natively a link that darkens #006b6b -> #002f2f — had no hover response at all.
+     Restate at id specificity. */
+  #more_comments_button:hover, .nbutton:hover, span.nbutton:hover {
+    background-color: #2d333b !important;
+    color: #cfe8ff !important;
+  }
 
   /* prev/next page links sitting on the light-grey article footer band */
   .grid_24.f a, aside.st a, .st .links a { color: #9bd4ff !important; }
@@ -946,6 +968,13 @@
      one place the blanket `* { border-color }` reset erased a real signal */
   section.m-section-emphasized, section.psp-section,
   .button.blue, a.button.blue, div.button.blue { border-color: #0e9494 !important; }
+  /* the grey `.button` family ("Free Trial" = `.btn-masthead-cmpn-secondary`,
+     "View Integrations" = `.sandiego .blue.button`) took the neutral fill above but no
+     hover: `button:hover`/`.btn:hover` never match Foundation's `.button`, so these CTAs
+     measured identical resting vs hovered while natively they lighten #006665 -> #038686.
+     Keep this at (0,2,0) so the green/hollow/hollow-opaque hovers below still win. */
+  a.button:hover, .button:hover, input.button:hover,
+  .btn-masthead-cmpn-secondary:hover { background-color: #2d333b !important; }
   input.search-submit, .m-sidebar-widget input.search-submit {
     background-color: #0b7c7c !important;
     border-color: #0e9494 !important;
@@ -1012,6 +1041,14 @@
     background-color: #1c2128 !important;
     border-color: #2d333b !important;
   }
+  /* both the open menu's rows and the `Sort:` trigger that opens it lost the site's only
+     hover cue (#333 -> #006665) because our accent colour is already applied at rest */
+  ul.menu.is-dropdown-submenu a:hover,
+  .dropdown.menu .is-dropdown-submenu a:hover,
+  .m-project-search-results div.sort-by a:hover, a.current-sort:hover {
+    background-color: #262c33 !important;
+    color: #9be7d6 !important;
+  }
   /* the shell's OTHER two Foundation floating surfaces, both hardcoded #fefefe and both
      display:none until opened, so no load-time scan reaches either: `.reveal` is the
      product page's "Get Information About <product>" lead-form modal (a 600x720 white
@@ -1052,6 +1089,18 @@
   .pagination-next a::after, .pagination-previous a::after,
   .pagination .pagination-next a::after,
   .pagination .pagination-previous a::after { color: #ffffff !important; }
+  /* Foundation's `.pagination a:hover { background:#e6e6e6 }` survived every rule above
+     (nothing here restates a pagination hover), so hovering a page number painted a
+     near-white chip carrying our #9bd4ff link ink at ~1.5:1. Click-state only, so no
+     load-time scan sees it; present on the directory AND every product review pager. */
+  .pagination a:hover, .pagination button:hover,
+  .pagination li a:hover, ul.pagination a:hover {
+    background: #262c33 !important;
+    color: #e6edf3 !important;
+  }
+  .pagination .disabled:hover, .pagination li.disabled a:hover {
+    background: transparent !important;
+  }
   /* the sponsor bar's CTA label is also ::before content, hardcoded #001e2b — on the
      dark bar it renders at 1.1:1, i.e. an invisible call-to-action */
   .sticky-cta::before, .sticky-wrapper .sticky-cta::before,

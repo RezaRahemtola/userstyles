@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Vinted Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.11
+@version        1.0.12
 @description    A clean, modern dark theme for Vinted. Easy on the eyes across the homepage, search, item pages, profiles and filters, on every regional Vinted site.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -812,6 +812,16 @@
      header row that goes light-on-light under our text colours. */
   .table-wrapper thead tr, .user-created-content thead tr {
     background-color: #2f3742 !important; }
+
+  /* CMS ordered lists draw their marker as a numbered disc on a ::before:
+     `background: rgba(var(--greyscale-level-2))` with `color: level-6`. Both
+     tokens are inverted for us, so the pair flips — a mid-grey disc carrying a
+     white numeral becomes a LIGHT disc carrying a dark one, and the /cookie-policy
+     list renders as a column of bright blobs. Restore the native relationship:
+     a subdued disc under a light numeral. (A pseudo-element is invisible to every
+     element-background scan, so nothing but the pixels shows this.) */
+  .user-created-content ol > li::before {
+    background-color: #2f3742 !important; color: #e6edf3 !important; }
 
   /* The no-photo avatar is an external <img> SVG: a full-bleed #EDF2F2 square
      with a #B6BEBF silhouette, so it renders as a glaring near-white disc on

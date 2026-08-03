@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           FanFiction.Net Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.8
+@version        1.0.9
 @description    A comfortable dark theme for FanFiction.Net and FictionPress — easy-on-the-eyes story reader, browse filters, profiles and forums.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -634,5 +634,15 @@
   /* ---- Misc: don't tint cover images ----------------------------------- */
   img, .cimage {
     background-color: transparent !important;
+  }
+  /* FFN serves ONE raster for every missing cover and every missing avatar:
+     /static/images/d_60_90.jpg, a near-white plate (mean luminance 170/255)
+     that repeats 13-26 times per browse row list, review list, forum thread,
+     community index and beta list. Real cover art and real user avatars are
+     served from /image/<id>/ and must stay untouched, so the correction is
+     keyed to that one filename. No DOM scan reads image pixels, and the
+     element itself is transparent, so every bucket passes on it. */
+  img[src*="d_60_90"] {
+    filter: brightness(.35) !important;
   }
 }

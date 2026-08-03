@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           StackExchange Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.13
+@version        1.0.14
 @description    Dark theme for Stack Overflow and the whole Stack Exchange network: easy-on-the-eyes questions, answers, code blocks, comments and sidebar.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -193,6 +193,37 @@
   .s-prose .fc-light,
   .revision-comment, span.revision-comment {
     color: #9198a1 !important;
+  }
+
+  /* The "Skip to main content" link is clipped to 1px until it takes focus,
+     then expands to a full-width 1280x44 bar with SE's white background. Our
+     text lift paints its label #c4cdd6, so the first Tab press on any network
+     page produces a blinding white band with a near-invisible label on it.
+     No load-time DOM scan sees it — the element has no size until focused. */
+  .s-topbar--skip-link,
+  .s-topbar--skip-link:focus,
+  a.s-topbar--skip-link:focus {
+    background-color: #1c2128 !important;
+    color: #e6edf3 !important;
+  }
+
+  /* The BLUE end of the Stacks colour scale is as dark as the black scale and
+     was never remapped: `.fc-blue-400` is #1b75d0 (3.4:1 on an elevated card —
+     every chat room-card title and its "More info" link reads at that), and
+     500 upwards are darker still. The `.fc-*` utilities are `!important` in
+     Stacks, so a bare `a { color }` never wins against them — they need their
+     own remap, exactly like `.fc-black-*`. Numbers run DARKER on the light
+     site, so on dark they run brighter. */
+  .fc-blue-400 {
+    color: #5fb0e6 !important;
+  }
+
+  .fc-blue-500,
+  .fc-blue-600,
+  .fc-blue-700,
+  .fc-blue-800,
+  .fc-blue-900 {
+    color: #6fb3e8 !important;
   }
 
   /* The SELECTED horizontal nav pill (.s-navigation--item.is-selected — the
@@ -1748,6 +1779,32 @@
     border-color: #3d444d !important;
   }
 
+  /* `.s-label--status` — the small rounded status pill beside a heading
+     ("Open to all users", "Last message 2m ago", "Beta"). It paints from
+     per-component tokens only (`--_la-status-bg` / `--_la-status-fc`), so no
+     `.bg-*` / `.fc-*` remap reaches it and every variant shipped as a light
+     pill with dark ink. Redefining the tokens keeps the variant semantics
+     (neutral / blue beta / green new / red required) and the pill geometry. */
+  .s-label--status {
+    --_la-status-bg: #262c33 !important;
+    --_la-status-fc: #c4cdd6 !important;
+  }
+
+  .s-label--status.s-label--status__beta {
+    --_la-status-bg: #14222e !important;
+    --_la-status-fc: #7cb7dd !important;
+  }
+
+  .s-label--status.s-label--status__new {
+    --_la-status-bg: #14261c !important;
+    --_la-status-fc: #8fdc9e !important;
+  }
+
+  .s-label--status.s-label--status__required {
+    --_la-status-bg: #2d1a1a !important;
+    --_la-status-fc: #f0a0a0 !important;
+  }
+
   /* reputation / badge counts on user cards */
   .reputation-score, .user-info .reputation-score {
     color: #c4cdd6 !important;
@@ -2179,6 +2236,24 @@
   .s-anchors.s-anchors__default {
     background-color: #1c2128 !important;
     border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+  }
+
+  /* Stacks colours the modal's two inner regions on the REGION, not on the
+     dialog: `.s-modal--header` is black-800 and `.s-modal--body` is black-500
+     #3b4045. Children that carry an `.fc-*` utility get lifted by the text
+     block above, but an unclassed `<p>` inherits the region colour and lands
+     at ~2:1 on the dark dialog. Live case, reachable logged-out: clicking a
+     vote arrow opens the "Hang on, you can't upvote just yet." modal, whose
+     whole explanatory paragraph is unclassed. Colour the regions themselves. */
+  .s-modal--header,
+  .s-modal--title {
+    color: #e6edf3 !important;
+  }
+
+  .s-modal--body,
+  .s-modal--subtitle,
+  .s-modal--footer {
     color: #c4cdd6 !important;
   }
 
@@ -2831,5 +2906,607 @@
   #hlogo img,
   .-logo img {
     filter: none !important;
+  }
+}
+
+/* ============================================================
+   Stack Exchange Chat (chat.stackoverflow.com, chat.stackexchange.com,
+   chat.meta.stackexchange.com)
+   ------------------------------------------------------------
+   Chat is claimed by the main block's domain() rules (it is a subdomain of
+   stackoverflow.com / stackexchange.com), but it is NOT the Stacks Q&A
+   frontend — it is a separate legacy app with its own stylesheet
+   (`/Content/css/<host>.css`) built on plain class names: `.messages`,
+   `.monologue`, `.onebox`, `.roomcard`, `#input-area`, `#sidebar`. The main
+   block darkens `body` and the Stacks chrome, so the page came out
+   half-themed: a dark shell with a column of #f6f6f6 message bubbles, white
+   timestamp pills, a #e0e0e0 input bar carrying our LIGHT text (light on
+   light, ~1.2:1) and dark-#222 usernames on the dark rail.
+
+   Those class names are generic enough to collide with the Q&A sites
+   (`.tag`, `.popup`, `.content`, `.button`, `.avatar`), so this lives in its
+   own domain block rather than in the main one. It is declared after the main
+   block so it wins the equal-specificity !important ties.
+
+   NOTE for review: `pw-inject.sh` flattens every @-moz-document block, so
+   injecting this file whole makes these rules fire on the Q&A sites too.
+   Build a per-domain trimmed variant before judging any screenshot.
+   ============================================================ */
+@-moz-document domain("chat.stackoverflow.com"),
+  domain("chat.stackexchange.com"),
+  domain("chat.meta.stackexchange.com") {
+
+  /* ---- page shell ------------------------------------------- */
+  /* chat.css sets `body { color:#222222 }` and repeats it on `#content`,
+     `#header` and `.subheader`, which the body-level lift cannot reach —
+     the whole FAQ / rooms / user page body copy renders near-black. */
+  body,
+  #content,
+  #header,
+  .subheader,
+  #sidebar,
+  .mspark {
+    color: #c4cdd6 !important;
+  }
+
+  body.outside.create-edit-page {
+    background-color: #14181d !important;
+  }
+
+  body.outside.create-edit-page #container {
+    background-color: #1c2128 !important;
+  }
+
+  /* ---- the conversation ------------------------------------- */
+  /* `.messages` is the bubble behind every message (#f6f6f6); `.mine` is the
+     warm cream variant that marks your own. Keep the two distinguishable. */
+  .messages {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+  }
+
+  .mine .messages {
+    background-color: #26221a !important;
+  }
+
+  .message .content,
+  .message .message-source,
+  div.message .meta {
+    color: #c4cdd6 !important;
+  }
+
+  div.message .meta {
+    background-color: #262c33 !important;
+  }
+
+  /* per-message timestamp pill: white bg + pure black text */
+  .monologue .timestamp,
+  div.timestamp {
+    background-color: #0d1117 !important;
+    color: #9198a1 !important;
+  }
+
+  /* the author column beside each bubble inherits chat.css's #222 */
+  .monologue .signature,
+  .monologue .signature .username,
+  .user-container .username,
+  .avatar,
+  .fly-in-user .username {
+    color: #9198a1 !important;
+  }
+
+  /* moderators are marked by a blue username; the 3-class signature rule above
+     out-ranks a bare `.username.moderator`, so restate it at equal depth or the
+     marker flattens to the same grey as everyone else. */
+  .username.moderator,
+  .monologue .signature .username.moderator,
+  .user-container .username.moderator,
+  .username.moderator span {
+    color: #6fb3e8 !important;
+  }
+
+  /* `.system-message` is the faint "N hours later…" / "The last message was
+     posted…" rule between monologues, and `.msg-small` the sidebar's "not the
+     room you are looking for?" / "all times are UTC" — both raw #222222, i.e.
+     invisible on dark. `.flair` (the rep number under an avatar) is raw #000.
+     chat.css declares the first as `.system-message-container .system-message`
+     WITH `!important`, so a one-class override never lands. */
+  .system-message-container .system-message,
+  div.system-message,
+  .msg-small,
+  .flair {
+    color: #767e87 !important;
+  }
+
+  /* "N hours later" catch-up separators are three grey ramps */
+  .monologue.catchup-marker-1 {
+    border-top-color: #3d444d !important;
+  }
+
+  .monologue.catchup-marker-2 {
+    border-top-color: #333a42 !important;
+  }
+
+  .monologue.catchup-marker-3 {
+    border-top-color: #2a3038 !important;
+  }
+
+  div.message.reply-parent,
+  div.message.reply-child {
+    background-color: #2d333b !important;
+  }
+
+  #main.select-mode .message.selected {
+    background-color: #1d3346 !important;
+  }
+
+  #main.select-mode .message:hover {
+    border-color: #5fb0e6 !important;
+  }
+
+  /* reply/flag/mod count bubbles ring themselves in 3px of pure white */
+  #reply-count,
+  #flag-count,
+  #modflag-count,
+  #annotation-count,
+  .reply-count {
+    border-color: #14181d !important;
+    box-shadow: none !important;
+  }
+
+  /* ---- the composer bar (fixed to the bottom of every room) --- */
+  #input-area {
+    background-color: #0d1117 !important;
+    border-top: 1px solid #262c33 !important;
+    color: #c4cdd6 !important;
+  }
+
+  #input,
+  #input.editing,
+  #searchbox,
+  #top-menu #search-form input.textbox {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #e6edf3 !important;
+  }
+
+  #input-area .input-hint {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  /* the hint's CSS-triangle pointer is a 20px #fafafa left border */
+  #input-area .input-hint:after {
+    border-left-color: #1c2128 !important;
+  }
+
+  #inputerror {
+    background-color: #2d1f1f !important;
+    border-color: #5c2b2b !important;
+    color: #f0b0b0 !important;
+  }
+
+  /* tab-completion strip above the composer */
+  #tabcomplete li {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #e6edf3 !important;
+    box-shadow: none !important;
+  }
+
+  #tabcomplete li.chosen {
+    background-color: #5fb0e6 !important;
+    border-color: #5fb0e6 !important;
+    color: #0d1117 !important;
+  }
+
+  #tabcomplete li.exact-match {
+    background-color: #262c33 !important;
+    border-color: #3d444d !important;
+  }
+
+  #tabcomplete li.too-many {
+    border-color: #2d333b !important;
+    color: #8b949e !important;
+  }
+
+  #tabcomplete-container.super-ping {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+
+  #tabcomplete-container.super-ping > #tabcomplete > li {
+    background-color: #2d1f1f !important;
+    border-color: #5c2b2b !important;
+  }
+
+  /* ---- floating surfaces (must stay opaque) ------------------ */
+  /* `.notification` is the fixed full-width banner at the top of every chat
+     page ("Welcome to Stack Overflow chat!"). chat.css paints it
+     rgba(255,255,255,.95); with our light body text on top it was a white
+     band carrying near-invisible grey copy. */
+  .notification,
+  #feed-ticker,
+  .popup,
+  #conversation-sel,
+  #main.message-admin-mode .message-controls,
+  .fly-in-user,
+  .share-tip,
+  .message-editor > .instructions,
+  div.time-picker {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  .notification .notify-close-info,
+  #dismiss-ticker {
+    color: #9198a1 !important;
+  }
+
+  .popup hr {
+    border-top-color: #2d333b !important;
+  }
+
+  .popup .btn-close,
+  #conversation-sel .btn-close {
+    background-color: #2d333b !important;
+    color: #e6edf3 !important;
+  }
+
+  .flags-popup li.flagged-message div.content {
+    background-color: #262c33 !important;
+  }
+
+  div.time-picker li.selected {
+    background-color: #2b4253 !important;
+    color: #e6edf3 !important;
+  }
+
+  #loading {
+    background-color: rgba(20, 24, 29, 0.9) !important;
+  }
+
+  #loading #loading-message {
+    background-color: #1c2128 !important;
+    color: #e6edf3 !important;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  .message-editor > .notice.good {
+    background-color: #14261c !important;
+    color: #8fdc9e !important;
+  }
+
+  .message-editor > .notice.bad {
+    background-color: #2d2415 !important;
+    color: #e0c07a !important;
+  }
+
+  /* ---- oneboxes (link previews inside messages) -------------- */
+  .onebox,
+  .ob-message,
+  .ob-post,
+  .ob-user,
+  .ob-tweet,
+  .ob-twitteruser,
+  .ob-wikipedia,
+  .ob-amazon,
+  .ob-gist,
+  .ob-lpadbug,
+  .ob-manpage,
+  .ob-blog,
+  .ob-exception,
+  .ob-anime,
+  .ob-github,
+  .ob-job,
+  .ob-docs,
+  .ob-trello-card {
+    background-color: #161b22 !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+  }
+
+  .ob-post-votes,
+  .ob-question-stats,
+  .ob-trello-card-badge,
+  .ob-docs .example-metric {
+    background-color: #262c33 !important;
+    border-color: #3d444d !important;
+    color: #c4cdd6 !important;
+  }
+
+  .ob-exception .ob-exception-detail {
+    background-color: #26221a !important;
+    color: #e3d9b0 !important;
+  }
+
+  .ob-docs .topic-links .example-row {
+    border-top-color: #2d333b !important;
+  }
+
+  /* ---- room / user cards (rooms list, transcript rail, profiles) */
+  .roomcard,
+  .usercard,
+  .roomcard-xxl,
+  .usercard-xxl,
+  .room-mini,
+  .conversation-info {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .roomcard.frozen,
+  .roomcard-xxl.frozen,
+  .room-mini.frozen-room {
+    background-color: #23262b !important;
+  }
+
+  /* a frozen card dims its own links to a brown #996b49 (2.9:1 on the card) */
+  .roomcard.frozen a,
+  .roomcard-xxl.frozen a,
+  .room-mini.frozen-room a,
+  .roomcard.frozen .room-name a,
+  .roomcard-xxl.frozen .room-name a {
+    color: #c9a37e !important;
+  }
+
+  /* `.room-header` / `#top-section` / the calendar weekday bands declare a
+     border WIDTH with no colour, so they inherit currentColor — which the text
+     lift just turned near-white. */
+  .room-header,
+  #top-section,
+  .faq-page #top-section,
+  .onebox .quote,
+  .ob-message .quote,
+  .calendar .weekday,
+  .calendar-small .weekday-small,
+  #filter-btn-handler {
+    border-color: #2d333b !important;
+  }
+
+  .roomcard.deleted,
+  .roomcard-xxl.deleted {
+    background-color: #191d23 !important;
+    border-color: #2d333b !important;
+    color: #767e87 !important;
+    box-shadow: none !important;
+  }
+
+  .beginner-room-section {
+    border-bottom-color: #262c33 !important;
+  }
+
+  .beginner-room-section .new-badge {
+    background-color: #14261c !important;
+    color: #8fdc9e !important;
+  }
+
+  /* ---- legacy tabs / tags ----------------------------------- */
+  /* `.subheader #tabs a.youarehere` is 0-1-2-1, so the main block's flat
+     `.youarehere` reset never reached it and the selected tab stayed a white
+     pill under our light label — white on white. */
+  .subheader #tabs a,
+  .subheader #tabs .disabled {
+    border-color: #2d333b !important;
+    color: #9198a1 !important;
+  }
+
+  .subheader #tabs a:hover {
+    background-color: #1c2128 !important;
+    border-color: #3d444d !important;
+    border-bottom-color: #1c2128 !important;
+    color: #e6edf3 !important;
+  }
+
+  .subheader #tabs a.youarehere {
+    background-color: #1c2128 !important;
+    border-color: #3d444d !important;
+    border-bottom-color: #1c2128 !important;
+    color: #e6edf3 !important;
+  }
+
+  .subheader #tabs .tabcount {
+    background-color: #2d333b !important;
+    color: #e6edf3 !important;
+  }
+
+  .subtabs a {
+    border-color: #2d333b !important;
+    color: #9198a1 !important;
+  }
+
+  .subtabs a.youarehere {
+    background-color: #2b4253 !important;
+    border-color: #2b4253 !important;
+    color: #e6edf3 !important;
+  }
+
+  .tag,
+  .ob-post-tag,
+  .ob-user-tag {
+    background-color: #1c2b36 !important;
+    border-color: #2d4a5c !important;
+    color: #7cb7dd !important;
+  }
+
+  .tag:hover {
+    background-color: #2d4a5c !important;
+    border-color: #2d4a5c !important;
+    color: #cfe6f5 !important;
+  }
+
+  /* ---- right sidebar ---------------------------------------- */
+  /* `#roomtitle` carries a white text-shadow meant to emboss it on the light
+     page; on dark it draws a halo under every letter. */
+  #sidebar #info #roomtitle {
+    text-shadow: none !important;
+  }
+
+  #sidebar #info #sidebar-menu,
+  #present-users,
+  ul#my-rooms,
+  div#starred-posts > div > ul > li,
+  div#room-files > div > ul > li,
+  .faq-page .share-more {
+    border-color: #2d333b !important;
+  }
+
+  /* room list "recency" ramp: chat.css runs #006000 -> #c0c0c0, i.e. it gets
+     LIGHTER as a room goes stale. On dark the first four are unreadable, so
+     invert the ramp direction while keeping green = active. */
+  ul#my-rooms > li.activity-0 {
+    color: #8fdc9e !important;
+  }
+
+  ul#my-rooms > li.activity-1 {
+    color: #66b57c !important;
+  }
+
+  ul#my-rooms > li.activity-2 {
+    color: #e6edf3 !important;
+  }
+
+  ul#my-rooms > li.activity-3 {
+    color: #c4cdd6 !important;
+  }
+
+  ul#my-rooms > li.activity-4 {
+    color: #9198a1 !important;
+  }
+
+  ul#my-rooms > li.activity-5 {
+    color: #767e87 !important;
+  }
+
+  ul#my-rooms > li.activity-6 {
+    color: #5c636b !important;
+  }
+
+  div#room-files > div > ul > li.file-thumbnail,
+  div#room-files > div > ul > li.file-thumbnail .quick-delete {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+
+  div#room-files > div > ul > li.file-thumbnail .quick-delete:hover {
+    background-color: #2d333b !important;
+  }
+
+  /* the top strip behind the room menu is painted by a pseudo-element */
+  #top-menu:before {
+    background-color: #0d1117 !important;
+  }
+
+  /* ---- transcript page -------------------------------------- */
+  /* Date tiles: a #f5f5f5 -> #e4e4e4 background-IMAGE gradient (a colour scan
+     reads the element as transparent) with a grey or brand-red weekday band. */
+  .calendar,
+  .calendar-small {
+    background-image: none !important;
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #e6edf3 !important;
+  }
+
+  .weekday-small {
+    background-image: none !important;
+    background-color: #2d333b !important;
+    color: #c4cdd6 !important;
+  }
+
+  .weekday {
+    background-image: none !important;
+    background-color: #6e2f2f !important;
+    color: #f0d5d5 !important;
+  }
+
+  /* message-volume sparkline. The `.now` marker is the only chromatic bar in
+     the strip, so it needs its own rule — a blanket `!important` on `.mspbar`
+     beats the more specific `.mspbar.now` and erases the "you are here" tick. */
+  .mspark .mspbar {
+    background-color: #454e59 !important;
+  }
+
+  .mspark .mspbar.now {
+    background-color: rgba(221, 98, 5, 0.85) !important;
+  }
+
+  /* ---- FAQ page --------------------------------------------- */
+  .faq-page #toc,
+  #toc.module {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+
+  .faq-page #top-section .col-section {
+    background-color: #26221a !important;
+    border-color: #4a4327 !important;
+  }
+
+  /* ---- markdown editor -------------------------------------- */
+  .wmd-prompt-dialog {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+  }
+
+  .wmd-mini-button:hover,
+  .wmd-mini-button.selected {
+    background-color: #2d333b !important;
+  }
+
+  .wmd-mini-button.selected:hover,
+  .wmd-mini-button.selected {
+    background-color: #3d444d !important;
+    color: #e6edf3 !important;
+  }
+
+  /* ---- misc ------------------------------------------------- */
+  /* chat's solid orange `.button` ("load older messages", "join N users in
+     this room now", "« first day") carries a white label via a Stacks link
+     token; the network-wide link accent repaints it to our blue, which lands
+     at 1.1:1 on the orange. Pin the label back to white. The sidebar accent
+     `#sidebar a` (1 id) out-ranks a bare `a.button`, so the transcript rail's
+     "join N users in this room now" / "about this room" need the id too. */
+  a.button,
+  span.button,
+  .roomcard-xxl .button,
+  .frozen a.button,
+  #sidebar a.button,
+  #sidebar .button,
+  #info a.button,
+  a#join-room.button {
+    color: #ffffff !important;
+  }
+
+  .button.disabled,
+  .button.disabled:hover {
+    background-color: #3d444d !important;
+    color: #9198a1 !important;
+  }
+
+  /* The logged-out composer shows SE's anonymous avatar raster — a light-grey
+     64px tile with a white silhouette, i.e. the brightest thing on the page for
+     exactly the visitors this theme is for. It is a placeholder, not content,
+     so inverting it in place is safe; real user avatars keep a different src. */
+  img[src*="Img/anon.png"] {
+    filter: invert(1) !important;
+  }
+
+  #conversation-body ul#participants li.selected {
+    background-color: #3d2f1c !important;
+  }
+
+  kbd {
+    background-color: #262c33 !important;
+    border-color: #3d444d #2d333b #21262d #3d444d !important;
+    color: #e6edf3 !important;
   }
 }

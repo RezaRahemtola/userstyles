@@ -274,6 +274,19 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .toggle_btn.active {
     border-color: #fa7d8c !important;
   }
+  /* The chip is an <a>, so the blanket accent paints its label AND its checkbox glyph the same
+     pink whether the filter is on or off — itch writes an OFF chip muted #606060 and an ON one
+     body-ink with a red tick, so the border was left carrying the whole state on its own. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .toggle_btn,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .toggle_btn .icon {
+    color: #8b949e !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .toggle_btn.active {
+    color: #e6edf3 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .toggle_btn.active .icon {
+    color: #fa7d8c !important;
+  }
   /* Controls-bar divider is a 1px background, not a border, so the border reset misses it */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .control_sep {
     background-color: #2d333b !important;
@@ -810,6 +823,16 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .pager_label {
     color: #8b949e !important;
   }
+  /* A tag card wraps its blurb, its weekly count and its "Commonly tagged with" list in <a>s
+     that itch leaves at body/muted ink — only the tag TITLE is a red link. The blanket accent
+     paints all of them pink, so /tags reads as a wall of links with no title emphasis. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .tag_cell .tag_description a {
+    color: #c4cdd6 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .tag_cell .games_count a,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .tag_cell .related_tags a {
+    color: #8b949e !important;
+  }
   /* Rating count beside the stars in every game grid ships itch's #606060 (~2.2:1 here) */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .game_rating,
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .rating_count {
@@ -832,6 +855,11 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .promotion_page .promotion_dates,
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .promotion_page .date_format {
     color: #8b949e !important;
+  }
+  /* "Includes the following games:" heads the product half at itch's hardcoded #434343
+     (1.6:1 on the card) — the token rebind does not reach it. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .promotion_page .game_column .stick_wrapper > p {
+    color: #c4cdd6 !important;
   }
   /* Countdown digits are the loudest thing in the buy row natively and ship #606060 */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .promotion_page .countdown .block_value {
@@ -1119,6 +1147,71 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .content_type .outline_button {
     background-color: #14181d !important;
     border-color: #2d333b !important;
+  }
+
+  /* ==== Marketing / index pages (itch.io/app, /developers, /jobs, /game-development/…) ==== */
+  /* The app tour alternates full-width text bands: the .right ones ship
+     var(--itchio_white_back) while their .left siblings are transparent, so half the copy
+     rendered white-on-white. The closing download panel is the same white. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .app_page .image_interstitial {
+    background-color: #14181d !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .app_page .download_row {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+  /* The developer page's scroll-in bar is a fixed full-width var(--itchio_white_back) strip
+     parked above the viewport at load, so it only exists on screen once the page scrolls —
+     and it carries the pure-black monochrome logo, same as the site header. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .developers_page .index_sticky_bar {
+    background-color: #0d1117 !important;
+    border-color: #2d333b !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .developers_page .sticky_logo {
+    filter: invert(1) !important;
+  }
+  /* Its "Learn more about:" chips are white pills carrying itch's link red — 2.5:1 here */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .developers_page .guide_nav .outline_button {
+    background-color: #1c2128 !important;
+    border-color: rgba(250, 125, 140, 0.45) !important;
+  }
+  /* Each section heading leads with an icon-FONT glyph left at itch's #434343 (1.8:1). It is
+     drawn by a ::before, so no text-colour walk reads it. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .developers_page .guide h3 .icon {
+    color: #8b949e !important;
+  }
+  /* Job listings are white cards holding itch's link-red titles (2.5:1), and the employer
+     logo tile is a light gray_back plate — both while the logo lazy-loads and behind a
+     transparent one, plus the briefcase fallback when a listing has no logo at all. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .jobs_browse_page .job_listing_row {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .jobs_browse_page .post_image {
+    background-color: #1a1f26 !important;
+  }
+  /* A single listing is its own page type and the article sheet itself is
+     var(--itchio_white_back), so the entire job description rendered white-on-white. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .jobs_view_page {
+    background-color: #14181d !important;
+  }
+  /* Every run of text in a listing card is wrapped in its own <a>, but itch colours only the
+     TITLE like a link (#da2c49) and leaves the summary at body ink and the tag chips muted —
+     the blanket accent turns the whole card into a wall of pink and the title stops standing
+     out. Neither scanner sees it: the native tones are achromatic, and `painted` skips colour. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .job_listing_row p.summary a {
+    color: #c4cdd6 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .job_listing_row .tags a {
+    color: #8b949e !important;
+  }
+  /* Engine directory: each row's sample-project strip is a light gray_back plate, every
+     thumbnail in it carries its own white plate behind the (often transparent) cover art,
+     and the engine icon sits on the same light tile. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .game_development_tools_page .tool_icon,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .game_development_tools_page .tool_project_preview,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .game_development_tools_page .tool_project_preview img {
+    background-color: #1a1f26 !important;
   }
 
   /* ==== Sale rows / goal bars ==== */

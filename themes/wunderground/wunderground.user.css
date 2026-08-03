@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Weather Underground Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.15
+@version        1.0.16
 @description    A clean dark theme for Weather Underground. Darkens forecasts, hourly and 10-day pages and data tables while keeping radar, maps and weather icons intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -720,6 +720,23 @@
   .legend-def.snowchance .legend-key {
     border-color: #15aadc !important;
   }
+  /* WU's form checkbox is an <input type=checkbox> + <label> whose visible box
+     is the LABEL's ::before painted from wu4Form_sprite.png. UNCHECKED is a
+     solid white cell of that sprite -- a bg-IMAGE on a pseudo-element, so
+     neither the element-bg scan nor a pseudo-bg-COLOR probe sees it, and every
+     instance is click-gated on top of that. Invert only the unchecked cell
+     (white box -> near-black with a legible rim); the checked cell is a cyan
+     tick that already reads on dark and must keep its hue, so it is exempted
+     via :checked. Two instances: the 10-day "Customize" series menu and the
+     city-page station-nav "Report Station" dropdown. */
+  .wu-forecastextended-seriesselector-preset label::before,
+  .checkbox-wrap label::before {
+    filter: invert(1) brightness(2.2) !important;
+  }
+  .wu-forecastextended-seriesselector-preset input:checked + label::before,
+  .checkbox-wrap input:checked + label::before {
+    filter: none !important;
+  }
 
   /* ---- (3) dashboard tiles (Precip / Pollen / Air Quality / UV) --------- */
   /* Each lib-*-tile body is a div#*BarChart wrapping an inline-styled white
@@ -1002,6 +1019,25 @@
   }
   .accordion-content .layerTitle {
     background-color: var(--wu-surface-2) !important;
+  }
+  /* Every layer toggle in that panel is a <span.wuCheckbox>/<span.wuRadioButton>
+     whose art is a background-IMAGE sprite (wu4Checkbox.png / wu4RadioButton.png).
+     The UNCHECKED cell is a solid white box/disc -- 16 checkboxes and 3 radios of
+     glaring white on the darkened panel, at 24x24 each (under the light-surface
+     size floor) and painted by a bg-image, so no bg-colour scan reports them.
+     Invert the unchecked art; the checked/selected cells are WU's cyan tick and
+     cyan-ringed dot, which read correctly on dark and are exempted so the
+     on/off distinction survives. State is encoded by background-position, so
+     the exemption must key off `.selected` (WU's own class), not the sprite.
+     `.map-accordion` scopes this to both the desktop rail and the
+     .mobile-wundermap-wrapper copy. */
+  .map-accordion .wuCheckbox,
+  .map-accordion .wuRadioButton {
+    filter: invert(1) brightness(2.2) !important;
+  }
+  .map-accordion .selected .wuCheckbox,
+  .map-accordion .wuRadioButton.selected {
+    filter: none !important;
   }
   lib-wm-sidebar {
     background-color: var(--wu-chrome) !important;
@@ -1803,5 +1839,15 @@
   i.mat-mdc-tooltip-trigger.material-icons,
   .module__header .mat-mdc-tooltip-trigger {
     color: var(--wu-link) !important;
+  }
+
+  /* ---- (h) maps-catalog "MAP SELECT" current map ------------------------ */
+  /* The catalog's MAP SELECT grid marks the map you are viewing with a 2px
+     #006f9e ring around its thumbnail -- the ONLY cue, since the caption stays
+     the same link blue as its siblings. The blanket `*` border reset flattened
+     the ring to the generic line colour, so all five tiles looked identical.
+     Restore the accent (the ring's width is WU's, we only recolour it). */
+  .thumbnail-img.selected {
+    border-color: #15aadc !important;
   }
 }

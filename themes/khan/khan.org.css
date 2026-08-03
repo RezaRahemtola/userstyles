@@ -467,6 +467,16 @@
      above and get the same flattening. The child combinator keeps it off any
      genuinely small `.graphic_shape_wrap` Khan adds later. */
   .u-cover-absolute > .graphic_shape_wrap { background-color: #14181d !important; }
+  /* The /schools hero's decorative street map: a 1312x436 inline <svg> whose
+     26px-wide "roads" are `stroke="currentColor"` over Khan's palest blue
+     (#eef7fe). It is a whisper on the white page — 1.06:1, a texture you have to
+     look for — and nothing in this sheet touches an SVG stroke, so on the dark
+     hero the SAME colour becomes near-white ribbons: the brightest thing on the
+     page, out-shouting the headline and the purple CTA. Restating `color` is
+     enough (the strokes inherit it); the coloured schoolhouse markers are
+     separate literal fills and keep their blue/green/pink/gold. This tone leaves
+     the map legible as a map while putting it back under the type. */
+  .graphic_map_lines { color: #232a34 !important; }
   /* Webflow's hairline rules are 1px DIVs with a light background, so the
      blanket `* { border-color }` reset never reaches them. */
   .c-divider { background-color: #2d333b !important; }
@@ -474,19 +484,80 @@
      `html, body` ink does not reach it: the skip link, the testimonial
      attribution (near-black on the now-dark card — "Sal Khan / Founder & CEO"
      was rendering at ~1.2:1) and the mega-menu group headers (a mid grey that
-     lands ~3.2:1 on the panel). The stat cards' numbers are deliberately NOT
-     here: those sit on Khan's gold/orange/pink tiles, which keep their fill,
-     so their near-black ink is still the correct colour. */
+     lands ~3.2:1 on the panel). The stat cards are deliberately NOT lifted here:
+     they sit on Khan's gold/orange/pink tiles, which keep their fill, so their
+     near-black ink is still the correct colour — the block below RE-ASSERTS it. */
   .nav_skip_text { color: #e6edf3 !important; }
   .card_testimonial_quote, .card_testimonial_author_name,
   .card_testimonial_author_title { color: #c4cdd6 !important; }
   .nav_group_title { color: #9aa4af !important; }
-  /* …and the "AS SEEN ON" press band, exactly like the home page's supporter
-     logos: five flat black wordmarks (one of them, GatesNotes, on a baked-in
-     white plate) drawn for the white section, so once the band goes dark four
-     of them vanish into it and the fifth becomes a white slab. They are
-     greyscale, so a straight inversion is faithful. */
-  .item_logo_wrap .item_logo_image { filter: invert(1) !important; }
+  /* The coloured cards Webflow KEEPS its fill on — the impact/teacher stat tiles
+     (`.card_stat_inner`, gold / orange / pink / green / blue / periwinkle) and the
+     full-width feature card (`.card_large_wrap`, 1120x492 pink on /schools) — are
+     the one place on these pages where near-black ink is still the RIGHT colour,
+     and the global `h1-h6` / `p, li, …` block above repaints it near-white:
+     "learning minutes" landed at 1.01:1 on the pink tile (i.e. gone) and
+     "Students deserve more than chatbots." at 1.6:1. The `.card_stat_number` was
+     already left alone but its caption is a Webflow rich-text `<p>` INSIDE the
+     wrapper, so the wrapper's own colour never reached it. Restate the authored
+     ink for the whole subtree; neither card contains a button or link whose label
+     needs a different colour. `-webkit-text-fill-color` too, since the global bold
+     rule sets it and it overrides `color` on every descendant. */
+  .card_stat_inner, .card_stat_inner *,
+  .card_large_wrap, .card_large_wrap * {
+    color: #191918 !important;
+    -webkit-text-fill-color: #191918 !important;
+  }
+  /* Webflow's text-link button ("See Tier 1 studies →", inside the evidence cards
+     on /about/impact) keeps the light page's near-black ink, which lands ~1.3:1 on
+     the `.card_primary_element` surface the block above darkens — the only call to
+     action on those three cards, effectively invisible. Native it is the strongest
+     ink on the card, so it maps to the theme's strong ink rather than the link
+     blue. */
+  .button_link_element, .button_link_text { color: #e6edf3 !important; }
+  /* Webflow's SECONDARY button variant is a pale-blue (#ebf1fd) pill with a purple
+     label — the inverse of the solid purple primary, and on the dark page it is the
+     brightest thing on the screen ("Read our blog to learn more", "View internships",
+     "Join the Learners Fund", plus the 48px carousel play/pause toggle). Same
+     treatment the Wonder Blocks `secondary` navbar search button gets: dark fill,
+     bordered, label lifted to a light shade of Khan's purple so the secondary still
+     reads as the quieter sibling of the solid CTA. Matched on the Webflow variant
+     id, which marks ONLY this variant (the solid primary carries no variant class);
+     if Khan re-authors it the rule simply stops applying and the button returns to
+     today's pale pill. */
+  .button_main_element[class*="w-variant-e85564cd"],
+  .button_toggle_element[class*="w-variant-ab355ea0"] {
+    background-color: #1c2128 !important;
+    border-color: #3a424c !important;
+  }
+  .button_main_element[class*="w-variant-e85564cd"] .button_main_text,
+  .button_toggle_element[class*="w-variant-ab355ea0"] .button_toggle_icon {
+    color: #a5a1ff !important;
+    -webkit-text-fill-color: #a5a1ff !important;
+  }
+  /* The "AS SEEN ON" press band (/teachers) and the district band (/schools):
+     flat greyscale wordmarks drawn for the white section, invisible once it goes
+     dark, so a straight inversion is faithful.
+
+     `lighten` is what makes that inversion safe on the ones that ship an OPAQUE
+     white plate instead of alpha — GatesNotes (1% transparent, 69% white) and the
+     Palm Beach County seal (11% transparent, 34% white). Inverting those paints a
+     pure #000 rectangle, DARKER than the band, so the plate reads as a hard-edged
+     black box around the mark. Blending picks the lighter of image and backdrop:
+     everything the inversion pushes below the band colour snaps back to the band,
+     the light linework is untouched, and the alpha-backed marks (55-82%
+     transparent, ~0% white) are unaffected — so no per-file exception list to keep
+     in sync as Khan swaps logos.
+
+     The wrapper fill is load-bearing: `.section_contain` is `position:relative;
+     z-index:1`, i.e. a stacking context, so the blend's backdrop is empty unless
+     the band colour is painted INSIDE it. It restates the `section.u-section`
+     colour these bands always sit on, so it is invisible on its own. */
+  .item_logo_wrap { background-color: #14181d !important; }
+  .item_logo_wrap .item_logo_image {
+    filter: invert(1) !important;
+    mix-blend-mode: lighten !important;
+  }
 
   /* ====================================================================
      Hardcoded light surfaces that bypass the design tokens

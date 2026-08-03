@@ -1330,9 +1330,13 @@
   /* .attention is NOT metadata — it is the emphasised 総合ポイント figure the
      site paints #dd0000 on every result row. Lumping it in with the muted
      lines above made the ONE emphasised line the dimmest thing on the row.
-     (#trad/#main_search out-specify a bare .attention, so name them.) */
+     (#trad/#main_search out-specify a bare .attention, so name them.)
+     The R18 search hosts nest the same figure under .in_box, where this sheet's
+     own `.in_box span` lift (0,1,1) out-specifies a bare `.attention` (0,1,0)
+     and greyed all 20 rows a page — qualify the element to win. */
   #trad .attention,
   #main_search .attention,
+  .in_box span.attention,
   .attention {
     color: #ff7b72 !important;
   }
@@ -1722,6 +1726,18 @@
   a#enable_history {
     background-color: #21262d !important;
   }
+  /* The MAIN network's 閲覧履歴 (yomou.syosetu.com/rireki/list/) now renders the
+     same two ids as modern `.c-button--primary` CTAs. The id rule above is
+     (1,0,1) and beat the modifier (0,2,0), so 閲覧履歴を記録しない and
+     閲覧履歴をすべて削除する sat as neutral chips beside a 続きから読む that
+     carries the identical classes and paints blue. Qualify to (1,1,1). */
+  a#rireki_alldelete.c-button--primary,
+  a#disable_history.c-button--primary,
+  a#enable_history.c-button--primary {
+    background-color: #1f6feb !important;
+    border-color: #1f6feb !important;
+    color: #ffffff !important;
+  }
   /* With those panels dark, everything written on them turns out to be the same
      legacy #333/#444/#555 ink the R18 base sheets set directly. */
   .review_list .novelinfo,
@@ -1783,6 +1799,71 @@
     color: #9aa3ad !important;
   }
 
+  /* The R18 paged ranking LIST (/rank/list/type/<period>/) is a different
+     container family from the ranking TOP handled above. noc wraps its 300 rows
+     in a `.ranking_inbox` painted a solid #ffffff — a full-length white slab
+     carrying our light body text; mnlt's is bare and mid has none. Each row's
+     heading is `#rank_box .rank_h` with a `.name` author span, both left at the
+     base sheet's universal `* { color:#333 }` — a DIRECT match, so no inherited
+     body colour reaches them. The title inside is an anchor and keeps its own. */
+  .ranking_inbox {
+    background-color: transparent !important;
+  }
+  #rank_box .rank_h,
+  #rank_box .rank_h .ranking_number {
+    color: #c4cdd6 !important;
+  }
+  #rank_box .rank_h .name {
+    color: #9aa3ad !important;
+  }
+  /* The 総合/短編/連載中/完結済 novel-type chips are the class twin of the
+     .r_navilist period pills above: a pale plate (#ffeeff on noc, #eeffff on
+     mnlt) under a BLACK label, the current one marked only by a 2px rule in the
+     site's own accent that the blanket border reset flattened. noc wraps the row
+     in `.r_navititle` (class), mnlt in `#r_navititle` (id) — that pair is the
+     only way to tell the two hosts apart from CSS. */
+  ul.r_noveltypelist li,
+  ul.r_noveltypelist li a {
+    background-color: transparent !important;
+    color: #c4cdd6 !important;
+  }
+  ul.r_noveltypelist li.on,
+  ul.r_noveltypelist li.on a {
+    background-color: #21262d !important;
+    color: #e6c9a8 !important;
+  }
+  ul.r_noveltypelist a:hover {
+    background-color: #21262d !important;
+  }
+  .r_navititle ul.r_noveltypelist li.on {
+    border-bottom-color: #ffaaff !important;
+  }
+  #r_navititle ul.r_noveltypelist li.on {
+    border-bottom-color: #66ccff !important;
+  }
+  /* mid's paged ranking list is a THIRD family again: each of its 300 rows is a
+     #fcfcfc `.rankList_info` card, and `.rankList` ships a #666 ink that the
+     作者 / 連載中 / キーワード / 最終更新日 lines inherit. The rank and point
+     figures keep their own #3bd cyan (a direct declaration beats inheritance). */
+  .rankList_info {
+    background-color: transparent !important;
+  }
+  .rankList {
+    color: #c4cdd6 !important;
+  }
+  /* mid marks the current period tab and novel-type chip with a #008877 teal
+     rule plus label — 2.2:1 on our base, and the label is additionally
+     overwritten by the generic link blue, so selected and unselected render
+     identical. Lift the teal on both; it is the row's only "you are here" cue. */
+  nav.rank_navtype li.on,
+  ul.rank_noveltypelist li.on {
+    border-bottom-color: #3ac9b4 !important;
+  }
+  nav.rank_navtype li.on a,
+  ul.rank_noveltypelist li.on a {
+    color: #3ac9b4 !important;
+  }
+
   /* The R18 group serves its OWN phone sheets (smp_base / smp_noc / the mnlt and mid
      equivalents) — a fifth family none of the desktop selectors above touch, and one
      the desktop viewport can never render. Everything here is a full-width band or a
@@ -1803,6 +1884,18 @@
   h2.official-x_headline {
     background-color: transparent !important;
     background-image: none !important;
+  }
+  /* Clearing those plates leaves the 新着一覧 / ランキング pair identical: their
+     only remaining difference was ランキング's saturated #ee9933 frame + #ee7633
+     label, both flattened. (新着一覧's own frame is a pale #cc99bb on noc /
+     #99bbcc on mnlt — correctly left flattened.) */
+  div.beginner li.ranking,
+  div.beginner_rank li.ranking {
+    border-color: #ee9933 !important;
+  }
+  div.beginner li.ranking a,
+  div.beginner_rank li.ranking a {
+    color: #f0954a !important;
   }
   /* Keep the heads' background-IMAGE: on these h2s it is the section icon
      (news.gif megaphone, book.gif), not a band — the band is the colour. */
@@ -1834,6 +1927,45 @@
   ul#r_navilist > li.on {
     background-color: #21262d !important;
     color: #e6c9a8 !important;
+  }
+  /* …and beside it the novel-type row as `ul#r_noveltypelist`, the id twin of
+     the desktop `ul.r_noveltypelist` above: four solid-white chips (#ffffff on
+     noc, #f0ffff on mnlt) under a #006699 label, the current one #eeeeee with a
+     #999999 rule. These legacy R18 rows always come in a desktop-class /
+     phone-id pair — fix the twin whenever you fix one. */
+  ul#r_noveltypelist > li,
+  ul#r_noveltypelist > li a {
+    background-color: #161b22 !important;
+    color: #c4cdd6 !important;
+  }
+  ul#r_noveltypelist > li.on,
+  ul#r_noveltypelist > li.on a {
+    background-color: #21262d !important;
+    color: #e6c9a8 !important;
+  }
+  ul#r_noveltypelist > li.on {
+    border-bottom-color: #8b949e !important;
+  }
+  /* Ranks 1–5 are medal GIFs; 6位 down is a text `.ranking_number` the phone
+     sheet paints #993333 — a maroon that reads on the site's white page and
+     vanishes on ours. Keep it in the native red family. The keyword and date
+     lines under each row are the same sheet's #666666. */
+  ul.ranking li .ranking_number {
+    color: #ff7b72 !important;
+  }
+  ul.ranking li.keyword,
+  ul.ranking li.date {
+    color: #9aa3ad !important;
+  }
+  /* mid's phone sheet moves the #666 ink off `.rankList` onto `.rankList p`
+     directly, so lifting the container is not enough — the 作者 / 連載中 /
+     キーワード / 最終更新日 paragraphs stay dark. Re-assert the rank line's own
+     #33bbdd afterwards; the broad lift would otherwise swallow it. */
+  .rankList p {
+    color: #c4cdd6 !important;
+  }
+  .rankList p.rank {
+    color: #33bbdd !important;
   }
   div#entry_link > a,
   .genre_list.content-bg,

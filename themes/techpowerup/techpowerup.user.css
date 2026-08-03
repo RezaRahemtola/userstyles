@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           TechPowerUp Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.13
+@version        1.0.14
 @description    A clean, neutral dark theme for TechPowerUp — news, reviews, the GPU/CPU spec databases and forums, with readable tables and code, TPU blue intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1361,8 +1361,7 @@
   .button,
   .search-button,
   input[type="submit"],
-  input[type="button"],
-  .button--cta {
+  input[type="button"] {
     background-color: #21262d !important;
     background-image: none !important;
     color: #e6edf3 !important;
@@ -1381,7 +1380,6 @@
   /* Primary / CTA buttons keep a blue identity. `.startbutton` is the big blue
      download CTA (#4486c7) on every /download/<app> page — the base `.button`
      rule above would otherwise flatten it into the same neutral grey. */
-  .button--cta,
   .btn-primary,
   .button.inverted,
   .submitUnit button[type="submit"],
@@ -1392,12 +1390,62 @@
     color: #ffffff !important;
   }
 
-  .button--cta:hover,
   .btn-primary:hover,
   .button.inverted:hover,
   .button.startbutton:hover,
   input.startbutton:hover {
     background-color: #2f74c0 !important;
+  }
+
+  /* ---- XenForo button VARIANTS (the /forums/ half of the domain) ----
+     TPU's forum paints a hierarchy the base `.button` rule above flattens: the
+     plain button is blue, `--primary` a brighter blue, `--cta` ORANGE (not
+     blue), `--plain` a bare glyph with no plate at all, and `is-disabled` a
+     muted face. At (0,1,0) the base rule swallows all of them, so the login
+     form's primary submit, the mobile nav trigger and a disabled control all
+     render as one identical neutral chip. Reclaim each at (0,2,0) — which also
+     has to out-rank the sitewide `a:link` blue (0,1,1), since every one of
+     these variants is an <a> as often as a <button>. */
+  .button.button--primary {
+    background-color: #2563a8 !important;
+    border-color: #2f74c0 !important;
+    color: #ffffff !important;
+  }
+
+  .button.button--primary:hover,
+  .button.button--primary:focus {
+    background-color: #2f74c0 !important;
+    color: #ffffff !important;
+  }
+
+  /* `--cta` is the forum's ORANGE call to action (#f2930d light / #a5660d dark);
+     painting it our blue both loses the hue and — once `a:link` wins the ink on
+     the anchor form — leaves blue-on-blue at ~2.8:1. */
+  .button.button--cta {
+    background-color: #a4620d !important;
+    border-color: #c8791a !important;
+    color: #ffffff !important;
+  }
+
+  .button.button--cta:hover,
+  .button.button--cta:focus {
+    background-color: #c8791a !important;
+    color: #ffffff !important;
+  }
+
+  /* `--plain` is a plate-less text/glyph button — the mobile nav trigger is one.
+     Giving it the neutral chip boxes a bare hamburger into a grey square. */
+  .button.button--plain {
+    background-color: transparent !important;
+    border: 0 !important;
+  }
+
+  /* A disabled control must not read as an enabled one */
+  .button.is-disabled,
+  .button.is-disabled:hover {
+    background-color: #1a1f25 !important;
+    border-color: #262c33 !important;
+    color: #7d8590 !important;
   }
 
   /* The review pager's "Next Page »" CTA carries the next section's name in a

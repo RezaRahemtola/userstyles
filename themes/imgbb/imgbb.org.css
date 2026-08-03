@@ -334,6 +334,16 @@
     color: #c4cdd6 !important;
   }
 
+  /* Dismissing a modal after a field has been touched (the image "Edit" dialog)
+     swaps its body for a confirm strip the site paints #fff — a full-width white
+     band across the modal carrying our light body text at about 1.6:1. It only
+     exists once a value has changed AND the dialog is closed, so no load-time
+     scan and no screenshot of an untouched form reaches it. */
+  #fullscreen-changes-confirm {
+    background-color: #1c2128 !important;
+    color: #c4cdd6 !important;
+  }
+
   /* Section headers ("Share", "Embed codes", related blocks) */
   .header,
   .header-content {

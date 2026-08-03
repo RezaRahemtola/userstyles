@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Avito Dark
 @namespace    github.com/RezaRahemtola/userstyles
-@version      1.0.14
+@version      1.0.15
 @description  A clean dark theme for Avito — comfortable dark surfaces across home, search and listing pages, with crisp prices and the familiar Avito blue kept bright.
 @author       Reza Rahemtola
 @homepageURL  https://github.com/RezaRahemtola/userstyles
@@ -537,6 +537,27 @@
   [class*="root_preset_secondary"] {
     background-color: #262c35 !important;
   }
+  /* `root_preset_accent` is the DS's OTHER solid primary — Avito's brand blue
+     `#00AAFF` with a white label. Three of its instances already reach the accent
+     through their own markers ("Найти", "Все категории"), but the region picker's
+     main CTA ("Показать больше N объявлений") carries no marker, so it fell through
+     to the generic dark `button` surface — `--av-surface` on a modal whose own panel
+     is also `--av-surface`, i.e. the dialog's only action rendered as bare white text
+     with no button shape at all. The trailing hyphen is load-bearing: the DS emits
+     `root_preset_accent-<hash>`, so `root_preset_accent-` excludes the soft-blue
+     `root_preset_accentSecondary-…` that the block below re-tunes. Written to fail
+     SAFE: a build that drops the hash suffix simply restores today's grey. Scoped to
+     `button` for the reason the primary arm is — Avito hangs DS presets on ANCHORS
+     too, and those are already claimed by the (0,1,1) `a[class*="styles-module-root"]`
+     arm, so a fill rule that loses to it would leave dark ink on a grey chip. */
+  button[class*="root_preset_accent-"] {
+    background-color: var(--av-accent) !important;
+    border-color: var(--av-accent) !important;
+  }
+  button[class*="root_preset_accent-"],
+  button[class*="root_preset_accent-"] * {
+    color: #0b1620 !important;
+  }
   /* The rest of the Button component's preset vocabulary, all of it natively
      COLOURED and all of it swallowed whole by the generic dark button rule:
 
@@ -659,6 +680,25 @@
   }
   a[class*="styles-module-root"][data-marker="messenger-button/link"],
   a[class*="styles-module-root"][data-marker="messenger-button/link"] * {
+    color: var(--av-text-soft) !important;
+  }
+  /* The model/catalog page's offer rows ship a THIRD build of the same marker, under
+     pure build hashes and with no border-radius — natively a plain WHITE square
+     secondary sitting under the row's soft-blue "Показать телефон" primary. The DS-class
+     arm above cannot reach it, so the accent rule painted it a solid blue slab: the
+     loudest thing in the row, square-cornered against its rounded neighbour, and the
+     row's two actions ranked upside down. Every card-embedded messenger CTA — search,
+     profile, model page — is a `[data-marker="item"]` descendant and is a secondary;
+     only the item page's own buy-box copy sits outside a card and stays the accent.
+     The fill is the secondary preset's tone, not `--av-surface`: a card only shows this
+     CTA while hovered, and the hover panel is itself `--av-surface`, so a surface-
+     coloured chip would have no edge at all and read as bare text. */
+  [data-marker="item"] a[data-marker="messenger-button/link"] {
+    background-color: #262c35 !important;
+    border-color: var(--av-border) !important;
+  }
+  [data-marker="item"] a[data-marker="messenger-button/link"],
+  [data-marker="item"] a[data-marker="messenger-button/link"] * {
     color: var(--av-text-soft) !important;
   }
 
@@ -919,8 +959,12 @@
      an empty one, so it has to be named. Written to fail SAFE: matching the FILLED
      hash means a rebuilt hash drops the stars back to the theme's neutral grey,
      where they are merely uninformative — never gold on an empty star, which would
-     overstate a seller's rating. */
-  [data-marker="sellerRate"] span[class*="_4da9fca36a8c49c9"] {
+     overstate a seller's rating. The model/catalog page's offer rows mount the same
+     widget under a different marker (`seller-rating/rating-stars`, one `star-N` div
+     per star) and were missed by the `sellerRate` scope, so all fifteen stars in its
+     offer list rendered body grey — every shop in the list looked unrated. */
+  [data-marker="sellerRate"] span[class*="_4da9fca36a8c49c9"],
+  [data-marker^="seller-rating/rating-stars"] span[class*="_4da9fca36a8c49c9"] {
     color: #ffb021 !important;
   }
   /* `[data-marker*="title"]` was too loose: Avito also hangs a bare
@@ -1182,6 +1226,33 @@
     background-color: var(--av-surface) !important;
     border-color: var(--av-border) !important;
   }
+  /* Category RUBRICATOR mega-menu — the panel behind the blue grid button next to the
+     logo, on every page type. Its 1280×528 sheet is a natively WHITE pair of nested
+     DIVs (`new-rubricator-content-root` / `…root_wrapper` / `…root_content`), and the
+     div-neutraliser flattened all of them: the whole category tree rendered straight
+     over the page underneath, headings and links stacked on top of the results grid
+     and unreadable. Painting the shared `…content-root` prefix covers all three nested
+     nodes at once; they are opaque over opaque in the same tone, so the nesting is
+     harmless. No load-time scan sees this — the panel is portalled in on click. */
+  [class*="new-rubricator-content-root"] {
+    background-color: var(--av-surface) !important;
+    border-color: var(--av-border) !important;
+  }
+  /* Its wrapper is the menu's backdrop (natively `rgba(0,0,0,0.32)`) — see the portal
+     backdrop rule further down, which covers it and the item page's dialog scrim in
+     one arm. Inside it, the root-category list marks which subtree is on show with a light
+     `#f2f1f0` fill on the current row and nothing else — no icon, no ink change — so
+     the neutraliser left all twelve rows identical. The `active` modifier is the only
+     discriminator; a raised surface reads the same way the light fill does natively. */
+  [data-marker^="top-rubricator/root-category"][class*="styles-module-active"] {
+    background-color: #262c35 !important;
+  }
+  /* And its promo card is a `#cfedff` light-blue panel, the same soft blue the theme
+     sinks to a tinted dark chip everywhere else. Scoped to the open menu so the shared
+     `background_color` class is untouched elsewhere. */
+  [data-marker="more-popup"] [class*="styles-module-background_color"] {
+    background-color: #1d2c3a !important;
+  }
   /* Third-party UX-survey card ("Сейчас мы изучаем, как люди пользуются Авито",
      `position: fixed`, bottom-right). Every node in the widget is a DIV under the
      `uxs-` namespace, so the neutraliser blanked the whole card: its heading and
@@ -1229,6 +1300,18 @@
      dropdown listboxes and must stay transparent. */
   [data-marker$="/overlay"] {
     background-color: rgba(0, 0, 0, 0.6) !important;
+  }
+  /* Portalled backdrops that carry no marker of their own: the item page's dialogs
+     ("Причина жалобы") hang theirs on a `position:fixed` wrapper under pure build
+     hashes, and the header's category mega-menu wrapper is the same shape. Both were
+     wiped by the neutraliser, so an open dialog floated over a page at full brightness
+     and the mega-menu had nothing behind it at all. `role="region"` is the stable hook.
+     The child combinators are load-bearing, NOT decoration: the mega-menu's own inner
+     panel carries the same role several levels deeper, and a descendant selector at
+     (0,2,0) beat the `new-rubricator-content-root` surface above and washed the open
+     menu 40% black. Only a backdrop sits two levels under the portal container. */
+  [data-marker="portals-container"] > div > [role="region"] {
+    background-color: rgba(0, 0, 0, 0.4) !important;
   }
   /* Suggestion / menu rows stay readable on the panel. */
   [data-marker="suggest/list/custom-option"],
@@ -1338,6 +1421,41 @@
      "4,7" inside the pill stays white — the rule above is more specific. */
   [data-marker="rating-and-reviews"] span {
     color: #57c98a !important;
+  }
+  /* The MODEL / catalog page shows the same score-and-reviews block under its own
+     marker, and both halves were lost there: the review-count link flattened to body
+     grey, and the pill's fill wiped by the div-neutraliser so the score read as a bare
+     grey number with nothing marking it as a rating at all. */
+  [data-marker="model-card/common-info/rating"] span {
+    color: #57c98a !important;
+  }
+  /* That pill takes its fill from an INLINE design token rather than a class or a
+     literal colour (`background-color: var(--theme-semantics-components-rate-bg-*)`),
+     so no `[style*="rgb(…)"]`/`[style*="#hex"]` selector in this file could reach it —
+     the token NAME is the hook. Avito's rate palette is a five-step SCALE
+     (excellent #00c257, good #72ca00, medium #fca400, low #f71b47, none #999894), and
+     collapsing it to one tone would trade a missing pill for a rating that always
+     looks the same; each step is named separately and refined to clear 4.5:1 against
+     the white label. Listed after the link rule so the score inside the pill stays
+     white rather than taking the link's green (equal specificity, later wins). */
+  [style*="--theme-semantics-components-rate-bg-excellent"] {
+    background-color: #198049 !important;
+  }
+  [style*="--theme-semantics-components-rate-bg-good"] {
+    background-color: #4b7f10 !important;
+  }
+  [style*="--theme-semantics-components-rate-bg-medium"] {
+    background-color: #8a5a00 !important;
+  }
+  [style*="--theme-semantics-components-rate-bg-low"] {
+    background-color: #c8323f !important;
+  }
+  [style*="--theme-semantics-components-rate-bg-none"] {
+    background-color: #4a4f57 !important;
+  }
+  [style*="--theme-semantics-components-rate-bg-"],
+  [style*="--theme-semantics-components-rate-bg-"] span {
+    color: #fff !important;
   }
 
   /* ---- Pagination current page ---- */

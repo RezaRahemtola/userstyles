@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           DaFont Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.12
+@version        1.0.13
 @description    A comfortable dark theme for DaFont. Font previews and character maps stay crisp and readable on the dark background, and the signature red is kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -54,11 +54,12 @@
   div.thumb_cont[style*="#fc3"] { border-color: #fc3 !important; }
   div.thumb_cont[style*="#3d6"] { border-color: #3d6 !important; }
   /* Inside a thread, a solved font request gets an "Identified font:" callout drawn
-     as a bare inline-styled div with `border:2px solid #3d6` — the same success green
-     as the answered-thread ring. The blanket border reset greys it out, dropping the
-     "solved" signal; keep the green edge (and its amber #fc3 twin, if present). */
-  div[style*="solid #3d6"] { border-color: #3d6 !important; }
-  div[style*="solid #fc3"] { border-color: #fc3 !important; }
+     as a bare inline-styled element with `border:2px solid #3d6` — the same success green
+     as the answered-thread ring — and its amber `#fc3` twin marks "Suggested font:".
+     The blanket border reset greys both out, dropping the solved/suggested signal.
+     NOT `div[…]`: `/forum/user.php?user=` draws the same two callouts as a <span>. */
+  [style*="solid #3d6"] { border-color: #3d6 !important; }
+  [style*="solid #fc3"] { border-color: #fc3 !important; }
   /* The empty-state notice ("No font with the limits you chose:") on author/listing
      pages is a bare inline-styled div framed top AND bottom with `10px solid #cc0000`
      brand red. The blanket reset greys that frame, dropping the alert's entire visual
@@ -378,8 +379,12 @@
      pure black on the elevated .hmessage bar. Colour the wrapper and the name span. */
   div.user, .username { color: #c4cdd6 !important; }
   /* Forum post message body (.body) carries the actual post text as classless
-     nodes under DaFont's base `color:#000` — black-on-dark unless remapped. */
-  .body, .body p, .body div { color: #c4cdd6 !important; }
+     nodes under DaFont's base `color:#000` — black-on-dark unless remapped.
+     `/forum/user.php?user=` (a poster's own post list, linked from every avatar)
+     renders the identical text as `.body_alt`, which forum4.css declares with no
+     colour of its own — so that whole page's content was pure black on dark. */
+  .body, .body p, .body div,
+  .body_alt, .body_alt p, .body_alt div { color: #c4cdd6 !important; }
 
   /* ---- Body content text + form/control labels ---- */
   /* DaFont hardcodes black on much of its content (the "Note of the author"
@@ -471,6 +476,14 @@
   div[style*="background:#e9e9e9"] {
     background-color: #1c2128 !important;
   }
+  /* The zebra's other half: the alternating row is a bare `background:#fff`, which the
+     white-cell safety net at the end of this sheet lifts to the SAME elevated surface as
+     the #e9e9e9 row — 174 identical rows, the stripe gone. Drop the white ones to the
+     base so the alternation survives. The `padding:9px 3px` half of the selector keeps it
+     to the comment rows (and takes it to (0,2,1), over the net's (0,1,0)). */
+  div[style*="padding:9px 3px"][style*="background:#fff"] {
+    background-color: #14181d !important;
+  }
   /* The "author of <font>" badge on a comment keeps DaFont's yellow `background:#ff0`,
      but our `.dfsmall b` rule repaints its text light grey — 1.9:1 on that yellow.
      Same shape as the div.notif banner below: keep the yellow, darken the text. */
@@ -496,6 +509,23 @@
      `.dfbg a` (0,1,1) already outrank the plain `a` rule. */
   .dfsmall, .dfxsmall, .points, .dfsmall b, .dfsmall label {
     color: #c4cdd6 !important;
+  }
+  /* DaFont mutes its secondary numbers and captions with greys of its own: `.light` and
+     `.grey` (both #888), the forum-stats share column (`td.tot {color:#999}`), and the
+     ad-disclosure labels it writes inline ("Google Ads of <author>", "Ad by <author>").
+     `.light` is remapped above, but the `.dfsmall` rule right here ties it at (0,1,0) and
+     comes later — so every `.dfsmall.light` ("Edited on …" under a forum post) and every
+     `.dfsmall.grey` (the 100 download counts on authors.php) rendered at full body
+     strength, erasing the muted/primary split. Match at (0,2,0) or higher, and after, so
+     the tie cannot come back. Not `[style*="color:#777"]`: the login form's section
+     heading uses that one as an EMPHASIS, and #777 is 3.9:1 here anyway. `div.nr`
+     ("Forum: <link>" above every post on `/forum/user.php?user=`) is forum4's #777 and
+     measures 3.61:1 on the .hmessage bar — a real fail, not just a lost distinction;
+     `div.` keeps it off `a.nr` (the post permalink), which stays a link. `.orig_url`
+     is the same shape at #999. */
+  .dfsmall.light, .grey, .dfsmall.grey, td.tot, div.nr, div.orig_url,
+  div.dfsmall[style*="color:#888"], div.dfsmall[style*="color:#999"] {
+    color: #8b949e !important;
   }
   .tdh, .black, td.black { color: #c4cdd6 !important; }
 
@@ -542,7 +572,13 @@
   /* The broad `b, strong` and `.dfsmall b` rules above repaint the font name and
      the category headers a muted grey ON the red bar (~3.8:1 — the site ships them
      white). `.dfbg b` ties `.dfsmall b` at (0,2,0), so this block has to come last
-     to win on source order. */
+     to win on source order. The font-file caption bar recoloured above is the same
+     shape without a class: its filename sits in a <b>, so `b, strong` painted it
+     #c4cdd6 on the red gradient (3.81:1) while the site ships it white. */
+  div[style*="linear-gradient(to right,#c8c8c8"] b,
+  div[style*="linear-gradient(to right,#c8c8c8"] strong,
+  div[style*="linear-gradient(to right, #c8c8c8"] b,
+  div[style*="linear-gradient(to right, #c8c8c8"] strong,
   .dfbg b, .dfbg strong, .metacat b, .metacat strong,
   .lv1left b, .lv1left strong, .lv1right b, .lv1right strong,
   .lv2left b, .lv2left strong,

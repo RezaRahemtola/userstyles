@@ -109,6 +109,24 @@
     --ozWhiteOverlay: rgba(20, 24, 29, 0.82) !important;
     --ozWhiteOverlay2: rgba(20, 24, 29, 0.62) !important;
     --ozWhiteOverlay3: rgba(20, 24, 29, 0.42) !important;
+    /* Highlight plate under the pointed-at row of EVERY Ozon select dropdown
+       (language, currency, address, delivery …). Literal #e5efff — a pale blue that
+       is invisible on the white site and a near-white slab on ours, and since the
+       option label is lifted to light text by the token remap, the row you are
+       actually pointing at is the one row you cannot read (~1.02:1). It exists only
+       under the cursor inside an opened menu, so no load-time scan and no static
+       screenshot can reach it. Single-role: measured live, `background-color` on the
+       option row is its ONLY use anywhere in the site's sheets, so it is safe at
+       :root. Inverted rather than neutralised, keeping the blue tint that marks the
+       row as the highlighted one. */
+    --ozBluePale: #16233a !important;
+    /* Same shape, same design-system module: a pale-green #c2eecf plate whose only
+       two uses are `background-color` on a button variant and its :hover, with
+       --ozTextPrimary (lifted to light by us) as the label — so the button paints
+       light-on-light at ~1.1:1. That variant renders on no logged-out surface
+       reachable here, so unlike --ozBluePale it is fixed from the stylesheet rather
+       than against a live element; the remap is background-only either way. */
+    --ozGreenPale: #13291d !important;
 
     /* ---- accents: keep brand identity, tune for dark ---- */
     --ozCtrlPrimary: var(--d-blue) !important;
@@ -1026,9 +1044,44 @@
      proportion fill, so the distribution bars vanish (only the counts remain).
      Ratings are a kept-brand surface, so restore the gold fill. The fill is the
      only descendant carrying an inline PERCENT width (the track/underline use px),
-     so this matches exactly the five bars and never the blue tab underline. */
-  [data-widget="webReviewTabs"] div[style*="width"][style*="%"] {
+     so this matches exactly the five bars and never the blue tab underline.
+
+     webReviewProductScore is the SAME control on the standalone /reviews/ page,
+     where the score summary is its own widget instead of a webReviewTabs panel —
+     and it carries its own copy of the `div { transparent }` reset, so the fills
+     were flat there while the PDP's were gold. The track stays visible on that
+     page, which is exactly what hides it: five identical grey bars still look
+     like a chart, so 869 five-star and 1 two-star read the same.
+
+     The grey TRACK behind the fill is flattened by the same reset and has no
+     selector of its own — it is the fill's PARENT, hashed, attribute-less. It does
+     carry `overflow: hidden` with a 5px radius, so a large-spread box-shadow on the
+     fill paints the remainder and is clipped to exactly the track's rounded box.
+     That also keeps a bar visible for a rating with zero reviews, whose fill is
+     0px wide. */
+  [data-widget="webReviewTabs"] div[style*="width"][style*="%"],
+  [data-widget="webReviewProductScore"] div[style*="width"][style*="%"] {
     background-color: var(--d-gold) !important;
+    box-shadow: 0 0 0 300px rgba(255, 255, 255, 0.12) !important;
+  }
+  /* Each histogram row spaces itself from the next with a 6px `border-bottom` that
+     is natively TRANSPARENT — a border used as a gap, not as a line. The blanket
+     `* { border-color }` softener at the top of this file paints it --d-border, so
+     a fat grey bar appears under every rating row: the chart renders as ten bars
+     where the site draws five, and the phantom ones are thicker than the real ones.
+     Nothing flags it — the colour is a legitimate theme value, the element has no
+     background, and the native side reads `rgba(0,0,0,0)`, which every "is it light?"
+     test passes.
+
+     Cleared across the whole widget rather than aimed at the rows: the histogram
+     list sits at a different depth on the PDP (where an extra summary block precedes
+     it) than on the standalone /reviews/ page, so any nth-child path that names the
+     rows on one page names a wrong element on the other. The widget's only other
+     bottom border is the 1px hairline under the stars header, which sits at that same
+     shifting depth and so goes with them; the header is still set off by its own
+     spacing, and one lost hairline beats five phantom bars. */
+  [data-widget="webReviewProductScore"] div {
+    border-bottom-color: transparent !important;
   }
   /* ACTIVE review-tab underline ("Отзывы о товаре" / "Вопросы о товаре"): a 2px bar
      Ozon slides under the current tab, painted brand-blue via an inline left+width.

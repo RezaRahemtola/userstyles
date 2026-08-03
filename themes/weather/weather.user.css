@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Weather.com Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.16
+@version        1.0.17
 @description    A clean dark theme for weather.com. Darkens forecasts, charts, tables and menus while keeping radar maps, weather icons, alerts and temperature colors intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
@@ -98,6 +98,22 @@
   .border-black,
   .border-white {
     border-color: var(--wx-text) !important;
+  }
+  /* ...but the article byline avatar is `border-2 border-white` on the white article
+     body, i.e. an INVISIBLE spacer ring, so lifting it to --wx-text drew a bright halo
+     round the author photo that weather.com never shows. Keep the ring, drop the paint. */
+  img[class*="authorImage"] {
+    border-color: transparent !important;
+  }
+  /* Tailwind's hover border variants are a real affordance the blanket rule pins flat:
+     the Today's-Details tiles darken border-gray-200 -> -400 on hover and the carousel
+     arrows go border-black, and both froze at --wx-border with no cue at all. On dark the
+     equivalent move is to brighten; the muted ink is the visible-but-quiet step. */
+  [class*="hover:border-gray-300"]:hover,
+  [class*="hover:border-gray-400"]:hover,
+  [class*="hover:border-gray-500"]:hover,
+  [class*="hover:border-black"]:hover {
+    border-color: var(--wx-text-muted) !important;
   }
 
   /* ---- header / sidebar chrome ----------------------------------------- */
@@ -296,6 +312,14 @@
   .ci-adhesion {
     background-color: var(--wx-surface-2) !important;
   }
+  /* Once the slot is filled the ad stack adds a `ci-<id>-open` body class and a
+     `.ci-<id>-open .ci-ad-<id> { background: #fff !important }` rule -- (0,2,0), so it
+     beats the single-class rule above and the bar renders solid white across the
+     viewport with the (narrower) creative floating in it. The numeric id rotates per
+     creative; the `ci-ad-` prefix does not. */
+  div[class*="ci-adhesion"][class*="ci-ad-"] {
+    background-color: var(--wx-surface-2) !important;
+  }
   /* the ad-disclosure label ("Advertisement") ships #6f7585 -- 3.68:1 on the
      darkened ad frame at 10px, an AA fail. It is a legal disclosure, so it must
      stay readable. The top ad slot draws its own label via a ::after content
@@ -468,6 +492,15 @@
   [class*="hover:bg-neutral-100"]:hover,
   [class*="hover:bg-neutral-200"]:hover {
     background-color: var(--wx-surface-2) !important;
+  }
+  /* A control that is ALREADY a grey fill at rest (bg-gray-100) and steps one shade
+     down on hover collapses to a no-op above, because both the rest rule and the hover
+     rule land on --wx-surface-2 -- the /hourbyhour/day-N prev/next day pills lost their
+     fill change that way. Step them to the component border tone instead so the hover
+     is a real shade change. Needs three classes to out-rank both rules. */
+  [class*="bg-gray-100"][class*="hover:bg-gray-200"]:hover,
+  [class*="bg-gray-50"][class*="hover:bg-gray-100"]:hover {
+    background-color: var(--wx-border-2) !important;
   }
 
   /* ---- cards / modules / wells ----------------------------------------- */
@@ -746,6 +779,25 @@
   .bg-brand-400 {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
+  }
+  /* The Today "Next 10 Days" CTA is an `<a data-testid="next-48-hours">` -- the SAME
+     testid the surrounding card carries, so the card rule above (0,1,0) painted the
+     button --wx-surface and the plate vanished into the card it sits on: the CTA read
+     as bare text. Restating the brand fills here (later in the file wins the 0,1,0 tie)
+     keeps the site's own navy plate wherever a bg-brand utility lands. The arbitrary
+     hover/active values are the button's own, matched verbatim so the press states
+     survive the restatement. */
+  .bg-brand-400 {
+    background-color: #0d142a !important;
+  }
+  .bg-brand-300 {
+    background-color: #204794 !important;
+  }
+  [class*="hover:bg-[#252C3F]"]:hover {
+    background-color: #252c3f !important;
+  }
+  [class*="active:bg-[#0C1226]"]:active {
+    background-color: #0c1226 !important;
   }
   /* `text-brand-dark` / `text-brand-400` resolve to #0d142a -- the design system's
      ink colour, not an accent. It currently only lands on <button>s (which take

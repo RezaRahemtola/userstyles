@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           KHInsider Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.9
+@version        1.0.10
 @description    A clean, comfortable dark theme for KHInsider — easy on the eyes across album pages, song lists, the audio player, search and comments.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -520,6 +520,13 @@
   }
   .input:focus { background-color: #1a2029 !important; border-color: #3d6a96 !important; }
   .input::placeholder, .js-editor::placeholder { color: #8b949e !important; opacity: 1 !important; }
+  /* `select.input` is `appearance: none` and draws its caret as a data-URI SVG whose
+     fill is baked to #141414 — 1.08:1 on our control, so the arrows vanish. A <select>
+     accepts no pseudo-element, so the glyph can only be swapped for another data URI.
+     Replacing background-IMAGE alone keeps the site's position/size/repeat. */
+  select.input {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4.9 10'%3E%3Cpath fill='%238b949e' d='M1.4 4.7l1.1-1.5 1 1.5m0 .6l-1 1.5-1.1-1.5'/%3E%3C/svg%3E") !important;
+  }
   .button, .menuTrigger, .buttonGroup {
     background-image: none !important;
     background-color: #21262d !important;
@@ -868,10 +875,12 @@
   /* Both pagers lost their hover feedback to the flat repaints above: the page pill
      darkens natively (#fef4e7 -> #fdeed8) and the per-row jump pill swaps to a white
      tile, and our !important rules outrank each. The current-page rule is restated at
-     `:hover` (same specificity, later) so the generic pill hover cannot grey it out. */
+     `:hover` (same specificity, later) so the generic pill hover cannot grey it out —
+     it lifts to a brighter blue instead, keeping the selected identity while still
+     answering the pointer, as the native cream chip does (#fef4e7 -> #fdeed8). */
   .pageNav-page:hover, .pageNav-page a:hover { background-color: #262c33 !important; }
   .pageNav-page--current:hover,
-  .pageNav-page--current a:hover { background-color: #1f6feb !important; }
+  .pageNav-page--current a:hover { background-color: #388bfd !important; }
   /* The Prev/Next jump buttons flanking the page pills are a separate element with its
      own native hover (#e8f4fc -> #daedfb) that the flat repaint above also swallowed. */
   .pageNav-jump:hover { background-color: #262c33 !important; }

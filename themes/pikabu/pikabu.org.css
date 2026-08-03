@@ -451,6 +451,30 @@
        the green amount labels are preserved. */
     --color-donate-bg: var(--pk-border);
 
+    /* ---- Mid-tone tokens that lose contrast on dark ----
+       The "pale token / near-black token" sweep only flags values whose channels are all
+       >200 or all <95, so a MID grey or a saturated mid red slips through it while still
+       failing WCAG once the surface goes dark. Each token below is Pikabu's light-theme
+       value measured against --pk-surface, with its own dark-theme value as the fix. */
+
+    /* #757880 = 3.66:1. Feeds the reaction-picker "+" smiley on every post and comment,
+       the section/profile/community info icons, .pkb-icon-btn and the sidebar footer
+       link column. Pikabu's dark theme lifts each of these itself. */
+    --s-icon-primary: #b6b8bf;
+    --c-btnIcon-primary-textIcon: #909299;
+    --c-btnIcon-tertiary-textIcon: #b6b8bf;
+    --sidebar-link-default: #909299;
+    --sidebar-link-click: #aaacb2;
+    --tabbar-contentDefault: #aaacb2;
+
+    /* #e13d27 = 3.78:1 across 38 consumers — the NSFW tag, form/comment errors, the
+       profile minus counter, ban icons and the community rules header. */
+    --color-danger-900: #f75c48;
+
+    /* Sole consumer is `.carousel__scroll svg { stroke: … }`, the games-carousel arrow;
+       its #212121 stroke sat on a disc we darken to --pk-surface, i.e. no arrow at all. */
+    --color-contrast-bg: var(--pk-text);
+
     /* ---- Subtle shadows: soften so they don't glow on dark ---- */
     --shadow-low: 0 1px 12px rgba(0, 0, 0, 0.4);
     --s-shadow-mainStroke: rgba(255, 255, 255, 0.06);
@@ -481,6 +505,16 @@
   .header-menu a { color: var(--pk-text-soft) !important; }
   .header a:hover,
   .menu__link:hover { color: var(--pk-text) !important; }
+  /* The three round header buttons (search / add / notifications) are brand-green discs
+     whose glyph paints from --c-btn-primary-textIcon, which we flip dark to read on
+     green. Two of them are <a>, so the `.header a` label rule above repainted the glyph
+     --pk-text-soft — a pale grey icon on bright green, ~1.1:1, while the search one (a
+     <div>, unmatched) stayed correct. Restate the dark glyph for the anchors. */
+  .header a.header-right-menu__add,
+  .header a.header-right-menu__notification,
+  .header a.header-right-menu__search {
+    color: var(--pk-bg) !important;
+  }
   .header-dropdown,
   .header-menu__dropdown,
   .menu-popup,
