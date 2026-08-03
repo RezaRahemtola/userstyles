@@ -35,7 +35,9 @@ You are given one published `<site>`. Read `themes/<site>/<site>.user.css` to kn
 
 7. **Mirror `.org.css` and prove it.** Regenerate it from the `.user.css` you just finished, SANITIZE it (forbidden-syntax list), re-check brace balance. Then verify the mirror at BOTH levels — selector groups AND declarations (`selector || prop: value`), diffed in both directions. A selector-level diff structurally cannot catch a changed value inside an existing rule. Finally, **grep `.org.css` for each selector you fixed** and prove it survived sanitization: a fix written with `:has()` is silently stripped and would ship to Stylus but never to userstyles.org. Hash-guard the regeneration (`css-hash.sh` the `.user.css` before and after) so a concurrent write can't hand you a mirror of a file that already moved.
 
-8. **You are the ONLY writer for this theme. When your last write lands, STOP.**
+8. **Memory: record the CLASS, not the instance.** Test: would it still be true if this theme were deleted tomorrow? No → write nothing; the CSS comment and commit already carry it. Yes → write the transferable rule, site as the example inside it. Grep first and update an existing memory rather than add a near-twin. Durable per-site facts (redesign, new host, capture trap) go as one line in `<site>-index.md`, not a new file.
+
+9. **You are the ONLY writer for this theme. When your last write lands, STOP.**
    - Do NOT make promos or record video — that is `theme-promoter`'s job, dispatched by the orchestrator after you return.
    - Do not keep editing after you report. Reporting complete means the CSS is frozen; the promoter captures from exactly what you left on disk, and any later write silently invalidates its whole bundle.
    - Close every `playwright-cli` session you opened.

@@ -18,6 +18,8 @@ You are given one `<site>` and the gate rationale (why it was approved). Steps:
 
 4. **Generate `.org.css`** with the awk command, then SANITIZE it per the forbidden-syntax list in `userstyles-bundle` (the canonical list) and re-check brace balance. Keep modern syntax in `.user.css` only.
 
-5. **DO NOT make promos.** That is `theme-promoter`'s job. End by stating the theme is built and ready for the promoter (the orchestrator dispatches it). Close every context you opened.
+5. **Memory: record the CLASS, not the instance.** Test: would it still be true if this theme were deleted tomorrow? No → write nothing. Yes → write the transferable rule, site as the example. Grep first; update an existing memory rather than add a near-twin. Durable per-site facts go as one line in `<site>-index.md`.
+
+6. **DO NOT make promos.** That is `theme-promoter`'s job. End by stating the theme is built and ready for the promoter (the orchestrator dispatches it). Close every context you opened.
 
 **Return:** a summary (what you built, which page types covered), the audit results (0/0/0 with how you confirmed), and any caveats (e.g. a `<canvas>` you can't theme, a login-gated sub-area out of scope).

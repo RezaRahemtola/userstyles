@@ -37,7 +37,9 @@ The reviewer owns the visual pass, not the promoter. Promoters used to find bugs
 3. If it changed CSS, dispatch a `theme-promoter`. If it found zero bugs and wrote nothing, skip the promoter — the bundle is still valid, because the gate now hashes rule content rather than comparing mtimes.
 4. Run `bash .claude/scripts/verify-theme.sh <site>`; require exit 0. Then `TaskStop` the promoter in that same block.
 
-**Killing teammates:** use `TaskStop({task_id: "<name>"})`. Do **not** `SendMessage` a `shutdown_request` and do **not** reply to a finished agent — messaging a terminated agent silently RESTARTS it with your message as its prompt, and it will open a browser and write CSS. `TaskStop`'s error text lists who is really still running; trust that over your own count. If a reviewer emits an `idle_notification` with no summary, read its work off disk rather than pinging it.
+**Killing teammates:** use `TaskStop({task_id: "<name>"})`, never a `shutdown_request`. Do **not** message an agent you have already killed — that silently RESTARTS it with your message as its prompt and it will open a browser and write CSS. `TaskStop`'s error text lists who is really still running; trust that over your own count.
+
+**A teammate that goes idle with no summary is alive and waiting — `SendMessage` it for its report.** Then verify on disk and `TaskStop`, in that order. Only fall back to reading `git diff`/mtimes if it stays silent: a diff shows what changed but never the caveats, unfixables or doubts the agent would have flagged.
 
 Throttle between waves to avoid anti-bot trips. Start the next site only as a slot frees (keep ≤4 reviewers live).
 

@@ -60,4 +60,6 @@ You are given exactly one `<site>`. Steps:
 
    **If something genuinely blocks you** (a bot wall, a page that will not render), say so explicitly: name the artifact, name the obstacle, leave the old file in place, and report the gate as still failing. An unfinished bundle reported honestly is fine. An unfinished bundle reported as done is a defect laundered into a certification.
 
+   **Memory: record the CLASS, not the instance.** Test: would it still be true if this theme were deleted tomorrow? A reusable capture technique (consent-selector pattern, recorder trap, headless block) qualifies — write it as the general rule. "Site X needed a 3s wait" does not; one line in `<site>-index.md` at most. Grep first; update an existing memory rather than add a near-twin.
+
 **Return:** the verify-theme.sh result **and its exit code**, `H_PRE`/`H_POST` (and whether they matched), the list of promos you regenerated (+ which got an `-org.jpg`), which video frames you eyeballed and what they showed, and any caveat (e.g. a WebGL/radar surface that blanks under headless and needs a headed capture). If you saw a rendering bug, describe it — **do not fix it**.

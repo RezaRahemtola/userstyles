@@ -92,6 +92,7 @@ Then sanitize — the old userstyles.org parser rejects modern CSS and fails the
 - `:where(` — risky; remove or rewrite
 - Complex `:not()` — `:not()` with a compound/descendant argument (e.g. `code:not(pre code)`) fails with "parse error on value ' '"; rewrite using prose-context selectors (`p code`, `li code`) instead. Simple `:not(.class)` / `:not(#id)` are fine.
 - `oklch(` / `color-mix(` — remove or convert to hex
+- `rgb(var(…))` / `rgba(var(…))` — .org's parser wants numbers inside `rgb()` and dies on `var(`, returning a 502 on save while the browser renders it fine. State the fallback as a literal hex in `.org.css`; keep the token form in `.user.css` only.
 - `@layer` — remove
 - `@container` — remove
 

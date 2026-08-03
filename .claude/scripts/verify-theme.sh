@@ -33,7 +33,7 @@ strip_comments() {
 }
 org_code="$(strip_comments "$org")"
 
-bad='" i\]|:has\(|:is\(|:where\(|oklch|color-mix|@layer|@container'
+bad='" i\]|:has\(|:is\(|:where\(|oklch|color-mix|@layer|@container|rgba?\(var\('
 if printf '%s' "$org_code" | grep -nE "$bad" >/dev/null; then
   echo "FAIL: .org.css unsanitized syntax:"; printf '%s' "$org_code" | grep -nE "$bad"; fail=1
 fi
