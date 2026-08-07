@@ -21,19 +21,64 @@ node -e '
   const raw = fs.readFileSync(process.argv[1], "utf8");
   // Concatenate the inner rules of every top-level @-moz-document block.
   // No block found = already-inner CSS, pass through unchanged.
-  const re = /@-moz-document[^{]*\{/g;
-  let m, out = "", found = false;
-  while ((m = re.exec(raw))) {
-    found = true;
-    let depth = 1, i = re.lastIndex;
-    for (; i < raw.length && depth > 0; i++) {
-      if (raw[i] === "{") depth++;
-      else if (raw[i] === "}") depth--;
+  // Braces and the at-rule token only count outside strings and comments: a
+  // regexp() prelude can hold a {n} quantifier, a declaration can hold a brace
+  // in a string, and a comment can mention @-moz-document. Treating any of
+  // those as structural silently truncates or discards the whole sheet.
+  // Quote chars via charCode: this program sits in a single-quoted shell string.
+  const DQ = String.fromCharCode(34), SQ = String.fromCharCode(39);
+  const skip = (s, i) => {
+    const c = s[i];
+    if (c === DQ || c === SQ) {
+      for (i++; i < s.length; i++) {
+        if (s[i] === "\\") i++;
+        else if (s[i] === c) return i + 1;
+      }
+      return s.length;                       // unterminated string: consume rest
     }
-    out += raw.slice(re.lastIndex, depth === 0 ? i - 1 : i) + "\n";
-    re.lastIndex = i;
+    if (c === "/" && s[i + 1] === "*") {
+      const end = s.indexOf("*/", i + 2);
+      return end === -1 ? s.length : end + 2;
+    }
+    return i;                                // not a string or comment
+  };
+  const AT = "@-moz-document";
+  let out = "", found = false, i = 0;
+  while (i < raw.length) {
+    const k = skip(raw, i);
+    if (k !== i) { i = k; continue; }
+    if (!raw.startsWith(AT, i)) { i++; continue; }
+    let j = i + AT.length, open = -1;
+    while (j < raw.length) {                 // opening brace, past the prelude
+      const k2 = skip(raw, j);
+      if (k2 !== j) { j = k2; continue; }
+      if (raw[j] === "{") { open = j; break; }
+      j++;
+    }
+    if (open === -1) break;                  // malformed: no block to unwrap
+    found = true;
+    let depth = 1;
+    j = open + 1;
+    while (j < raw.length && depth > 0) {
+      const k2 = skip(raw, j);
+      if (k2 !== j) { j = k2; continue; }
+      if (raw[j] === "{") depth++;
+      else if (raw[j] === "}") depth--;
+      j++;
+    }
+    out += raw.slice(open + 1, depth === 0 ? j - 1 : j) + "\n";
+    i = j;
   }
   const css = found ? out : raw;
+  // Both failures below inject cleanly and do nothing, so without a warning they
+  // read as "the theme has no effect" — i.e. as a dead incumbent.
+  const pre = /@preprocessor\s+([a-z]+)/i.exec(raw);
+  if (pre && pre[1] !== "default" && pre[1] !== "uso") {
+    console.error("WARN: @preprocessor " + pre[1] + " — source is not plain CSS, injected rules will not apply");
+  }
+  if (raw.length > 500 && css.length * 10 < raw.length) {
+    console.error("WARN: unwrapped " + raw.length + "B -> " + css.length + "B (<10%) — check the @-moz-document prelude");
+  }
   fs.writeFileSync(process.argv[2], css);
   const cssPath = process.argv[2];
   const timeout = Number(process.argv[3]);
