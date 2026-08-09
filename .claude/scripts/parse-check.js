@@ -60,17 +60,39 @@ function unwrap(css) {
 }
 
 // split a stylesheet into its top-level rule texts (prelude + block)
+//
+// Both scans below must ignore anything inside a quoted string. A selector may
+// legitimately carry `{`, `}` or `;` inside an attribute value —
+// `[style*=";color:gray"]` is the shape that bites — and a naive backward scan for
+// the prelude start cuts the selector in half, leaving `color:gray"] { … }`, which
+// then reports as "parses to nothing" for a rule that is valid and applies live.
 function topRules(css) {
   const s = css.replace(/\/\*[\s\S]*?\*\//g, '');
+  // inStr[i] is true when s[i] sits inside a quoted string (the quotes themselves
+  // count as inside, so a scan lands outside the literal either way).
+  const inStr = new Uint8Array(s.length);
+  let quote = null;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (quote) {
+      inStr[i] = 1;
+      if (c === '\\') { if (i + 1 < s.length) inStr[++i] = 1; continue; }
+      if (c === quote) quote = null;
+    } else if (c === '"' || c === "'") {
+      quote = c;
+      inStr[i] = 1;
+    }
+  }
   const rules = [];
   let depth = 0, start = 0;
   for (let i = 0; i < s.length; i++) {
+    if (inStr[i]) continue;
     if (s[i] === '{') { if (depth === 0) start = i; depth++; }
     else if (s[i] === '}') {
       depth--;
       if (depth === 0) {
         let p = start - 1;
-        while (p >= 0 && s[p] !== '}' && s[p] !== ';') p--;
+        while (p >= 0 && (inStr[p] || (s[p] !== '}' && s[p] !== ';'))) p--;
         const text = s.slice(p + 1, i + 1).trim();
         if (text) rules.push(text);
       }

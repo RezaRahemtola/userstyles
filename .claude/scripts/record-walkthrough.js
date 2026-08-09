@@ -122,13 +122,13 @@ function ffmpeg(args) {
 // verification", DataDome). These are a SILENT killer: our own theme sets a dark
 // body background, so a whole video of challenge pages sails through the brightness
 // sweep AND reports styled=true. Block until the real document arrives.
-const CHALLENGE_RE = /just a moment|performing security verification|attention required|checking your browser/i;
+const CHALLENGE_RE = /just a moment|performing security verification|attention required|checking your browser|making sure you.?re not a bot/i;
 async function waitPastChallenge(pg, budgetMs = 45000) {
   const deadline = Date.now() + budgetMs;
   while (Date.now() < deadline) {
     const challenged = await pg.evaluate(() => {
       const t = document.title || '';
-      const re = /just a moment|performing security verification|attention required|checking your browser/i;
+      const re = /just a moment|performing security verification|attention required|checking your browser|making sure you.?re not a bot/i;
       return re.test(t) || !!document.querySelector('#challenge-running, .cf-turnstile, #cf-chl-widget');
     }).catch(() => false);
     if (!challenged) return true;
@@ -141,7 +141,12 @@ async function waitPastChallenge(pg, budgetMs = 45000) {
 // it carries no #challenge-running/.cf-turnstile and never clears, so
 // waitPastChallenge() reports success and films it. Bursty navigation earns one
 // (olx.com.br, 2026-07-09 — 7.5s of block page in an otherwise valid take).
-const BLOCKED_RE = /sorry, you have been blocked|you are unable to access|verifying you are human|error 1015|access denied/i;
+//
+// A 429 belongs here too: substack serves a bare "Too Many Requests" body with an
+// EMPTY title, which our own dark theme then paints, so it passes styled=true and the
+// brightness sweep alike. Its rate limit counts stops rather than takes, so cooling
+// down between takes does not buy back a stop.
+const BLOCKED_RE = /sorry, you have been blocked|you are unable to access|verifying you are human|error 1015|access denied|too many requests/i;
 async function isHardBlocked(pg) {
   return pg.evaluate(re => {
     const t = `${document.title || ''}\n${(document.body && document.body.innerText || '').slice(0, 500)}`;

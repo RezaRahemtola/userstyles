@@ -12,12 +12,6 @@ fail=0
 [ -f "$user" ] || { echo "FAIL: missing $user"; exit 2; }
 [ -f "$org" ]  || { echo "FAIL: missing $org"; exit 2; }
 
-# 1. brace balance, both files
-for f in "$user" "$org"; do
-  o=$(grep -o '{' "$f" | wc -l | tr -d ' '); c=$(grep -o '}' "$f" | wc -l | tr -d ' ')
-  [ "$o" = "$c" ] || { echo "FAIL: brace imbalance in $(basename "$f") ($o/$c)"; fail=1; }
-done
-
 # 2. .org.css sanitization — check CODE ONLY.
 #
 # Comments are stripped first. Grepping the raw file makes any comment that merely
@@ -32,6 +26,22 @@ strip_comments() {
   perl -0777 -pe 's{/\*(.*?)\*/}{ my $c = $1; my $n = ($c =~ tr/\n//); "\n" x $n }ges' "$1"
 }
 org_code="$(strip_comments "$org")"
+
+# 1. brace balance, both files — CODE ONLY.
+#
+# Braces are counted with comments AND quoted strings removed. A brace inside comment
+# prose or inside an attribute value (`content: "{"`) is not a brace the parser sees,
+# and counting it reports an imbalance on a sheet that parses perfectly. Line numbers
+# do not matter here, so this strip need not preserve them.
+strip_comments_and_strings() {
+  perl -0777 -pe 's{/\*.*?\*/}{}gs; s{"(?:[^"\\]|\\.)*"|'"'"'(?:[^'"'"'\\]|\\.)*'"'"'}{}gs' "$1"
+}
+for f in "$user" "$org"; do
+  code="$(strip_comments_and_strings "$f")"
+  o=$(printf '%s' "$code" | grep -o '{' | wc -l | tr -d ' ')
+  c=$(printf '%s' "$code" | grep -o '}' | wc -l | tr -d ' ')
+  [ "$o" = "$c" ] || { echo "FAIL: brace imbalance in $(basename "$f") ($o/$c)"; fail=1; }
+done
 
 bad='" i\]|:has\(|:is\(|:where\(|oklch|color-mix|@layer|@container|rgba?\(var\('
 if printf '%s' "$org_code" | grep -nE "$bad" >/dev/null; then
