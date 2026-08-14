@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Pikabu Dark
 @namespace    github.com/RezaRahemtola/userstyles
-@version      1.0.16
+@version      1.0.17
 @description  Dark theme for Pikabu — comfortable late-night reading of the feed, posts and comments. Soft dark surfaces, crisp text, and the familiar Pikabu green.
 @author       Reza Rahemtola
 @homepageURL  https://github.com/RezaRahemtola/userstyles
@@ -10,7 +10,14 @@
 @preprocessor default
 ==/UserStyle== */
 
-@-moz-document domain("pikabu.ru") {
+@-moz-document regexp("https?://(www\\.|m\\.)?pikabu\\.ru(/.*)?") {
+
+  /* Host-exact, NOT domain("pikabu.ru"): that form also matches every subdomain, and
+     games. / promokod. / rabota. / education. / special. are separate apps with their
+     own — mostly light — design systems this sheet only half-reaches, leaving a dark
+     base under their black headings and dark input boxes punched into white fields.
+     www. and m. both 301 to the apex; they stay in the pattern so a bookmark still
+     themes. */
 
   /* Pikabu ships a fully tokenised design system (~900 CSS custom properties).
      The cleanest, most stable retheme is to flip the light palette tokens to a
