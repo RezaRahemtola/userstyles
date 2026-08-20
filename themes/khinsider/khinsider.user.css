@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           KHInsider Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.13
+@version        1.0.14
 @description    A clean, comfortable dark theme for KHInsider — easy on the eyes across album pages, song lists, the audio player, search and comments.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -216,6 +216,12 @@
     background-color: #1c2128 !important;
     border-radius: 8px !important;
   }
+  /* The UA shadow root paints its own enclosure ACROSS the element box, so the
+     `background-color` above never reaches a pixel — under `color-scheme: dark`
+     the pill stays Chrome's neutral #383839, a lit grey slab in a blue-grey page.
+     The controls panel is the one surface author CSS can still reach; everything
+     else in that shadow tree (glyphs, timeline, volume) is UA-only. */
+  audio::-webkit-media-controls-panel { background-color: #1c2128 !important; }
 
   /* ---- HTML5 audio player (custom widget) ---- */
   .audioplayer {
