@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           TechPowerUp Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.19
+@version        1.0.20
 @description    A clean, neutral dark theme for TechPowerUp — news, reviews, the GPU/CPU spec databases and forums, with readable tables and code, TPU blue intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1314,9 +1314,12 @@
     color: #c4cdd6 !important;
   }
 
+  /* The Popular tile also draws `outline: 1px solid #ccc` on hover — a bright
+     ring the background repaint does not reach. */
   .popular a.clearfix:hover,
   .dltree li a:hover {
     background-color: #21303f !important;
+    outline-color: #2d333b !important;
   }
 
   /* Currently-selected node in the downloads category tree (#cadbe5 pale blue).
@@ -1418,8 +1421,10 @@
     color: #ffffff !important;
   }
 
+  /* Same `outline: 1px solid #ccc` hover ring as the Popular tile. */
   .downloads-mirrors .mirrorlist > button:hover {
     background-color: #2d333b !important;
+    outline-color: #262c33 !important;
   }
 
   /* Download DETAIL page (/download/<app>): versions box, file rows, the
@@ -2697,6 +2702,20 @@
   .reactionSummary li,
   .reactionsBar .reactionSummary li {
     background-color: transparent !important;
+  }
+
+  /* Thread poll. Both surfaces take the light style's #e8f4fc
+     `--xf-contentHighlightBg` and neither exists at load time: the voter list is
+     a `toggleTarget` that only gets a box once the result row is clicked, and
+     the row plate only paints under the pointer. The `.pollResult-bar > i` fill
+     is XenForo's own orange progress colour — leave it. */
+  .pollResult--showVoters:hover {
+    background-color: #21303f !important;
+  }
+
+  .pollResult-voters {
+    background-color: #161d27 !important;
+    color: #c4cdd6 !important;
   }
 
   /* Members with no uploaded photo get a generated letter tile whose plate AND

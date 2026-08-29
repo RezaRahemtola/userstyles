@@ -883,18 +883,8 @@
     --magritte-color-component-segmented-item-background-state-unselected-pressed-v24-8-1: #2d333b;
     --magritte-color-component-switch-background-state-container-unchecked-pressed-v24-8-1: #4a545f;
 
-    /* --- Magritte v25-0-0 (current live suffix) -------------------------------
-       The live :root declares ONLY v25-0-0 (plus the legacy v21-1-0 / bloko
-       v0-12-2 sets), so every block above resolves to nothing and each component
-       falls back to its light value: background-primary is #fff, text/icon-primary
-       #000, button-background-neutral-secondary #f1f4f9 — the header "Войти" pill
-       and the round icon buttons render near-white slabs under our light label.
-       Same tokens, new suffix.
-       Probe the live suffix FIRST on every patrol —
-       getComputedStyle(document.documentElement) filtered on --magritte-color-.
-       The set re-versions periodically and the button component migrates first.
-       Older suffixes are kept: a suffix that disappears from :root can come back
-       (v21-1-0 did). */
+    /* --- Magritte v25-0-0 --------------------------------------------------
+       Same tokens, older suffix. */
     --magritte-color-background-primary-v25-0-0: #14181d;
     --magritte-color-background-body-v25-0-0: #14181d;
     --magritte-color-background-secondary-v25-0-0: #1c2128;
@@ -1161,6 +1151,824 @@
     --magritte-color-component-checkable-card-stroke-state-unchecked-disabled-v25-0-0: #2d333b;
     --magritte-color-component-segmented-item-background-state-unselected-pressed-v25-0-0: #2d333b;
     --magritte-color-component-switch-background-state-container-unchecked-pressed-v25-0-0: #4a545f;
+
+    /* --- Magritte v25-0-1 (current live suffix) -------------------------------
+       Probe the live suffix FIRST on every patrol —
+       getComputedStyle(document.documentElement) filtered on --magritte-color-.
+       The set re-versions periodically and the button component migrates first;
+       under a stale suffix background-primary resolves #fff, text/icon-primary
+       #000 and the header pills render near-white slabs. Older suffixes stay
+       declared: a suffix that drops out of :root can come back (v21-1-0 did). */
+    --magritte-color-background-primary-v25-0-1: #14181d;
+    --magritte-color-background-body-v25-0-1: #14181d;
+    --magritte-color-background-secondary-v25-0-1: #1c2128;
+    --magritte-color-background-tertiary-v25-0-1: #21262d;
+    --magritte-color-background-state-primary-hovered-v25-0-1: #14181d;
+    --magritte-color-background-state-primary-pressed-v25-0-1: #14181d;
+    --magritte-color-background-state-secondary-hovered-v25-0-1: #21262d;
+    --magritte-color-background-state-secondary-pressed-v25-0-1: #2d333b;
+    --magritte-color-background-state-tertiary-hovered-v25-0-1: #2d333b;
+    --magritte-color-background-state-tertiary-pressed-v25-0-1: #2d333b;
+    --magritte-color-background-accent-secondary-v25-0-1: #1f3550;
+    --magritte-color-background-positive-secondary-v25-0-1: #16301f;
+    --magritte-color-background-negative-secondary-v25-0-1: #3a231e;
+    --magritte-color-background-warning-secondary-v25-0-1: #33261a;
+    --magritte-color-background-special-secondary-v25-0-1: #241d33;
+    --magritte-color-background-dreamy-secondary-v25-0-1: #16303c;
+    --magritte-color-background-lovely-secondary-v25-0-1: #3a1c24;
+    --magritte-color-background-vivid-secondary-v25-0-1: #332c14;
+    --magritte-color-text-primary-v25-0-1: #e6edf3;
+    --magritte-color-text-secondary-v25-0-1: #8b949e;
+    --magritte-color-text-dense-v25-0-1: #c4cdd6;
+    --magritte-color-text-accent-v25-0-1: #5fb0e6;
+    --magritte-color-text-accent-secondary-v25-0-1: #5fb0e6;
+    --magritte-color-text-state-primary-hovered-v25-0-1: #ffffff;
+    --magritte-color-text-state-primary-pressed-v25-0-1: #e6edf3;
+    --magritte-color-icon-primary-v25-0-1: #c4cdd6;
+    --magritte-color-icon-secondary-v25-0-1: #8b949e;
+    --magritte-color-icon-accent-v25-0-1: #5fb0e6;
+    --magritte-color-icon-accent-secondary-v25-0-1: #5fb0e6;
+    --magritte-color-icon-state-primary-hovered-v25-0-1: #e6edf3;
+    --magritte-color-icon-state-primary-pressed-v25-0-1: #ffffff;
+    --magritte-color-icon-state-secondary-hovered-v25-0-1: #c4cdd6;
+    --magritte-color-stroke-neutral-v25-0-1: #2d333b;
+    --magritte-color-stroke-neutral-heavy-v25-0-1: #3a424c;
+    --magritte-color-stroke-phantom-v25-0-1: #2d333b;
+    --magritte-color-stroke-state-neutral-hovered-v25-0-1: #3a424c;
+    --magritte-color-stroke-state-neutral-pressed-v25-0-1: #3a424c;
+    --magritte-color-component-drop-background-content-v25-0-1: #1c2128;
+    --magritte-color-component-modal-background-content-v25-0-1: #1c2128;
+    --magritte-color-component-input-background-field-v25-0-1: #1c2128;
+    --magritte-color-component-input-background-state-field-hovered-v25-0-1: #1c2128;
+    --magritte-color-component-input-background-state-field-focused-v25-0-1: #1c2128;
+    --magritte-color-component-input-background-state-field-invalid-v25-0-1: #1c2128;
+    --magritte-color-component-input-background-state-field-disabled-v25-0-1: #181d23;
+    --magritte-color-component-input-text-content-v25-0-1: #e6edf3;
+    --magritte-color-component-input-text-label-v25-0-1: #8b949e;
+    --magritte-color-component-input-text-placeholder-v25-0-1: #8b949e;
+    --magritte-color-component-input-text-postfix-v25-0-1: #8b949e;
+    --magritte-color-component-input-icon-content-v25-0-1: #8b949e;
+    --magritte-color-component-input-stroke-field-v25-0-1: #2d333b;
+    --magritte-color-component-button-background-neutral-v25-0-1: #30363d;
+    --magritte-color-component-button-background-neutral-secondary-v25-0-1: #21262d;
+    --magritte-color-component-button-background-accent-v25-0-1: #2f81f7;
+    --magritte-color-component-button-background-accent-secondary-v25-0-1: #1f3550;
+    --magritte-color-component-button-background-state-neutral-hovered-v25-0-1: #3a424c;
+    --magritte-color-component-button-background-state-neutral-pressed-v25-0-1: #3a424c;
+    --magritte-color-component-button-background-state-neutral-secondary-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-button-background-state-neutral-secondary-pressed-v25-0-1: #2d333b;
+    --magritte-color-component-button-background-state-accent-hovered-v25-0-1: #4c9bff;
+    --magritte-color-component-button-background-state-accent-pressed-v25-0-1: #4c9bff;
+    --magritte-color-component-button-background-state-accent-secondary-hovered-v25-0-1: #24406040;
+    --magritte-color-component-button-text-neutral-secondary-v25-0-1: #e6edf3;
+    --magritte-color-component-button-text-neutral-tertiary-v25-0-1: #c4cdd6;
+    --magritte-color-component-button-text-accent-secondary-v25-0-1: #5fb0e6;
+    --magritte-color-component-button-text-accent-tertiary-v25-0-1: #5fb0e6;
+    --magritte-color-component-button-icon-neutral-secondary-v25-0-1: #e6edf3;
+    --magritte-color-component-button-icon-neutral-tertiary-v25-0-1: #c4cdd6;
+    --magritte-color-component-button-icon-accent-secondary-v25-0-1: #5fb0e6;
+    --magritte-color-component-button-icon-accent-tertiary-v25-0-1: #5fb0e6;
+    --magritte-color-component-tag-background-neutral-v25-0-1: #21262d;
+    --magritte-color-component-tag-background-accent-v25-0-1: #1f3550;
+    --magritte-color-component-tag-background-positive-v25-0-1: #16301f;
+    --magritte-color-component-tag-background-negative-v25-0-1: #3a231e;
+    --magritte-color-component-tag-background-warning-v25-0-1: #33261a;
+    --magritte-color-component-tag-background-special-v25-0-1: #241d33;
+    --magritte-color-component-tag-background-on-surface-neutral-v25-0-1: #21262d;
+    --magritte-color-component-tag-background-on-surface-accent-v25-0-1: #1f3550;
+    --magritte-color-component-tag-background-on-surface-positive-v25-0-1: #16301f;
+    --magritte-color-component-tag-background-on-surface-negative-v25-0-1: #3a231e;
+    --magritte-color-component-tag-background-on-surface-warning-v25-0-1: #33261a;
+    --magritte-color-component-tag-background-on-surface-special-v25-0-1: #241d33;
+    --magritte-color-component-chips-background-unchecked-neutral-v25-0-1: #21262d;
+    --magritte-color-component-chips-background-unchecked-neutral-secondary-v25-0-1: #21262d;
+    --magritte-color-component-chips-background-unchecked-accent-v25-0-1: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-v25-0-1: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-secondary-v25-0-1: #21262d;
+    --magritte-color-component-chips-background-checked-accent-v25-0-1: #2f81f7;
+    --magritte-color-component-chips-background-state-unchecked-neutral-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-neutral-secondary-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-accent-hovered-v25-0-1: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-hovered-v25-0-1: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-secondary-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-chips-text-unchecked-neutral-v25-0-1: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-neutral-secondary-v25-0-1: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-accent-v25-0-1: #5fb0e6;
+    --magritte-color-component-chips-text-checked-neutral-secondary-v25-0-1: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-hovered-v25-0-1: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-secondary-hovered-v25-0-1: #e6edf3;
+    --magritte-color-component-chips-text-state-checked-neutral-secondary-hovered-v25-0-1: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-accent-hovered-v25-0-1: #9bd4ff;
+    --magritte-color-component-chips-icon-unchecked-neutral-v25-0-1: #c4cdd6;
+    --magritte-color-component-chips-icon-unchecked-accent-v25-0-1: #5fb0e6;
+    --magritte-color-component-chips-icon-checked-neutral-secondary-v25-0-1: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-neutral-hovered-v25-0-1: #e6edf3;
+    --magritte-color-component-chips-icon-state-checked-neutral-secondary-hovered-v25-0-1: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-accent-hovered-v25-0-1: #9bd4ff;
+    --magritte-color-component-chips-stroke-unchecked-neutral-secondary-v25-0-1: #2d333b;
+    --magritte-color-component-chips-stroke-checked-neutral-secondary-v25-0-1: #3a424c;
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-hovered-v25-0-1: #3a424c;
+    --magritte-color-component-chips-stroke-state-checked-neutral-secondary-hovered-v25-0-1: #3a424c;
+    --magritte-color-component-checkable-background-unchecked-v25-0-1: #1c2128;
+    --magritte-color-component-checkable-background-state-unchecked-hovered-v25-0-1: #21262d;
+    --magritte-color-component-checkable-background-checked-v25-0-1: #2f81f7;
+    --magritte-color-component-checkable-stroke-unchecked-v25-0-1: #3a424c;
+    --magritte-color-component-checkable-stroke-state-unchecked-hovered-v25-0-1: #4a545f;
+    --magritte-color-component-checkable-icon-state-unchecked-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-checkable-card-background-unchecked-v25-0-1: #1c2128;
+    --magritte-color-component-checkable-card-background-state-unchecked-hovered-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-tone-hovered-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-hovered-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-tone-hovered-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-stroke-unchecked-v25-0-1: #2d333b;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-hovered-v25-0-1: #3a424c;
+    --magritte-color-component-segmented-background-content-v25-0-1: #1c2128;
+    --magritte-color-component-segmented-stroke-content-v25-0-1: #2d333b;
+    --magritte-color-component-segmented-item-background-selected-v25-0-1: #30363d;
+    --magritte-color-component-segmented-item-background-state-unselected-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-segmented-item-text-selected-v25-0-1: #e6edf3;
+    --magritte-color-component-segmented-item-text-unselected-v25-0-1: #8b949e;
+    --magritte-color-component-segmented-item-text-state-unselected-hovered-v25-0-1: #c4cdd6;
+    --magritte-color-component-segmented-item-icon-selected-v25-0-1: #e6edf3;
+    --magritte-color-component-segmented-item-icon-unselected-v25-0-1: #8b949e;
+    --magritte-color-component-segmented-item-icon-state-unselected-hovered-v25-0-1: #c4cdd6;
+    --magritte-color-component-switch-background-container-unchecked-v25-0-1: #3a424c;
+    --magritte-color-component-switch-background-state-container-unchecked-hovered-v25-0-1: #4a545f;
+    --magritte-color-component-button-background-state-neutral-tertiary-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-button-background-state-neutral-tertiary-pressed-v25-0-1: #3a424c;
+    --magritte-color-component-button-background-state-accent-tertiary-hovered-v25-0-1: #1f3550;
+    --magritte-color-component-button-background-state-accent-tertiary-pressed-v25-0-1: #24406b;
+    --magritte-color-component-button-background-state-positive-tertiary-hovered-v25-0-1: #16301f;
+    --magritte-color-component-button-background-state-positive-tertiary-pressed-v25-0-1: #1b3d28;
+    --magritte-color-component-button-background-state-negative-tertiary-hovered-v25-0-1: #3a231e;
+    --magritte-color-component-button-background-state-negative-tertiary-pressed-v25-0-1: #4a2c25;
+    --magritte-color-component-button-background-state-special-tertiary-hovered-v25-0-1: #241d33;
+    --magritte-color-component-button-background-state-special-tertiary-pressed-v25-0-1: #2d2440;
+    --magritte-color-component-button-background-positive-secondary-v25-0-1: #16301f;
+    --magritte-color-component-button-background-negative-secondary-v25-0-1: #3a231e;
+    --magritte-color-component-button-background-special-secondary-v25-0-1: #241d33;
+    --magritte-color-component-button-background-state-positive-secondary-hovered-v25-0-1: #1b3d28;
+    --magritte-color-component-button-background-state-positive-secondary-pressed-v25-0-1: #1b3d28;
+    --magritte-color-component-button-background-state-negative-secondary-hovered-v25-0-1: #4a2c25;
+    --magritte-color-component-button-background-state-negative-secondary-pressed-v25-0-1: #4a2c25;
+    --magritte-color-component-button-background-state-special-secondary-hovered-v25-0-1: #2d2440;
+    --magritte-color-component-button-background-state-special-secondary-pressed-v25-0-1: #2d2440;
+    --magritte-color-component-button-background-state-accent-secondary-pressed-v25-0-1: #24406b;
+    --magritte-color-component-button-background-state-neutral-disabled-v25-0-1: #21262d;
+    --magritte-color-component-button-background-state-accent-disabled-v25-0-1: #21262d;
+    --magritte-color-component-button-background-state-positive-disabled-v25-0-1: #21262d;
+    --magritte-color-component-button-background-state-negative-disabled-v25-0-1: #21262d;
+    --magritte-color-component-button-background-state-special-disabled-v25-0-1: #21262d;
+    --magritte-color-component-button-background-state-neutral-secondary-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-button-background-state-accent-secondary-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-button-background-state-positive-secondary-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-button-background-state-negative-secondary-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-button-background-state-special-secondary-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-button-text-positive-secondary-v25-0-1: #57d98a;
+    --magritte-color-component-button-text-positive-tertiary-v25-0-1: #57d98a;
+    --magritte-color-component-button-icon-positive-secondary-v25-0-1: #57d98a;
+    --magritte-color-component-button-icon-positive-tertiary-v25-0-1: #57d98a;
+    --magritte-color-component-button-text-negative-secondary-v25-0-1: #ff8a7a;
+    --magritte-color-component-button-text-negative-tertiary-v25-0-1: #ff8a7a;
+    --magritte-color-component-button-icon-negative-secondary-v25-0-1: #ff8a7a;
+    --magritte-color-component-button-icon-negative-tertiary-v25-0-1: #ff8a7a;
+    --magritte-color-component-button-text-special-secondary-v25-0-1: #c3a6f5;
+    --magritte-color-component-button-text-special-tertiary-v25-0-1: #c3a6f5;
+    --magritte-color-component-button-icon-special-secondary-v25-0-1: #c3a6f5;
+    --magritte-color-component-button-icon-special-tertiary-v25-0-1: #c3a6f5;
+
+    /* --- Remaining light STATE surfaces + strokes (v25-0-1) ------------------
+       Enumerated live: of the ~215 background/stroke tokens the current set
+       still ships near-white, these are the ones a logged-out visitor actually
+       hits. They are all hover / pressed / loading / disabled STATES or
+       component surfaces the blocks above never named, so nothing is visible
+       until the pointer lands — no load-time scan can reach them.
+       The confirmed one: `stroke-state-phantom-hovered` (#dce3eb) is the ring a
+       Magritte CARD draws on hover, painted as a 1px inset box-shadow on an
+       inner `magritte-border-element` — the blanket `* { border-color }` cannot
+       touch a shadow, so every hovered vacancy card lit up with a near-white
+       outline. Deliberately NOT remapped: the `constant` / `inverse` /
+       `on-surface` / `overlay-action` families (they sit on hh's own dark
+       surfaces or over photos, where white is correct — same reason the
+       "Понятно" pill stays white), the switch TOGGLE knob, and the `vivid`
+       brand yellow. */
+    --magritte-color-stroke-state-phantom-hovered-v25-0-1: #3a424c;
+    --magritte-color-stroke-state-phantom-pressed-v25-0-1: #3a424c;
+    --magritte-color-background-state-body-hovered-v25-0-1: #14181d;
+    --magritte-color-background-state-body-pressed-v25-0-1: #14181d;
+    /* tinted surfaces: the resting values are remapped above, the states were not */
+    --magritte-color-background-state-accent-secondary-hovered-v25-0-1: #24406b;
+    --magritte-color-background-state-accent-secondary-pressed-v25-0-1: #24406b;
+    --magritte-color-background-state-positive-secondary-hovered-v25-0-1: #1b3d28;
+    --magritte-color-background-state-positive-secondary-pressed-v25-0-1: #1b3d28;
+    --magritte-color-background-state-negative-secondary-hovered-v25-0-1: #4a2c25;
+    --magritte-color-background-state-negative-secondary-pressed-v25-0-1: #4a2c25;
+    --magritte-color-background-state-warning-secondary-hovered-v25-0-1: #3f2f20;
+    --magritte-color-background-state-warning-secondary-pressed-v25-0-1: #3f2f20;
+    --magritte-color-background-state-special-secondary-hovered-v25-0-1: #2d2440;
+    --magritte-color-background-state-special-secondary-pressed-v25-0-1: #2d2440;
+    --magritte-color-background-state-dreamy-secondary-hovered-v25-0-1: #1b3c4a;
+    --magritte-color-background-state-dreamy-secondary-pressed-v25-0-1: #1b3c4a;
+    --magritte-color-background-state-lovely-secondary-hovered-v25-0-1: #48232d;
+    --magritte-color-background-state-lovely-secondary-pressed-v25-0-1: #48232d;
+    --magritte-color-background-state-vivid-secondary-hovered-v25-0-1: #3d3419;
+    --magritte-color-background-state-vivid-secondary-pressed-v25-0-1: #3d3419;
+    /* list rows / cells (menu + drop items) */
+    --magritte-color-component-cell-background-state-hovered-v25-0-1: #21262d;
+    --magritte-color-component-cell-background-state-pressed-v25-0-1: #2d333b;
+    /* dividers, progress track, carousel dots */
+    --magritte-color-component-divider-stroke-content-v25-0-1: #2d333b;
+    --magritte-color-component-progress-bar-background-content-v25-0-1: #2d333b;
+    --magritte-color-component-dot-pages-background-content-v25-0-1: #3a424c;
+    /* mobile bottom sheet */
+    --magritte-color-component-bottom-sheet-background-content-v25-0-1: #1c2128;
+    /* badges */
+    --magritte-color-component-badge-background-neutral-v25-0-1: #21262d;
+    --magritte-color-component-badge-background-positive-v25-0-1: #16301f;
+    --magritte-color-component-badge-background-state-neutral-disabled-v25-0-1: #21262d;
+    --magritte-color-component-badge-background-state-accent-disabled-v25-0-1: #21262d;
+    --magritte-color-component-badge-background-state-positive-disabled-v25-0-1: #21262d;
+    --magritte-color-component-badge-background-state-attention-disabled-v25-0-1: #21262d;
+    /* tabs component (pill variant) */
+    --magritte-color-component-tabs-background-unselected-v25-0-1: #21262d;
+    --magritte-color-component-tabs-background-state-unselected-hovered-v25-0-1: #2d333b;
+    --magritte-color-component-tabs-background-state-unselected-pressed-v25-0-1: #2d333b;
+    --magritte-color-component-tabs-background-state-unselected-focused-v25-0-1: #2d333b;
+    /* pagination */
+    --magritte-color-component-number-pages-background-content-v25-0-1: #14181d;
+    --magritte-color-component-number-pages-stroke-content-v25-0-1: #2d333b;
+    --magritte-color-component-number-pages-item-background-selected-v25-0-1: #30363d;
+    --magritte-color-component-number-pages-item-background-state-unselected-hovered-v25-0-1: #21262d;
+    --magritte-color-component-number-pages-item-background-state-unselected-pressed-v25-0-1: #2d333b;
+    /* inputs: hovered / loading / disabled strokes and fills */
+    --magritte-color-component-input-stroke-state-field-hovered-v25-0-1: #3a424c;
+    --magritte-color-component-input-stroke-state-field-loading-v25-0-1: #3a424c;
+    --magritte-color-component-input-stroke-state-field-disabled-v25-0-1: #2d333b;
+    --magritte-color-component-input-background-state-field-loading-v25-0-1: #21262d;
+    --magritte-color-component-input-counter-background-content-v25-0-1: #21262d;
+    --magritte-color-component-input-counter-background-state-content-disabled-v25-0-1: #21262d;
+    --magritte-color-component-input-chips-background-state-neutral-disable-v25-0-1: #21262d;
+    /* chips / checkables / segmented: pressed + disabled states */
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-pressed-v25-0-1: #3a424c;
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-disabled-v25-0-1: #2d333b;
+    --magritte-color-component-checkable-background-state-unchecked-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-checkable-background-state-checked-disabled-v25-0-1: #30363d;
+    --magritte-color-component-checkable-stroke-state-unchecked-disabled-v25-0-1: #2d333b;
+    --magritte-color-component-checkable-stroke-state-checked-disabled-v25-0-1: #3a424c;
+    --magritte-color-component-checkable-card-background-state-unchecked-pressed-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-tone-pressed-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-pressed-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-tone-pressed-v25-0-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-checkable-card-background-state-checked-disabled-v25-0-1: #1c2128;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-pressed-v25-0-1: #3a424c;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-disabled-v25-0-1: #2d333b;
+    --magritte-color-component-segmented-item-background-state-unselected-pressed-v25-0-1: #2d333b;
+    --magritte-color-component-switch-background-state-container-unchecked-pressed-v25-0-1: #4a545f;
+
+    /* --- Magritte v24-7-1 (the hh.ru/mentors micro-frontend) ---------------
+       /mentors is served by a separate app (mentors-front.hh.ru) pinned to its
+       own Magritte build; its stylesheet declares a v24-7-1 set on :root that
+       the main site never ships, so without this block every component there
+       resolves light — the "Фильтры" pill is #f1f4f9 under our light label.
+       Same tokens, app-local suffix. */
+    --magritte-color-background-primary-v24-7-1: #14181d;
+    --magritte-color-background-body-v24-7-1: #14181d;
+    --magritte-color-background-secondary-v24-7-1: #1c2128;
+    --magritte-color-background-tertiary-v24-7-1: #21262d;
+    --magritte-color-background-state-primary-hovered-v24-7-1: #14181d;
+    --magritte-color-background-state-primary-pressed-v24-7-1: #14181d;
+    --magritte-color-background-state-secondary-hovered-v24-7-1: #21262d;
+    --magritte-color-background-state-secondary-pressed-v24-7-1: #2d333b;
+    --magritte-color-background-state-tertiary-hovered-v24-7-1: #2d333b;
+    --magritte-color-background-state-tertiary-pressed-v24-7-1: #2d333b;
+    --magritte-color-background-accent-secondary-v24-7-1: #1f3550;
+    --magritte-color-background-positive-secondary-v24-7-1: #16301f;
+    --magritte-color-background-negative-secondary-v24-7-1: #3a231e;
+    --magritte-color-background-warning-secondary-v24-7-1: #33261a;
+    --magritte-color-background-special-secondary-v24-7-1: #241d33;
+    --magritte-color-background-dreamy-secondary-v24-7-1: #16303c;
+    --magritte-color-background-lovely-secondary-v24-7-1: #3a1c24;
+    --magritte-color-background-vivid-secondary-v24-7-1: #332c14;
+    --magritte-color-text-primary-v24-7-1: #e6edf3;
+    --magritte-color-text-secondary-v24-7-1: #8b949e;
+    --magritte-color-text-dense-v24-7-1: #c4cdd6;
+    --magritte-color-text-accent-v24-7-1: #5fb0e6;
+    --magritte-color-text-accent-secondary-v24-7-1: #5fb0e6;
+    --magritte-color-text-state-primary-hovered-v24-7-1: #ffffff;
+    --magritte-color-text-state-primary-pressed-v24-7-1: #e6edf3;
+    --magritte-color-icon-primary-v24-7-1: #c4cdd6;
+    --magritte-color-icon-secondary-v24-7-1: #8b949e;
+    --magritte-color-icon-accent-v24-7-1: #5fb0e6;
+    --magritte-color-icon-accent-secondary-v24-7-1: #5fb0e6;
+    --magritte-color-icon-state-primary-hovered-v24-7-1: #e6edf3;
+    --magritte-color-icon-state-primary-pressed-v24-7-1: #ffffff;
+    --magritte-color-icon-state-secondary-hovered-v24-7-1: #c4cdd6;
+    --magritte-color-stroke-neutral-v24-7-1: #2d333b;
+    --magritte-color-stroke-neutral-heavy-v24-7-1: #3a424c;
+    --magritte-color-stroke-phantom-v24-7-1: #2d333b;
+    --magritte-color-stroke-state-neutral-hovered-v24-7-1: #3a424c;
+    --magritte-color-stroke-state-neutral-pressed-v24-7-1: #3a424c;
+    --magritte-color-component-drop-background-content-v24-7-1: #1c2128;
+    --magritte-color-component-modal-background-content-v24-7-1: #1c2128;
+    --magritte-color-component-input-background-field-v24-7-1: #1c2128;
+    --magritte-color-component-input-background-state-field-hovered-v24-7-1: #1c2128;
+    --magritte-color-component-input-background-state-field-focused-v24-7-1: #1c2128;
+    --magritte-color-component-input-background-state-field-invalid-v24-7-1: #1c2128;
+    --magritte-color-component-input-background-state-field-disabled-v24-7-1: #181d23;
+    --magritte-color-component-input-text-content-v24-7-1: #e6edf3;
+    --magritte-color-component-input-text-label-v24-7-1: #8b949e;
+    --magritte-color-component-input-text-placeholder-v24-7-1: #8b949e;
+    --magritte-color-component-input-text-postfix-v24-7-1: #8b949e;
+    --magritte-color-component-input-icon-content-v24-7-1: #8b949e;
+    --magritte-color-component-input-stroke-field-v24-7-1: #2d333b;
+    --magritte-color-component-button-background-neutral-v24-7-1: #30363d;
+    --magritte-color-component-button-background-neutral-secondary-v24-7-1: #21262d;
+    --magritte-color-component-button-background-accent-v24-7-1: #2f81f7;
+    --magritte-color-component-button-background-accent-secondary-v24-7-1: #1f3550;
+    --magritte-color-component-button-background-state-neutral-hovered-v24-7-1: #3a424c;
+    --magritte-color-component-button-background-state-neutral-pressed-v24-7-1: #3a424c;
+    --magritte-color-component-button-background-state-neutral-secondary-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-button-background-state-neutral-secondary-pressed-v24-7-1: #2d333b;
+    --magritte-color-component-button-background-state-accent-hovered-v24-7-1: #4c9bff;
+    --magritte-color-component-button-background-state-accent-pressed-v24-7-1: #4c9bff;
+    --magritte-color-component-button-background-state-accent-secondary-hovered-v24-7-1: #24406040;
+    --magritte-color-component-button-text-neutral-secondary-v24-7-1: #e6edf3;
+    --magritte-color-component-button-text-neutral-tertiary-v24-7-1: #c4cdd6;
+    --magritte-color-component-button-text-accent-secondary-v24-7-1: #5fb0e6;
+    --magritte-color-component-button-text-accent-tertiary-v24-7-1: #5fb0e6;
+    --magritte-color-component-button-icon-neutral-secondary-v24-7-1: #e6edf3;
+    --magritte-color-component-button-icon-neutral-tertiary-v24-7-1: #c4cdd6;
+    --magritte-color-component-button-icon-accent-secondary-v24-7-1: #5fb0e6;
+    --magritte-color-component-button-icon-accent-tertiary-v24-7-1: #5fb0e6;
+    --magritte-color-component-tag-background-neutral-v24-7-1: #21262d;
+    --magritte-color-component-tag-background-accent-v24-7-1: #1f3550;
+    --magritte-color-component-tag-background-positive-v24-7-1: #16301f;
+    --magritte-color-component-tag-background-negative-v24-7-1: #3a231e;
+    --magritte-color-component-tag-background-warning-v24-7-1: #33261a;
+    --magritte-color-component-tag-background-special-v24-7-1: #241d33;
+    --magritte-color-component-tag-background-on-surface-neutral-v24-7-1: #21262d;
+    --magritte-color-component-tag-background-on-surface-accent-v24-7-1: #1f3550;
+    --magritte-color-component-tag-background-on-surface-positive-v24-7-1: #16301f;
+    --magritte-color-component-tag-background-on-surface-negative-v24-7-1: #3a231e;
+    --magritte-color-component-tag-background-on-surface-warning-v24-7-1: #33261a;
+    --magritte-color-component-tag-background-on-surface-special-v24-7-1: #241d33;
+    --magritte-color-component-chips-background-unchecked-neutral-v24-7-1: #21262d;
+    --magritte-color-component-chips-background-unchecked-neutral-secondary-v24-7-1: #21262d;
+    --magritte-color-component-chips-background-unchecked-accent-v24-7-1: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-v24-7-1: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-secondary-v24-7-1: #21262d;
+    --magritte-color-component-chips-background-checked-accent-v24-7-1: #2f81f7;
+    --magritte-color-component-chips-background-state-unchecked-neutral-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-neutral-secondary-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-accent-hovered-v24-7-1: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-hovered-v24-7-1: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-secondary-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-chips-text-unchecked-neutral-v24-7-1: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-neutral-secondary-v24-7-1: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-accent-v24-7-1: #5fb0e6;
+    --magritte-color-component-chips-text-checked-neutral-secondary-v24-7-1: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-hovered-v24-7-1: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-secondary-hovered-v24-7-1: #e6edf3;
+    --magritte-color-component-chips-text-state-checked-neutral-secondary-hovered-v24-7-1: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-accent-hovered-v24-7-1: #9bd4ff;
+    --magritte-color-component-chips-icon-unchecked-neutral-v24-7-1: #c4cdd6;
+    --magritte-color-component-chips-icon-unchecked-accent-v24-7-1: #5fb0e6;
+    --magritte-color-component-chips-icon-checked-neutral-secondary-v24-7-1: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-neutral-hovered-v24-7-1: #e6edf3;
+    --magritte-color-component-chips-icon-state-checked-neutral-secondary-hovered-v24-7-1: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-accent-hovered-v24-7-1: #9bd4ff;
+    --magritte-color-component-chips-stroke-unchecked-neutral-secondary-v24-7-1: #2d333b;
+    --magritte-color-component-chips-stroke-checked-neutral-secondary-v24-7-1: #3a424c;
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-hovered-v24-7-1: #3a424c;
+    --magritte-color-component-chips-stroke-state-checked-neutral-secondary-hovered-v24-7-1: #3a424c;
+    --magritte-color-component-checkable-background-unchecked-v24-7-1: #1c2128;
+    --magritte-color-component-checkable-background-state-unchecked-hovered-v24-7-1: #21262d;
+    --magritte-color-component-checkable-background-checked-v24-7-1: #2f81f7;
+    --magritte-color-component-checkable-stroke-unchecked-v24-7-1: #3a424c;
+    --magritte-color-component-checkable-stroke-state-unchecked-hovered-v24-7-1: #4a545f;
+    --magritte-color-component-checkable-icon-state-unchecked-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-checkable-card-background-unchecked-v24-7-1: #1c2128;
+    --magritte-color-component-checkable-card-background-state-unchecked-hovered-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-tone-hovered-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-hovered-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-tone-hovered-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-stroke-unchecked-v24-7-1: #2d333b;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-hovered-v24-7-1: #3a424c;
+    --magritte-color-component-segmented-background-content-v24-7-1: #1c2128;
+    --magritte-color-component-segmented-stroke-content-v24-7-1: #2d333b;
+    --magritte-color-component-segmented-item-background-selected-v24-7-1: #30363d;
+    --magritte-color-component-segmented-item-background-state-unselected-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-segmented-item-text-selected-v24-7-1: #e6edf3;
+    --magritte-color-component-segmented-item-text-unselected-v24-7-1: #8b949e;
+    --magritte-color-component-segmented-item-text-state-unselected-hovered-v24-7-1: #c4cdd6;
+    --magritte-color-component-segmented-item-icon-selected-v24-7-1: #e6edf3;
+    --magritte-color-component-segmented-item-icon-unselected-v24-7-1: #8b949e;
+    --magritte-color-component-segmented-item-icon-state-unselected-hovered-v24-7-1: #c4cdd6;
+    --magritte-color-component-switch-background-container-unchecked-v24-7-1: #3a424c;
+    --magritte-color-component-switch-background-state-container-unchecked-hovered-v24-7-1: #4a545f;
+    --magritte-color-component-button-background-state-neutral-tertiary-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-button-background-state-neutral-tertiary-pressed-v24-7-1: #3a424c;
+    --magritte-color-component-button-background-state-accent-tertiary-hovered-v24-7-1: #1f3550;
+    --magritte-color-component-button-background-state-accent-tertiary-pressed-v24-7-1: #24406b;
+    --magritte-color-component-button-background-state-positive-tertiary-hovered-v24-7-1: #16301f;
+    --magritte-color-component-button-background-state-positive-tertiary-pressed-v24-7-1: #1b3d28;
+    --magritte-color-component-button-background-state-negative-tertiary-hovered-v24-7-1: #3a231e;
+    --magritte-color-component-button-background-state-negative-tertiary-pressed-v24-7-1: #4a2c25;
+    --magritte-color-component-button-background-state-special-tertiary-hovered-v24-7-1: #241d33;
+    --magritte-color-component-button-background-state-special-tertiary-pressed-v24-7-1: #2d2440;
+    --magritte-color-component-button-background-positive-secondary-v24-7-1: #16301f;
+    --magritte-color-component-button-background-negative-secondary-v24-7-1: #3a231e;
+    --magritte-color-component-button-background-special-secondary-v24-7-1: #241d33;
+    --magritte-color-component-button-background-state-positive-secondary-hovered-v24-7-1: #1b3d28;
+    --magritte-color-component-button-background-state-positive-secondary-pressed-v24-7-1: #1b3d28;
+    --magritte-color-component-button-background-state-negative-secondary-hovered-v24-7-1: #4a2c25;
+    --magritte-color-component-button-background-state-negative-secondary-pressed-v24-7-1: #4a2c25;
+    --magritte-color-component-button-background-state-special-secondary-hovered-v24-7-1: #2d2440;
+    --magritte-color-component-button-background-state-special-secondary-pressed-v24-7-1: #2d2440;
+    --magritte-color-component-button-background-state-accent-secondary-pressed-v24-7-1: #24406b;
+    --magritte-color-component-button-background-state-neutral-disabled-v24-7-1: #21262d;
+    --magritte-color-component-button-background-state-accent-disabled-v24-7-1: #21262d;
+    --magritte-color-component-button-background-state-positive-disabled-v24-7-1: #21262d;
+    --magritte-color-component-button-background-state-negative-disabled-v24-7-1: #21262d;
+    --magritte-color-component-button-background-state-special-disabled-v24-7-1: #21262d;
+    --magritte-color-component-button-background-state-neutral-secondary-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-button-background-state-accent-secondary-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-button-background-state-positive-secondary-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-button-background-state-negative-secondary-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-button-background-state-special-secondary-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-button-text-positive-secondary-v24-7-1: #57d98a;
+    --magritte-color-component-button-text-positive-tertiary-v24-7-1: #57d98a;
+    --magritte-color-component-button-icon-positive-secondary-v24-7-1: #57d98a;
+    --magritte-color-component-button-icon-positive-tertiary-v24-7-1: #57d98a;
+    --magritte-color-component-button-text-negative-secondary-v24-7-1: #ff8a7a;
+    --magritte-color-component-button-text-negative-tertiary-v24-7-1: #ff8a7a;
+    --magritte-color-component-button-icon-negative-secondary-v24-7-1: #ff8a7a;
+    --magritte-color-component-button-icon-negative-tertiary-v24-7-1: #ff8a7a;
+    --magritte-color-component-button-text-special-secondary-v24-7-1: #c3a6f5;
+    --magritte-color-component-button-text-special-tertiary-v24-7-1: #c3a6f5;
+    --magritte-color-component-button-icon-special-secondary-v24-7-1: #c3a6f5;
+    --magritte-color-component-button-icon-special-tertiary-v24-7-1: #c3a6f5;
+
+    /* --- Remaining light STATE surfaces + strokes (v24-7-1) ------------------
+       Enumerated live: of the ~215 background/stroke tokens the current set
+       still ships near-white, these are the ones a logged-out visitor actually
+       hits. They are all hover / pressed / loading / disabled STATES or
+       component surfaces the blocks above never named, so nothing is visible
+       until the pointer lands — no load-time scan can reach them.
+       The confirmed one: `stroke-state-phantom-hovered` (#dce3eb) is the ring a
+       Magritte CARD draws on hover, painted as a 1px inset box-shadow on an
+       inner `magritte-border-element` — the blanket `* { border-color }` cannot
+       touch a shadow, so every hovered vacancy card lit up with a near-white
+       outline. Deliberately NOT remapped: the `constant` / `inverse` /
+       `on-surface` / `overlay-action` families (they sit on hh's own dark
+       surfaces or over photos, where white is correct — same reason the
+       "Понятно" pill stays white), the switch TOGGLE knob, and the `vivid`
+       brand yellow. */
+    --magritte-color-stroke-state-phantom-hovered-v24-7-1: #3a424c;
+    --magritte-color-stroke-state-phantom-pressed-v24-7-1: #3a424c;
+    --magritte-color-background-state-body-hovered-v24-7-1: #14181d;
+    --magritte-color-background-state-body-pressed-v24-7-1: #14181d;
+    /* tinted surfaces: the resting values are remapped above, the states were not */
+    --magritte-color-background-state-accent-secondary-hovered-v24-7-1: #24406b;
+    --magritte-color-background-state-accent-secondary-pressed-v24-7-1: #24406b;
+    --magritte-color-background-state-positive-secondary-hovered-v24-7-1: #1b3d28;
+    --magritte-color-background-state-positive-secondary-pressed-v24-7-1: #1b3d28;
+    --magritte-color-background-state-negative-secondary-hovered-v24-7-1: #4a2c25;
+    --magritte-color-background-state-negative-secondary-pressed-v24-7-1: #4a2c25;
+    --magritte-color-background-state-warning-secondary-hovered-v24-7-1: #3f2f20;
+    --magritte-color-background-state-warning-secondary-pressed-v24-7-1: #3f2f20;
+    --magritte-color-background-state-special-secondary-hovered-v24-7-1: #2d2440;
+    --magritte-color-background-state-special-secondary-pressed-v24-7-1: #2d2440;
+    --magritte-color-background-state-dreamy-secondary-hovered-v24-7-1: #1b3c4a;
+    --magritte-color-background-state-dreamy-secondary-pressed-v24-7-1: #1b3c4a;
+    --magritte-color-background-state-lovely-secondary-hovered-v24-7-1: #48232d;
+    --magritte-color-background-state-lovely-secondary-pressed-v24-7-1: #48232d;
+    --magritte-color-background-state-vivid-secondary-hovered-v24-7-1: #3d3419;
+    --magritte-color-background-state-vivid-secondary-pressed-v24-7-1: #3d3419;
+    /* list rows / cells (menu + drop items) */
+    --magritte-color-component-cell-background-state-hovered-v24-7-1: #21262d;
+    --magritte-color-component-cell-background-state-pressed-v24-7-1: #2d333b;
+    /* dividers, progress track, carousel dots */
+    --magritte-color-component-divider-stroke-content-v24-7-1: #2d333b;
+    --magritte-color-component-progress-bar-background-content-v24-7-1: #2d333b;
+    --magritte-color-component-dot-pages-background-content-v24-7-1: #3a424c;
+    /* mobile bottom sheet */
+    --magritte-color-component-bottom-sheet-background-content-v24-7-1: #1c2128;
+    /* badges */
+    --magritte-color-component-badge-background-neutral-v24-7-1: #21262d;
+    --magritte-color-component-badge-background-positive-v24-7-1: #16301f;
+    --magritte-color-component-badge-background-state-neutral-disabled-v24-7-1: #21262d;
+    --magritte-color-component-badge-background-state-accent-disabled-v24-7-1: #21262d;
+    --magritte-color-component-badge-background-state-positive-disabled-v24-7-1: #21262d;
+    --magritte-color-component-badge-background-state-attention-disabled-v24-7-1: #21262d;
+    /* tabs component (pill variant) */
+    --magritte-color-component-tabs-background-unselected-v24-7-1: #21262d;
+    --magritte-color-component-tabs-background-state-unselected-hovered-v24-7-1: #2d333b;
+    --magritte-color-component-tabs-background-state-unselected-pressed-v24-7-1: #2d333b;
+    --magritte-color-component-tabs-background-state-unselected-focused-v24-7-1: #2d333b;
+    /* pagination */
+    --magritte-color-component-number-pages-background-content-v24-7-1: #14181d;
+    --magritte-color-component-number-pages-stroke-content-v24-7-1: #2d333b;
+    --magritte-color-component-number-pages-item-background-selected-v24-7-1: #30363d;
+    --magritte-color-component-number-pages-item-background-state-unselected-hovered-v24-7-1: #21262d;
+    --magritte-color-component-number-pages-item-background-state-unselected-pressed-v24-7-1: #2d333b;
+    /* inputs: hovered / loading / disabled strokes and fills */
+    --magritte-color-component-input-stroke-state-field-hovered-v24-7-1: #3a424c;
+    --magritte-color-component-input-stroke-state-field-loading-v24-7-1: #3a424c;
+    --magritte-color-component-input-stroke-state-field-disabled-v24-7-1: #2d333b;
+    --magritte-color-component-input-background-state-field-loading-v24-7-1: #21262d;
+    --magritte-color-component-input-counter-background-content-v24-7-1: #21262d;
+    --magritte-color-component-input-counter-background-state-content-disabled-v24-7-1: #21262d;
+    --magritte-color-component-input-chips-background-state-neutral-disable-v24-7-1: #21262d;
+    /* chips / checkables / segmented: pressed + disabled states */
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-pressed-v24-7-1: #3a424c;
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-disabled-v24-7-1: #2d333b;
+    --magritte-color-component-checkable-background-state-unchecked-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-checkable-background-state-checked-disabled-v24-7-1: #30363d;
+    --magritte-color-component-checkable-stroke-state-unchecked-disabled-v24-7-1: #2d333b;
+    --magritte-color-component-checkable-stroke-state-checked-disabled-v24-7-1: #3a424c;
+    --magritte-color-component-checkable-card-background-state-unchecked-pressed-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-tone-pressed-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-pressed-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-tone-pressed-v24-7-1: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-checkable-card-background-state-checked-disabled-v24-7-1: #1c2128;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-pressed-v24-7-1: #3a424c;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-disabled-v24-7-1: #2d333b;
+    --magritte-color-component-segmented-item-background-state-unselected-pressed-v24-7-1: #2d333b;
+    --magritte-color-component-switch-background-state-container-unchecked-pressed-v24-7-1: #4a545f;
+
+    /* --- Magritte v18-1-0 (the #cmsFrontendAppRoot promo renderer) ---------
+       hh's "startic" CMS promo pages (e.g. /article/promoproducts) mount a Vite
+       app pinned to an old Magritte build whose v18-1-0 set only this renderer
+       declares. Same tokens, app-local suffix. */
+    --magritte-color-background-primary-v18-1-0: #14181d;
+    --magritte-color-background-body-v18-1-0: #14181d;
+    --magritte-color-background-secondary-v18-1-0: #1c2128;
+    --magritte-color-background-tertiary-v18-1-0: #21262d;
+    --magritte-color-background-state-primary-hovered-v18-1-0: #14181d;
+    --magritte-color-background-state-primary-pressed-v18-1-0: #14181d;
+    --magritte-color-background-state-secondary-hovered-v18-1-0: #21262d;
+    --magritte-color-background-state-secondary-pressed-v18-1-0: #2d333b;
+    --magritte-color-background-state-tertiary-hovered-v18-1-0: #2d333b;
+    --magritte-color-background-state-tertiary-pressed-v18-1-0: #2d333b;
+    --magritte-color-background-accent-secondary-v18-1-0: #1f3550;
+    --magritte-color-background-positive-secondary-v18-1-0: #16301f;
+    --magritte-color-background-negative-secondary-v18-1-0: #3a231e;
+    --magritte-color-background-warning-secondary-v18-1-0: #33261a;
+    --magritte-color-background-special-secondary-v18-1-0: #241d33;
+    --magritte-color-background-dreamy-secondary-v18-1-0: #16303c;
+    --magritte-color-background-lovely-secondary-v18-1-0: #3a1c24;
+    --magritte-color-background-vivid-secondary-v18-1-0: #332c14;
+    --magritte-color-text-primary-v18-1-0: #e6edf3;
+    --magritte-color-text-secondary-v18-1-0: #8b949e;
+    --magritte-color-text-dense-v18-1-0: #c4cdd6;
+    --magritte-color-text-accent-v18-1-0: #5fb0e6;
+    --magritte-color-text-accent-secondary-v18-1-0: #5fb0e6;
+    --magritte-color-text-state-primary-hovered-v18-1-0: #ffffff;
+    --magritte-color-text-state-primary-pressed-v18-1-0: #e6edf3;
+    --magritte-color-icon-primary-v18-1-0: #c4cdd6;
+    --magritte-color-icon-secondary-v18-1-0: #8b949e;
+    --magritte-color-icon-accent-v18-1-0: #5fb0e6;
+    --magritte-color-icon-accent-secondary-v18-1-0: #5fb0e6;
+    --magritte-color-icon-state-primary-hovered-v18-1-0: #e6edf3;
+    --magritte-color-icon-state-primary-pressed-v18-1-0: #ffffff;
+    --magritte-color-icon-state-secondary-hovered-v18-1-0: #c4cdd6;
+    --magritte-color-stroke-neutral-v18-1-0: #2d333b;
+    --magritte-color-stroke-neutral-heavy-v18-1-0: #3a424c;
+    --magritte-color-stroke-phantom-v18-1-0: #2d333b;
+    --magritte-color-stroke-state-neutral-hovered-v18-1-0: #3a424c;
+    --magritte-color-stroke-state-neutral-pressed-v18-1-0: #3a424c;
+    --magritte-color-component-drop-background-content-v18-1-0: #1c2128;
+    --magritte-color-component-modal-background-content-v18-1-0: #1c2128;
+    --magritte-color-component-input-background-field-v18-1-0: #1c2128;
+    --magritte-color-component-input-background-state-field-hovered-v18-1-0: #1c2128;
+    --magritte-color-component-input-background-state-field-focused-v18-1-0: #1c2128;
+    --magritte-color-component-input-background-state-field-invalid-v18-1-0: #1c2128;
+    --magritte-color-component-input-background-state-field-disabled-v18-1-0: #181d23;
+    --magritte-color-component-input-text-content-v18-1-0: #e6edf3;
+    --magritte-color-component-input-text-label-v18-1-0: #8b949e;
+    --magritte-color-component-input-text-placeholder-v18-1-0: #8b949e;
+    --magritte-color-component-input-text-postfix-v18-1-0: #8b949e;
+    --magritte-color-component-input-icon-content-v18-1-0: #8b949e;
+    --magritte-color-component-input-stroke-field-v18-1-0: #2d333b;
+    --magritte-color-component-button-background-neutral-v18-1-0: #30363d;
+    --magritte-color-component-button-background-neutral-secondary-v18-1-0: #21262d;
+    --magritte-color-component-button-background-accent-v18-1-0: #2f81f7;
+    --magritte-color-component-button-background-accent-secondary-v18-1-0: #1f3550;
+    --magritte-color-component-button-background-state-neutral-hovered-v18-1-0: #3a424c;
+    --magritte-color-component-button-background-state-neutral-pressed-v18-1-0: #3a424c;
+    --magritte-color-component-button-background-state-neutral-secondary-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-button-background-state-neutral-secondary-pressed-v18-1-0: #2d333b;
+    --magritte-color-component-button-background-state-accent-hovered-v18-1-0: #4c9bff;
+    --magritte-color-component-button-background-state-accent-pressed-v18-1-0: #4c9bff;
+    --magritte-color-component-button-background-state-accent-secondary-hovered-v18-1-0: #24406040;
+    --magritte-color-component-button-text-neutral-secondary-v18-1-0: #e6edf3;
+    --magritte-color-component-button-text-neutral-tertiary-v18-1-0: #c4cdd6;
+    --magritte-color-component-button-text-accent-secondary-v18-1-0: #5fb0e6;
+    --magritte-color-component-button-text-accent-tertiary-v18-1-0: #5fb0e6;
+    --magritte-color-component-button-icon-neutral-secondary-v18-1-0: #e6edf3;
+    --magritte-color-component-button-icon-neutral-tertiary-v18-1-0: #c4cdd6;
+    --magritte-color-component-button-icon-accent-secondary-v18-1-0: #5fb0e6;
+    --magritte-color-component-button-icon-accent-tertiary-v18-1-0: #5fb0e6;
+    --magritte-color-component-tag-background-neutral-v18-1-0: #21262d;
+    --magritte-color-component-tag-background-accent-v18-1-0: #1f3550;
+    --magritte-color-component-tag-background-positive-v18-1-0: #16301f;
+    --magritte-color-component-tag-background-negative-v18-1-0: #3a231e;
+    --magritte-color-component-tag-background-warning-v18-1-0: #33261a;
+    --magritte-color-component-tag-background-special-v18-1-0: #241d33;
+    --magritte-color-component-tag-background-on-surface-neutral-v18-1-0: #21262d;
+    --magritte-color-component-tag-background-on-surface-accent-v18-1-0: #1f3550;
+    --magritte-color-component-tag-background-on-surface-positive-v18-1-0: #16301f;
+    --magritte-color-component-tag-background-on-surface-negative-v18-1-0: #3a231e;
+    --magritte-color-component-tag-background-on-surface-warning-v18-1-0: #33261a;
+    --magritte-color-component-tag-background-on-surface-special-v18-1-0: #241d33;
+    --magritte-color-component-chips-background-unchecked-neutral-v18-1-0: #21262d;
+    --magritte-color-component-chips-background-unchecked-neutral-secondary-v18-1-0: #21262d;
+    --magritte-color-component-chips-background-unchecked-accent-v18-1-0: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-v18-1-0: #1f3550;
+    --magritte-color-component-chips-background-checked-neutral-secondary-v18-1-0: #21262d;
+    --magritte-color-component-chips-background-checked-accent-v18-1-0: #2f81f7;
+    --magritte-color-component-chips-background-state-unchecked-neutral-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-neutral-secondary-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-chips-background-state-unchecked-accent-hovered-v18-1-0: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-hovered-v18-1-0: #24406b;
+    --magritte-color-component-chips-background-state-checked-neutral-secondary-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-chips-text-unchecked-neutral-v18-1-0: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-neutral-secondary-v18-1-0: #c4cdd6;
+    --magritte-color-component-chips-text-unchecked-accent-v18-1-0: #5fb0e6;
+    --magritte-color-component-chips-text-checked-neutral-secondary-v18-1-0: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-hovered-v18-1-0: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-neutral-secondary-hovered-v18-1-0: #e6edf3;
+    --magritte-color-component-chips-text-state-checked-neutral-secondary-hovered-v18-1-0: #e6edf3;
+    --magritte-color-component-chips-text-state-unchecked-accent-hovered-v18-1-0: #9bd4ff;
+    --magritte-color-component-chips-icon-unchecked-neutral-v18-1-0: #c4cdd6;
+    --magritte-color-component-chips-icon-unchecked-accent-v18-1-0: #5fb0e6;
+    --magritte-color-component-chips-icon-checked-neutral-secondary-v18-1-0: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-neutral-hovered-v18-1-0: #e6edf3;
+    --magritte-color-component-chips-icon-state-checked-neutral-secondary-hovered-v18-1-0: #e6edf3;
+    --magritte-color-component-chips-icon-state-unchecked-accent-hovered-v18-1-0: #9bd4ff;
+    --magritte-color-component-chips-stroke-unchecked-neutral-secondary-v18-1-0: #2d333b;
+    --magritte-color-component-chips-stroke-checked-neutral-secondary-v18-1-0: #3a424c;
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-hovered-v18-1-0: #3a424c;
+    --magritte-color-component-chips-stroke-state-checked-neutral-secondary-hovered-v18-1-0: #3a424c;
+    --magritte-color-component-checkable-background-unchecked-v18-1-0: #1c2128;
+    --magritte-color-component-checkable-background-state-unchecked-hovered-v18-1-0: #21262d;
+    --magritte-color-component-checkable-background-checked-v18-1-0: #2f81f7;
+    --magritte-color-component-checkable-stroke-unchecked-v18-1-0: #3a424c;
+    --magritte-color-component-checkable-stroke-state-unchecked-hovered-v18-1-0: #4a545f;
+    --magritte-color-component-checkable-icon-state-unchecked-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-checkable-card-background-unchecked-v18-1-0: #1c2128;
+    --magritte-color-component-checkable-card-background-state-unchecked-hovered-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-tone-hovered-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-hovered-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-tone-hovered-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-stroke-unchecked-v18-1-0: #2d333b;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-hovered-v18-1-0: #3a424c;
+    --magritte-color-component-segmented-background-content-v18-1-0: #1c2128;
+    --magritte-color-component-segmented-stroke-content-v18-1-0: #2d333b;
+    --magritte-color-component-segmented-item-background-selected-v18-1-0: #30363d;
+    --magritte-color-component-segmented-item-background-state-unselected-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-segmented-item-text-selected-v18-1-0: #e6edf3;
+    --magritte-color-component-segmented-item-text-unselected-v18-1-0: #8b949e;
+    --magritte-color-component-segmented-item-text-state-unselected-hovered-v18-1-0: #c4cdd6;
+    --magritte-color-component-segmented-item-icon-selected-v18-1-0: #e6edf3;
+    --magritte-color-component-segmented-item-icon-unselected-v18-1-0: #8b949e;
+    --magritte-color-component-segmented-item-icon-state-unselected-hovered-v18-1-0: #c4cdd6;
+    --magritte-color-component-switch-background-container-unchecked-v18-1-0: #3a424c;
+    --magritte-color-component-switch-background-state-container-unchecked-hovered-v18-1-0: #4a545f;
+    --magritte-color-component-button-background-state-neutral-tertiary-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-button-background-state-neutral-tertiary-pressed-v18-1-0: #3a424c;
+    --magritte-color-component-button-background-state-accent-tertiary-hovered-v18-1-0: #1f3550;
+    --magritte-color-component-button-background-state-accent-tertiary-pressed-v18-1-0: #24406b;
+    --magritte-color-component-button-background-state-positive-tertiary-hovered-v18-1-0: #16301f;
+    --magritte-color-component-button-background-state-positive-tertiary-pressed-v18-1-0: #1b3d28;
+    --magritte-color-component-button-background-state-negative-tertiary-hovered-v18-1-0: #3a231e;
+    --magritte-color-component-button-background-state-negative-tertiary-pressed-v18-1-0: #4a2c25;
+    --magritte-color-component-button-background-state-special-tertiary-hovered-v18-1-0: #241d33;
+    --magritte-color-component-button-background-state-special-tertiary-pressed-v18-1-0: #2d2440;
+    --magritte-color-component-button-background-positive-secondary-v18-1-0: #16301f;
+    --magritte-color-component-button-background-negative-secondary-v18-1-0: #3a231e;
+    --magritte-color-component-button-background-special-secondary-v18-1-0: #241d33;
+    --magritte-color-component-button-background-state-positive-secondary-hovered-v18-1-0: #1b3d28;
+    --magritte-color-component-button-background-state-positive-secondary-pressed-v18-1-0: #1b3d28;
+    --magritte-color-component-button-background-state-negative-secondary-hovered-v18-1-0: #4a2c25;
+    --magritte-color-component-button-background-state-negative-secondary-pressed-v18-1-0: #4a2c25;
+    --magritte-color-component-button-background-state-special-secondary-hovered-v18-1-0: #2d2440;
+    --magritte-color-component-button-background-state-special-secondary-pressed-v18-1-0: #2d2440;
+    --magritte-color-component-button-background-state-accent-secondary-pressed-v18-1-0: #24406b;
+    --magritte-color-component-button-background-state-neutral-disabled-v18-1-0: #21262d;
+    --magritte-color-component-button-background-state-accent-disabled-v18-1-0: #21262d;
+    --magritte-color-component-button-background-state-positive-disabled-v18-1-0: #21262d;
+    --magritte-color-component-button-background-state-negative-disabled-v18-1-0: #21262d;
+    --magritte-color-component-button-background-state-special-disabled-v18-1-0: #21262d;
+    --magritte-color-component-button-background-state-neutral-secondary-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-button-background-state-accent-secondary-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-button-background-state-positive-secondary-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-button-background-state-negative-secondary-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-button-background-state-special-secondary-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-button-text-positive-secondary-v18-1-0: #57d98a;
+    --magritte-color-component-button-text-positive-tertiary-v18-1-0: #57d98a;
+    --magritte-color-component-button-icon-positive-secondary-v18-1-0: #57d98a;
+    --magritte-color-component-button-icon-positive-tertiary-v18-1-0: #57d98a;
+    --magritte-color-component-button-text-negative-secondary-v18-1-0: #ff8a7a;
+    --magritte-color-component-button-text-negative-tertiary-v18-1-0: #ff8a7a;
+    --magritte-color-component-button-icon-negative-secondary-v18-1-0: #ff8a7a;
+    --magritte-color-component-button-icon-negative-tertiary-v18-1-0: #ff8a7a;
+    --magritte-color-component-button-text-special-secondary-v18-1-0: #c3a6f5;
+    --magritte-color-component-button-text-special-tertiary-v18-1-0: #c3a6f5;
+    --magritte-color-component-button-icon-special-secondary-v18-1-0: #c3a6f5;
+    --magritte-color-component-button-icon-special-tertiary-v18-1-0: #c3a6f5;
+
+    /* --- Remaining light STATE surfaces + strokes (v18-1-0) ------------------
+       Enumerated live: of the ~215 background/stroke tokens the current set
+       still ships near-white, these are the ones a logged-out visitor actually
+       hits. They are all hover / pressed / loading / disabled STATES or
+       component surfaces the blocks above never named, so nothing is visible
+       until the pointer lands — no load-time scan can reach them.
+       The confirmed one: `stroke-state-phantom-hovered` (#dce3eb) is the ring a
+       Magritte CARD draws on hover, painted as a 1px inset box-shadow on an
+       inner `magritte-border-element` — the blanket `* { border-color }` cannot
+       touch a shadow, so every hovered vacancy card lit up with a near-white
+       outline. Deliberately NOT remapped: the `constant` / `inverse` /
+       `on-surface` / `overlay-action` families (they sit on hh's own dark
+       surfaces or over photos, where white is correct — same reason the
+       "Понятно" pill stays white), the switch TOGGLE knob, and the `vivid`
+       brand yellow. */
+    --magritte-color-stroke-state-phantom-hovered-v18-1-0: #3a424c;
+    --magritte-color-stroke-state-phantom-pressed-v18-1-0: #3a424c;
+    --magritte-color-background-state-body-hovered-v18-1-0: #14181d;
+    --magritte-color-background-state-body-pressed-v18-1-0: #14181d;
+    /* tinted surfaces: the resting values are remapped above, the states were not */
+    --magritte-color-background-state-accent-secondary-hovered-v18-1-0: #24406b;
+    --magritte-color-background-state-accent-secondary-pressed-v18-1-0: #24406b;
+    --magritte-color-background-state-positive-secondary-hovered-v18-1-0: #1b3d28;
+    --magritte-color-background-state-positive-secondary-pressed-v18-1-0: #1b3d28;
+    --magritte-color-background-state-negative-secondary-hovered-v18-1-0: #4a2c25;
+    --magritte-color-background-state-negative-secondary-pressed-v18-1-0: #4a2c25;
+    --magritte-color-background-state-warning-secondary-hovered-v18-1-0: #3f2f20;
+    --magritte-color-background-state-warning-secondary-pressed-v18-1-0: #3f2f20;
+    --magritte-color-background-state-special-secondary-hovered-v18-1-0: #2d2440;
+    --magritte-color-background-state-special-secondary-pressed-v18-1-0: #2d2440;
+    --magritte-color-background-state-dreamy-secondary-hovered-v18-1-0: #1b3c4a;
+    --magritte-color-background-state-dreamy-secondary-pressed-v18-1-0: #1b3c4a;
+    --magritte-color-background-state-lovely-secondary-hovered-v18-1-0: #48232d;
+    --magritte-color-background-state-lovely-secondary-pressed-v18-1-0: #48232d;
+    --magritte-color-background-state-vivid-secondary-hovered-v18-1-0: #3d3419;
+    --magritte-color-background-state-vivid-secondary-pressed-v18-1-0: #3d3419;
+    /* list rows / cells (menu + drop items) */
+    --magritte-color-component-cell-background-state-hovered-v18-1-0: #21262d;
+    --magritte-color-component-cell-background-state-pressed-v18-1-0: #2d333b;
+    /* dividers, progress track, carousel dots */
+    --magritte-color-component-divider-stroke-content-v18-1-0: #2d333b;
+    --magritte-color-component-progress-bar-background-content-v18-1-0: #2d333b;
+    --magritte-color-component-dot-pages-background-content-v18-1-0: #3a424c;
+    /* mobile bottom sheet */
+    --magritte-color-component-bottom-sheet-background-content-v18-1-0: #1c2128;
+    /* badges */
+    --magritte-color-component-badge-background-neutral-v18-1-0: #21262d;
+    --magritte-color-component-badge-background-positive-v18-1-0: #16301f;
+    --magritte-color-component-badge-background-state-neutral-disabled-v18-1-0: #21262d;
+    --magritte-color-component-badge-background-state-accent-disabled-v18-1-0: #21262d;
+    --magritte-color-component-badge-background-state-positive-disabled-v18-1-0: #21262d;
+    --magritte-color-component-badge-background-state-attention-disabled-v18-1-0: #21262d;
+    /* tabs component (pill variant) */
+    --magritte-color-component-tabs-background-unselected-v18-1-0: #21262d;
+    --magritte-color-component-tabs-background-state-unselected-hovered-v18-1-0: #2d333b;
+    --magritte-color-component-tabs-background-state-unselected-pressed-v18-1-0: #2d333b;
+    --magritte-color-component-tabs-background-state-unselected-focused-v18-1-0: #2d333b;
+    /* pagination */
+    --magritte-color-component-number-pages-background-content-v18-1-0: #14181d;
+    --magritte-color-component-number-pages-stroke-content-v18-1-0: #2d333b;
+    --magritte-color-component-number-pages-item-background-selected-v18-1-0: #30363d;
+    --magritte-color-component-number-pages-item-background-state-unselected-hovered-v18-1-0: #21262d;
+    --magritte-color-component-number-pages-item-background-state-unselected-pressed-v18-1-0: #2d333b;
+    /* inputs: hovered / loading / disabled strokes and fills */
+    --magritte-color-component-input-stroke-state-field-hovered-v18-1-0: #3a424c;
+    --magritte-color-component-input-stroke-state-field-loading-v18-1-0: #3a424c;
+    --magritte-color-component-input-stroke-state-field-disabled-v18-1-0: #2d333b;
+    --magritte-color-component-input-background-state-field-loading-v18-1-0: #21262d;
+    --magritte-color-component-input-counter-background-content-v18-1-0: #21262d;
+    --magritte-color-component-input-counter-background-state-content-disabled-v18-1-0: #21262d;
+    --magritte-color-component-input-chips-background-state-neutral-disable-v18-1-0: #21262d;
+    /* chips / checkables / segmented: pressed + disabled states */
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-pressed-v18-1-0: #3a424c;
+    --magritte-color-component-chips-stroke-state-unchecked-neutral-secondary-disabled-v18-1-0: #2d333b;
+    --magritte-color-component-checkable-background-state-unchecked-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-checkable-background-state-checked-disabled-v18-1-0: #30363d;
+    --magritte-color-component-checkable-stroke-state-unchecked-disabled-v18-1-0: #2d333b;
+    --magritte-color-component-checkable-stroke-state-checked-disabled-v18-1-0: #3a424c;
+    --magritte-color-component-checkable-card-background-state-unchecked-pressed-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-tone-pressed-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-pressed-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-checked-tone-pressed-v18-1-0: #21262d;
+    --magritte-color-component-checkable-card-background-state-unchecked-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-checkable-card-background-state-checked-disabled-v18-1-0: #1c2128;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-pressed-v18-1-0: #3a424c;
+    --magritte-color-component-checkable-card-stroke-state-unchecked-disabled-v18-1-0: #2d333b;
+    --magritte-color-component-segmented-item-background-state-unselected-pressed-v18-1-0: #2d333b;
+    --magritte-color-component-switch-background-state-container-unchecked-pressed-v18-1-0: #4a545f;
 
     /* --- Magritte v24-3-0 (the hh.ru/blog Next.js app) -------------------
        The blog is a separate app pinned to an older Magritte build; its :root
@@ -2664,6 +3472,85 @@
   /* The store CTA is an <a> carrying the solid-button class, so the site-wide
      link ink lands on the label instead of the button's own white. */
   a.mob__hh__button { color: #ffffff !important; }
+
+  /* ---- Карьерный маркетплейс (/mentors) ----
+     A micro-frontend (mentors-front.hh.ru) mounted under .MentorsFront-ReactRoot;
+     its Magritte build is the v24-7-1 token set declared above. Two surfaces are
+     hardcoded in its own module CSS and so ignore the tokens: the hero band, a
+     full-bleed light gradient laid on the root's first child as a background-IMAGE
+     (a bg-colour rule alone leaves it painted), and the "Шаг N" step pills, whose
+     plate is #fff with the label inheriting body ink. */
+  .MentorsFront-ReactRoot > div[class*="container--"] {
+    background-color: #14181d !important;
+    background-image: none !important; }
+  .MentorsFront-ReactRoot div[class*="tag--"] {
+    background-color: #21262d !important; }
+
+  /* ---- Рекламные продукты (/article/promoproducts) ----
+     hh's "startic" CMS renderer mounts a Vite app under #cmsFrontendAppRoot whose
+     styles live in an inline <style> in the BODY — later in document order than
+     our sheet, so only !important wins there. Its module classes are
+     `_<name>_<buildhash>_<line>`: match the NAME segment, never the hash. Bands
+     and cards are hardcoded #f1f4f9 / #fff literals rather than tokens, so the
+     v18-1-0 block cannot reach them; the band arm clears the colour instead of
+     repainting it so a nested wrapper keeps whatever plate it sits on. Its icons
+     are single-colour CDN SVGs drawn as `content: url()` on an otherwise empty
+     pseudo, which is what makes inverting them safe. */
+  #cmsFrontendAppRoot [class*="_container_"],
+  #cmsFrontendAppRoot [class*="_items_"],
+  #cmsFrontendAppRoot [class*="_infoBlock_"],
+  #cmsFrontendAppRoot [class*="_slide_"] {
+    background-color: transparent !important;
+    background-image: none !important; }
+  #cmsFrontendAppRoot [class*="_item_"],
+  #cmsFrontendAppRoot [class*="_whiteSquare_"],
+  #cmsFrontendAppRoot [class*="_smallContainer_"],
+  #cmsFrontendAppRoot [class*="_formContainer_"],
+  #cmsFrontendAppRoot [class*="_chooseBlock_"],
+  #cmsFrontendAppRoot [class*="_sliderInfoBlockWhite_"],
+  #cmsFrontendAppRoot [class*="_addIcon_"],
+  #cmsFrontendAppRoot .swiper-button-next,
+  #cmsFrontendAppRoot .swiper-button-prev {
+    background-color: #1c2128 !important; }
+  #cmsFrontendAppRoot .swiper-fade {
+    background-color: rgba(20, 24, 29, 0.7) !important; }
+  #cmsFrontendAppRoot [class*="_addIcon_"]::before,
+  #cmsFrontendAppRoot [class*="_addIcon_"]::after,
+  #cmsFrontendAppRoot [class*="_itemHeader_"]::after,
+  #cmsFrontendAppRoot .swiper-button-next::before,
+  #cmsFrontendAppRoot .swiper-button-prev::before {
+    filter: invert(1) !important; }
+  /* The app keeps its own saturated fills (blue stat tiles, the lavender/green
+     expert pills, the blue pill a highlight word draws as its ::before), so the
+     labels on them must stay #fff or the body ink lands on brand colour. The
+     highlight word is a bare <span> — no other span in the app carries a
+     `_container_` class. */
+  #cmsFrontendAppRoot span[class*="_container_"],
+  #cmsFrontendAppRoot [class*="_sliderInfoBlockOne_"],
+  #cmsFrontendAppRoot [class*="_sliderInfoBlockOne_"] *,
+  #cmsFrontendAppRoot [class*="_sliderInfoBlockTwo_"],
+  #cmsFrontendAppRoot [class*="_sliderInfoBlockTwo_"] *,
+  #cmsFrontendAppRoot [class*="_moreContainer_"],
+  #cmsFrontendAppRoot [class*="_currentTitleContainer_"] {
+    color: #ffffff !important; }
+  /* The solution-picker pills are the one plate in this app that encodes state
+     (#f1f4f9 unselected / #000 selected); the band arm above clears both, so the
+     two have to be re-split here. */
+  #cmsFrontendAppRoot [class*="_sliderSelectorList_"] > [class*="_container_"] {
+    background-color: #21262d !important; }
+  #cmsFrontendAppRoot [class*="_sliderSelectorList_"] > [class*="_active_"] {
+    background-color: #1f3550 !important; }
+  #cmsFrontendAppRoot [class*="_sliderSelectorList_"] > [class*="_active_"],
+  #cmsFrontendAppRoot [class*="_sliderSelectorList_"] > [class*="_active_"] * {
+    color: #ffffff !important; }
+
+  /* ---- hh бизнес (/hrmobile) ----
+     A brand-purple marketing page. Two labels sit on a plate hh paints white and
+     colours purple; that plate is correct on the purple band, so only the ink has
+     to come back — the third `.hh-business-text`, on the dark hero, is white and
+     is left to the body ink. */
+  .hh-business__main-subtitle .hh-business-text { color: #7945c1 !important; }
+  .qr-text { color: #3a1da1 !important; }
 
   /* ---- Misc surfaces hh paints white directly ---- */
   [style*="background-color: rgb(255, 255, 255)"],

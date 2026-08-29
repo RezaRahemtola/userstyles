@@ -781,6 +781,23 @@
     color: #c4cdd6 !important;
   }
 
+  /* ---- Third-party consent overlay (Sirdata CMP) ---- */
+  /* A vendor-rendered LIGHT panel mounted outside the site's own markup, shown to every
+     visitor before they consent. The blanket `*` border reset and the `b, strong, label` /
+     `p, td, i` ink rules reach into it: its body copy drops to 1.7:1 on the white panel and
+     the section rule under "THE ACTIVITIES" plus every toggle track turn near-black. Hand
+     the panel back its own chrome instead of theming it — Sirdata's class names are build
+     hashes, so anything keyed to one would silently die and leave our light ink on white.
+     #999 is the tone DaFont pins for this panel in its own inline sheet, and one of the
+     three paragraphs carries it on the element itself, so `inherit` cannot recover it —
+     the copy has to be restated. The footer buttons look the same either way: the vendor
+     draws their visible sides in this same #d8d8d8 and gives the red one zero width. */
+  div[class*="sd-cmp"] p { color: #999999 !important; }
+  div[class*="sd-cmp"] b, div[class*="sd-cmp"] strong, div[class*="sd-cmp"] label,
+  div[class*="sd-cmp"] td, div[class*="sd-cmp"] i { color: inherit !important; }
+  div[class*="sd-cmp"] div,
+  div[class*="sd-cmp"] span { border-color: #d8d8d8 !important; }
+
   /* ---- Tables / generic light cells safety net ---- */
   td[bgcolor="#FFFFFF"], td[bgcolor="#ffffff"], td[bgcolor="white"],
   [style*="background:#fff"], [style*="background-color:#fff"],

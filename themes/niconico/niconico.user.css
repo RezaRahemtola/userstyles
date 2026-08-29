@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           niconico Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.23
+@version        1.0.24
 @description    A clean dark theme for niconico — easy on the eyes across home, videos, comments, rankings, search and profiles. Keeps the accent; thumbnails stay true.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1895,6 +1895,42 @@
      so inverting it is hue-lossless and turns the light disc into a dark one. */
   #__ap_gfc_consent_box_btn__ img {
     filter: invert(1) !important; border-color: #2d333b !important;
+  }
+
+  /* ---- Feedback form (www.nicovideo.jp/feedback/*) ----
+     A BaseUniLayout page family with its own literal-colour sheet
+     (pages_feedback_FeedbackPage.css) that no design token reaches. Linked from
+     the /watch footer and the video side menu.
+     `.FeedbackPage a:link` is (0,2,1), so the `.BaseUniLayout a` pass below cannot
+     take the link ink without !important. The validation banner ships in the DOM
+     as display:none; the confirmation panel and its back button render only on the
+     form's POST response, which nothing links to. */
+  .FeedbackPage a, .FeedbackPage a:link, .FeedbackPage a:hover {
+    color: #5fb0e6 !important;
+  }
+  .FeedbackPage .errorMessageContainer {
+    background: #2b1d20 !important;
+    border-bottom-color: #5a2f2f !important;
+  }
+  .FeedbackPage .errorMessageContainer p,
+  .FeedbackPage .errorMessageLink a,
+  .FeedbackPage .errorMessageLink a:after,
+  .FeedbackPage .notice,
+  .FeedbackPage .redText { color: #ff5c5c !important; }
+  .FeedbackPage .confirmationDetails {
+    background: #1c2128 !important;
+    border-color: #3a424c !important;
+  }
+  /* Disabled submit keeps a muted label so it still reads as unavailable next to
+     the enabled #006fff variant. */
+  .FeedbackPage input[type="submit"][disabled].confirmButton {
+    background: #2d333b !important;
+    color: #8b949e !important;
+  }
+  .FeedbackPage input[type="submit"].backButton {
+    background: #1c2128 !important;
+    color: #c4cdd6 !important;
+    border-color: #3a424c !important;
   }
 
   /* Search box (legacy header) */

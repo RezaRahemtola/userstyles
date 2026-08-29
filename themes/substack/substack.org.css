@@ -349,6 +349,17 @@
     --color-theme-fg: #c4cdd6 !important;
   }
 
+  /* The Pencraft `tertiary-accent` button priority (the label-only `Subscribe`
+     beside each restack) spends the accent as INK on a transparent fill. The
+     token is remapped rather than the hashed class so a bundle rename cannot
+     drop the hook, and the scope is the publication wrapper: on the hub the
+     same token resolves to the brand orange and must stay. The matching
+     -bg-hover is untouched, so hover still washes the button in the accent. */
+  [class*="pubTheme"] {
+    --color-button-tertiary-accent-fg: #e6edf3 !important;
+    --color-button-tertiary-accent-fg-hover: #e6edf3 !important;
+  }
+
   /* --- Sticky publication nav spacer (inline-styled hardcoded white block
      reserving the header's layout height) --- */
   .main-menu > div {

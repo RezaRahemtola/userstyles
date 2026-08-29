@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Avito Dark
 @namespace    github.com/RezaRahemtola/userstyles
-@version      1.0.20
+@version      1.0.21
 @description  A clean dark theme for Avito — easy-on-the-eyes surfaces across home, search and listings, with crisp prices and the familiar Avito blue kept bright.
 @author       Reza Rahemtola
 @homepageURL  https://github.com/RezaRahemtola/userstyles
@@ -582,6 +582,22 @@
   [class*="root_preset_secondary"] {
     background-color: #262c35 !important;
   }
+  /* One build of the DS Button drops the preset NAME and ships pure hashes, so the arm
+     above cannot reach it; when such a button is also an `<a>` with no `data-marker`
+     (the model page's "Показать все отзывы") nothing in this file names it and it keeps
+     the design system's `#f2f1f0` fill under accent-blue text. Every build resolves the
+     fill through the same design token, so remap the token instead of chasing hashes.
+     The site declares it on class-scoped theme containers rather than `:root`, so a
+     `:root` override would never be reached — the tag+attribute pair is what raises this
+     above those declarations. Hover and pressed have to move with it: the site swaps the
+     fill through its own token on hover, and this theme paints no `!important` fill on
+     these buttons to mask a light one. */
+  html [class] {
+    --theme-semantics-components-button-bg-secondary: #1c2128;
+    --theme-semantics-components-button-bg-secondaryHover: #262c35;
+    --theme-semantics-components-button-bg-secondaryPressed: #2a313a;
+    --theme-semantics-components-button-text-secondary: #e6edf3;
+  }
   /* `root_preset_overlay` is the DS's float-over-imagery button: a solid WHITE pill the
      site uses on banners and photos. The generic surface sank it to the same tone as the
      panels it sits on (promo strips, hover cards), so it lost its button shape entirely.
@@ -1046,6 +1062,15 @@
   [style*="color:#ff6163"], [style*="color:#FF6163"] {
     color: #ff6163 !important;
   }
+  /* The design-system field carries its validation message in a bare `error-<hash>`
+     span whose only marking is that same status red — no icon, no border change — so
+     the broad text rule turned "Неизвестный город или регион" into ordinary grey
+     metadata under the input. The element is the span itself, not a wrapper, so no
+     descendant arm is wanted; the tag guard keeps the generic `error-` fragment off
+     any block a build may name the same way. */
+  span[class*="error-"] {
+    color: #ff6163 !important;
+  }
   /* SEO geo-links tab strip at the foot of a results page. Two tabs mark the
      current one with a bold black `<strong>` and the other with an inline
      `color: rgb(0, 153, 247)` on a bare SPAN — the link blue is the ONLY thing
@@ -1092,11 +1117,18 @@
      it anchors to the build's `<name>-<hash>` shape instead of any class containing
      "filled". Every arm is scoped to the FILLED state so a rebuild that rotates a hash
      leaves a star merely uninformative — never gold on an empty star, which would
-     overstate a seller's rating. */
+     overstate a seller's rating.
+     The marker belongs to the CALL SITE, so each new place the widget is embedded needs
+     naming again (`model-review/score` on the model page's review list is one). Every
+     call site declares the widget's palette as inline custom properties on the rating
+     root, so matching that property NAME — never its value, which serialises with and
+     without spaces — reaches them all. */
   [data-marker="sellerRate"] span[class*="_4da9fca36a8c49c9"],
   [data-marker^="seller-rating/rating-stars"] span[class*="_4da9fca36a8c49c9"],
   [data-marker="sellerRate"] span[class*="filled-"],
-  [data-marker^="seller-rating/rating-stars"] span[class*="filled-"] {
+  [data-marker^="seller-rating/rating-stars"] span[class*="filled-"],
+  [style*="--star-color-filled"] span[class*="_4da9fca36a8c49c9"],
+  [style*="--star-color-filled"] span[class*="filled-"] {
     color: #ffb021 !important;
   }
   /* `[data-marker*="title"]` was too loose: Avito also hangs a bare
@@ -1148,9 +1180,14 @@
      cue onto the label. The child combinator is load-bearing, not tidiness: a
      seller-name link wraps its whole rating widget, whose gold stars are painted through
      `color`, and a descendant selector would out-specify the star rule and turn every
-     star blue on hover — only the label is ever a direct `p`/`span` child. */
+     star blue on hover — only the label is ever a direct `p`/`span` child.
+     The header's location link splits its label across two nested spans inside that
+     `p`, and the broad text rule pins each of them directly, so the paragraph arm
+     alone recolours nothing visible; the spans are reached under the direct `p` only,
+     which keeps the rating widget (never a direct `p` child) out of range. */
   a[class*="root_underlineOffset"]:hover > p,
-  a[class*="root_underlineOffset"]:hover > span {
+  a[class*="root_underlineOffset"]:hover > span,
+  a[class*="root_underlineOffset"]:hover > p span {
     color: var(--av-accent-hover) !important;
   }
   /* The `link-<hash>` variant reserves its underline as a `border-bottom: 1px
@@ -1452,8 +1489,12 @@
      TRIGGER (link + caret, natively transparent) then the PANEL — so the adjacent-
      sibling combinator selects the panel alone. Without it the trigger also took an
      `--av-surface` fill, giving "Для бизнеса" and "Ещё" a grey pill that read as an
-     active/selected state their plain-link siblings never got. */
-  [class*="nav-container-HEADER"] li > div > div + div {
+     active/selected state their plain-link siblings never got.
+     The fill belongs on that div's single CHILD, which is the panel proper: it is wider
+     than its wrapper, offset 24px left of it and rounded, so a fill on the wrapper
+     leaves a transparent strip down the menu's left edge — the width of the labels'
+     first characters — and stamps a square-cornered ledge above and below the panel. */
+  [class*="nav-container-HEADER"] li > div > div + div > div {
     background-color: var(--av-surface) !important;
     border-color: var(--av-border) !important;
   }
@@ -1964,9 +2005,16 @@
      reaches — ten white tiles carrying accent-blue labels at ~1.5:1. Its marker is the
      durable hook. Natively the label is BLACK body text, not a link, so the accent from
      the blanket `a` rule has to be taken back off it too. */
+  /* The employer profile ("Все вакансии компании") builds the same idea from a
+     `Categorizer-module-item-<hash>` anchor whose fill arrives from a palette-named
+     sibling class (`…-warmGray4-<hash>`), so naming the component class covers every
+     tone variant at once. Its illustration is a transparent-backed PNG sized `cover`,
+     so the colour override is enough — the artwork survives and only the plate under
+     it changes. */
   [class*="visual-rubricator-gridItem"],
   [class*="search-history-widget-item"],
   [class*="category-block-img__placeholder"],
+  [class*="Categorizer-module-item"],
   [data-marker^="visual-rubricator/block"] {
     background-color: var(--av-surface) !important;
     border-color: var(--av-border) !important;

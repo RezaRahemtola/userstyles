@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           StackExchange Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.19
+@version        1.0.20
 @description    Dark theme for Stack Overflow and the whole Stack Exchange network: easy-on-the-eyes questions, answers, code blocks, comments and sidebar.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -736,7 +736,9 @@
      the white site — invisible black-on-dark. They're images we
      can't recolor internally, so apply the standard dark-mode
      luminance invert (hue-rotate keeps brand hues like SU's blue
-     bracket). SO uses an inline SVG (handled above), not this img. */
+     bracket). SO uses an inline SVG (handled above), not this img.
+     Sites whose header band is a BRAND colour reset this at the end
+     of the file — there the wordmark is baked for the band. */
   .site-header--link img,
   a.site-header--link img,
   #hlogo img,
@@ -1136,6 +1138,26 @@
     color: #e6edf3 !important;
   }
 
+  /* Stacks semantic TEXT tones. `--fc-success` #18864b, `--fc-error` /
+     `--fc-danger` #c83232 and `--fc-warning` #9c730d were picked for the
+     white site and land 4.0:1 / 3.1:1 / 4.0:1 on the page base — all under
+     AA for the 12-13px labels they mark (the editor draft status, form
+     validation). Lift each to the palette sibling of the same hue; the
+     matching `.bg-*` / `.bc-*` utilities are solid fills that already read
+     on dark and must keep the site value. */
+  .fc-success {
+    color: #3fb950 !important;
+  }
+
+  .fc-error,
+  .fc-danger {
+    color: #f85149 !important;
+  }
+
+  .fc-warning {
+    color: #d98b3a !important;
+  }
+
   /* The accepted (green check) glyph */
   .accepted-answer-indicator,
   .js-accepted-answer-indicator,
@@ -1229,9 +1251,13 @@
   /* The POST OWNER's name in comments carries `.owner`, which SE highlights
      with a light-blue #ebf6fa pill background to mark the author — a glaring
      light pill on dark (short at 83x20, so it slips the audit height filter).
-     Retone to a subtle dark-blue tint; the #6f9ab0 name still reads on it. */
+     Retone to a subtle dark-blue tint; the #6f9ab0 name still reads on it.
+     The bare arms carry it to the post timeline, which repeats the pill
+     outside any `.comment` container. */
   .comment .comment-user.owner,
-  .comment a.comment-user.owner {
+  .comment a.comment-user.owner,
+  .comment-user.owner,
+  a.comment-user.owner {
     background-color: #16202c !important;
   }
 
@@ -3331,6 +3357,54 @@
   }
 
   /* ============================================================
+     Post timeline (/posts/<id>/timeline)
+     ------------------------------------------------------------
+     Reached from the clock icon in every post's vote column, and
+     anonymous. Its own stylesheet paints from raw Stacks tokens, so
+     no utility remap reaches it.
+     ============================================================ */
+  /* A deleted event plates the row from `--red-100` on each <td>, not
+     on the <tr> — the rule has to repeat per cell to cover the row. */
+  .post-timeline tr.deleted-event td {
+    background-color: #2a1718 !important;
+  }
+
+  .post-timeline tr.separator > td > div {
+    background-color: #2d333b !important;
+  }
+
+  .post-timeline tr.separator > td > div.deleted {
+    background-color: #5a2a2c !important;
+  }
+
+  /* Event kinds are `.event-type > span` pills, each filled by one raw
+     token. `history` (--black-225) and `comment` (--black-350) are the
+     two light-theme greys; every other kind is a brand hue that already
+     reads on dark and must keep its own colour. `.comment` additionally
+     collides with the post-comment component, whose network-wide
+     transparent + divider rule outranks the site's pill fill. */
+  .post-timeline .event-type > span.history {
+    background-color: #2d333b !important;
+    color: #c4cdd6 !important;
+  }
+
+  .post-timeline .event-type > span.comment {
+    background-color: #454e59 !important;
+    color: #f0f4f8 !important;
+    border: 0 !important;
+  }
+
+  /* ============================================================
+     Badge detail page (/help/badges/<id>/<slug>)
+     ============================================================ */
+  /* Every awarded row is separated by a `--black-200` top rule and a
+     page lists ~30 of them, so the light hairlines stripe the column. */
+  .badges-page .single-badge-table .single-badge-row-question,
+  .badges-page .single-badge-table .single-badge-row-reason {
+    border-top-color: #262c33 !important;
+  }
+
+  /* ============================================================
      Editor (Markdown answer/comment box) — public on ask flow
      ============================================================ */
   .wmd-button-bar,
@@ -3338,6 +3412,40 @@
   .js-editor-toolbar {
     background-color: #20262d !important;
     border-color: #2d333b !important;
+  }
+
+  /* The toolbar row draws the separator under the buttons from its own
+     id rule, which the .wmd-button-bar border above cannot reach, and
+     keeps it a light #babfc5 — a bright rule straight across the answer
+     box. The guest answer form on the network sites renders the editor
+     logged-out, so this is a public surface. */
+  ul#wmd-button-row,
+  .wmd-button-row {
+    border-color: #2d333b !important;
+  }
+
+  /* The Markdown help strip and its "?" toggle only mount once the answer
+     box takes focus, and the textarea sits on a resize grippie — all three
+     are SE #f1f2f3 plates with #babfc5 rules, and the strip already carries
+     our light tab labels, so it reads light-on-light until the plate moves.
+     The grippie and the "?" glyph are both drawn from the legacy sprite:
+     the "?" lives alone in its own <span> so it can be inverted, the
+     grippie paints its dots on the same box as the plate and can only drop
+     them. */
+  button#wmd-help-button,
+  div#mdhelp,
+  ul#mdhelp-tabs,
+  .grippie {
+    background-color: #20262d !important;
+    border-color: #2d333b !important;
+  }
+
+  .grippie {
+    background-image: none !important;
+  }
+
+  button#wmd-help-button > span {
+    filter: invert(1) !important;
   }
 
   .wmd-preview {
@@ -3672,38 +3780,192 @@
 }
 
 /* ============================================================
-   Server Fault only — per-site branded header band
+   Per-site header bands (measured, not guessed)
    ------------------------------------------------------------
    Every network site paints `header.site-header` from its own
-   `--theme-header-background-color` token: Ask Ubuntu ships brand
-   orange, Sci-Fi black, Super User / MathOverflow / Stack Apps
-   transparent — all fine on dark. Server Fault alone ships #f4f4f4,
-   a full-width white band under the topbar, and the luminance-
-   inverted wordmark then renders near-white ON white. A network-wide
-   `.site-header` rule would flatten Ask Ubuntu's brand orange, so
-   scope the fix to the one domain that needs it.
+   `--theme-header-background-color`, and the value decides both what
+   the band looks like on dark AND whether the main block's luminance
+   invert is right for the wordmark sitting on it. Read the value with:
+
+     curl https://<host>/Content/Sites/<slug>/primary.css \
+       | grep -o -- '--theme-header-background-color: *[^;]*'
+
+   (the slug is the `/Content/Sites/<slug>/` segment of the site's
+   `icon_url` in api.stackexchange.com/2.3/sites). Across the 184 main
+   sites it lands in exactly three buckets:
+
+     transparent (36)  no band; the invert lifts the dark wordmark onto
+                       the page — nothing to do, and these are listed in
+                       NEITHER block below.
+     chrome grey (101) hsl(210,80%,96%), var(--black-100), #F4F4F4,
+                       #F9F9F9, #E7EBEA, #D4D8DB — a full-width pale
+                       band, and the lifted/inverted wordmark then sits
+                       light-on-light. Darken the band; keep the invert.
+     brand hue   (42)  var(--theme-primary) and the hand-picked hexes
+                       (Ask Ubuntu orange, Meta blue, Arqade navy,
+                       Sci-Fi black, English Language cream …). The
+                       wordmark is an <img> baked FOR that band, so the
+                       band stays and the invert must go.
+
+   Both blocks are declared after the main block so they win the
+   equal-specificity !important tie. A site the network adds later
+   defaults to the chrome grey, so it needs adding to the first list.
    ============================================================ */
-@-moz-document domain("serverfault.com") {
+@-moz-document
+  domain("3dprinting.stackexchange.com"),
+  domain("alcohol.stackexchange.com"),
+  domain("astronomy.stackexchange.com"),
+  domain("bioacoustics.stackexchange.com"),
+  domain("bioinformatics.stackexchange.com"),
+  domain("boardgames.stackexchange.com"),
+  domain("bricks.stackexchange.com"),
+  domain("buddhism.stackexchange.com"),
+  domain("cardano.stackexchange.com"),
+  domain("chinese.stackexchange.com"),
+  domain("civicrm.stackexchange.com"),
+  domain("coffee.stackexchange.com"),
+  domain("communitybuilding.stackexchange.com"),
+  domain("computergraphics.stackexchange.com"),
+  domain("conlang.stackexchange.com"),
+  domain("craftcms.stackexchange.com"),
+  domain("crafts.stackexchange.com"),
+  domain("cs50.stackexchange.com"),
+  domain("cseducators.stackexchange.com"),
+  domain("devops.stackexchange.com"),
+  domain("drones.stackexchange.com"),
+  domain("earthscience.stackexchange.com"),
+  domain("ebooks.stackexchange.com"),
+  domain("economics.stackexchange.com"),
+  domain("elementaryos.stackexchange.com"),
+  domain("engineering.stackexchange.com"),
+  domain("eosio.stackexchange.com"),
+  domain("esperanto.stackexchange.com"),
+  domain("expatriates.stackexchange.com"),
+  domain("fitness.stackexchange.com"),
+  domain("freelancing.stackexchange.com"),
+  domain("french.stackexchange.com"),
+  domain("genai.stackexchange.com"),
+  domain("genealogy.stackexchange.com"),
+  domain("german.stackexchange.com"),
+  domain("ham.stackexchange.com"),
+  domain("hardwarerecs.stackexchange.com"),
+  domain("hermeneutics.stackexchange.com"),
+  domain("hinduism.stackexchange.com"),
+  domain("history.stackexchange.com"),
+  domain("homebrew.stackexchange.com"),
+  domain("hsm.stackexchange.com"),
+  domain("interpersonal.stackexchange.com"),
+  domain("iot.stackexchange.com"),
+  domain("iota.stackexchange.com"),
+  domain("italian.stackexchange.com"),
+  domain("joomla.stackexchange.com"),
+  domain("korean.stackexchange.com"),
+  domain("langdev.stackexchange.com"),
+  domain("languagelearning.stackexchange.com"),
+  domain("latin.stackexchange.com"),
+  domain("law.stackexchange.com"),
+  domain("lifehacks.stackexchange.com"),
+  domain("linguistics.stackexchange.com"),
+  domain("literature.stackexchange.com"),
+  domain("martialarts.stackexchange.com"),
+  domain("matheducators.stackexchange.com"),
+  domain("mattermodeling.stackexchange.com"),
+  domain("medicalsciences.stackexchange.com"),
+  domain("monero.stackexchange.com"),
+  domain("musicfans.stackexchange.com"),
+  domain("mythology.stackexchange.com"),
+  domain("opendata.stackexchange.com"),
+  domain("opensource.stackexchange.com"),
+  domain("or.stackexchange.com"),
+  domain("outdoors.stackexchange.com"),
+  domain("parenting.stackexchange.com"),
+  domain("pets.stackexchange.com"),
+  domain("philosophy.stackexchange.com"),
+  domain("pm.stackexchange.com"),
+  domain("poker.stackexchange.com"),
+  domain("politics.stackexchange.com"),
+  domain("portuguese.stackexchange.com"),
+  domain("proofassistants.stackexchange.com"),
+  domain("psychology.stackexchange.com"),
+  domain("retrocomputing.stackexchange.com"),
+  domain("reverseengineering.stackexchange.com"),
+  domain("robotics.stackexchange.com"),
+  domain("rus.stackexchange.com"),
+  domain("russian.stackexchange.com"),
+  domain("scicomp.stackexchange.com"),
+  domain("serverfault.com"),
+  domain("sitecore.stackexchange.com"),
+  domain("softwareengineering.stackexchange.com"),
+  domain("solana.stackexchange.com"),
+  domain("space.stackexchange.com"),
+  domain("sports.stackexchange.com"),
+  domain("sqa.stackexchange.com"),
+  domain("stats.stackexchange.com"),
+  domain("stellar.stackexchange.com"),
+  domain("substrate.stackexchange.com"),
+  domain("sustainability.stackexchange.com"),
+  domain("tezos.stackexchange.com"),
+  domain("tor.stackexchange.com"),
+  domain("tridion.stackexchange.com"),
+  domain("ukrainian.stackexchange.com"),
+  domain("vegetarianism.stackexchange.com"),
+  domain("vi.stackexchange.com"),
+  domain("video.stackexchange.com"),
+  domain("webapps.stackexchange.com"),
+  domain("woodworking.stackexchange.com") {
   header.site-header,
   .site-header {
     background-color: #0d1117 !important;
     border-bottom: 1px solid #262c33 !important;
+    /* the three zero-width sides otherwise inherit the body ink and read as
+       a light border to any scan */
+    border-color: #262c33 !important;
   }
 }
 
-/* ============================================================
-   Ask Ubuntu only — keep the brand-orange header logo readable
-   ------------------------------------------------------------
-   Ask Ubuntu keeps its brand-orange `header.site-header` (we don't
-   darken it — see the Server Fault note above). Its logo.svg is a
-   WHITE wordmark baked for that orange band, and is already legible.
-   The network-wide logo-invert rule exists for the DARK wordmarks on
-   the transparent/white-header sites; applied here it turns the white
-   logo BLACK, which is low-contrast on the orange. Ask Ubuntu's header
-   stays light, so its logo must NOT be inverted — reset it to none.
-   Placed after the main block so it wins the !important tie.
-   ============================================================ */
-@-moz-document domain("askubuntu.com") {
+@-moz-document
+  domain("ai.stackexchange.com"),
+  domain("android.stackexchange.com"),
+  domain("askubuntu.com"),
+  domain("bicycles.stackexchange.com"),
+  domain("blender.stackexchange.com"),
+  domain("chemistry.stackexchange.com"),
+  domain("chess.stackexchange.com"),
+  domain("christianity.stackexchange.com"),
+  domain("codegolf.stackexchange.com"),
+  domain("crypto.stackexchange.com"),
+  domain("cs.stackexchange.com"),
+  domain("cstheory.stackexchange.com"),
+  domain("datascience.stackexchange.com"),
+  domain("diy.stackexchange.com"),
+  domain("drupal.stackexchange.com"),
+  domain("english.stackexchange.com"),
+  domain("expressionengine.stackexchange.com"),
+  domain("gaming.stackexchange.com"),
+  domain("gardening.stackexchange.com"),
+  domain("judaism.stackexchange.com"),
+  domain("magento.stackexchange.com"),
+  domain("meta.stackexchange.com"),
+  domain("movies.stackexchange.com"),
+  domain("music.stackexchange.com"),
+  domain("networkengineering.stackexchange.com"),
+  domain("patents.stackexchange.com"),
+  domain("photo.stackexchange.com"),
+  domain("physics.stackexchange.com"),
+  domain("quant.stackexchange.com"),
+  domain("quantumcomputing.stackexchange.com"),
+  domain("raspberrypi.stackexchange.com"),
+  domain("salesforce.stackexchange.com"),
+  domain("scifi.stackexchange.com"),
+  domain("security.stackexchange.com"),
+  domain("sharepoint.stackexchange.com"),
+  domain("softwarerecs.stackexchange.com"),
+  domain("stackoverflow.com"),
+  domain("travel.stackexchange.com"),
+  domain("ux.stackexchange.com"),
+  domain("webmasters.stackexchange.com"),
+  domain("wordpress.stackexchange.com"),
+  domain("writing.stackexchange.com") {
   .site-header--link img,
   a.site-header--link img,
   #hlogo img,

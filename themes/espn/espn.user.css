@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ESPN Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.25
+@version        1.0.26
 @description    Dark theme for ESPN and its international editions: dark homepage, sport sections, scores, gamecasts and stories, with team and score colors preserved.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -369,6 +369,17 @@
   .Button.Button--disabled {
     background-color: transparent !important; border-color: #4a525b !important;
     color: #6e7681 !important; -webkit-text-fill-color: #6e7681 !important; }
+  /* Prism's no-chrome variant: ESPN gives it no fill and no border. It is also the class
+     on the 2px screen-reader toggle that sits in every #global nav gap, where any surface
+     or border colour renders as a full-height bar between the nav items. */
+  .Button--unstyled {
+    background-color: transparent !important; border-color: transparent !important; }
+  /* Prism Radio / Switch: the glyph is an SVG filling from the control's own `color`, and
+     only the --checked variant carries the accent. Without it, selected and unselected
+     differ by the inner dot alone. */
+  .SwitchBase--checked, .Radio--checked,
+  .SwitchBase--checked .SvgIcon, .Radio--checked .SvgIcon {
+    color: #5fb0e6 !important; fill: #5fb0e6 !important; }
   /* Where-to-Watch row CTA + the scoreboard game-card "Watch" button: a filled brand-blue
      <a> whose only classes are hashed, so the `a` link rule painted its label #5fb0e6 on
      the site's own fill (~1.2:1). The data-testid is the one stable hook; reuse the
@@ -892,6 +903,9 @@
   .MediaPlaceholder__Pill { background-color: rgba(13,17,23,0.78) !important; color: #ffffff !important; }
   /* Search player-result tiles: team/league subtitle hardcodes #6c6d6f → dark-on-dark */
   .LogoTile__Meta, .LogoTile__Meta--subtitle, .LogoTile__Meta--category { color: #9aa4ae !important; }
+  /* The tile's own hover fill is #f9f9fb, a tint picked for the white results page — the
+     one state a load-time scan of this page never reaches. */
+  .LogoTile:hover { background-color: #2d333b !important; }
 
   /* ---- Taboola "sponsored content" wrapper (hyphenated class variant). The
        right-rail mount carries its white inline on an ID with no class at all
@@ -1279,6 +1293,16 @@
     background-color: #1c2128 !important; color: #e6edf3 !important; }
   .share-button-wrapper .share-popup .copy-link.active-copy-link .copy-link-inner {
     color: #4ac76a !important; -webkit-text-fill-color: #4ac76a !important; }
+  /* The byline Share / Like controls take a #f4f4f4 chip on hover and while their popup is
+     open, and their glyphs are RASTER icons authored near-black for ESPN's white page —
+     both invisible to a colour scan. Only these two are monochrome; .reactions-count-button
+     next to them carries the coloured reaction emoji, so the invert is keyed to the two
+     glyph files rather than the shared .reactions-button class. */
+  .reactions-hover-button:hover,
+  .share-button-wrapper.popup-active .reactions-hover-button {
+    background-color: #2d333b !important; }
+  .reactions-button img[src*="share-ios-on_light"],
+  .reactions-button img[src*="heart-light-unfilled"] { filter: invert(1) !important; }
 
   /* ---- One-feed game-strip out count: ESPN paints the LIVE clock (.game-time) red and
        leaves the "0 Outs" span inside it neutral ink. Our live-red rule sets
@@ -1328,6 +1352,20 @@
   .button-filter::before, .button-filter::after,
   .quicklinks_list__icon::before, .contentItem__content__meta::after,
   a.external::after, li.external > a::after { color: #9aa4ae !important; }
+
+  /* ---- Quick-links / network-logo slots carry RASTER brand marks, and ESPN serves the
+       near-black variant of several of them (the file name says so: `_bk`, `-black`) for
+       its white page. A pixel scan is the only way to see them; a colour scan reads the
+       slot as transparent. The slot holds nothing but the <img>, so a filter is safe, but
+       it must be keyed per file — the same slots hold full-colour marks (Facebook, YouTube,
+       Snapchat, the league and team logos) that an invert would wreck. The bare hash is the
+       X Games category id, the only hook on artwork.espncdn.com. ---- */
+  .quicklinks_list__icon img[src*="black.png"],
+  .quicklinks_list__icon img[src*="instagram.png"],
+  .quicklinks_list__icon img[src*="bf9d0869"],
+  .quicklinks_list__icon img[src*="_bk.png"],
+  .contentItem__logo img[src*="black.png"],
+  .contentItem__logo img[src*="_bk.png"] { filter: invert(1) !important; }
 
   /* ---- Card top rule: the legacy one-feed bar (.contentItem__teamBorder) and its
        Prism News-card successor (.ColorBorder) both carry the TEAM colour in an inline
@@ -1627,4 +1665,7 @@
      picked for the white page — it is not in the .clr-gray-* scale the theme remaps, so it
      survived at 3.1:1 on our card. */
   .LargeRadioControl__Description { color: #9aa4ae !important; }
+  /* Its newer SelectableCard sibling hardcodes a near-black #121212 helper line — outside
+     the .clr-gray-* scale, so it lands at ~1.1:1 on our card. */
+  .SelectableCard__Description { color: #9aa4ae !important; }
 }

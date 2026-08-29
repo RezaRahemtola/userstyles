@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Ozon Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.19
+@version        1.0.20
 @description    A dark theme for Ozon in Russia, Kazakhstan and Belarus: easy on the eyes across home, catalog, search, product pages and cart, with prices and ratings clear.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -309,6 +309,16 @@
   /* soften every bright border to a subtle dark one */
   * {
     border-color: var(--d-border) !important;
+  }
+
+  /* UA BUTTON FACE. `color-scheme: dark` above makes Chrome paint every <button>
+     the site never gave a background as a mid-grey rgb(107,107,107) slab. The
+     rule MUST stay unimportant: an author declaration outranks the UA sheet at
+     any importance, so this reaches only the buttons nothing else styles, while
+     every site rule and every rule below still wins — with !important it would
+     repaint the transparent icon buttons (tile favourite, gallery arrows) too. */
+  button {
+    background-color: var(--d-surface);
   }
 
   /* ============================================================
@@ -838,6 +848,15 @@
   .search-bar-wrapper div[class*="search_"] {
     background-color: var(--d-bg) !important;
   }
+  /* SUGGESTION CHIPS in the open suggest flyout ("андроид", "xiaomi" …). Each
+     word sits on a pill whose only fill is rgba(0,48,120,.04) — over white that
+     is a visible pale plate, over the dark panel it composites to the panel's own
+     colour and the chips read as bare words in a row. The pill is the chip's
+     inner DIV; its own class is a build hash, but the row is the whole content of
+     [data-widget="tapTags"], so `> div > div > div` names exactly the pills. */
+  [data-widget="tapTags"] > div > div > div {
+    background-color: var(--d-surface) !important;
+  }
   /* APPLIED SEARCH-SCOPE CHIP ("Смартфоны ✕" — the pill shown when a query is
      restricted to a store or category). Natively a solid #005bff fill with a white
      label; the neutraliser above flattens it, so the scope reads as bare white words
@@ -1168,6 +1187,46 @@
   [data-widget="webListQuestions"] {
     --bgActionPrimary: var(--d-blue-ink) !important;
   }
+  /* REVIEW LIST + its page heading. Both render from a module that hardcodes its
+     ink instead of reading the tokens: rgb(7,7,7) on headings, reviewer names and
+     the review body, rgba(0,26,51,.6) on every date and meta line — 1.1:1 and
+     1.0:1 on the dark card. Both are literals, so no token remap reaches them, and
+     the module's class hashes rotate; the TAGS carry the split instead, body copy
+     in SPANs and metadata in DIVs. */
+  [data-widget="webListReviews"] span,
+  [data-widget="reviewsTitle"] span {
+    color: var(--d-text) !important;
+  }
+  [data-widget="webListReviews"] div,
+  [data-widget="reviewsTitle"] sup {
+    color: var(--d-text-3) !important;
+  }
+  /* The two action inks the blanket above would otherwise swallow, both a literal
+     #005bff (2.9:1) that has to be lifted anyway. The SELECTED sort option is the
+     only span in the widget carrying two module classes — the unselected one ships
+     a single class — and the "Читать полностью" expander is emitted only on a
+     clamped review, as a second SPAN beside the body copy. */
+  [data-widget="webListReviews"] span[class*="rpProduct_"][class*=" "],
+  [data-widget="webListReviews"] div > span + span {
+    color: var(--d-blue-ink) !important;
+  }
+  /* REVIEW-LIST PAGINATION ("1 2 3 4 5 Дальше"). The page chips are literal-white
+     plates with blue digits on the light site, and the current page inverts to a
+     #005bff fill with a white label. Nothing in the token layer reaches either, so
+     on dark the four unvisited pages stay glaring white tiles while the current
+     page keeps its blue fill but takes the remapped link blue as its label —
+     1.4:1, blue on blue. The chips are the only anchors in the widget whose parent
+     div carries no class of its own, and the current one is the only one of those
+     with a second class, so both states are named by shape, not by hash. */
+  [data-widget="webListReviews"] div[class=""] > a,
+  [data-widget="webListReviews"] div:not([class]) > a {
+    background-color: var(--d-surface) !important;
+  }
+  [data-widget="webListReviews"] div[class=""] > a[class*=" "],
+  [data-widget="webListReviews"] div:not([class]) > a[class*=" "] {
+    background-color: #005bff !important;
+    color: #ffffff !important;
+  }
   /* REVIEW RATING HISTOGRAM ("5 звёзд … 1 звезда" bars): the webReviewTabs
      `div { transparent }` reset above flattens BOTH the grey track and the gold
      proportion fill, so the distribution bars vanish (only the counts remain).
@@ -1211,6 +1270,20 @@
      spacing, and one lost hairline beats five phantom bars. */
   [data-widget="webReviewProductScore"] div {
     border-bottom-color: transparent !important;
+  }
+  /* The widget's own module hardcodes its ink instead of reading the tokens: the
+     "5 / 5" score and the per-row counts are rgb(7,7,7) and the "N звёзд" labels
+     rgba(0,26,51,.6), all ~1.1:1 on the dark panel. Reached through the module
+     prefix (the hash after it rotates) and restricted to DIVs plus the score SPAN,
+     because the five rating stars are SVG in the same subtree and take their gold
+     from `color` — an `*` here would repaint them. `:last-child` is the count
+     column; the label column is the row's first child and keeps the muted tone. */
+  [data-widget="webReviewProductScore"] div[class*="rpProduct_"] {
+    color: var(--d-text-3) !important;
+  }
+  [data-widget="webReviewProductScore"] div[class*="rpProduct_"]:last-child,
+  [data-widget="webReviewProductScore"] div[class*="rpProduct_"] > span {
+    color: var(--d-text) !important;
   }
   /* ACTIVE review-tab underline ("Отзывы о товаре" / "Вопросы о товаре"): a 2px bar
      Ozon slides under the current tab, painted brand-blue via an inline left+width.

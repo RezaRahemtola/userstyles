@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           itch.io Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.12
+@version        1.0.13
 @description    A clean dark theme for itch.io — browse, games, jams, community and profiles — that leaves each creator's own custom page design untouched.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -893,6 +893,14 @@
     color: #c4cdd6 !important;
   }
 
+  /* A community search only renders its result list once the URL carries a query, so a scan of
+     the bare /community/search page sees nothing: every hit is a var(--itchio_white_back) card
+     holding the muted post excerpt, i.e. our light copy on white. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .community_search_page .search_results > li {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+
   /* ==== Game jams ==== */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .jams_page { background-color: transparent !important; }
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .jams_header,
@@ -1022,6 +1030,13 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .jam_ranked strong { color: #8b949e !important; }
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .short_text { color: #c4cdd6 !important; }
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .jam_ranked svg { fill: #8b949e !important; }
+
+  /* A jam's /screenshots grid paints each shot as a lazy background-image over a
+     var(--itchio_gray_back) tile, so the whole 40-cell grid is a wall of light plates until the
+     images land — and stays one for any shot that fails to load. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .view_jam_screenshots_page .game_screenshot_cell {
+    background-color: #1a1f26 !important;
+  }
 
   /* ==== Search explorer (itch.io/search, sale explorer) — newer facet layout ==== */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .search_header,
@@ -1578,6 +1593,47 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .game_development_tools_page .tool_project_preview,
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .game_development_tools_page .tool_project_preview img {
     background-color: #1a1f26 !important;
+  }
+
+  /* itch.io/direct is a one-off landing page whose whole sheet is `background: white` — the
+     only surface on it, so nothing else darkens it. Its wordmark is a flat #333 SVG served as
+     an <img>, the sole child of the h1, so inverting the element is safe. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .direct_page {
+    background-color: #14181d !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .direct_page h1 img {
+    filter: invert(1) !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .direct_page .center_block ul li {
+    color: #c4cdd6 !important;
+  }
+  /* The partner profile's "Connected accounts" rail is a var(--itchio_gray_back) plate; its
+     verification ticks are #aada80, tuned for that light plate. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .partners_profile_page .connected_accounts_wrapper {
+    background-color: #1c2128 !important;
+  }
+
+  /* ==== Activity feed (itch.io/feed, /featured-games-feed) ==== */
+  /* A whole page type: the tab band is var(--itchio_white_back) and every activity row is a
+     white card with a var(--itchio_gray_back) byline strip, so the entire stream rendered our
+     light copy on white. Both feeds are public — no account needed to reach them. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .feed_page .feed_header {
+    background-color: #1a1f26 !important;
+    border-color: #2d333b !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .events_page .event_row {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .events_page .event_row .event_header {
+    background-color: #1a1f26 !important;
+  }
+  /* "Read the whole post" and the featured-tag chips are .outline_button in its white_back
+     rest state; the generic hover rule already fills them brand red. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .events_page .outline_button,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget) .feed_page .outline_button {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
   }
 
   /* ==== Sale rows / goal bars ==== */

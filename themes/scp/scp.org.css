@@ -26,6 +26,7 @@
     --scp-lift-red: #ff453a;
     --scp-lift-brown: #d4a373;
     --scp-lift-teal: #56d4dd;
+    --scp-lift-pink: #ff7eb0;
   }
 
   /* Black Highlighter declares its whole palette on :root and feeds the site
@@ -186,16 +187,33 @@
      the boxes seen doing it hold no text of their own. Filtering it needs a
      `color:`-bearing :not(), which also drops the light boxes that DO name
      their ink — and those still need the rebinds below for their headings and
-     links. */
-  #page-content [style*="background"][style*="#c"],
-  #page-content [style*="background"][style*="#d"],
-  #page-content [style*="background"][style*="#e"],
-  #page-content [style*="background"][style*="#f"],
-  #page-content [style*="background"][style*="#C"],
-  #page-content [style*="background"][style*="#D"],
-  #page-content [style*="background"][style*="#E"],
-  #page-content [style*="background"][style*="#F"],
-  #page-content [style*="background"][style*="white"] {
+     links.
+     `.content-panel` is the one exclusion: the ARTICLE FURNITURE rules fill that
+     component dark with !important, so its inline paper never renders and this
+     ink would land on our own surface. Any component filled that way has to be
+     excluded here too.
+     `##` is a malformed hex — `background: ##F6F6F6` paints nothing, so the box
+     renders on our own fill and this ink would land dark on dark.
+     A `.content-panel` whose inline background is an IMAGE is the other half of
+     that exclusion and has to come back in: the image paints over our fill, so
+     the paper is the author's after all.
+     The curated-series grids are the same shape one step out: the card is a white
+     plate from the page's own CSS rather than an inline style, and it frames
+     black-linework logos, so the paper stays and the ink comes back. Only the
+     cards that name an inline background COLOUR are excluded — a card carrying
+     just a `background-image` keeps the class's white plate underneath it. */
+  #page-content [style*="background"][style*="#c"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="#d"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="#e"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="#f"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="#C"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="#D"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="#E"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="#F"]:not(.content-panel):not([style*="##"]),
+  #page-content [style*="background"][style*="white"]:not(.content-panel):not([style*="##"]),
+  #page-content .content-panel[style*="url("],
+  #page-content .multi-grid > div:not([style*="background:"]):not([style*="background-color"]),
+  #page-content .multi-grid-small > div:not([style*="background:"]):not([style*="background-color"]) {
     color: #1b1815;
     --scp-title: #7a1d24;
     --scp-heading: #1b1815;
@@ -221,6 +239,7 @@
     --scp-lift-red: #c30000;
     --scp-lift-brown: #6b4423;
     --scp-lift-teal: #006a6a;
+    --scp-lift-pink: #a1004a;
   }
 
   hr {
@@ -1084,6 +1103,8 @@
   #page-content span[style*="color: steelblue"],
   #page-content span[style*="color:#0000ff"],
   #page-content span[style*="color: #0000ff"],
+  #page-content span[style*="color:#00f;"],
+  #page-content span[style*="color: #00f;"],
   #page-content span[style*="color:#4682b4"],
   #page-content span[style*="color: #4682b4"],
   #page-content a[style*="color:blue"],
@@ -1100,6 +1121,14 @@
   #page-content em[style*="color: blue"],
   #page-content em[style*="color:steelblue"],
   #page-content em[style*="color: steelblue"] {
+    color: var(--scp-lift-blue) !important;
+  }
+
+  /* The #00f shorthand only ends a declaration when it is the last one in the
+     attribute, and a loose match would swallow #00ff00. Kept in a rule of its
+     own so the suffix matcher can only cost this one form. */
+  #page-content span[style$="color:#00f"],
+  #page-content span[style$="color: #00f"] {
     color: var(--scp-lift-blue) !important;
   }
 
@@ -1122,6 +1151,10 @@
   #page-content span[style*="color: indigo"],
   #page-content span[style*="color:#800080"],
   #page-content span[style*="color: #800080"],
+  #page-content span[style*="color:#880680"],
+  #page-content span[style*="color: #880680"],
+  #page-content a[style*="color:#880680"],
+  #page-content a[style*="color: #880680"],
   #page-content a[style*="color:purple"],
   #page-content a[style*="color: purple"],
   #page-content strong[style*="color:purple"],
@@ -1138,6 +1171,14 @@
   #page-content span[style*="color: maroon"],
   #page-content span[style*="color:darkred"],
   #page-content span[style*="color: darkred"],
+  #page-content span[style*="color:firebrick"],
+  #page-content span[style*="color: firebrick"],
+  #page-content a[style*="color:firebrick"],
+  #page-content a[style*="color: firebrick"],
+  #page-content strong[style*="color:firebrick"],
+  #page-content strong[style*="color: firebrick"],
+  #page-content em[style*="color:firebrick"],
+  #page-content em[style*="color: firebrick"],
   #page-content span[style*="color:#800000"],
   #page-content span[style*="color: #800000"],
   #page-content span[style*="color:#990000"],
@@ -1187,6 +1228,19 @@
   #page-content strong[style*="color:sienna"],
   #page-content strong[style*="color: sienna"] {
     color: var(--scp-lift-brown) !important;
+  }
+
+  /* #ce005c is the magenta half of the taboo-family palette and carries whole
+     paragraphs, so it needs a hue of its own rather than the maroon lift. */
+  #page-content span[style*="color:#ce005c"],
+  #page-content span[style*="color: #ce005c"],
+  #page-content a[style*="color:#ce005c"],
+  #page-content a[style*="color: #ce005c"],
+  #page-content strong[style*="color:#ce005c"],
+  #page-content strong[style*="color: #ce005c"],
+  #page-content em[style*="color:#ce005c"],
+  #page-content em[style*="color: #ce005c"] {
+    color: var(--scp-lift-pink) !important;
   }
 
   #page-content span[style*="color:teal"],
@@ -1388,6 +1442,26 @@
     border-color: #2d333b !important;
     color: inherit !important;
     text-shadow: none !important;
+  }
+
+  /* At the narrow breakpoint the hub sort strip fills this anchor and its <em>
+     label near-white from a four-class rule, which no !important on a two-class
+     selector reaches. An id outweighs it — and then also outweighs the hover and
+     selected fills above, so both are restated at that weight. */
+  #main-content .yui-navset .yui-nav a,
+  #main-content .yui-navset .yui-nav a em {
+    background-color: #22282f !important;
+    background-image: none !important;
+  }
+
+  #main-content .yui-navset .yui-nav a:hover,
+  #main-content .yui-navset .yui-nav a:focus {
+    background-color: #33272a !important;
+  }
+
+  #main-content .yui-navset .yui-nav .selected a,
+  #main-content .yui-navset .yui-nav .selected a em {
+    background-color: #8a2f2f !important;
   }
 
   /* The frame those hub pages draw around the whole tab widget. */
@@ -1812,6 +1886,86 @@
   #page-content .content-type-title a,
   #page-content .content-type-footer a {
     color: #fff !important;
+  }
+
+  /* ============================================================
+     HUB / INDEX CARDS
+
+     The tales, series, canon, artwork and contest indexes the sidebar links to
+     render their entries through one shared card component set, and every card
+     in it is a white plate. Only the plate and its hairlines are stated: the
+     cards hold nothing but text and links the article rules already colour.
+     ============================================================ */
+
+  #page-content .tale-block,
+  #page-content .series-block,
+  #page-content .canon-block,
+  #page-content .item-list .item {
+    background-color: #1c2128;
+    box-shadow: 0 0 .325rem rgba(0, 0, 0, .6);
+  }
+
+  /* Series and canon cards head themselves with a transparent PNG logo drawn in
+     black linework, which the site frames on the card's white plate. The plate
+     is the picture's paper, so it moves onto the image once the card is dark;
+     an opaque emblem covers it and is unchanged.
+     Only for cards still carrying the fill above: a card naming an inline
+     background keeps the author's own paper — light or dark, colour or image —
+     which beats that fill, and the logo is drawn to sit on it, so a plate there
+     is a grey box the site never frames. Matched on the VALUE, like the inline
+     paper rules at the top of the sheet, since the classes are page-local. */
+  #page-content .canon-block:not([style*="background"]) img,
+  #page-content .series-block:not([style*="background"]) img {
+    background-color: #dcdcdc;
+  }
+
+  /* The separator between a series card's blurb and its metadata row is a
+     10%-black hairline, invisible once the card is dark. */
+  #page-content .series-block .metadata {
+    border-top-color: rgba(255, 255, 255, .12);
+  }
+
+  /* The contest archive frames each entry and its floating title tab in #bbb,
+     which is the card's whole outline on a dark page. The title tab inherits
+     the card's fill, so it follows the plate above on its own. */
+  #page-content .item-list .item,
+  #page-content .item-list .item .item-title {
+    border-color: #3a4048;
+  }
+
+  #page-content .item-list .item > hr {
+    border-bottom-color: #3a4048;
+  }
+
+  /* "Unofficial" contests are marked by a cream plate rather than a label, so
+     the variant needs a distinct tone of its own, not the neutral card fill. */
+  #page-content .item-list .item.unofficial {
+    background-color: #2a2419;
+  }
+
+  /* /universe-hub renders its whole orientation letter inside one near-white
+     terminal panel; its rule is drawn by the shared `hr` override. */
+  #page-content .terminalbody {
+    background-color: #1c2128;
+    border-color: #3a4048;
+  }
+
+  /* The letter's "End Session" pill is a light chip on the maroon band, and the
+     band's own colours are what read on it — the page crimson does not. Two ids
+     are needed to outweigh the article-link rule, which then also takes the
+     hover state, so the hover pair is restated. */
+  #main-content #page-content .mailend a {
+    color: #990000;
+  }
+
+  #main-content #page-content .mailend a:hover {
+    color: #f7f7f7;
+  }
+
+  /* The author and artist directories head themselves with a class-painted
+     #660000 masthead, which is 1.3:1 on the page floor. */
+  #page-content .welcome-header {
+    color: var(--scp-title);
   }
 
   /* ============================================================

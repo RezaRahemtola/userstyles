@@ -534,6 +534,16 @@
     background-color: var(--ff-brand) !important;
     color: var(--ff-text) !important;
   }
+  /* `.btn-primary` is the only primary CTA the site ships logged-out: the Filters
+     modal's Apply and the reader's Fontastic / Follow-Fav Save. Bootstrap keeps it
+     blue through hover, focus and press; the generic `.btn:hover` arm above ties
+     this on specificity, so the arm must stay AFTER it or the CTA collapses onto
+     the neutral chip and reads as less prominent hovered than at rest. */
+  .btn-primary:hover,
+  .btn-primary:focus,
+  .btn-primary:active {
+    background-color: #2d4a80 !important;
+  }
   /* The category-picker popup (`/search/?popup=1`, opened by the "Select" link
      in the search Options panel) ships its submit as a real
      `<input type="button" disabled>` until a main category is picked. The UA

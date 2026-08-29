@@ -305,6 +305,19 @@
   #page-content [style*="background: #F"],
   #page-content [style*="background-color:#F"],
   #page-content [style*="background-color: #F"],
+  /* Below the `#c` floor the group starts at, and the only such value on the
+     branch: the copy-pasted translation-notice box, 10 hits in a 267-article
+     sweep. */
+  #page-content [style*="background:#bfe1ff"],
+  #page-content [style*="background: #bfe1ff"],
+  #page-content [style*="background :#bfe1ff"],
+  #page-content [style*="background : #bfe1ff"],
+  #page-content [style*="background-color:#bfe1ff"],
+  #page-content [style*="background-color: #bfe1ff"],
+  #page-content [style*="background:#BFE1FF"],
+  #page-content [style*="background: #BFE1FF"],
+  #page-content [style*="background-color:#BFE1FF"],
+  #page-content [style*="background-color: #BFE1FF"],
   #page-content [style*="background:white"],
   #page-content [style*="background: white"],
   #page-content [style*="background-color:white"],
@@ -344,6 +357,46 @@
   #page-content [style*="background:magenta"],
   #page-content [style*="background: magenta"],
   #page-content [style*="background-color:magenta"],
+  /* Wikidot keeps the author's spacing verbatim, so `background :#F5F5F5` is a
+     separate spelling from `background:#F5F5F5`. A 300-article sweep found the
+     space only before the colon and only on the shorthand — `background-color :`
+     does not occur on the branch. */
+  #page-content [style*="background :#c"],
+  #page-content [style*="background : #c"],
+  #page-content [style*="background :#d"],
+  #page-content [style*="background : #d"],
+  #page-content [style*="background :#e"],
+  #page-content [style*="background : #e"],
+  #page-content [style*="background :#f"],
+  #page-content [style*="background : #f"],
+  #page-content [style*="background :#C"],
+  #page-content [style*="background : #C"],
+  #page-content [style*="background :#D"],
+  #page-content [style*="background : #D"],
+  #page-content [style*="background :#E"],
+  #page-content [style*="background : #E"],
+  #page-content [style*="background :#F"],
+  #page-content [style*="background : #F"],
+  #page-content [style*="background :white"],
+  #page-content [style*="background : white"],
+  #page-content [style*="background :red"],
+  #page-content [style*="background : red"],
+  #page-content [style*="background :yellow"],
+  #page-content [style*="background : yellow"],
+  #page-content [style*="background :orange"],
+  #page-content [style*="background : orange"],
+  #page-content [style*="background :gold"],
+  #page-content [style*="background : gold"],
+  #page-content [style*="background :lime"],
+  #page-content [style*="background : lime"],
+  #page-content [style*="background :aqua"],
+  #page-content [style*="background : aqua"],
+  #page-content [style*="background :cyan"],
+  #page-content [style*="background : cyan"],
+  #page-content [style*="background :pink"],
+  #page-content [style*="background : pink"],
+  #page-content [style*="background :magenta"],
+  #page-content [style*="background : magenta"],
   #page-content [style*="background-color: magenta"] {
     color: #140f0c;
     --scpru-title: #7a1d24;
@@ -379,7 +432,22 @@
   #page-content blockquote:not([style*="background"]),
   #page-content div.blockquote:not([style*="background"]),
   #page-content .content-panel:not([style*="background"]),
+  #page-content .content-panel.standalone[style*="#FFF"],
+  #page-content .content-panel.standalone[style*="#fff"],
+  #page-content .content-panel.standalone[style*="white"],
+  #page-content .content-panel.standalone[style*="#ececec"],
+  #page-content .content-panel.standalone[style*="#ECECEC"],
+  #page-content .content-panel.standalone[style*="#f5f5f5"],
+  #page-content .content-panel.standalone[style*="#F5F5F5"],
+  #page-content .content-panel.standalone[style*="#fcfdfb"],
+  #page-content .content-panel.standalone[style*="#FCFDFB"],
   #page-content .collapsible-block,
+  #page-content .footnotes-footer,
+  #page-content .fncon,
+  #page-content div.wiki-note,
+  #page-content .hovertip,
+  #page-content div.sexy-box,
+  #page-content .scp-image-block .scp-image-caption,
   #page-content .scp-front-block,
   #page-content .banner-block {
     color: #c4cdd6;
@@ -838,6 +906,13 @@
     color: #e6edf3 !important;
   }
 
+  /* Same token pair as the page-options rail: the fill and the cell ink move
+     together, so a skin that states either one directly keeps it. */
+  #page-content table.wiki-content-table {
+    --tables-body-bg: 26, 31, 38;
+    --tables-body-txt: 196, 205, 214;
+  }
+
   table.page-compare td,
   table.page-compare th,
   table.form.grid td,
@@ -1118,6 +1193,24 @@
 
   .content-panel.standalone:not([style*="background"]) {
     background-color: #1a1f26 !important;
+  }
+
+  /* `.content-panel.standalone` is already near-white (`#fcfdfb`) in the site's
+     own sheet, so an inline neutral white on it restates the component default
+     rather than naming a paper — the hub template writes one on every section
+     of /task-forces, /departments and /groups-of-interest. Chromatic tints stay
+     with the escape above: those are a choice. */
+  #page-content .content-panel.standalone[style*="#FFF"],
+  #page-content .content-panel.standalone[style*="#fff"],
+  #page-content .content-panel.standalone[style*="white"],
+  #page-content .content-panel.standalone[style*="#ececec"],
+  #page-content .content-panel.standalone[style*="#ECECEC"],
+  #page-content .content-panel.standalone[style*="#f5f5f5"],
+  #page-content .content-panel.standalone[style*="#F5F5F5"],
+  #page-content .content-panel.standalone[style*="#fcfdfb"],
+  #page-content .content-panel.standalone[style*="#FCFDFB"] {
+    background-color: #1a1f26 !important;
+    background-image: none !important;
   }
 
   /* The body is a background-IMAGE (a cream field with a gradient strip along
@@ -1537,6 +1630,17 @@
   .page-options-bottom a,
   a.btn.btn-default {
     color: #e8626e;
+  }
+
+  /* Black Highlighter — imported by a large share of the modern corpus — paints
+     this rail from `rgb(var(--ui-button-*))`, which leaves five near-white pills
+     on our dark page. Moving the tokens keeps an article that states the fill
+     directly (a branded rail, e.g. /scp-4967) as its author drew it. */
+  #page-options-container a.btn {
+    --ui-button-bg: 26, 31, 38;
+    --ui-button-txt: 232, 98, 110;
+    --ui-button-hover-bg: 45, 51, 59;
+    --ui-button-hover-txt: 255, 143, 151;
   }
 
   .page-options-bottom a:hover,
@@ -2983,6 +3087,7 @@
      /scp-028-j, `#a52a2a` (the `brown` keyword's hex) at 2.52:1 on /scp-179. */
   #page-content [style*="color:blue"]:not([style*="background"]),
   #page-content [style*="color: blue"]:not([style*="background"]),
+  #page-content [style*="color:  blue"]:not([style*="background"]),
   #page-content [style*="color:navy"]:not([style*="background"]),
   #page-content [style*="color: navy"]:not([style*="background"]),
   #page-content [style*="color:#0000ff"]:not([style*="background"]),

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ImgBB Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.14
+@version        1.0.15
 @description    A clean dark theme for ImgBB. Comfortable dark backgrounds across the upload page, image viewer, embed-code panel and albums, with the ImgBB blue kept readable.
 @author         Reza Rahemtola
 @supportURL     https://github.com/rezarahemtola/userstyles/issues
@@ -199,6 +199,16 @@
 
   .top-bar a:hover {
     color: #e6edf3 !important;
+  }
+
+  /* On every page but home and /upload the top-bar "Upload" item is an <a> whose
+     label is a nested <span class="top-btn-text">. The generic span colour is a
+     direct declaration and outranks the anchor's hovered ink, so the label — and
+     the glyph that inherits it — have to be told to follow the anchor. Matching on
+     the nested span keeps the "Create account" chip out: there .top-btn-text IS
+     the anchor. */
+  .top-bar a:hover span.top-btn-text {
+    color: inherit !important;
   }
 
   /* "About", "EN" and "Upload" are <span class="top-btn-text"> inside li.pop-btn,
