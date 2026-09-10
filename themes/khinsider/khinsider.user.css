@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           KHInsider Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.17
+@version        1.0.18
 @description    A clean, comfortable dark theme for KHInsider — easy on the eyes across album pages, song lists, the audio player, search and comments.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -894,10 +894,15 @@
   }
   .pageNav-jump, .pageNavSimple-el { color: #5fb0e6 !important; }
   /* The current-page rule is restated at `:hover` (later, same specificity) so the
-     generic pill hover cannot grey it out. */
+     generic pill hover cannot grey it out. The label ink is restated too: the
+     `.p-body-content a:hover` link ink ties `a:hover` here at (0,2,1), so this must
+     stay after it or the white label drops to the link blue on the blue chip. */
   .pageNav-page:hover, .pageNav-page a:hover { background-color: #262c33 !important; }
   .pageNav-page--current:hover,
-  .pageNav-page--current a:hover { background-color: #388bfd !important; }
+  .pageNav-page--current a:hover {
+    background-color: #388bfd !important;
+    color: #ffffff !important;
+  }
   /* A separate element with its own native hover, also swallowed by the flat
      repaint above. */
   .pageNav-jump:hover { background-color: #262c33 !important; }

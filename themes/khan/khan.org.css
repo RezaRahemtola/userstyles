@@ -85,6 +85,22 @@
        empty "not started" square is darkened. */
     --wb-semanticColor-learning-background-progress-notStarted-default: #2d333b !important;
     --wb-semanticColor-learning-foreground-progress-notStarted-strong: #8b949e !important;
+
+    /* Worked-example term highlights. MathJax articles colour each term through
+       `color: var(--wb-semanticColor-learning-math-foreground-<hue>, #hex)` on an <mjx-mstyle>,
+       so the token is what renders; the literal-colour rules further down only reach the
+       `mathcolor` / inline-rgb carriers. Same lifted hues as that block so both renderers pair.
+       `grayH` / `grayI` are near-black inks, not highlights. */
+    --wb-semanticColor-learning-math-foreground-blue: #6cb6d9 !important;
+    --wb-semanticColor-learning-math-foreground-gold: #e3b341 !important;
+    --wb-semanticColor-learning-math-foreground-gray: #9aa4af !important;
+    --wb-semanticColor-learning-math-foreground-grayH: #c4cdd6 !important;
+    --wb-semanticColor-learning-math-foreground-grayI: #e6edf3 !important;
+    --wb-semanticColor-learning-math-foreground-green: #7ee787 !important;
+    --wb-semanticColor-learning-math-foreground-pink: #ff8ac4 !important;
+    --wb-semanticColor-learning-math-foreground-purple: #d2a8ff !important;
+    --wb-semanticColor-learning-math-foreground-purpleD: #d2a8ff !important;
+    --wb-semanticColor-learning-math-foreground-red: #ff7b72 !important;
   }
 
   /* Base surfaces */
@@ -117,6 +133,12 @@
      beside a blue anchor. Scoped to `p a` so lesson-row / card links keep near-white
      titles; `a[data-kind="primary"] span` below out-specifies it. */
   #main-content p a > span { color: inherit !important; }
+  /* The unit page's lesson-section title is an <h2> whose ONLY child is a link with a direct
+     text node, so the content-link rule paints a 24px heading link-blue where Khan draws it in
+     the heading ink. Stable test id; the hover arm is restated because this rule ties the
+     `a:hover` above and would otherwise erase the cue. */
+  #main-content a[data-testid="lesson-card-link"] { color: #e6edf3 !important; }
+  #main-content a[data-testid="lesson-card-link"]:hover { color: #9bd4ff !important; }
   /* `tertiary` IS a link rendered as a button, so give back the brand blue the shell's
      span rule flattens. `#main-content button[aria-expanded]` (home accordions) is more
      specific and stays near-white. */
@@ -268,6 +290,17 @@
      stable exercise-chrome wrapper, its only button. */
   .exercise-chrome-content-for-mobile-zoom button { color: #9aa4af !important; }
   .exercise-chrome-content-for-mobile-zoom button:hover { color: #c4cdd6 !important; }
+
+  /* "Draw on exercise" overlay: `[data-testid="drawing-area"]` lays a transparent SVG over
+     the problem, and its strokes take the light-page ink #21242c by default, from a palette
+     of black / red / gold / green / teal / blue / purple. Only a filter reaches the pattern
+     fill the strokes are painted through; transparent pixels stay transparent, so the page
+     shows through unchanged. The swatch is the wrapper DIV of the opacity-0 colour input
+     (hashed, so it degrades to a mismatched swatch, not a lost stroke). */
+  [data-testid="drawing-area"],
+  [role="toolbar"][aria-label="Drawing controls"] ._a7ipt1d {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
 
   /* Discussion tabs: active (brand blue) and inactive (mid grey) hardcoded through
      `-webkit-text-fill-color`. Stable ARIA tab ids; set the fill too, since it drives
@@ -815,6 +848,23 @@
   /* Soften any remaining bright borders across the app */
   * { border-color: #2d333b !important; }
 
+  /* Form validation state (login / signup LabeledField): Khan reddens the invalid input's
+     border, the "Error:" mask icon and the helper text, all through the critical token, and
+     the blanket border reset, the shell `span` rule and the `p { color }` block flatten every
+     one of them to neutral. `aria-invalid` and the `-error` live region are Wonder Blocks'
+     stable contract; the login server error (`#log-in-server-error`) is the same shape with
+     its own id. Lifted red so the text passes on the page base, where Khan's #d92916 does
+     not. Placed after the blanket reset because the input border rule ties it on
+     specificity. */
+  input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #ff7b72 !important; }
+  div[id$="-error"][aria-live] p,
+  #log-in-server-error p { color: #ff7b72 !important; }
+  span[role="img"][aria-label="Error:"],
+  #log-in-server-error span:empty {
+    background-color: #ff7b72 !important;
+    color: #ff7b72 !important;
+  }
+
   /* Code editor / syntax highlighting (CS & programming courses)
      CodeMirror + ka-syntax tokens */
   .CodeMirror, .CodeMirror-gutters,
@@ -862,6 +912,23 @@
   .ace_editor .ace_gutter-active-line { background-color: #161b22 !important; }
   .ace_editor .ace_marker-layer .ace_selection { background-color: #2d4f7c !important; }
   .ace_editor .ace_print-margin { background-color: #21262d !important; }
+
+  /* Challenge hint code (`pre.rainbowjs`, Rainbow.js tokens) beside the ACE editor: a
+     light-page palette on white that the generic `pre, code` ink and the span-inherit rule
+     flatten to one white. Same token colours as the ACE block so the hint reads like the
+     editor it is copied into. The token family is the site's own `.rainbowjs .<token>` set;
+     `.function.call` has no site rule and keeps the base ink. */
+  .rainbowjs .comment { color: #8b949e !important; }
+  .rainbowjs .constant { color: #ff7b72 !important; }
+  .rainbowjs .constant.numeric { color: #79c0ff !important; }
+  .rainbowjs .storage, .rainbowjs .keyword, .rainbowjs .selector { color: #ff7b72 !important; }
+  .rainbowjs .keyword.operator { color: #c4cdd6 !important; }
+  .rainbowjs .string { color: #a5d6ff !important; }
+  .rainbowjs .entity { color: #7ee787 !important; }
+  .rainbowjs .entity.name.function { color: #d2a8ff !important; }
+  .rainbowjs .support { color: #79c0ff !important; }
+  .rainbowjs .variable.global, .rainbowjs .variable.class,
+  .rainbowjs .variable.instance { color: #e6edf3 !important; }
 
   /* Scratchpad tablist: the current tab's 5px brand-blue `border-bottom` is repainted by the
      blanket border reset. Re-tint via its stable ARIA state. */
@@ -954,6 +1021,11 @@
   /* Inline-style twins of the PEMDAS colour-coding above. */
   #main-content [style*="color: rgb(89, 64, 148)"] { color: #d2a8ff !important; -webkit-text-fill-color: #d2a8ff !important; }
   #main-content [style*="color: rgb(148, 103, 0)"] { color: #e3b341 !important; -webkit-text-fill-color: #e3b341 !important; }
+  /* A token-coloured term inside a bold run inherits the `b, strong` text-fill above, which
+     paints over the term's colour; the fill must track that colour instead. */
+  #main-content [style*="learning-math-foreground"] {
+    -webkit-text-fill-color: currentColor !important;
+  }
 
   /* The mastery bar's numerator is a <b> hardcoded to the light-page ink; no rule here
      reaches a bare <b>, the shell rule covering only a/span/div. */

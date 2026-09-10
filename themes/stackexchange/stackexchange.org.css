@@ -501,6 +501,13 @@
     color: #e6edf3 !important;
   }
 
+  /* The narrow-viewport search trigger (`.js-searchbar-trigger`) is the one topbar
+     item that is also a `.s-btn__muted`, so on hover Stacks adds its muted-button
+     `--black-300` border on top of the plate above. */
+  .s-topbar .s-topbar--item.s-btn__muted:not(.s-topbar--item__unset):hover {
+    border-color: #2d333b !important;
+  }
+
   /* The site wordmark is a `.s-topbar--logo` link and takes the same near-white
      fill from its own `--_tb-logo-bg` token. */
   .s-topbar a.s-topbar--logo:hover,
@@ -1260,6 +1267,13 @@
   .s-sidebarwidget--content,
   .s-sidebarwidget .s-sidebarwidget--content {
     border-color: #2d333b !important;
+  }
+
+  /* Inside the yellow widget those same rules are warm; three classes to out-rank
+     the `--content.__item` arms later in the file. */
+  .s-sidebarwidget.s-sidebarwidget__yellow .s-sidebarwidget--content,
+  .s-sidebarwidget.s-sidebarwidget__yellow .s-sidebarwidget--item {
+    border-color: #3a3320 !important;
   }
 
   /* Stacks de-links plain anchors inside a sidebar widget
@@ -2858,6 +2872,31 @@
     filter: invert(1) !important;
   }
 
+  /* The toolbar glyphs are a three-row sprite (rest / focused / pressed) whose
+     focused row is #535a60 and pressed row near-black, both baked for the light bar.
+     SE ships a dark twin of the sprite for its own dark mode (`wmd-buttons-dark.svg`)
+     with the same row layout, so swapping the image keeps every state. Host-relative:
+     each site serves it from its own `/Content/`. */
+  .wmd-button > span {
+    background-image: url("/Content/Img/unified/wmd-buttons-dark.svg") !important;
+  }
+
+  /* The link / image inserter is an inline panel under the toolbar on `var(--white)`,
+     and the button that opened it becomes a white `__active` chip whose bottom border
+     is painted to merge with the panel. */
+  .wmd-inline-dialog,
+  .wmd-button-bar .wmd-inline-dialog {
+    background-color: #20262d !important;
+    border-color: #2d333b !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .wmd-button__active,
+  .wmd-button-bar .wmd-button__active {
+    background-color: #20262d !important;
+    border-color: #2d333b #2d333b #20262d !important;
+  }
+
   .wmd-preview {
     background-color: #181d23 !important;
     color: #c4cdd6 !important;
@@ -2906,6 +2945,26 @@
   .s-btn__outlined {
     border-color: #2d333b !important;
   }
+
+  /* Stacks pairs the side utilities above with a chromatic `.bc-<hue>-N` on the same
+     element, and the blanket `.ba`/`.bb` darkener wins that tie, erasing the hue. The
+     pastel steps (100-300) take the matching callout frame tone, the saturated steps
+     (400-600) a mid tone that reads on dark. */
+  .bc-blue-100, .bc-blue-200, .bc-blue-300 { border-color: #234055 !important; }
+  .bc-blue-400, .bc-blue-500, .bc-blue-600 { border-color: #3b82b8 !important; }
+  .bc-green-100, .bc-green-200, .bc-green-300 { border-color: #25402d !important; }
+  .bc-green-400, .bc-green-500, .bc-green-600 { border-color: #2b6e44 !important; }
+  .bc-red-100, .bc-red-200, .bc-red-300 { border-color: #5a2a2c !important; }
+  .bc-red-400, .bc-red-500, .bc-red-600 { border-color: #a03a40 !important; }
+  .bc-orange-100, .bc-orange-200, .bc-orange-300 { border-color: #6b4a30 !important; }
+  .bc-orange-400, .bc-orange-500, .bc-orange-600 { border-color: #d98b3a !important; }
+  .bc-yellow-100, .bc-yellow-200, .bc-yellow-300 { border-color: #4a3a1c !important; }
+  .bc-yellow-400, .bc-yellow-500, .bc-yellow-600 { border-color: #8a6a1a !important; }
+  .bc-purple-100, .bc-purple-200, .bc-purple-300 { border-color: #3a2f55 !important; }
+  .bc-purple-500, .bc-purple-600 { border-color: #5a5fc0 !important; }
+  .bc-gold-100, .bc-gold-200, .bc-gold-300, .bc-gold-400 { border-color: #6b5518 !important; }
+  .bc-silver-100, .bc-silver-200, .bc-silver-300, .bc-silver-400 { border-color: #5a6068 !important; }
+  .bc-bronze-100, .bc-bronze-200, .bc-bronze-300, .bc-bronze-400 { border-color: #6b4a30 !important; }
 
   .bg-black-025, .bg-black-050, .bg-black-075,
   .bg-black-100, .bg-black-150, .bg-black-200,
@@ -3121,14 +3180,24 @@
     border-color: #262c33 !important;
   }
 
-  /* The mobile sticky anchor ad (Aditude) wraps its slot in a hard #fff container
-     pinned to the viewport foot, mounted only below `md`. A floating surface, so it
-     needs a solid dark fill, not transparent. */
+  /* The sticky anchor ad (Aditude) wraps its slot in a container pinned to the
+     viewport foot at every width. A floating surface, so it needs a solid dark fill,
+     not transparent. */
   #pb-anchor--wrapper,
   #pb-anchor--wrapper-inner,
   .tude-anchor-wrapper-outer,
   .tude-anchor-wrapper-inner {
     background-color: #14181d !important;
+  }
+
+  /* Its close control is a disc drawn by `::before` under an `::after` whose
+     background IS the X glyph (an SVG mask), so the two must move together. */
+  .tude-anchor-close-button::before {
+    background-color: #2d333b !important;
+  }
+
+  .tude-anchor-close-button::after {
+    background-color: #c4cdd6 !important;
   }
 
   /* The "Report this ad" pill on the sticky anchor ad is a light #f0f0f0 plate with
@@ -3846,9 +3915,12 @@
     color: #c4cdd6 !important;
   }
 
-  .weekday {
+  /* Two classes: the width-only border list above names `.calendar .weekday`. */
+  .weekday,
+  .calendar .weekday {
     background-image: none !important;
     background-color: #6e2f2f !important;
+    border-color: #7a3a3a !important;
     color: #f0d5d5 !important;
   }
 

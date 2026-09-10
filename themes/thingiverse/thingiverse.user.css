@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Thingiverse Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.20
+@version        1.0.21
 @description    A full dark theme for Thingiverse — the feed, model pages, search and profiles in comfortable dark, while model previews and 3D renders stay true to color.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -691,6 +691,40 @@
   [class*="publift-widget"][class*="container-background"] { background-color: #14181d !important; }
   [class*="publift-widget"][class*="-button"] { background-color: #1c2128 !important; }
   [class*="publift-widget"][class*="-button"] > div { background-color: #c4cdd6 !important; }
+
+  /* AdThrive/Raptive chrome, all hosted on the page in the vendor's own classes:
+     the fixed footer plate and its close pill, two in-content sticky plates, and
+     four dialogs (content terms, adblock recovery, US privacy, CCPA). Each is a
+     white panel under literal dark inks, so the blanket heading/`p` inks would
+     land light-on-white. The creatives themselves are iframes, untouched. */
+  .adthrive-sticky.adthrive-footer { background-color: rgba(13, 17, 23, 0.9) !important; }
+  .adthrive-sticky.adthrive-footer > .adthrive-close {
+    background-color: #1c2128 !important; color: #c4cdd6 !important; border-color: #3a424c !important; }
+  .adthrive-sticky-container, .adthrive-recipe-sticky-container {
+    background-color: #14181d !important; }
+  .adthrive-content.adthrive-sticky::after { color: #8b949e !important; }
+  .raptive-content-terms-modal-content, .adthrive-act25-modal,
+  .adthrive-us-cmp-modal-content, .adthrive-ccpa-modal-content {
+    background-color: #1c2128 !important; border-color: #2d333b !important; }
+  .raptive-content-terms-modal-header, .adthrive-act25-modal-footer,
+  .adthrive-us-cmp-modal-footer { border-color: #2d333b !important; }
+  .raptive-content-terms-modal-title, .adthrive-act25-modal-header h2,
+  .adthrive-us-cmp-modal-header h2 { color: #e6edf3 !important; }
+  .raptive-content-terms-modal-body, .raptive-content-terms-modal-body p,
+  .adthrive-act25-modal-body p, .adthrive-us-cmp-modal-body p,
+  .adthrive-ccpa-lower-buttons-container { color: #c4cdd6 !important; }
+  .raptive-content-terms-modal-close, .adthrive-act25-modal-close-btn,
+  .adthrive-us-cmp-modal-close { color: #9aa4af !important; }
+  .raptive-content-terms-modal-close:hover, .adthrive-act25-modal-close-btn:hover,
+  .adthrive-us-cmp-modal-close:hover { color: #e6edf3 !important; }
+  .raptive-content-terms-modal-body a { color: #5fb0e6 !important; }
+  /* The green accept CTA keeps its fill; only the grey-outlined decline is retoned. */
+  .adthrive-act25-btn.secondary, .adthrive-us-cmp-modal-decline {
+    color: #c4cdd6 !important; border-color: #3a424c !important; }
+  .adthrive-act25-btn.secondary:hover, .adthrive-us-cmp-modal-decline:focus {
+    background-color: #21262d !important; color: #e6edf3 !important; }
+  .adthrive-act25-footer-text, .adthrive-act25-footer-text p,
+  .adthrive-us-cmp-footer-text, .adthrive-us-cmp-footer-text p { color: #8b949e !important; }
 
   /* Blog — a Dropinblog embed with its own light palette, resolving no `--tv-*`
      token. Its rules are `#id`-scoped (several `!important`), so each override must

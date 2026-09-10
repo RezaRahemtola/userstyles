@@ -448,10 +448,17 @@
        --pk-surface. */
     --color-contrast-bg: var(--pk-text);
 
-    /* ---- Subtle shadows: soften so they don't glow on dark ---- */
+    /* ---- Shadows ---- */
     --shadow-low: 0 1px 12px rgba(0, 0, 0, 0.4);
-    --s-shadow-mainStroke: rgba(255, 255, 255, 0.06);
-    --s-shadow-extraStroke: rgba(255, 255, 255, 0.06);
+    /* Every ui-kit floating surface (ComboBox list, Select dropdown, date-range popover,
+       menus, modal cards) draws its whole edge from this pair: a 1px `-Stroke` ring plus
+       a blurred `main`/`extra` shadow. The ring must be LIGHT and visible — the surfaces
+       share --pk-surface-2 with the inputs they open over, and a dark shadow reads as
+       nothing there. */
+    --s-shadow-mainStroke: rgba(255, 255, 255, 0.16);
+    --s-shadow-extraStroke: rgba(255, 255, 255, 0.16);
+    --s-shadow-main: rgba(0, 0, 0, 0.55);
+    --s-shadow-extra: rgba(0, 0, 0, 0.65);
   }
 
   /* ===== Base canvas ===== */

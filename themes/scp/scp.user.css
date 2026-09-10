@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           SCP Foundation Wiki Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.12
+@version        1.0.13
 @description    A comfortable dark theme for the SCP Foundation Wiki — articles, sidebar, tables, tabs, ratings, forums and search, crimson look intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -258,14 +258,17 @@
 
   /* HEADER / TOP BAR */
 
-  #header h1 a {
-    color: #eee;
-  }
+  /* No colour on #header h1 a: Sigma-9 already paints it #eee, BH holds its span transparent, and the Sigma-derived skins hide the anchor's own text with `color: transparent` under a ::before copy - an ink here prints the title twice. */
 
   /* This span stays unstyled: BH hides it with `color: transparent` and draws its own ::before copy, so a colour here un-hides a second tagline. The tokens below are what that copy reads. */
   #header {
     --swatch-headerh1-color: 238, 238, 238;
     --swatch-headerh2-color: 240, 240, 192;
+  }
+
+  /* BH declares this on #top-bar itself, from the tertiary ink token remapped above at half alpha, and draws it as an inset ring on every dropdown item plus the two loose edges completing the phone menu's grid around its empty last cell. The item plates below cover the rings; the loose edges show, so it is pitched as a panel hairline. Two ids: the skin's own #top-bar declaration must lose on weight, not order. */
+  #header #top-bar {
+    --dropdown-border-color: 58, 64, 72;
   }
 
   /* For the themes that name the pseudo's colour outright, at #000. Sigma-9 gives these pseudos no content, so the rule costs nothing there. `color` only: -webkit-text-fill-color is what a background-clip title sets transparent so its artwork shows through. */
@@ -344,7 +347,6 @@
     background-color: #1c2128 !important;
     border-color: rgba(255, 255, 255, .06);
   }
-
   /* Open dropdown: the site paints these #eee / #fff */
   #top-bar ul li.sfhover a,
   #top-bar ul li:hover a,
@@ -419,6 +421,11 @@
   #search-top-box-form input[type="submit"]:focus {
     background-color: rgb(var(--search-icon-hover-color, 13, 17, 23)) !important;
     border-color: #b98a8a !important;
+  }
+
+  /* The "Search" label. NOT !important, and pinned at specificity (1,2,2): it outranks the (1,1,1)/(1,2,1) rules Sigma-9 and the real-button skins (classic, decom-dept, derby, black-diamond, aces-and-eights) paint a dark label with, and LOSES to the (1,2,3) `div#search-top-box form input[type="submit"].button` that newspaper, monotypical and cosmonaut hide theirs with (`color: transparent`, magnifier drawn by #search-top-box::before, no mask, no token) - an !important ink prints the word across that glyph. Same token as the plate, so it is invisible on every masked BH skin whatever the token holds. A (1,2,2) tie goes to the skin (its sheet sits in the page body, after this one); no known skin has one. */
+  form#search-top-box-form input[type="submit"][name="search"] {
+    color: rgb(var(--search-icon-hover-color, 230, 237, 243));
   }
 
   /* BH masks this pseudo to a person icon below the desktop breakpoint and paints it with rgb(var(--login-mobile-icon-color)), pitched near-black by the themes. No opposite case here - Sigma-9 gives the pseudo no content - so a flat fill, not a token branch. */
@@ -768,6 +775,11 @@
     background-color: #1a1f26 !important;
     border-color: #2d333b !important;
     box-shadow: inset 1px 2px 6px rgba(0, 0, 0, .4);
+  }
+
+  /* /about-the-scp-foundation's letter is a marble background-IMAGE from page CSS, opaque and near-white, so the panel fill above never shows and the article ink lands on paper. Paper ink, as for an inline light box. */
+  #page-content .content-panel.admin-letter {
+    color: #1b1815;
   }
 
   div#u-adult-warning {

@@ -373,6 +373,12 @@
     color: #c4cdd6 !important;
   }
 
+  /* On /upload the box is an empty in-flow shell (its heading is position:fixed) that the site keeps transparent; a surface here is a bare band under the top bar. */
+  body#upload .upload-box,
+  #upload #anywhere-upload {
+    background-color: transparent !important;
+  }
+
   /* An icon FONT, so the generic span colour repaints it. Keep it ImgBB blue. */
   .upload-box-heading .icon {
     color: #3a8fd6 !important;

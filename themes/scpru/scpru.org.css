@@ -180,6 +180,30 @@
     color: var(--scpru-heading);
   }
 
+  /* Sigma-9 gives h2–h6 no colour of their own, so inside a box that states
+     `color:` inline they take the box's ink natively; the element rule above
+     would state one directly and beat that inheritance. h1 is excluded: the
+     site colours it directly, so it never inherited. Anchored on the
+     declaration boundary — a `-color:` longhand (`background-color:`,
+     `--link-color:`) can never precede `color:` with `^`, `;` or `; `. */
+  #page-content [style^="color:"] h2,
+  #page-content [style*=";color:"] h2,
+  #page-content [style*="; color:"] h2,
+  #page-content [style^="color:"] h3,
+  #page-content [style*=";color:"] h3,
+  #page-content [style*="; color:"] h3,
+  #page-content [style^="color:"] h4,
+  #page-content [style*=";color:"] h4,
+  #page-content [style*="; color:"] h4,
+  #page-content [style^="color:"] h5,
+  #page-content [style*=";color:"] h5,
+  #page-content [style*="; color:"] h5,
+  #page-content [style^="color:"] h6,
+  #page-content [style*=";color:"] h6,
+  #page-content [style*="; color:"] h6 {
+    color: inherit !important;
+  }
+
   /* Article root ONLY — on p/li/dd/dt/td it would be a direct declaration beating an author's callout-box colour, erasing their ink under their light paper. */
   #page-content,
   .thread-container .post .content,
@@ -416,6 +440,16 @@
     color: var(--scpru-link-hover);
   }
 
+  /* Site chrome outside the article column: a skin's bare `a` wins on document order against the one-id rule above. */
+  #main-content #breadcrumbs a,
+  #main-content #breadcrumbs a:visited {
+    color: var(--scpru-link);
+  }
+
+  #main-content #breadcrumbs a:hover {
+    color: var(--scpru-link-hover);
+  }
+
   /* Low specificity, so component rules (the rating buttons) can still fill their own hover. */
   a:hover {
     background-color: transparent !important;
@@ -544,8 +578,11 @@
     color: #ff8f97;
   }
 
-  /* Mobile hamburger — a white disc with a grey rule and a grey glyph. */
-  #top-bar .open-menu a {
+  /* Mobile hamburger — a white disc with a grey rule and a grey glyph. Two ids:
+     Black Highlighter clears the disc from a page <style> at more than one id,
+     and the glyph it leaves is this sheet's light text-fill on the skin's light
+     mobile bar. */
+  #header #top-bar .open-menu a {
     background-color: #1c2128 !important;
     border-color: #4a5058 !important;
     color: #eaeaea !important;
@@ -594,6 +631,15 @@
     background-image: linear-gradient(to bottom, #a06666, #7d4444, #5a2f2f) !important;
     border-color: #b98a8a !important;
     color: #fff !important;
+  }
+
+  /* The Basalt family draws the magnifier as a masked `::after` at z-index 1
+     under a transparent submit, and the submit is a flex item whose z-index 2
+     puts the plate above it. Lifted over the plate; clicks pass through to the
+     submit as before. Skins without the pseudo generate no box, so no effect. */
+  #search-top-box::after {
+    z-index: 3 !important;
+    pointer-events: none !important;
   }
 
   /* SIDE BAR */
@@ -756,6 +802,18 @@
   table.wiki-content-table td,
   table.wiki-content-table th {
     border-color: #2d333b !important;
+  }
+
+  /* An author's white cell border is an invisible spacer on the white page and a drawn grid here; a cell naming its own paper keeps its border. */
+  #page-content td[style*="border: 1px solid white"]:not([style*="background"]),
+  #page-content td[style*="border:1px solid white"]:not([style*="background"]),
+  #page-content td[style*="border: 1px solid #fff"]:not([style*="background"]),
+  #page-content td[style*="border:1px solid #fff"]:not([style*="background"]),
+  #page-content th[style*="border: 1px solid white"]:not([style*="background"]),
+  #page-content th[style*="border:1px solid white"]:not([style*="background"]),
+  #page-content th[style*="border: 1px solid #fff"]:not([style*="background"]),
+  #page-content th[style*="border:1px solid #fff"]:not([style*="background"]) {
+    border-color: transparent !important;
   }
 
   /* The id form reaches a theme stating the header row from the column id. The bare form covers tables outside the content column. */
@@ -1093,6 +1151,14 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, .5) !important;
   }
 
+  /* The ACS component stretches an anchor over the diamond with `color: transparent` so only the artwork shows; one class, which the two-id article-link rule outweighs. The border takes currentColor. */
+  #main-content #page-content .danger-diamond a,
+  #main-content #page-content .danger-diamond a:visited,
+  #main-content #page-content .danger-diamond a:hover {
+    color: transparent !important;
+    border-color: transparent !important;
+  }
+
   /* Already a dark maroon; only its cream rule is pitched down. */
   .heritage-rating-module {
     border-color: #8a7a3a !important;
@@ -1350,6 +1416,17 @@
   .yui-navset .yui-nav,
   .yui-navset .yui-navset-top .yui-nav {
     border-color: #7d3030 !important;
+  }
+
+  /* The Bedrock family holds the anchor's own fill transparent and paints the list item instead, so the anchor rule below reaches nothing there. The item takes the same pair, elsewhere showing only in the gaps. */
+  .yui-navset .yui-nav li,
+  .yui-navset .yui-navset-top .yui-nav li {
+    background-color: #22282f !important;
+  }
+
+  .yui-navset .yui-nav li.selected,
+  .yui-navset .yui-navset-top .yui-nav li.selected {
+    background-color: #8a2f2f !important;
   }
 
   /* The tab strip's fill is a sprite background-IMAGE, so it has to be dropped rather than covered. */
@@ -3129,6 +3206,12 @@
     color: #c4cdd6 !important;
   }
 
+  /* The hub's warning variant is a red wash and frame over the modal paper; the wash stays a tint of the branch crimson so it still reads as a warning and not a second neutral plate. */
+  div.modal.themes-warning {
+    background-color: #2a1618 !important;
+    border-color: #8a2f2f !important;
+  }
+
   div.modal h1,
   div.modal h2,
   div.modal h3,
@@ -3228,5 +3311,35 @@
     border-color: #621b0d;
     color: #fff;
     box-shadow: 0 2px 3px rgba(0, 0, 0, .6);
+  }
+}
+
+/* The page's own <style> paints each episode's `.jk` panel #f0faff with no
+   ink of its own — a class, so the value-matched author-paper rebind never
+   sees it. The paper is the page's identity and stays; the ink is handed back.
+   Top-bar linked, so site chrome rather than an article's own box. */
+@-moz-document url-prefix("https://scpfoundation.net/site-7-midnight-radio") {
+
+  #page-content .jk {
+    color: #140f0c !important;
+    --scpru-title: #7a1d24;
+    --scpru-heading: #140f0c;
+    --scpru-link: #a4161a;
+    --scpru-link-visited: #6d3550;
+    --scpru-link-hover: #d21414;
+    --scpru-newpage: #8a4b00;
+    --scpru-lift-black: #140f0c;
+    --scpru-lift-blue: #0000cd;
+    --scpru-lift-green: #046307;
+    --scpru-lift-purple: #800080;
+    --scpru-lift-maroon: #800000;
+    --scpru-lift-red: #c30000;
+    --scpru-lift-brown: #6b4423;
+    --scpru-lift-teal: #006a6a;
+  }
+
+  /* `lightgrey` frame from the same <style>. */
+  #page-content .material-box {
+    border-color: #3a4048 !important;
   }
 }

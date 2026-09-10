@@ -493,16 +493,19 @@
   [data-testid$="--price-text"], [data-testid="feed-item--price-text"] {
     color: #e6edf3 !important; }
 
-  /* Catalog filter chips / sidebar */
+  /* Catalog filter chips / sidebar. The profile's sort/category `*-dropdown--trigger`
+     is a FLAT muted button, not a chip: it must keep its flat-button ink and no box. */
   .web_ui__Chip__chip, [class*="Chip__chip"],
-  [data-testid$="-filter--trigger"], [data-testid$="--trigger"] {
+  [data-testid$="-filter--trigger"],
+  [data-testid$="--trigger"]:not([class*="Button__flat"]) {
     background-color: #1c2128 !important;
     border-color: #2d333b !important;
     color: #e6edf3 !important; }
   /* Native hover swaps the ring to brand teal, which the border-color above
      overwrites. Also covers the filter triggers, Chips without the Chip class. */
   .web_ui__Chip__chip:hover, [class*="Chip__chip"]:hover,
-  [data-testid$="-filter--trigger"]:hover, [data-testid$="--trigger"]:hover {
+  [data-testid$="-filter--trigger"]:hover,
+  [data-testid$="--trigger"]:not([class*="Button__flat"]):hover {
     background-color: #232a32 !important;
     border-color: #4db8c4 !important; }
   /* `filled` is the APPLIED state, `outlined` the idle trigger; both flatten to the
@@ -836,6 +839,10 @@
      the blanket border reset takes it. */
   .web_ui__Radio__button, [class*="Radio__button"] {
     border-color: #667273 !important; }
+  /* A checked ring reads the same token as its fill; the rest-state ring above
+     would rim the disc grey. */
+  input:checked + .web_ui__Radio__button,
+  input:checked + [class*="Radio__button"] { border-color: #33adb8 !important; }
 
   /* company.vinted.com — a separate Next.js site that domain("vinted.com") also
      matches; shares none of web_ui. */

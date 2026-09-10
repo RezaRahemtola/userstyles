@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Mobilism Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.8
+@version        1.0.9
 @description    A complete dark theme for the Mobilism forum — index, topic lists, posts, profiles and forms — with the blue Mobilism identity kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -450,6 +450,14 @@
 
   .well blockquote {
     border-color: #2d333b !important;
+  }
+
+  /* phone-only "poster is online" cue: a 4px green right edge on the post card
+     that the `.well` border pin above would otherwise swallow */
+  @media (max-width: 767px) {
+    .well.mobile-online {
+      border-right-color: #3fb950 !important;
+    }
   }
 
   .postbody,

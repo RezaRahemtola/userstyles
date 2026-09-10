@@ -120,6 +120,29 @@
     z-index: -1;
     background-color: var(--av-header) !important;
   }
+  /* The other gallery arm ships the 88px deep-scroll bar instead, under pure hashes: its white sits
+     on a child whose `::before` spreads a 1280px white box-shadow to the viewport edges under a
+     `clip-path: inset(0 -1280px)`. Neither is nameable, but this arm keeps the bar's title as an `h4`
+     carrying the marker (the in-flow title and the 48px bar's are `h1`), so the pseudo hangs there
+     and repeats the same shadow-and-clip trick over the white one: both are `z-index:-1` in the
+     bar's stacking context and the deeper one paints last. Surface tone, not header: the bar's
+     thumbnail and price/title are bare `<button>`s the generic button rule chips, and on a surface
+     bar a surface chip is invisible should the hash below rotate. */
+  h4[data-marker="item-view/title-info"]::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    height: 88px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background-color: var(--av-surface) !important;
+    box-shadow: 0 0 0 1280px var(--av-surface) !important;
+    clip-path: inset(0 -1280px);
+  }
+  button[class*="_6a9117bb1fcd1b61"] {
+    background-color: transparent !important;
+  }
 
   /* The wordmark path has NO fill attribute, so it defaults to black; `:not([fill])` keeps this off
      the coloured dot paths, which do carry fill attrs. Four builds name it differently — the last,
@@ -286,6 +309,14 @@
   [style*="color:rgb(0, 170, 255)"], [style*="color:rgb(0, 170, 255)"] * {
     color: var(--av-accent) !important;
   }
+  /* One card build draws the end-cap as an EMPTY div filled from that same inline colour through
+     `currentColor`, and the div-neutraliser wipes it, leaving the pill a flat rectangle. The cap
+     rules above have already moved the colour to the pill's tone, so `currentColor` is the right
+     fill. The card scope and `:empty` keep this off any text-bearing div with an inline colour. */
+  [data-marker="item"] div[style^="color:"]:empty,
+  [data-marker^="iva-item"] div[style^="color:"]:empty {
+    background-color: currentColor !important;
+  }
 
   /* Buttons */
   /* One hashed Button class serves both primary and secondary, so every button gets a dark surface
@@ -402,6 +433,12 @@
   [class*="root_preset_secondary"] {
     background-color: #262c35 !important;
   }
+  /* The suggest panel's refinement bubbles are secondary DS Buttons that the item-page build ships
+     under pure hashes; the group's inline `--module-bubbleGroup-*` tokens are its only stable hook.
+     Secondary tone, not surface: the panel is itself `--av-surface`, so a surface chip has no edge. */
+  [style*="--module-bubbleGroup"] button {
+    background-color: #262c35 !important;
+  }
   /* One build drops the preset NAME and ships pure hashes, and a marker-less `<a>` build is
      unnameable here; every build resolves the fill through the same token, so remap the token rather
      than chase hashes. The site declares it on class-scoped theme containers, not `:root`, so a
@@ -474,6 +511,19 @@
   [class*="avito-ads-container"] button[class*="root_preset_secondary"],
   [class*="avito-ads-container"] button[class*="root_preset_secondary"] * {
     color: var(--av-text-soft) !important;
+  }
+  /* The DS Button's DISABLED state is a `root_disabled` modifier (plus `aria-disabled`) on top of
+     whatever preset the button has, natively the secondary's `#f2f1f0` under a `#a3a3a3` label: the
+     region picker's untouched save CTA and the complaint dialog's "Продолжить" both ship it on the
+     `accent` preset. Every preset arm above is (0,1,1) and paints it as a live CTA, so this block
+     must follow them all; the descendant arm ties the presets' ink arms and wins on order. */
+  button[class*="root_disabled"] {
+    background-color: #262c35 !important;
+    border-color: var(--av-border) !important;
+  }
+  button[class*="root_disabled"],
+  button[class*="root_disabled"] * {
+    color: var(--av-text-muted) !important;
   }
   /* DS BADGE. Both presets paint through `--module-badge-backgroundColor`. `root_preset_primary` is
      shared with the Button and the Spinner, so both properties read the badge's OWN tokens with a
@@ -1167,6 +1217,12 @@
   [class*="map-root"],
   [data-marker="map-view"] {
     background-color: var(--av-bg) !important;
+  }
+  /* While the filter drawer is open a `disabled-<hash>` sibling veils the rail: a white plate the
+     site fades to 0.8, which the neutraliser wipes. The drawer is narrower than the rail, so the
+     uncovered strip must dim with it. The tag guard keeps the fragment off any disabled button. */
+  [data-marker="map-full/side-block"] div[class*="disabled-"] {
+    background-color: var(--av-surface) !important;
   }
   /* The seller profile's "Адрес" map floats a natively white address card over the Yandex tiles, and
      the light body ink would land on the light raster — which no scan sees, the tiles being an image

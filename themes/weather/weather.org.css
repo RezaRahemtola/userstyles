@@ -352,6 +352,14 @@
   svg[class*="Icon--icon"][class*="Icon--lightTheme"] {
     color: #ffffff !important;
   }
+  /* the legacy NARROW header carries the knockout wordmark as `MainMenuHeader--twcLogo`
+     with that same lightTheme class, but overrides it with the brand navy: with the
+     colour lifted to white the square goes white and the letters go chrome. Navy ink on
+     the white backdrop above, like the other three carriers. */
+  svg[class*="Icon--icon"][class*="MainMenuHeader--twcLogo"] {
+    color: #003399 !important;
+    background-color: #ffffff !important;
+  }
   svg[class*="Icon--icon"][class*="SearchInput--searchIcon"] {
     color: var(--wx-text-2) !important;
   }
@@ -406,6 +414,16 @@
   /* a literal `<span> | </span>`: punctuation, not a link, so it takes the muted ink. */
   [class*="MemberLoginForm--separator"] {
     color: var(--wx-text-muted) !important;
+  }
+  /* an INVALID field is marked by a 2px #eb0000 rim on the <input> and the message under
+     it; the generic `input` border pin greys the rim, and #eb0000 is 3.8:1 on the base.
+     Rim and message take the same lifted red as the severe-alert text so the state stays
+     one signal. */
+  [class*="FormInput--hasError"] input {
+    border-color: #f4695c !important;
+  }
+  [class*="FormInput--bottomErrors"] {
+    color: #f4695c !important;
   }
 
   /* these pin their ink to `var(--Panther)` with !important at (0,1,0), out-ranking
@@ -574,6 +592,18 @@
      rules lift. */
   [class*="bg-[#ebecee]"] {
     background-color: var(--wx-surface-2) !important;
+  }
+  /* trust.weather.com (privacy / terms) sets its intro callout as a pale-blue arbitrary
+     hex under paragraphs the text rules lift, and its Expand / Collapse controls as navy
+     <button>s that `button { color: inherit }` greys. Matched on the hex PREFIX so the
+     alpha variants (`bg-[#CBDEF080]`) resolve with it; both spellings ship. */
+  [class*="bg-[#cbdef0"],
+  [class*="bg-[#CBDEF0"] {
+    background-color: var(--wx-surface-2) !important;
+  }
+  [class*="text-[#039]"],
+  [class*="text-[#003399]"] {
+    color: var(--wx-link) !important;
   }
   /* the PALE brand tints are light surfaces; the SATURATED brand blues are real fills.
      The alpha variants have their own class TOKEN (`bg-brand-100/30`) the plain class
@@ -893,6 +923,18 @@
   /* brand-blue kickers the generic `p` rule flattens; #3a61cc is ~2.9:1 on our base. */
   .text-brand-light {
     color: var(--wx-link) !important;
+  }
+  /* the light end of that scale (#679ced / #aacbff / #d8e6fe) only lands on the BLACK
+     hero plates as kickers, where the generic `p` rule greys it; the values read on dark,
+     so they are restated verbatim rather than remapped. */
+  .text-blue-400 {
+    color: #679ced !important;
+  }
+  .text-blue-300 {
+    color: #aacbff !important;
+  }
+  .text-blue-200 {
+    color: #d8e6fe !important;
   }
   a:hover,
   a:focus {
@@ -1226,11 +1268,13 @@
     color: var(--wx-text-2) !important;
   }
   /* ...but `header` / `footer` are BARE TAG selectors and the SPA also uses those tags
-     for a card's own title row and source strip, transparent natively. The page's real
-     header/footer are direct children of <main>, never inside a <section>, so scoping the
-     reset to section descendants cannot reach them. */
+     for a card's own title row and source strip, transparent natively -- inside a
+     <section>, and on the content hubs (/health, /travel) as a title row nested in plain
+     <div>s. The page's real header/footer are DIRECT children of <main>, so neither
+     descendant form can reach them. */
   section header,
-  section footer {
+  section footer,
+  main div header {
     background-color: transparent !important;
   }
   footer a,
@@ -1626,6 +1670,41 @@
     color: var(--wx-text) !important;
   }
 
+  /* DeeperDive's answer DIALOG (`.dd-dialog-wrapper`) is appended to <html> as a sibling
+     of <body>, outside `#dd-widget`, and every surface, divider, ink and hover mix in it
+     resolves from `--dd-*` tokens declared on :root (the widget ships a dark set behind
+     `html.dd-dark`, which the page never applies). Remap the tokens; hex only, the widget
+     does its own `color-mix()` on top. */
+  :root {
+    --dd-background-color: #1c2128 !important;
+    --dd-text-color: #e6edf3 !important;
+    --dd-text-meta-color: #8b949e !important;
+    --dd-input-background: #161d27 !important;
+    --dd-border-color: #2d333b !important;
+    --dd-primary-color: #5fb0e6 !important;
+    --dd-link-color: #5fb0e6 !important;
+    --dd-widget-divider-color: #262c33 !important;
+    --dd-result-divider-color: #262c33 !important;
+    --dd-frame-divider-color: #262c33 !important;
+    --dd-overlay-container: #161d27 !important;
+    --dd-tooltip-background: #161d27 !important;
+    --dd-overlay-backdrop-color: rgba(0, 0, 0, 0.6) !important;
+    --dd-scrollbar-thumb: rgba(230, 237, 243, 0.3) !important;
+    --dd-light-card-background: rgba(230, 237, 243, 0.05) !important;
+    --dd-brand-logo-color: #e6edf3 !important;
+    --dd-brand-icon-color: #8b949e !important;
+  }
+  /* the send button is a `--dd-primary-color` plate under a WHITE arrow: with the primary
+     lifted to a light blue the arrow must go dark. */
+  .dd-widget-input-send-button svg path {
+    fill: var(--wx-chrome) !important;
+  }
+  /* the feedback tooltip is an inverted plate (`--dd-text-color` fill) whose caret is a
+     hardcoded #1a1a1a path. */
+  .dd-dialog .dd-tooltip svg path {
+    fill: var(--wx-text) !important;
+  }
+
   /* OpenWeb (Spot.IM) reactions + comments on news/video articles */
   /* OpenWeb renders inside an OPEN SHADOW ROOT on a custom element whose tag name is a
      per-publisher hash, so no rule of ours reaches inside. It is themeable anyway: the
@@ -1723,6 +1802,15 @@
   .footer-v2 .footer-copyright {
     color: var(--wx-text-2) !important;
   }
+  /* the data-rights row is the footer's one LINK-coloured row (Salesforce navy) among
+     #333 siblings; two classes deep to out-rank its own `text-gray-600` utility, so the
+     hover arm has to be restated at the same weight. */
+  .footer-v2 .footer-data-links a {
+    color: var(--wx-link) !important;
+  }
+  .footer-v2 .footer-data-links a:hover {
+    color: var(--wx-link-hover) !important;
+  }
   /* a WHITE pill on the navy bar, so it has to keep dark ink; the anchor rule would paint
      it link blue at 2.4:1 on its own fill. */
   .nav-pill-active {
@@ -1750,28 +1838,44 @@
   .brand-badge {
     color: var(--wx-text-muted) !important;
   }
+  /* the badge is an OUTLINE chip: rim and label share one hue, so the rim is restated
+     with the ink or the blanket border reset leaves a grey ring around a coloured word. */
   .platform-badge[data-platform="iOS"] {
     color: #6ea8f0 !important;
+    border-color: #6ea8f0 !important;
   }
   .platform-badge[data-platform="Android"] {
     color: #57bb7e !important;
+    border-color: #57bb7e !important;
   }
   .platform-badge[data-platform="Web"] {
     color: #b18ce0 !important;
+    border-color: #b18ce0 !important;
   }
-  /* authored rich text: every paragraph is a `<span style="...color: #000000">` pasted
-     from the editor, which the tag-level text rules never reach. */
-  .article-body [style*="color: #000000"],
-  .alert-detail-card [style*="color: #000000"] {
+  /* authored rich text: every run is a `<span style="color: …">` pasted from an editor
+     (#000000, #1a1a1a, #1d1c1d, #434343 and the Docs / Slack link blues #1155cc, #1264a3
+     have all shipped), so the literal set is open-ended and the tag-level text rules
+     never reach it. No inline ink in a support body is semantic: lift all of it, links
+     to the link colour, heading runs (`<h2><strong><span>`) to the primary ink. The
+     inline declaration sits on the span, so a heading lift on the <h2> never wins. */
+  .article-body [style*="color:"],
+  .alert-detail-card [style*="color:"] {
     color: var(--wx-text-2) !important;
   }
-  /* the same editor emits headings as `<h2><strong><span style="color: #1a1a1a">`. That
-     inline colour is a declaration on the span, so it beats the `h1..h6` lift matching the
-     <h2> two levels up. Attribute values are case-sensitive and the parser rejects the
-     ` i` flag, so both spellings are listed. */
-  .article-body [style*="color: #1a1a1a"],
-  .article-body [style*="color: #1A1A1A"] {
+  .article-body h1 [style*="color:"],
+  .article-body h2 [style*="color:"],
+  .article-body h3 [style*="color:"],
+  .article-body h4 [style*="color:"] {
     color: var(--wx-text) !important;
+  }
+  .article-body a[style*="color:"],
+  .article-body a [style*="color:"] {
+    color: var(--wx-link) !important;
+  }
+  /* the same paste carries `background-color: #ffffff` / `#f3f3f3` plates on whole
+     paragraphs and headings; table headers keep the plate the cell rule gives them. */
+  .article-body [style*="background-color"]:not(th):not(td) {
+    background-color: transparent !important;
   }
   /* none of this metadata carries a text-* utility, so the muted-token list above cannot
      reach it. */
@@ -1826,6 +1930,18 @@
     color: var(--wx-link) !important;
     border-color: var(--wx-link) !important;
   }
+  /* the PRESSED vote is a `--primary` fill under a `--primary-foreground` label, which the
+     resting restatement above would pin flat. */
+  .vote-btn.vote-btn-active,
+  .vote-btn.vote-btn-active:hover {
+    background-color: var(--wx-link) !important;
+    color: var(--wx-chrome) !important;
+    border-color: var(--wx-link) !important;
+  }
+  .vote-btn.vote-btn-success {
+    color: var(--wx-link) !important;
+    border-color: var(--wx-link) !important;
+  }
   .action-btn:hover {
     background-color: var(--wx-border) !important;
   }
@@ -1864,10 +1980,13 @@
     background-color: rgba(13, 17, 23, 0.85) !important;
   }
 
-  /* keeps the Salesforce navy as its LABEL -- 1.9:1 on the dark card. */
+  /* navy label AND rim natively (1.9:1 on the dark card); both lift to the link tone.
+     The rim is otherwise swallowed by the blanket border reset. Keep this the ONLY
+     .brand-badge-outline border-color declaration -- a same-specificity twin earlier in
+     the sheet loses to it silently. */
   .brand-badge-outline {
     color: var(--wx-link) !important;
-    border-color: var(--wx-border-2) !important;
+    border-color: var(--wx-link) !important;
   }
 
   /* Keep weather imagery / data viz untouched: maps (DynamicMap + Mapbox tiles),

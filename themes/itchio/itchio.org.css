@@ -120,6 +120,16 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .bundle_promo_banner_widget a.cta:hover {
     color: #14181d !important;
   }
+  /* The featured-video hero's ghost button: white label in a white ring over blurred cover art,
+     inverting to a white pill with black text when the button OR its info block is hovered. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .youtube_game_promo_banner_widget .game_information .cta_button {
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.85) !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .youtube_game_promo_banner_widget .game_information .cta_button:hover,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .youtube_game_promo_banner_widget .game_information:hover .cta .cta_button {
+    color: #14181d !important;
+  }
 
   /* Header / nav */
   .primary_header {
@@ -342,6 +352,12 @@
   }
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .toggle_btn.active .icon {
     color: #fa7d8c !important;
+  }
+  /* An OFF chip's hover cue is label and glyph moving to body ink together; the blanket a:hover would
+     take only the label, and pink is the ON glyph's colour. Outranks both pins above by :hover:not(). */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .toggle_btn:hover:not(.active),
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .toggle_btn:hover:not(.active) .icon {
+    color: #e6edf3 !important;
   }
   /* A 1px background, not a border, so the border reset misses it */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .control_sep {
@@ -613,6 +629,20 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .form .sub { color: #c4cdd6 !important; }
   /* Ships itch muted #606060 */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .user_configurator p { color: #8b949e !important; }
+  /* Validation copy (login "Errors:" list, per-field messages) ships #D14343, 3.8:1 on the page base. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .form_errors,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .form .input_row .input_error,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .register_form_widget .input_error_message,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) form .errors {
+    color: #ff7b72 !important;
+  }
+  /* A rejected field's only marker is its red ring. Must outrank the (0,8,1) input rule above, so the
+     row wrapper and the type guards are part of the selector, not decoration. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .form .input_row input.has_error:not([type="checkbox"]):not([type="radio"]),
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .form .input_row textarea.has_error,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .form .input_row .validated.invalid input.text_input {
+    border-color: #e5534b !important;
+  }
 
   /* Tables */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) table,
@@ -778,6 +808,16 @@
     background-color: #1c2128 !important;
     border-color: #2d333b !important;
   }
+  /* Any user-formatted body (forum post, blog article) plates its code blocks gray_back and draws
+     its rules as a border-token background. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .user_formatted pre {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #e6edf3 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .user_formatted hr {
+    background-color: #2d333b !important;
+  }
   /* The muted `.topic_meta *` rule would grey the author link too. */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .topic_meta a { color: #fa7d8c !important; }
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .topic_meta,
@@ -921,6 +961,12 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .view_jam_screenshots_page .game_screenshot_cell {
     background-color: #1a1f26 !important;
   }
+  /* Below 650px the submissions grid grows a gray_back "Filter Results" toggle on a border-token ring. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .jam_browse_entries_widget .filter_toggle_row > button {
+    background-color: #1c2128 !important;
+    border-color: #2d333b !important;
+    color: #c4cdd6 !important;
+  }
 
   /* Search explorer (itch.io/search, sale explorer) — newer facet layout */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .search_header,
@@ -975,7 +1021,18 @@
     border-color: #2d333b !important;
   }
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .segmented_link { color: #8b949e !important; }
-  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .segmented_link.active { color: #e6edf3 !important; }
+  /* The selected segment is a raised white_back pill with a link-red label and a border-token ring;
+     the others hover to a 5% black wash. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .segmented_links .segmented_link:hover {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: #e6edf3 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .segmented_links .segmented_link.active,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .segmented_links .segmented_link.active:hover {
+    background-color: #30363d !important;
+    color: #fa7d8c !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px #3c444d !important;
+  }
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .facet_group_label,
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .facet_panel_hint,
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .facet_panel_note,
@@ -1041,6 +1098,12 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .sale_explorer_page .similar_banner {
     background-color: #1b2a17 !important;
     border-color: #2d333b !important;
+    /* Its label and link token are a deep #2c7a16 green; itch's own dark theme lifts both to this. */
+    --itchio_link_color: #aada80;
+    color: #aada80 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .sale_explorer_page .similar_banner .similar_banner_label {
+    color: #aada80 !important;
   }
   /* A white pill whose icon and label take the rebound muted tokens. */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .promotion_extras .extra_bubble {
@@ -1075,8 +1138,10 @@
   }
 
   /* Lightbox dialogs (login prompt, share sheet, image viewer) */
-  /* Real <dialog> nodes, existing only once opened; native white ringed #dadada. */
-  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) dialog {
+  /* Real <dialog> nodes, existing only once opened; native white ringed #dadada. The same .lightbox
+     skin also mounts as a plain div under #lightbox_container. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) dialog,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .lightbox {
     background-color: #1c2128 !important;
     color: #c4cdd6 !important;
     box-shadow: 0 0 0 2px #2d333b, 0 0 20px rgba(0, 0, 0, 0.6) !important;
@@ -1139,7 +1204,8 @@
     background-color: transparent !important;
   }
   /* Endpoint headers bleed their fill with a 10px #F4F4F4 spread */
-  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .knowledge_base_article_page .text_content h3 code {
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .knowledge_base_article_page .text_content h3 code,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .knowledge_base_article_page .text_content h4 code {
     box-shadow: 0 0 0 10px #1c2128 !important;
   }
   /* A <code> inside a link inherits the link red; the generic code rule above would flatten it. */
@@ -1193,6 +1259,59 @@
     background-color: #1c2128 !important;
     color: #e6edf3 !important;
     border-color: #2d333b !important;
+  }
+  /* highlight.js "tomorrow" (light) token inks inside those blocks — olive strings, navy sections,
+     purple keywords — mapped group by group onto the dark syntax palette. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-comment,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-tag {
+    color: #8b949e !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-subst,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-punctuation,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-operator {
+    color: #c4cdd6 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-bullet,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-variable,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-template-variable,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-selector-tag,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-name,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-deletion,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-keyword,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-atrule,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-doctag,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-meta,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-meta-keyword,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-template-tag {
+    color: #ff7b72 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-symbol,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-number,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-link,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-attr,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-literal {
+    color: #79c0ff !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-title,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-class,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-strong,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-function,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-attribute,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-property,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-section,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-emphasis {
+    color: #d2a8ff !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-code,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-addition,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-string {
+    color: #a5d6ff !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-built_in,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-type,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-quote,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-body .hljs-regexp {
+    color: #ffa657 !important;
   }
   /* Only the chapter being read takes the link colour. */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book-summary ul.summary li a {

@@ -444,6 +444,14 @@
     border-color: #2d333b !important;
   }
 
+  /* phone-only "poster is online" cue: a 4px green right edge on the post card
+     that the `.well` border pin above would otherwise swallow */
+  @media (max-width: 767px) {
+    .well.mobile-online {
+      border-right-color: #3fb950 !important;
+    }
+  }
+
   .postbody,
   .postbody .content {
     color: #c4cdd6 !important;

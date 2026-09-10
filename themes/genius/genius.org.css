@@ -576,6 +576,9 @@
      opacity:0 once loaded */
   .annotation_placeholder, .placeholder.annotation_placeholder {
     background-color: #1c2128 !important; }
+  /* the React loading skeleton (artist hover-card bio and other lazily fetched blocks) is a
+     #ddd slab with its own pulse animation; only the fill moves */
+  [class*="Placeholder__Container"] { background-color: #2d333b !important; }
   .profile_tabs-tab--selected { border-bottom-color: #ed4337 !important; color: #ffffff !important; }
   /* the reset also hits borders the site uses as accents. The avatar ring is NOT decorative
      - brand yellow #ffff64 for a VERIFIED artist, white otherwise. */
@@ -1041,6 +1044,24 @@
   #onetrust-pc-sdk #ot-search-cntr { background-color: #1c2128 !important; }
   /* expanding a vendor row opens a white table whose rows carry no fill of their own */
   #onetrust-pc-sdk .ot-ven-dets { background-color: #21262d !important; }
+  /* the vendor-list filter flyout (funnel button) and its pointer are a third view: white
+     fill at two-id specificity with a light halo, and the panel-wide ink below lands on it */
+  #onetrust-pc-sdk #ot-fltr-cnt {
+    background-color: #1c2128 !important; box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.55) !important; }
+  #onetrust-pc-sdk #ot-anchor {
+    background-color: #1c2128 !important; box-shadow: -3px -3px 5px -2px rgba(0, 0, 0, 0.55) !important; }
+  #onetrust-pc-sdk #ot-filter-list-header {
+    color: #9aa7f0 !important; -webkit-text-fill-color: #9aa7f0 !important; }
+  /* Apply and Cancel both take the host's black fill; on the dark panel they lose their
+     edges and each other. Cancel becomes the outline form. */
+  #onetrust-pc-sdk #filter-apply-handler { border-color: #4a525c !important; }
+  #onetrust-pc-sdk #filter-cancel-handler {
+    background-color: transparent !important; border-color: #4a525c !important; }
+  /* the purpose panels' "Object to Legitimate Interests" toggle is OneTrust's one WHITE-filled
+     button (#4d4d4d ink and edge), so the panel-wide white button ink below erases its label.
+     Its pressed twin (.ot-active-leg-btn) is already a black fill with white ink. */
+  #onetrust-pc-sdk .ot-obj-leg-btn-handler.ot-inactive-leg-btn {
+    background-color: #21262d !important; border-color: #4a525c !important; }
   #onetrust-banner-sdk, #onetrust-banner-sdk *,
   #onetrust-pc-sdk, #onetrust-pc-sdk * {
     color: #c4cdd6 !important; -webkit-text-fill-color: #c4cdd6 !important; }

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Depop Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.16
+@version        1.0.17
 @description    A clean dark theme for Depop: easy on the eyes across home, search, categories and product pages, with prices, sale tags and the Depop red kept readable.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -173,6 +173,13 @@
   [class*="hoverContainer"] *,
   [class*="hoverMenu"] * {
     color: #c4cdd6 !important;
+    background-color: transparent !important;
+  }
+
+  /* The autocomplete's "People" rows wrap avatar and text in *Container divs the
+     site never paints; the banner Container fill above would box them inside the row's
+     own hover band. Ties with that rule at (0,2,1), so it must stay below it. */
+  [class*="searchSuggestionsContainer"] div[class*="Container"] {
     background-color: transparent !important;
   }
 
@@ -1241,6 +1248,13 @@
 
   [class*="StyledLogoLink"] svg circle + path {
     fill: #ffffff !important;
+  }
+
+  /* The current-section link is the raw brand red, 3.8:1 on our header bar; the
+     `> ul > li >` chain keeps the sub-menu's own aria-current entry, which the site leaves
+     uncoloured, out of it. */
+  [class*="StyledNav-"] > ul > li > a[aria-current="page"] {
+    color: #ff6b7d !important;
   }
 
   /* The photo bands paint their light plate with a full-size ::before AND

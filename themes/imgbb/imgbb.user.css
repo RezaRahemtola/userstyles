@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name           ImgBB Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.15
-@description    A clean dark theme for ImgBB. Comfortable dark backgrounds across the upload page, image viewer, embed-code panel and albums, with the ImgBB blue kept readable.
+@version        1.0.16
+@description    A clean dark theme for ImgBB. Dark backgrounds across the upload page, image viewer, embed-code panel and albums, with the ImgBB blue kept readable.
 @author         Reza Rahemtola
 @supportURL     https://github.com/rezarahemtola/userstyles/issues
 @license        MIT
@@ -378,6 +378,12 @@
   .upload-box-status {
     background-color: transparent !important;
     color: #c4cdd6 !important;
+  }
+
+  /* On /upload the box is an empty in-flow shell (its heading is position:fixed) that the site keeps transparent; a surface here is a bare band under the top bar. */
+  body#upload .upload-box,
+  #upload #anywhere-upload {
+    background-color: transparent !important;
   }
 
   /* An icon FONT, so the generic span colour repaints it. Keep it ImgBB blue. */

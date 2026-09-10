@@ -960,10 +960,40 @@
     background-color: #332d1a !important;
   }
 
-  /* Same "current record" tint elsewhere in the databases */
+  /* Same "current record" tint elsewhere in the databases. The board table's
+     cells are also matched by the (0,2,2) `.contnt table tbody tr td`
+     transparent reset, so the current row is restated above it. */
   .customboard-current,
-  .customboard-current td {
+  .customboard-current td,
+  .contnt table tbody tr.customboard-current,
+  .contnt table tbody tr.customboard-current td {
     background-color: #332d1a !important;
+  }
+
+  /* Board cells identical to the reference design are dimmed; the changed
+     ones keep the body ink, which is the whole point of the table. */
+  .customboards td.unchanged {
+    color: #8b949e !important;
+  }
+
+  /* Lifted a step on the amber current row to clear 4.5:1 at 12px */
+  .customboards .customboard-current td.unchanged {
+    color: #98a2ad !important;
+  }
+
+  /* Chip-page lists ("All <arch> GPUs", "Architecture History") are odd
+     children of `section.details > div` and take the site's #fcfcfc zebra. */
+  .all-gpus,
+  .gpu-history {
+    background-color: #1c2128 !important;
+  }
+
+  .gpu-history__year {
+    color: #8b949e !important;
+  }
+
+  .gpu-history__entry-active .gpu-history__year {
+    color: #c4cdd6 !important;
   }
 
   .all-gpus__entry-active,
@@ -1006,6 +1036,17 @@
   .gpudb-details section.details .multigpu::after {
     background-color: #182a1a !important;
     color: #7ee787 !important;
+  }
+
+  /* Numeric-format grid: the site's pale UNSUPPORTED grey out-shines the green
+     on a dark plate, so the two states swap emphasis unless both are restated. */
+  .gpudb-details .contnt section.details .gpudb-formats .supported {
+    color: #3fb950 !important;
+  }
+
+  .gpudb-details .contnt section.details .gpudb-formats .unsupported,
+  .gpudb-details .contnt section.details .gpudb-formats-none {
+    color: #8b949e !important;
   }
 
   /* Add-Filters flyout internals */
@@ -2435,6 +2476,17 @@
   .reactionSummary li,
   .reactionsBar .reactionSummary li {
     background-color: transparent !important;
+  }
+
+  /* Collapsed "Low quality post by" row: the site pins its #777 ink with
+     !important at (0,1,0), and its hover plate is the light-style
+     highlight token. */
+  .message .low-quality-post {
+    color: #8b949e !important;
+  }
+
+  .message .low-quality-post:hover {
+    background-color: #21303f !important;
   }
 
   /* Neither surface exists at load time: the voter list is a `toggleTarget`

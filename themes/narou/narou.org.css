@@ -617,14 +617,25 @@
     color: #1a1109 !important;
     border-color: #ff922b !important;
   }
-  /* Natively transparent link-buttons, not filled chips. blog.syosetu.com's scale
-     is inverted (its bare .c-button is the brand-blue PRIMARY), so a neutral chip
-     here erases its only rank distinction. */
+  /* Natively transparent link-buttons, not filled chips. */
   .c-button.c-button--minor,
   .c-button.c-button--outline,
   .c-button.c-button--secondary {
     background-color: transparent !important;
     color: #5fb0e6 !important;
+  }
+  /* blog.syosetu.com's scale is inverted: its BARE .c-button is the brand-blue
+     primary and --secondary the quiet one. --center is emitted by the blog sheet
+     alone, so it is the only hook that reaches the blog's primary without
+     repainting the network's white bare button. */
+  .c-button.c-button--center:not(.c-button--secondary) {
+    background-color: #1f6feb !important;
+    color: #ffffff !important;
+    border-color: #1f6feb !important;
+  }
+  .c-button.c-button--center:not(.c-button--secondary):hover {
+    background-color: #1a5fd0 !important;
+    color: #ffffff !important;
   }
   /* Each is a transparent chip whose identity is its label colour: --outline-warn
      destructive, --outline-cheers the チアーズ green (paired with --primary-cheers'
@@ -1373,6 +1384,7 @@
   #mobile,
   #marker,
   #top_typesearch,
+  .div_h2,
   .div_h3 {
     background-color: #0d1117 !important;
     background-image: none !important;

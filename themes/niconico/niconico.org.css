@@ -327,8 +327,21 @@
   }
   /* The channel link announces itself only by turning #559cff on hover, and the heading pass pins it — without this it stops reading as clickable. */
   a.channel-name-anchor:hover { color: #5fb0e6 !important; }
+  /* The 関連コンテンツ rows announce hover with a plate one step above the panel, and the `-card` surface arm pins them flat. */
+  .ga-ns-related-content-card:hover { background-color: #262c33 !important; }
   /* Same shape on every live program card. */
   a.name-label:hover { color: #5fb0e6 !important; }
+  /* Live home: the hero card's title turns blue under the pointer, and every card's broadcaster name turns blue when the pointer is on its provider ROW, not the name itself. Both are pinned by the `-title` / `-label` passes below. */
+  .organization-super-important-program-card .program-title:hover,
+  .program-provider-card .information:hover > a.name-label { color: #5fb0e6 !important; }
+  /* Three of the home's card rails paint the SUMMARY blue on hover and their titles `inherit` it; the stage rail's white-on-artwork cards share the card markup but have no such rule, so the rails are named. */
+  [class*="local-program-list-section"] .program-summary:hover > .program-title,
+  [class*="nicoad-program-list-section"] .program-summary:hover > .program-title,
+  [class*="ranking-program-list-section"] .program-summary:hover > .program-title { color: #5fb0e6 !important; }
+  /* Live search / timetable / ranking lists: the list layout hovers the TITLE, the tile layouts the summary. */
+  .program-card-list[data-program-card-view-mode="list"] .program-summary > .program-title:hover,
+  .program-card-list[data-program-card-view-mode="tile"] .program-summary:hover > .program-title,
+  [data-layout="tile"] .program-card-list .program-summary:hover > .program-title { color: #5fb0e6 !important; }
 
   /* Live broadcast-history embed — the iframe a www user page's 生放送 tab mounts. This theme reaches it (a live document), but it is a SEPARATE one: no host-page scan sees it. The month picker marks its choice with aria-pressed and the pager with aria-selected; both keep the active azure so the choice still reads. The prev/next arrows are a mask-image ::before whose background-color IS the glyph, so they are lightened — but the number buttons' ::before is the digit itself and takes the button's colour, so it must NOT be given a background. */
   .ga-ns-broadcast-history-page { background-color: #14181d !important; }
@@ -527,6 +540,22 @@
   }
   .NC-VideoMenuDrawerPlaceHolder a:hover > *,
   .NC-WebDrawer a:hover > * { background-color: #262c33 !important; }
+  /* The rail's language picker is an Ark UI select. Its trigger rests in the rail's own #1a1a1a ink, and its listbox is portalled under <body> — outside the drawer subtree — as a #fff sheet with #1a1a1a rows and a black-wash hover. Scoped to the legacy body class: the modern pages' selects are token-driven. */
+  .NC-VideoMenuDrawerPlaceHolder [data-scope="select"][data-part="trigger"],
+  .NC-VideoMenuDrawerPlaceHolder [data-scope="select"][data-part="value-text"] { color: #c4cdd6 !important; }
+  .NC-VideoMenuDrawerPlaceHolder [data-scope="select"][data-part="trigger"]:hover { background-color: #262c33 !important; }
+  .BaseLayout [data-scope="select"][data-part="content"],
+  .BaseUniLayout [data-scope="select"][data-part="content"] {
+    background-color: #1c2128 !important; box-shadow: 0 0 8px #0d1117 !important;
+  }
+  .BaseLayout [data-scope="select"][data-part="item"],
+  .BaseUniLayout [data-scope="select"][data-part="item"] { color: #c4cdd6 !important; }
+  .BaseLayout [data-scope="select"][data-part="item"]:hover,
+  .BaseLayout [data-scope="select"][data-part="item"][data-highlighted],
+  .BaseUniLayout [data-scope="select"][data-part="item"]:hover,
+  .BaseUniLayout [data-scope="select"][data-part="item"][data-highlighted] {
+    background-color: #262c33 !important; color: #e6edf3 !important;
+  }
 
   /* Each home section is a stable *Container; the cards inside are hashed React nodes, so the subtree is reset dark and the cards repainted on top. */
   .RecommendAreaContainer, .RecommendVideoContainer, .ForYouRankingContainer,
@@ -616,6 +645,10 @@
   }
   .ContentsPickupContainer, .ContentsPickupContainer-waku,
   .ContentsPickupContainer-wakuItems { background-color: transparent !important; }
+  /* The live-event window is a #fff slab that only renders while a campaign sets data-wktk-show; its title/blurb are already lightened by the heading and description passes, which also pin the title's #0080ff hover. The player is an ext.live iframe, out of reach; its failure plate is the site's own #252525 with #555 text. */
+  .LiveWindowContainer { background-color: #1c2128 !important; }
+  .LiveWindowContainer-metaLink:hover > .LiveWindowContainer-metaTitle { color: #5fb0e6 !important; }
+  .ExtPlayerView-errorText { color: #c4cdd6 !important; }
   /* "Sticker"-type headings: a near-black label wearing a 4px #fafafa `-webkit-text-stroke`. Our text pass flips the FILL but nothing reaches the stroke, so fill and outline end up the same tone and the letterforms render hollow. */
   .ContentsPickupContainer-wakuTitleText { -webkit-text-stroke-color: #14181d !important; }
   .StageRecommendLiveCard, .StageRequestedContentCard, .StageEventContentCard {
@@ -679,6 +712,11 @@
   .ExpandBoxButton-overlay {
     background-image: linear-gradient(rgba(28, 33, 40, 0) 0px, #1c2128) !important;
   }
+  /* The もっと見る toggle is label + chevron in one #999 that turns #0080ff on hover (also when the pointer is on the fade above it). The `Description` pass pins only the label, so the pair would split: chevron blue, label grey. */
+  .ExpandBoxButton-icon { fill: #c4cdd6 !important; }
+  .ExpandBoxButton:hover, .ExpandBoxButton-overlay:hover + .ExpandBoxButton { color: #5fb0e6 !important; }
+  .ExpandBoxButton:hover .ExpandBoxButton-icon,
+  .ExpandBoxButton-overlay:hover + .ExpandBoxButton .ExpandBoxButton-icon { fill: #5fb0e6 !important; }
   /* Same fade, HORIZONTAL and on a pseudo. A pseudo's background-IMAGE is invisible to both the element-bg walk and the pseudo-colour probe. */
   .NC-MylistMediaObject-thumbnail::before {
     background-image: linear-gradient(90deg, rgba(28, 33, 40, 0), #1c2128) !important;
@@ -742,6 +780,9 @@
   }
   /* A transparent→#fff scroll-shadow as a background-IMAGE on the same body, which the colour rule alone cannot clear. */
   .ModalContent-body { background-image: none !important; }
+  /* The dialog's two actions are a <button> and an <a> sharing one class. The legacy `.BaseLayout a` pass (0,1,1) outranks the bare class and would grey only the anchor half, so the pair stops reading as sibling actions. */
+  .DialogAction, a.DialogAction { color: #5fb0e6 !important; }
+  .DialogAction:hover, a.DialogAction:hover { color: #9bd4ff !important; }
   .ModalActionButton { background-color: #2d333b !important; }
   /* A #fff sheet whose #ffbe3c header strip takes the light heading ink while its body stays #252525. Gated on a legacy-UA sniff, so nothing that can run a userstyle manager renders it — force it visible (`removeAttribute('hidden')`) to check. */
   .NC-LegacyBrowserModal-modal { background-color: #1c2128 !important; }
@@ -812,6 +853,10 @@
   }
   /* The share glyph is a MASK-IMAGE button: its `background-color` IS the artwork's fill, not a panel, so it is LIGHTENED — darkening it would erase the glyph. */
   .ShareButton-button { background-color: #c4cdd6 !important; }
+  /* The wrapper's hover disc is a #eee (_grey) / #ccc (_white) wash that would sit UNDER that light glyph. */
+  .ShareButton_grey:hover, .ShareButton_white:hover { background-color: #2d333b !important; }
+  .ShareButton_grey:hover .ShareButton-button,
+  .ShareButton_white:hover .ShareButton-button { background-color: #e6edf3 !important; }
   /* A white pill under the legacy text pass's light label. */
   .ContinuousPlayButton {
     background-color: #2d333b !important; border-color: #3a424c !important;

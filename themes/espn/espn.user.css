@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ESPN Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.27
+@version        1.0.28
 @description    Dark theme for ESPN and its international editions: dark homepage, sport sections, scores, gamecasts and stories, with team and score colors preserved.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -146,6 +146,10 @@
   .BaseballSituation .AnchorLink, .Athlete__Link .Athlete__PlayerName {
     color: #5fb0e6 !important; }
   .Table__sub-header .AnchorLink { color: #e6edf3 !important; }
+  /* Card footer actions ("Full Roster", "See All", "Full Standings") and the ticket-price line
+     are plain leaf .AnchorLinks in ESPN's link blue; .Button variants keep their own ink. */
+  .Card__Footer .AnchorLink:not(.Button), a.powered-by__ticketsAvailable,
+  .powered-by__details--buy .AnchorLink { color: #5fb0e6 !important; }
 
   /* ---- Story / article body ---- */
   .article, #article-feed .article, .article-body, .Story, .Story__Body,
@@ -355,6 +359,11 @@
   /* Hover moves the 2px underline onto the hovered tab and ESPN paints it #c00, which the
      blanket `*` border reset flattens. */
   .tabs__list__item:hover { border-bottom-color: #c8102e !important; }
+  /* The mobile box score marks the chosen team tab with --clicked and inks its label near-
+     black at three classes, above the --active rule. */
+  .tabs__list .tabs__list__item--clicked .tabs__link,
+  .tabs__list .tabs__list__item--clicked .Button--unstyled {
+    color: #e6edf3 !important; -webkit-text-fill-color: #e6edf3 !important; }
   /* ESPN paints the ACTIVE segment's label live-red as the selected-state accent, flattened by
      the .AnchorLink white rule. */
   a.Button--filter.Button--active, .Button--filter.Button--active {
@@ -463,6 +472,10 @@
   /* .clr-brand-ESPN is the same red. Single class, so it ties with the .Schedule__Time /
      .ScoreCell__Time greys above and wins only by order — keep it below them. */
   .clr-brand-ESPN { color: #ff5a5a !important; -webkit-text-fill-color: #ff5a5a !important; }
+  /* .clr-link is ESPN's link-blue utility (#06c); it marks the footer's Manage Privacy
+     Preferences trigger among blue siblings and outranks both the .ot-sdk-show-settings grey
+     and the .AnchorLink white by order. */
+  .clr-link { color: #5fb0e6 !important; }
   /* Module / section / panel titles ESPN colors with a dark grey (#2b2c2d) */
   .Stats__LeadersTitle, .Table__Title, .Card__Header__Title, .module-header,
   .headerCell__title, .pageHeader__title, .Wrapper__Header, .ContentList__Title,
@@ -631,6 +644,12 @@
   .mediaList__duration, .MediaList__duration, .MediaList__item__time,
   .MediaList__item__meta, .video-playlist-item__duration,
   .playlist__item__duration, .video-duration { color: #9aa4ae !important; }
+  /* The row's play glyph is an SVG <use> with a black fill; the ACTIVE row is marked by a
+     link-blue title and a faint surface tint. */
+  .MediaList__item__icon { fill: #c4cdd6 !important; }
+  .MediaList__item--active { background-color: #21262d !important; }
+  .MediaList__item--active .MediaList__item__description,
+  .MediaList__item--active .MediaList__item__icon { color: #5fb0e6 !important; fill: #5fb0e6 !important; }
 
   /* ---- Scores carousel: light band past the last chip (#f1f2f3) ---- */
   .scores-carousel, .scores-carousel .wrap, .scoreboard-content .wrap,
@@ -969,6 +988,13 @@
      colour as the signal. ---- */
   .PitchCount__Orb:not(.PitchCount__Orb--filled) {
     background-color: transparent !important; border-color: #4a525b !important; }
+  /* ESPN fills a lit strike/out orb with `var(--bg-surface-raised, #d00)`: the token is unset
+     natively so the red fallback paints, but the token block below defines it as the card
+     surface, which makes a lit orb identical to the panel. Balls resolve through a token the
+     block never defines, so only their ring needs restating past the `*` reset. */
+  .PitchCount__Strikes .PitchCount__Orb--filled, .PitchCount__Outs .PitchCount__Orb--filled {
+    background-color: #dd0000 !important; border-color: #dd0000 !important; }
+  .PitchCount__Balls .PitchCount__Orb--filled { border-color: #009944 !important; }
   /* The SCOREBOARD's .BaseballSituation uses .pitches .circle, not .PitchCount__Orb, and fills
      a lit orb through a design token our block remaps to the card surface. The .green modifier
      needs three classes to clear the two-class red rule; the unlit ring is flattened by the
@@ -992,6 +1018,11 @@
   /* The .CustomLegend container hands children a near-black; the percentage is a <div> and
      inherits it. */
   .CustomLegend__Team__Percent { color: #c4cdd6 !important; }
+  /* The legend swatch carries its team colour twice inline: a top-to-transparent gradient and
+     a 1px ring. The ring is an open set of team hexes no rule can restate, and the `*` reset
+     greys it into a neutral box, so the ring goes and the gradient extends under it. */
+  .CustomLegend__Rect {
+    border-color: transparent !important; background-origin: border-box !important; }
   .Weather__Temp, .Weather__Items, .Weather__HiLow { color: #c4cdd6 !important; }
   /* Recharts ticks paint through a `fill` presentation attribute, out of reach of the token
      remaps and any `color` rule. Only the axis scale; series keep their team colours. */
@@ -1272,6 +1303,8 @@
   .evp-player.audio, .evp-player.audio .vjs-text-track-display,
   .evp-player.audio .vjs-menu, .audio-content-container, .RadioContact__Content {
     background-color: #1c2128 !important; }
+  /* The contact card's handle is a leaf .AnchorLink in link blue. */
+  .RadioContact .AnchorLink { color: #5fb0e6 !important; }
   .evp-player.audio, .evp-player.audio .vjs-control, .evp-player.audio button,
   .audio-content-container { color: #c4cdd6 !important; }
   /* .vjs-progress-holder also carries .vjs-slider but is the 30px HIT AREA, not the 4px track
@@ -1296,6 +1329,11 @@
   /* The Autoplay switch draws its whole track as a 1px #0066cc ring on .toggle-checkbox and
      only swaps the ::after knob, so the blanket `*` reset erases the track. */
   .toggle-checkbox { border-color: #5fb0e6 !important; }
+  /* The Share control opens a 290px #fff card (`.vjs-share-open .vjs-branded-social-overlay`)
+     whose title and links are near-black natively; the theme's h3 white and link blue land on
+     that white card, so the panel needs the dark tone the rest of the skin takes. */
+  .evp-player.audio.vjs-share-open .vjs-branded-social-overlay {
+    background-color: #1c2128 !important; }
 
   /* ---- fantasy.espn.com marketing pages (a claimed espn.com subdomain on its own Next.js
      frontend): secondary nav, feature bands and support module ship solid #fff, plus a near-

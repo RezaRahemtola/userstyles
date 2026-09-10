@@ -168,6 +168,13 @@
     background-color: transparent !important;
   }
 
+  /* The autocomplete's "People" rows wrap avatar and text in *Container divs the
+     site never paints; the banner Container fill above would box them inside the row's
+     own hover band. Ties with that rule at (0,2,1), so it must stay below it. */
+  [class*="searchSuggestionsContainer"] div[class*="Container"] {
+    background-color: transparent !important;
+  }
+
   /* Mega-menu "Featured" captions sit on a product photo, guaranteed by #262626 ink
      on an rgba(255,255,255,.7) plate the blanket menu rules re-light and strip. Restore
      both, scoped to an image container so plain menu links keep the light colour. */
@@ -1233,6 +1240,13 @@
 
   [class*="StyledLogoLink"] svg circle + path {
     fill: #ffffff !important;
+  }
+
+  /* The current-section link is the raw brand red, 3.8:1 on our header bar; the
+     `> ul > li >` chain keeps the sub-menu's own aria-current entry, which the site leaves
+     uncoloured, out of it. */
+  [class*="StyledNav-"] > ul > li > a[aria-current="page"] {
+    color: #ff6b7d !important;
   }
 
   /* The photo bands paint their light plate with a full-size ::before AND

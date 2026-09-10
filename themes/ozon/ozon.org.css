@@ -298,6 +298,15 @@
   .vue-portal-target > div {
     background-color: var(--d-bg) !important;
   }
+  /* The same mount hosts every MODAL (language/currency, address book, all
+     filters, login). Their top-level wrapper is the modal component's fixed
+     full-viewport box — natively transparent, with the dimming scrim a CHILD —
+     so the flyout's canvas paint above turns it into an opaque blackout over
+     the page. `b65_` is that component's id prefix (its version suffix rotates,
+     like `b25_` for buttons); the flyout's children carry `uw_`. */
+  .vue-portal-target > div[class*="b65_"] {
+    background-color: transparent !important;
+  }
   /* The flyout is a separate Vue bundle: no --text* tokens, literal colours
      (#070707 headings, navy rgba(0,26,51,.6) links, rgba(0,26,52,.2) rail
      glyphs, #005bff actions). Colour by role — a global `a { color: blue }`
@@ -395,6 +404,32 @@
   .vue-portal-target a[class*="rpProduct_"] {
     color: var(--d-blue-ink) !important;
   }
+  /* The viewer's "Читать полностью" is the same second SPAN beside the body
+     copy as in the list, a literal #005bff the span blanket above swallows. */
+  .vue-portal-target [data-review-uuid] div > span + span {
+    color: var(--d-blue-ink) !important;
+  }
+  /* "Комментарии N" heading: the count is a navy-literal SPAN, the only child
+     of the heading DIV, outside both uuid roots. The same only-child shape
+     is a comment's or a short review's body copy inside a root, handed back
+     to the primary ink by the second rule. */
+  .vue-portal-target div[class*="rpProduct_"] > span[class*="rpProduct_"]:only-child {
+    color: var(--d-text-3) !important;
+  }
+  .vue-portal-target [data-review-uuid] div[class*="rpProduct_"] > span[class*="rpProduct_"]:only-child,
+  .vue-portal-target [data-comment-uuid] div[class*="rpProduct_"] > span[class*="rpProduct_"]:only-child {
+    color: var(--d-text) !important;
+  }
+  /* Comment thread: the "Показать больше ответов" expander is the a25 button
+     component with a literal #005bff label (2.9:1 on the dark column), in the
+     list and in the viewer alike; the reply's indent line is a 1px ::before on
+     the div after the comment header, a pale literal. */
+  div[class*="rpProduct_"] > button[class*="a25_"] span {
+    color: var(--d-blue-ink) !important;
+  }
+  [data-comment-uuid] > div + div[class*="rpProduct_"]::before {
+    background-color: var(--d-border-2) !important;
+  }
   /* The viewer's "Другие фото и видео" grid carries a sticky #fff
      back-to-top disc whose chevron takes the lifted --textPrimary. Disc and
      grid are the two children of one attribute-less wrapper under
@@ -411,6 +446,18 @@
      shadow, which stays. */
   .vue-portal-target div {
     box-shadow: none !important;
+  }
+  /* …except the text-field component (`a3s5_` id prefix, version suffix
+     rotates), whose ONLY outline is an inset box-shadow: 1px pale at rest, 2px
+     brand blue focused, on a box the same colour as the panel. The box carries
+     TWO a3s5_ classes and no typography class; the outer wrapper has one class,
+     and the floating label pairs its a3s5_ classes (it gains a focus modifier
+     too) with a ts* class. */
+  .vue-portal-target div[class*=" a3s5_"]:not([class*="ts"]) {
+    box-shadow: inset 0 0 0 1px var(--d-border-2) !important;
+  }
+  .vue-portal-target div[class*=" a3s5_"]:not([class*="ts"]):focus-within {
+    box-shadow: inset 0 0 0 2px var(--d-blue) !important;
   }
 
   /* PORTAL-MOUNTED MODALS (language/currency, address book …) share .vue-portal-target with
@@ -436,6 +483,14 @@
   }
   [data-widget="currencyLanguageSelector"] p {
     color: var(--d-text) !important;
+  }
+  /* Its two SELECT fields are the `f5_` field component: a 2px border, pale
+     at rest and brand blue while the field's combobox input holds focus (the
+     open state), which the blanket border softener paints the same grey in
+     both states. The root class leads the class list; the leaked `errors`
+     prop pins the component. */
+  .vue-portal-target div[class^="f5_"][errors]:focus-within {
+    border-color: var(--d-blue) !important;
   }
   /* The currency SELECT uses the shared listbox, but its option CONTENT is the modal's own
      bundle: a literal #f5f7fa plate on the group headers and a literal rgba(0,26,51,.6) on them
@@ -851,8 +906,11 @@
      rgba(255,255,255,.8) veil with a blue count. It has no inline background, so the reset above
      clears it and leaves #005bff text on the bare photo. Given the dark-side equivalent,
      mirroring the video-timecode scrim two rules down; `:not([style])` keeps the inline-styled
-     timecode pill in the same button family untouched. */
-  [data-widget="webListReviews"] button[aria-label="Открыть галерею"] > div:not([style]) {
+     timecode pill in the same button family untouched. Unscoped: the button also renders in
+     the media viewer's portal column, where nothing else darkens the veil; the portal form
+     is restated to outrank that column's muted-DIV rule for the count. */
+  button[aria-label="Открыть галерею"] > div:not([style]),
+  .vue-portal-target button[aria-label="Открыть галерею"] > div:not([style]) {
     background-color: rgba(7, 7, 7, 0.64) !important;
     color: #ffffff !important;
   }
@@ -885,6 +943,17 @@
   [data-widget="webPDPListQuestions"] div:not([class]) > div[class*="rpProduct_"]:first-child {
     color: var(--d-text-3) !important;
   }
+  /* "Лучший ответ" badge — natively white on a green plate the webReviewTabs
+     reset strips (no inline background, hashed class). The plate cannot be
+     named without a parent selector, but the badge is the widget's only lone-child DIV
+     that opens with an inline SVG (the medal), so the medal and the label DIV
+     after it take the positive green instead. Scoped to the PDP tab: on the
+     /questions/ route the same widget sits outside webReviewTabs and keeps
+     its plate, where a green label would vanish into it. */
+  [data-widget="webReviewTabs"] [data-widget="webPDPListQuestions"] div[class*="rpProduct_"]:only-child > svg:first-child,
+  [data-widget="webReviewTabs"] [data-widget="webPDPListQuestions"] div[class*="rpProduct_"]:only-child > svg:first-child + div {
+    color: var(--d-green) !important;
+  }
   /* "ЗАДАЙТЕ ВОПРОС О ТОВАРЕ" form. The rpProduct module paints its plate a
      literal #f5f7fa through a hashed class while its heading and hint take the
      lifted --graphicPrimary. The <form> is the widget's only form. */
@@ -895,12 +964,16 @@
      instead of reading the tokens: rgb(7,7,7) on headings, names and body,
      rgba(0,26,51,.6) on dates and meta. Literals, and the module's hashes
      rotate, so the TAGS carry the split: body copy in SPANs, metadata in
-     DIVs. */
+     DIVs. The `b5_` badge component ("Отзыв устарел" and its kin) is
+     excluded: it is fully token-inked (--textWarning / --textPositive /
+     --textNegative …, all remapped at :root), its root sets the colour and
+     its inner DIVs inherit it, so the blanket would flatten every variant
+     to one grey. */
   [data-widget="webListReviews"] span,
   [data-widget="reviewsTitle"] span {
     color: var(--d-text) !important;
   }
-  [data-widget="webListReviews"] div,
+  [data-widget="webListReviews"] div:not([class*="b5_"]),
   [data-widget="reviewsTitle"] sup {
     color: var(--d-text-3) !important;
   }
@@ -919,7 +992,8 @@
      the pager's "Дальше", the button component's ANCHOR form. The anchor already takes the
      widget link blue, so its label only inherits, which keeps the current page chip's label
      white. */
-  [data-widget="webListReviews"] a div {
+  [data-widget="webListReviews"] a div,
+  [data-widget="webListReviews"] a div:not([class*="b5_"]) {
     color: inherit !important;
   }
   [data-widget="webListReviews"] button[class*="ga5_"],
@@ -1343,7 +1417,8 @@
      it, which our :root remap darkens. Keyed on BOTH inline tokens so it hits only this
      scrim+layerFloor1 pattern and never the elements using --layerFloor1 as a
      background-color (the "Ozon Express" badge). The scrim stays native. */
-  [style*="clearDarkKey600"][style*="var(--layerFloor1)"] {
+  [style*="clearDarkKey600"][style*="var(--layerFloor1)"],
+  .vue-portal-target div[style*="clearDarkKey600"][style*="var(--layerFloor1)"] {
     color: #ffffff !important;
   }
   /* Second --layerFloor1-as-a-glyph use: the play triangle + ring on those thumbnails,
@@ -1438,9 +1513,19 @@
      tokens cannot reach. */
 
   /* PDP aspect labels ("Цвет:", "Оперативная память:") — a literal
-     `color: rgba(0,26,51,.6)` on the label span. */
+     `color: rgba(0,26,51,.6)` on the label span. The label is the text
+     component's CLASSED inner span; the value beside it ("ментол") and the
+     size select's value spans are classless and natively primary ink. The
+     select's urgency note ("осталась 1 штука!") is the one classed span
+     under a ts* value span, a literal pink. */
   [data-widget="webAspects"] span span {
     color: var(--d-text-3) !important;
+  }
+  [data-widget="webAspects"] span > span:not([class]) {
+    color: var(--d-text) !important;
+  }
+  [data-widget="webAspects"] span[class*="tsBody"] > span[class*="pdp_"] {
+    color: var(--d-red) !important;
   }
 
   /* SELECTED aspect (colour swatch, and the RAM / storage / model chips) — Ozon rings the
@@ -1523,10 +1608,37 @@
     background-color: #16233a !important;
   }
 
+  /* CHARACTERISTICS table: each <dt> label sits in a span whose background is
+     the page-white so it masks the dotted leader running under the row; the
+     token it takes resolves to the ELEVATED surface, one step above the
+     canvas the table sits on, so the mask reads as a plate. Canvas, not
+     surface. */
+  [data-widget="webCharacteristics"] dt span {
+    background-color: var(--d-bg) !important;
+  }
+
   /* Spec-rating verdicts ("среднее" / "высокая") ship the raw brand blue #005bff
      (~2.9:1 on the base). */
   [data-widget="contextQuestionsStatistic"] span {
     color: var(--d-blue-ink) !important;
+  }
+  /* The same widget's size-fit histogram ("Соответствие размеру") is the
+     rpProduct module: label DIVs at rgba(0,26,51,.6), percentage DIVs at
+     rgb(7,7,7), a #f5f7fa track and a #005bff fill with an inline percent
+     width. The two section headings are the widget's direct children and
+     already take the tokens; every module DIV nested deeper is a row part.
+     The fill matches the review histogram's gold selector one level up, so
+     it is restated here in blue — the same spread shadow paints the track
+     through its overflow clip. */
+  [data-widget="contextQuestionsStatistic"] div[class*="rpProduct_"] div[class*="rpProduct_"] {
+    color: var(--d-text-3) !important;
+  }
+  [data-widget="contextQuestionsStatistic"] div[class*="rpProduct_"] > div[class*="rpProduct_"] + div[class*="rpProduct_"] {
+    color: var(--d-text) !important;
+  }
+  [data-widget="contextQuestionsStatistic"] div[style*="width"][style*="%"] {
+    background-color: var(--d-blue) !important;
+    box-shadow: 0 0 0 300px rgba(255, 255, 255, 0.12) !important;
   }
 
   /* "Есть дешевле" cross-sell label (data-widget="webBestSeller") ships a literal
@@ -1665,6 +1777,7 @@
     --search-result-section: var(--d-text-3) !important;
     --ozi-text-primary-transparent: var(--d-text) !important;
     --ozi-text-secondary-transparent: var(--d-text-3) !important;
+    --ozi-text-tertiary-transparent: rgba(255, 255, 255, 0.45) !important;
     --icon-500: var(--d-text-3) !important;
     --icon-600: var(--d-text-2) !important;
     --oz-gray-40: var(--d-text-2) !important;
@@ -1729,12 +1842,16 @@
     background-color: var(--d-surface-2) !important;
   }
 
-  /* Header search: idle it is a translucent tint, but hover and focus swap in
-     the opaque page-white token — and the field's own ink is white, so a
-     focused search box swallowed what you were typing. */
+  /* Header search: the field is painted from --oz-white in every state
+     (that token stays untouched, it is also ink on brand grounds) and its own
+     ink is white, so typed text vanished into the box. Rest and hover keep
+     one step between them. */
+  .search__wrapper {
+    background-color: var(--d-surface-2) !important;
+  }
   .search__wrapper:hover,
   .search__wrapper:focus-within {
-    background-color: var(--d-surface-2) !important;
+    background-color: #232a32 !important;
   }
 
   /* Scroll-to-top disc: a literal #f0f2f5 puck fixed over the article. */
@@ -1772,23 +1889,25 @@
      — and `icons/check.svg` is #005BFF and must keep the brand hue marking the selected
      country.
      A filter takes the host's own plate, text and children with it, so it is only safe on
-     a pseudo-element or a box carrying nothing but the glyph. */
+     a pseudo-element or a box carrying nothing but the glyph.
+     NOT in this list: `.menu__lang::before/::after` and `.dropdown::before`, which are
+     mask-image glyphs painted from --ozi-graphic-tertiary-transparent (remapped light
+     above) — an inversion there turns a light glyph dark. */
   .tree-item__button-icon,
   .tree-item__button-marker-arrow,
   .page-header__burger,
   .country-modal__close-btn,
-  .dropdown::before,
-  .select__trigger::after,
-  .menu__lang::after {
+  .select__trigger::after {
     filter: invert(1) !important;
   }
-  /* The remaining glyphs are the background of a box that also carries text, so they
-     can only be replaced, not filtered: the header magnifier and the mobile menu's
-     language-row chevron, restated as the same paths in the muted ink. */
+  /* The remaining glyphs are the background of a box that also carries text or its own
+     plate, so they can only be replaced, not filtered: the header magnifier and the
+     mobile header's back chevron (`icons/menu-back.svg`, #4B667E at .53, on the header
+     plate this block paints), restated as the same paths in the muted ink. */
   .search__wrapper {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%238b949e' d='M17.8924 15.0639C18.5962 13.8729 19 12.4836 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C12.4836 19 13.8729 18.5961 15.064 17.8923L17.5858 20.4142C18.3669 21.1953 19.6332 21.1953 20.4143 20.4142C21.1953 19.6332 21.1953 18.3668 20.4143 17.5858L17.8924 15.0639ZM11 16C8.23858 16 6 13.7614 6 11C6 8.23858 8.23858 6 11 6C13.7614 6 16 8.23858 16 11C16 13.7614 13.7614 16 11 16Z'/%3E%3C/svg%3E") !important;
   }
-  .menu__lang {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='25' viewBox='0 0 24 25'%3E%3Cpath fill='%238b949e' d='M9.29289 6.35527C8.90237 6.7458 8.90237 7.37896 9.29289 7.76948L13.5858 12.0624L9.29289 16.3553C8.90237 16.7458 8.90237 17.379 9.29289 17.7695C9.68342 18.16 10.3166 18.16 10.7071 17.7695L15.7071 12.7695C16.0976 12.379 16.0976 11.7458 15.7071 11.3553L10.7071 6.35527C10.3166 5.96475 9.68342 5.96475 9.29289 6.35527Z'/%3E%3C/svg%3E") !important;
+  .page-header__mobile-back-link {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%238b949e' d='M15.5992 4.47933C16.1629 5.0864 16.1277 6.03549 15.5207 6.5992L9.70442 12L15.5207 17.4008C16.1277 17.9645 16.1629 18.9136 15.5992 19.5207C15.0355 20.1278 14.0864 20.1629 13.4793 19.5992L6.47932 13.0992C6.17367 12.8154 6 12.4171 6 12C6 11.5829 6.17367 11.1846 6.47932 10.9008L13.4793 4.40082C14.0864 3.83711 15.0355 3.87226 15.5992 4.47933Z'/%3E%3C/svg%3E") !important;
   }
 }

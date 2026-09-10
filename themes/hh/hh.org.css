@@ -1,4 +1,6 @@
-/* hh.ru Dark (HeadHunter) — report issues: https://github.com/rezarahemtola/userstyles/issues */
+/*
+  hh.ru Dark (HeadHunter) — report issues: https://github.com/rezarahemtola/userstyles/issues
+*/
 
 @-moz-document domain("hh.ru"), domain("hh.kz"), domain("hh.uz"), domain("hh.by"), domain("rabota.by"), domain("headhunter.kg") {
 
@@ -2203,6 +2205,12 @@
     background-image: none !important;
     background-color: #1c2128 !important;
     color: #7be8d8 !important; -webkit-text-fill-color: #7be8d8 !important; }
+  /* builder CTA: a light pill with a teal gradient IMAGE riding over the plate; the plate rule alone leaves the gradient under the light ink */
+  [class*="tmpl_hh_benefits__button"], [class*="tmpl-hh-benefits__button"],
+  [class*="tmpl_hh_benefits__button"] *, [class*="tmpl-hh-benefits__button"] * {
+    background-image: none !important;
+    background-color: #1d5b53 !important;
+    color: #ffffff !important; }
   /* class-less <img> chevrons (black strokes, transparent) in a glyph-only box, so a filter is safe. */
   [class*="tmpl_hh_workers__arrow"] img, [class*="tmpl-hh-workers__arrow"] img {
     filter: invert(0.8) !important; }
@@ -2308,6 +2316,11 @@
     border-color: #2f81f7 !important; }
   [class*="magritte-button-style-primary"]:hover,
   .bloko-button_kind-primary:hover { background-color: #4c9bff !important; }
+  /* the SUCCESS kind is a green CTA; below the `:not([class*="primary"])` neutral fill it ties at 0-2-0 and wins on order */
+  .bloko-button.bloko-button_kind-success {
+    background-color: #238636 !important; color: #ffffff !important;
+    border-color: #238636 !important; }
+  .bloko-button.bloko-button_kind-success:hover { background-color: #2ea043 !important; }
   /* Label/icon colour must follow the button variant or the blanket `span` / `a span` rules paint a blue CTA's white label light-grey. */
   [class*="magritte-button_style-accent"][class*="magritte-button_mode-primary"] span,
   [class*="magritte-button_style-special"][class*="magritte-button_mode-primary"] span,
@@ -2737,7 +2750,9 @@
   .calendar-norms-separator td::before {
     background-color: #2d333b !important; }
 
-  /* ---- Legal / rules documents (/conditions, /terms) ---- white sidebar cards. The toggle's off track is a light pill; its knob and the ON track's green are correct as-is. */
+  /* ---- Legal / rules documents (/conditions, /terms) ---- white sidebar cards. The toggle's off track is a light pill; its knob and the ON track's green are correct as-is. The document body sits inside a `tmpl_hh_tab` wrapper, so the chameleon ink blanket (0-1-0) reaches its inline anchors; `.hh-rules a` clears it at 0-1-1 and needs its own hover arm. */
+  .hh-rules a { color: #5fb0e6 !important; }
+  .hh-rules a:hover { color: #9bd4ff !important; }
   .hh-rules__banner, .hh-rules__all, .hh-rules__button, .hh-rules__archive-link {
     background-color: #1c2128 !important; }
   .hh-rules__banner-button { background-color: #21262d !important; }
@@ -2757,6 +2772,10 @@
   .cx_signsItem_example_block, .cx_scammersItems .slick-arrow {
     background-color: #21262d !important; }
   .cx_scammersItem_media::after { background-image: none !important; }
+  /* the module's CTA is an <a> with a white label on its own blue fill; the site-wide link ink and border reset must not reach it. The example toggle and the green highlight are the module's own hues. */
+  a.cx_button { color: #ffffff !important; border-color: #3c9df2 !important; }
+  .cx_signsItem_example_click { color: #5fb0e6 !important; }
+  span.cx_green { color: #7bcc7e !important; }
 
   /* ---- Блог (/blog) ---- separate Next.js app the supernova header rules never reach. It runs an older Magritte set (icon-primary #000); the icon arm is scoped to the header so the logo's own fills survive. */
   header[class*="Header_header"],
@@ -2875,6 +2894,18 @@
   #cmsFrontendAppRoot [class*="_sliderSelectorList_"] > [class*="_active_"],
   #cmsFrontendAppRoot [class*="_sliderSelectorList_"] > [class*="_active_"] * {
     color: #ffffff !important; }
+
+  /* ---- startic CMS landings (/article/resume_audit …) ---- inline body stylesheet. `.btn` is an <a> with a white label on the page's own blue fill and `btn-whiteborder` a white outline on a colour band, so the link ink and border reset must not reach them; the step counter is a `::before` in the page's purple, lifted for the dark base. */
+  .HH-ContainerForStarticMarkup a.btn,
+  .HH-ContainerForStarticMarkup a.btn * { color: #ffffff !important; }
+  .HH-ContainerForStarticMarkup a.btn-whiteborder { border-color: #ffffff !important; }
+  .HH-ContainerForStarticMarkup .custom-howitworks__item::before {
+    color: #c3a6f5 !important; border-color: #c3a6f5 !important; }
+
+  /* ---- Vacancy map (/search/vacancy/map) ---- the overlay controls keep the site's white plate over the light raster, so the neutral-secondary label/icon tokens (dark-theme values) must be pinned dark inside them */
+  [class*="control-highlighting--"] [class*="magritte-button_style-neutral"] span:not(.metro-point),
+  [class*="control-highlighting--"] [class*="magritte-button_style-neutral"] svg {
+    color: #1f2429 !important; }
 
   /* ---- hh бизнес (/hrmobile) ---- two labels sit on a plate hh paints white and colours purple, correct there, so only the ink comes back; the third `.hh-business-text` is on the dark hero */
   .hh-business__main-subtitle .hh-business-text { color: #7945c1 !important; }

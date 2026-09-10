@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Substack Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.13
+@version        1.0.14
 @description    A clean, comprehensive dark theme for Substack — the hub, discovery, and every publication and post — that keeps each newsletter's own accent color intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -406,6 +406,11 @@
   #substack-home .featured-byline {
     color: #8b949e !important;
   }
+  /* The site's hover wash is the cream #fafafa, under the light ink above. */
+  #substack-home .resource:hover,
+  #substack-home .featured-resource:hover {
+    background-color: #262c33 !important;
+  }
 
   /* Anchored to the route's `page-` wrapper: these stems are not unique to the
      routes (`heroSubtitle-` is white-on-orange on /about). The loose
@@ -533,6 +538,10 @@
   .www-footer h4 {
     color: #e6edf3 !important;
   }
+  /* Column links ship a hardcoded #808080 (4.4:1 here). */
+  .www-footer .footer-info-col a {
+    color: #8b949e !important;
+  }
   /* WHITE lockups on a white anchor; inverting yields the vendors' own BLACK
      lockup rather than an off-brand recolour, and hue-rotate keeps the Play
      triangle's colours. */
@@ -607,6 +616,12 @@
      natively. */
   a {
     color: #00cc99;
+  }
+  /* The theme's bare `a:hover` is #00231d, invisible here; same specificity,
+     no !important, so the more specific brand-link hovers still win. */
+  a:hover,
+  a:focus {
+    color: #66e0bd;
   }
   /* Green as INK (glyph + outline), not fill. A `button`, so the `a` rule
      above misses it; its native hover goes DARKER, so here hover moves UP the
