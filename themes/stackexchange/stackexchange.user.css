@@ -2883,10 +2883,10 @@
   /* The toolbar glyphs are a three-row sprite (rest / focused / pressed) whose
      focused row is #535a60 and pressed row near-black, both baked for the light bar.
      SE ships a dark twin of the sprite for its own dark mode (`wmd-buttons-dark.svg`)
-     with the same row layout, so swapping the image keeps every state. Host-relative:
-     each site serves it from its own `/Content/`. */
+     with the same row layout, so swapping the image keeps every state. Absolute URL
+     (the file is identical on every network site) — .org rejects relative URLs. */
   .wmd-button > span {
-    background-image: url("/Content/Img/unified/wmd-buttons-dark.svg") !important;
+    background-image: url("https://stackoverflow.com/Content/Img/unified/wmd-buttons-dark.svg") !important;
   }
 
   /* The link / image inserter is an inline panel under the toolbar on `var(--white)`,
