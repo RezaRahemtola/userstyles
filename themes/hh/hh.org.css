@@ -1,7 +1,6 @@
 /*
   hh.ru Dark (HeadHunter) — report issues: https://github.com/rezarahemtola/userstyles/issues
 */
-
 @-moz-document domain("hh.ru"), domain("hh.kz"), domain("hh.uz"), domain("hh.by"), domain("rabota.by"), domain("headhunter.kg") {
 
   :root { color-scheme: dark !important; }
@@ -2136,6 +2135,12 @@
   [data-qa="vacancy-serp__vacancy"], [class*="vacancy-card"],
   [class*="serp-item"], [class*="-card-"] {
     background-color: #1c2128 !important; border-color: #2d333b !important; }
+  /* inside a scroll strip (SERP tabs row, company carousel) `magritte-position-container` is a bare full-width layout box, not the input shell */
+  [class*="magritte-scrollable-container"] > [class*="magritte-position-container"] {
+    background-color: transparent !important; }
+  /* square wrappers of a rounded surface: a checkable `label.magritte-card` paints on its inner `magritte-content-border-container`, and `vacancy-card--` sits inside the rounded `magritte-card` */
+  label[class*="magritte-card___"], div[class*="vacancy-card--"], div[class*="vacancy-card-footer--"] {
+    background-color: transparent !important; }
   [class*="magritte-card-style-special"],
   [class*="magritte-card-style-secondary"],
   [class*="magritte-segment"][class*="selected"] {
@@ -2364,6 +2369,11 @@
   [class*="magritte-chip"] [class*="magritte-content___"],
   [data-qa="chip"] [class*="magritte-content___"] {
     background-color: transparent !important; }
+  /* the pill radius lives on that inner span (50vh; 12px on `_secondary`), the button and its wrapper are square */
+  div[class*="magritte-chip-wrapper"], div[class*="magritte-chips-and-input"],
+  label[class*="magritte-chip___"] { background-color: transparent !important; }
+  button[class*="magritte-chip___"] { border-radius: 50vh !important; }
+  button[class*="magritte-chip___"][class*="magritte-chip_secondary"] { border-radius: 12px !important; }
   /* The mobile sheet's RADIO chips are the opposite shape: the <label> is transparent and that SAME inner span IS the pill, with state on a sibling `input:checked` and never a class. `>` lifts the resting arm to 0-2-1 so the `:checked` arm can follow. Both must stay anchored on `label[class*="magritte-chip___"] >` — `input:checked + content` alone also matches the /account/login role CARD. */
   label[class*="magritte-chip___"] > [class*="magritte-content___"] {
     background-color: #21262d !important; }
@@ -2517,9 +2527,20 @@
     color: #d6dde3 !important; }
 
   /* ---- Vacancy detail page ---- */
-  [class*="magritte-content-border-container"], .vacancy-section {
+  [class*="magritte-content-border-container"] {
     background-color: #1c2128 !important; border-color: #2d333b !important; }
-  [data-qa="vacancy-title"], [data-qa="vacancy-description"],
+  /* the description sections are unpadded and sit straight on the page, outside the header/company cards */
+  .vacancy-section { background-color: transparent !important; }
+  /* the title words are class-less spans the blanket `span:not(.metro-point)` body ink reaches; 0-1-2 outranks it */
+  h1[data-qa="vacancy-title"], h1[data-qa="vacancy-title"] span {
+    color: #e6edf3 !important; }
+  /* header facts are one primary ink natively; their value halves are class-less or `text--` spans the body ink splits off. 0-1-1, wins on order */
+  [data-qa^="vacancy-salary-compensation-type"] span,
+  span[data-qa="vacancy-experience"], [data-qa="vacancy-experience"] span,
+  span[data-qa="common-employment-text"], [data-qa="common-employment-text"] span,
+  span[data-qa="working-hours-text"], [data-qa="working-hours-text"] span {
+    color: #e6edf3 !important; }
+  [data-qa="vacancy-description"],
   [class*="vacancy-branded"], .bloko-tag-list,
   [data-qa="vacancy-view-employment-mode"] {
     color: #c4cdd6 !important; }

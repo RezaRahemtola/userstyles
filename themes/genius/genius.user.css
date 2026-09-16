@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Genius Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.23
+@version        1.0.24
 @description    Turns Genius dark: lyrics, annotations, the homepage, artist and album pages, charts and search — with the familiar red accents and links kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -959,6 +959,10 @@
   [class*="TrackLyric-module__"][class*="__lyric"]::after {
     background-image: linear-gradient(rgba(20, 24, 29, 0), #14181d) !important; }
   [class*="ExpandButton-module__"], [class*="ExpandButton-module__"] * { color: #14181d !important; }
+  /* the pointer under the key lyric is an SVG notch whose fill paints over the divider in the
+     paper colour, with its own #ccc outline; both must follow the ground and the border reset */
+  [class*="TrackLyric-module__"][class*="__notchFill"] { fill: #14181d !important; }
+  [class*="TrackLyric-module__"][class*="__notchLine"] { stroke: #262c33 !important; }
   /* the wordmark SVG carries no fill attribute and falls back to black; the insight tabs'
      icons take currentColor off a button the shared rules leave black */
   svg[class*="TrackInsights-module__"] path { fill: #c4cdd6 !important; }

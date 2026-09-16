@@ -1212,6 +1212,13 @@
     border-color: #262c33 !important;
   }
 
+  /* `footer` is also a CONTENT tag: the brand / Top Seller cards close on a
+     <footer> row the site never paints. Only this element, not `footer div` — the
+     affiliates CTA footer hides its gradient under an opaque child div. */
+  main footer {
+    background-color: transparent !important;
+  }
+
   footer a,
   [data-testid="footerV2"] a {
     color: #c4cdd6 !important;

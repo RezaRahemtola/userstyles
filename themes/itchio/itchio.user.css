@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           itch.io Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.15
+@version        1.0.16
 @description    A clean dark theme for itch.io — browse, games, jams, community and profiles — that leaves each creator's own custom page design untouched.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1347,6 +1347,11 @@
   /* Hover INVERTS it — near-white pill, band-red label — through the pin above. */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page_header .return_link:hover {
     color: #b81c3a !important;
+  }
+  /* The manual title is a link written white on the same band; hover only underlines it. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page_header h1 a,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page_header h1 a:hover {
+    color: #ffffff !important;
   }
   /* A #fafafa flyout whose generic .button class our red button rule would hijack. */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page .dropdown-menu {

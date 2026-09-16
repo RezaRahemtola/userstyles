@@ -1330,6 +1330,11 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page_header .return_link:hover {
     color: #b81c3a !important;
   }
+  /* The manual title is a link written white on the same band; hover only underlines it. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page_header h1 a,
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page_header h1 a:hover {
+    color: #ffffff !important;
+  }
   /* A #fafafa flyout whose generic .button class our red button rule would hijack. */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .book_page .dropdown-menu {
     background-color: #1c2128 !important;

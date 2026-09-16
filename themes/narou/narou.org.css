@@ -1742,11 +1742,14 @@
     color: #e6c9a8 !important;
   }
   ul#r_navilist,
-  ul#r_navilist > li {
+  ul#r_navilist > li,
+  ul#r_navilist > li a {
     background-color: #161b22 !important;
     color: #c4cdd6 !important;
   }
-  ul#r_navilist > li.on {
+  /* The label is an <a>, which takes the generic link blue over an inherited ink. */
+  ul#r_navilist > li.on,
+  ul#r_navilist > li.on a {
     background-color: #21262d !important;
     color: #e6c9a8 !important;
   }

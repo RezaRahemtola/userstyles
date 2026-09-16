@@ -114,7 +114,18 @@
      Underground tile beside it is 50x50 and must NOT take a white plate. */
   svg[class*="text-[#003399]"],
   svg[class*="SidebarNavigation--logoIcon"],
-  .brands svg[viewBox="0 0 48 48"] {
+  .brands svg[viewBox="0 0 48 48"],
+  .footer-brands svg[viewBox="0 0 48 48"] {
+    background-color: #ffffff !important;
+  }
+  /* the support footer's Weather Company wordmark is currentColor on its own white tile, so
+     it keeps the site's dark ink rather than the link colour its anchor takes. */
+  .footer-brands a.brand-home {
+    color: #333333 !important;
+  }
+  /* trust.weather.com (privacy / terms) carries the same knockout mark as an <img>. Keyed
+     to that app's asset host: the footer's Weather Channel tile draws its own letters. */
+  img[src*="wx-next-privacy"][src*="the-weather-channel-logo"] {
     background-color: #ffffff !important;
   }
 
@@ -316,6 +327,19 @@
      14px. */
   [class*="AirQualityText--measurement"] {
     color: var(--wx-text-muted) !important;
+  }
+  /* the Precip Intensity card's rain notice is a #f6f6f6 plate under the Helios inks the
+     text rules lift; its headline is the muted one of the pair. */
+  [class*="InsightNotification--root"] {
+    background-color: var(--wx-surface-2) !important;
+  }
+  [class*="InsightNotification--headline"] {
+    color: var(--wx-text-muted) !important;
+  }
+  /* its bar chart's x-axis <text> carries `fill="currentColor"`, but a module class pins
+     the fill to the Helios ink. */
+  [class*="PrecipIntensityBarChart--xAxisLabel"] {
+    fill: var(--wx-text-muted) !important;
   }
   /* the ink sits on the anchor's own wrappers -- the `Ellipsis--ellipsis` span holding
      the words is a truncation utility with no colour. */
@@ -604,6 +628,11 @@
   [class*="text-[#039]"],
   [class*="text-[#003399]"] {
     color: var(--wx-link) !important;
+  }
+  /* ...but the SPA header wordmark carries the same utility: its navy square is the brand,
+     painted in currentColor over the white knockout backdrop. */
+  svg[class*="text-[#003399]"] {
+    color: #003399 !important;
   }
   /* the PALE brand tints are light surfaces; the SATURATED brand blues are real fills.
      The alpha variants have their own class TOKEN (`bg-brand-100/30`) the plain class
@@ -1107,6 +1136,20 @@
      chromatic step is data. */
   [style*="background-color: rgb(242, 242, 242)"] {
     background-color: var(--wx-border) !important;
+  }
+  /* the Hourly chart tabs: the UV ramp's zero step is the same achromatic near-white
+     (#f7f7f7), with its black label a SIBLING span, not a child. */
+  [class*="hourlyItem"] [style*="background-color: rgb(247, 247, 247)"] {
+    background-color: var(--wx-border) !important;
+  }
+  [class*="hourlyItem"] [style*="background-color: rgb(247, 247, 247)"] + [style*="color: rgb(0, 0, 0)"] {
+    color: var(--wx-text) !important;
+  }
+  /* the Dew Point tab labels its temperature end with the value's hue on an inline WHITE
+     plate: the page paper, masking the dotted rail under the label. It must track the card
+     it sits on. */
+  [class*="hourlyItem"] [style*="background-color: rgb(255, 255, 255)"] {
+    background-color: var(--wx-surface) !important;
   }
   /* forms / location search */
   input,

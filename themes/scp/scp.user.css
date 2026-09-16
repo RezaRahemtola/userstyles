@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           SCP Foundation Wiki Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.13
+@version        1.0.14
 @description    A comfortable dark theme for the SCP Foundation Wiki — articles, sidebar, tables, tabs, ratings, forums and search, crimson look intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1704,6 +1704,11 @@
     background-color: #2a2419;
   }
 
+  /* /canon-hub's "So You Wanna…" guide blocks are the cream variant of the canon card; same tone, so they stay set apart from the canon entries. */
+  #page-content .canon-block.sywbac {
+    background-color: #2a2419;
+  }
+
   /* /universe-hub's orientation letter sits in one near-white terminal panel; its rule comes from the shared `hr` override. */
   #page-content .terminalbody {
     background-color: #1c2128;
@@ -2079,6 +2084,18 @@
   #page-content .c-art {
     --link-color: #6fbc8a;
     --link-bg: #6fbc8a1f;
+  }
+
+  /* The statement banner is a knocked-out slab: plate from --dark, label and masked icon from --light, which the remap above swaps into a light plate. Handed back as a raised dark plate with white ink. The ink outweighs the core-link rule in every state; the hover sweep is --active, which white still reads on. */
+  #page-content #u-fp-statement .survey-link {
+    --dark: #2d333b;
+    --light: #fff;
+  }
+
+  #main-content #page-content #u-fp-statement a.survey-link,
+  #main-content #page-content #u-fp-statement a.survey-link:visited,
+  #main-content #page-content #u-fp-statement a.survey-link:hover {
+    color: var(--light);
   }
 
   /* Text that must stay light because it sits on an accent/photo fill */

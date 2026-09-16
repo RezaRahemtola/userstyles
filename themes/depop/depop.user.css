@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Depop Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.17
+@version        1.0.18
 @description    A clean dark theme for Depop: easy on the eyes across home, search, categories and product pages, with prices, sale tags and the Depop red kept readable.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -1218,6 +1218,13 @@
   [data-testid="footerV2"] div {
     background-color: #0d1117 !important;
     border-color: #262c33 !important;
+  }
+
+  /* `footer` is also a CONTENT tag: the brand / Top Seller cards close on a
+     <footer> row the site never paints. Only this element, not `footer div` — the
+     affiliates CTA footer hides its gradient under an opaque child div. */
+  main footer {
+    background-color: transparent !important;
   }
 
   footer a,

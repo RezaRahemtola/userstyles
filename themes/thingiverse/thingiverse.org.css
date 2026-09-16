@@ -694,6 +694,9 @@
     background-color: #1c2128 !important; color: #c4cdd6 !important; border-color: #3a424c !important; }
   .adthrive-sticky-container, .adthrive-recipe-sticky-container {
     background-color: #14181d !important; }
+  /* In-content video player frame: #dbdbdb top/bottom rules drawn as dividers for a
+     white page. */
+  .adthrive-collapse-player { border-color: #2d333b !important; }
   .adthrive-content.adthrive-sticky::after { color: #8b949e !important; }
   .raptive-content-terms-modal-content, .adthrive-act25-modal,
   .adthrive-us-cmp-modal-content, .adthrive-ccpa-modal-content {
