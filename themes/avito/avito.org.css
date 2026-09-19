@@ -170,6 +170,21 @@
     background-image: none !important;
     border-color: var(--av-border) !important;
   }
+  /* A DS mask icon paints its glyph with `background-color`, and a marker ending `-button` on the
+     `<svg>` itself (the banner's close cross) drops it into the button rule's surface fill, the same
+     tone as the banner. `currentColor` is the icon's own ink. */
+  svg[data-marker$="-button"] {
+    background-color: currentColor !important;
+  }
+  /* A call site can pin the glyph through an inline `--ds-icon-color` (`--kitty-icon-color` in the
+     older build); hard black ones (the listing card's sale-timer clock, the adult-content
+     placeholder) vanish on the canvas. Grey and brand values are left alone. */
+  svg[style*="--ds-icon-color: #000000"],
+  svg[style*="--ds-icon-color:#000000"],
+  svg[style*="--kitty-icon-color: #000000"],
+  svg[style*="--kitty-icon-color:#000000"] {
+    background-color: currentColor !important;
+  }
 
   /* Inline-styled badges & pills */
   /* Fill arrives via an inline `background`, which the neutraliser would flatten. Each brand colour
@@ -321,7 +336,8 @@
      rules above have already moved the colour to the pill's tone, so `currentColor` is the right
      fill. The card scope and `:empty` keep this off any text-bearing div with an inline colour. */
   [data-marker="item"] div[style^="color:"]:empty,
-  [data-marker^="iva-item"] div[style^="color:"]:empty {
+  [data-marker^="iva-item"] div[style^="color:"]:empty,
+  [data-marker="docking-badge-bar"] div[style^="color:"]:empty {
     background-color: currentColor !important;
   }
 
@@ -662,6 +678,18 @@
     color: #0b1620 !important;
   }
 
+  /* Segmented tabs under pure hashes (the item page's "Рекомендации" switcher): `label > radio + span`
+     pills, natively `#f2f1f0` with the selected one marked by a 2px ring alone. The group role is the
+     only non-hash hook. The `:not()` keeps the named segmented build, whose checked fill is a (0,1,0)
+     `wrapper_isChecked` arm, out of reach. The installment pills share this shape, so their checked
+     fill is restated below at this rule's specificity. */
+  [role="group"] > label > input[type="radio"] + span:not([class*="wrapper_"]) {
+    background-color: var(--av-surface) !important;
+  }
+  [role="group"] > label > input[type="radio"]:checked + span:not([class*="wrapper_"]) {
+    border-color: var(--av-accent) !important;
+  }
+
   /* Installment-period selector (item buy-box) */
   /* The "рассрочка" period picker is `label > input[type=radio] + span` pills, natively white with a
      near-black checked one; `span` is deliberately outside the div-neutraliser. */
@@ -670,7 +698,8 @@
     border-color: var(--av-border) !important;
     color: var(--av-text) !important;
   }
-  [data-marker="installments-promoblock"] input:checked + span {
+  [data-marker="installments-promoblock"] input:checked + span,
+  [data-marker="installments-promoblock"] label > input[type="radio"]:checked + span {
     background-color: var(--av-accent) !important;
     border-color: var(--av-accent) !important;
     color: #0b1620 !important;
@@ -1343,6 +1372,15 @@
      wrapper, is natively transparent, so the canvas tone is invisible on it at rest. */
   [data-marker="item-view/main-gallery"] > div {
     background-color: var(--av-bg) !important;
+  }
+  /* The sheet's header carries the purple delivery CTAs, which the gallery's (0,1,1) transparent
+     button arm would strip, and a close cross hard-filled `black` on the SVG and its path. */
+  [data-marker="item-view/main-gallery"] [data-marker^="delivery-item-button"] {
+    background-color: #7d5bc4 !important;
+  }
+  [data-marker="item-view/main-gallery"] > div button svg[fill="black"],
+  [data-marker="item-view/main-gallery"] > div button svg path[fill="black"] {
+    fill: var(--av-text) !important;
   }
 
   /* Dark scrims over photos (erased by the div-neutraliser) */

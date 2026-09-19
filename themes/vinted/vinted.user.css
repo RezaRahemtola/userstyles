@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Vinted Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.21
+@version        1.0.22
 @description    A clean, modern dark theme for Vinted. Easy on the eyes across the homepage, search, item pages, profiles and filters, on every regional Vinted site.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -877,6 +877,8 @@
   .bg-ventures-peach       { background-color: #4a2c20 !important; }
   .bg-ventures-grey, .bg-ventures-light-green,
   .bg-ventures-light-purple, .bg-ventures-peach { color: #e6edf3 !important; }
+  /* Team carousel arrows: a monochrome black <img> SVG on a transparent button. */
+  img[src*="/icons/arrow-right-circle.svg"] { filter: invert(1) !important; }
   /* The copy here already reads our light ink, so only the surfaces need turning. */
   [class*="InfoSection_infoSection"],
   [class*="Findings_container"],

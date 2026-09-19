@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Genius Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.24
+@version        1.0.25
 @description    Turns Genius dark: lyrics, annotations, the homepage, artist and album pages, charts and search — with the familiar red accents and links kept intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -240,14 +240,18 @@
                       linear-gradient(#e9e9e9, #e9e9e9),
                       linear-gradient(#808080, #808080) !important;
     background-blend-mode: lighten, multiply, color-dodge, difference, saturation !important;
-    color: #e6edf3 !important; }
+    color: #e6edf3 !important;
+    /* The chip's edges land on fractional pixels, where the anti-aliased layers no longer
+       cancel and the stack prints a red hairline on resting chips at 1x DPR. This outline
+       overdraws that pixel row on both sides of the edge in the resting tone. */
+    outline: 2px solid #21262d !important; outline-offset: -1px !important; }
   /* Hover is the one referent state a selector CAN name, so it takes an explicit fill: it
      cannot go stale when genius re-tunes the art colour, and it separates hover from the open
      chip, painted the same value by the site. */
   [class*="ReferentFragment"][class*="ClickTarget"]:hover [class*="Highlight"] {
     background-image: none !important;
     background-blend-mode: normal !important;
-    background-color: #a53a31 !important; }
+    background-color: #a53a31 !important; outline-color: #a53a31 !important; }
   /* painting the natively-bare ClickTarget draws an elevated rectangle in the chip's padding
      that the blended span no longer matches */
   [class*="ReferentFragment-desktop__ClickTarget"] {

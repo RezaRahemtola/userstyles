@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Thingiverse Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.22
+@version        1.0.23
 @description    A full dark theme for Thingiverse — the feed, model pages, search and profiles in comfortable dark, while model previews and 3D renders stay true to color.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -315,6 +315,9 @@
   [class*="SiteWideNotification__info"] { background-color: #b36b00 !important; }
   [class*="SiteWideNotification__problem"] { background-color: #a3253d !important; }
   [class*="SiteWideNotification__tv"] { background-color: #1d51b0 !important; }
+  /* The copy is a <p> the site inks white; the blanket `p` ink would grey it on the
+     bar while its link stays white. */
+  [class*="SiteWideNotification__notification--"] p { color: #ffffff !important; }
 
   /* Tailwind utilities with a literal `background-color`. The tag's
      `--tv-content-accent` is the LINK blue, too light under its white label, so it

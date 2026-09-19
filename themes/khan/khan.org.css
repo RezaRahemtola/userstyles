@@ -523,6 +523,13 @@
   #main-content [style*="background-position"] {
     filter: invert(0.92) hue-rotate(180deg);
   }
+  /* The lesson sidebar's course badge is a white book mask glyph on a brand-indigo raster
+     plate painted as this box's `background-image`, which the split above strips; the glyph
+     alone then floats on nothing. Hashed class, degrade-safe; `!important` because the
+     neutralizer outranks a class. */
+  #main-content div._1r3t0of5 {
+    background-image: url("https://cdn.kastatic.org/images/content-library/course-accordion-bg.png") !important;
+  }
   /* Re-surface the elements that NATIVELY carry a background, and only those — keyed on what
      the element looks like, not on its type. No button without a Wonder Blocks `data-kind`
      has a native background; `tertiary` is Khan's link-styled button (transparent at rest AND
@@ -787,6 +794,13 @@
   form fieldset, form fieldset ul, form fieldset li,
   form fieldset li label { background-color: #1c2128 !important; color: #c4cdd6 !important; }
   form fieldset li label:hover { background-color: #232a32 !important; }
+  /* The banner's gift form sits straight on the banner ground: its fieldset / list wrappers
+     are natively bare, and a plate there starts mid-legend and stops mid-row. Only the
+     button-shaped choice labels keep their fill; the Monthly / Yearly radio labels are bare
+     text. */
+  #donate-banner form fieldset, #donate-banner form fieldset ul,
+  #donate-banner form fieldset li,
+  #donate-banner form fieldset li.frequency-item label { background-color: transparent !important; }
   /* The picked gift frequency and amount are signalled by a white label with brand-blue text,
      and the state lives on a visually-hidden radio, so the label's class list is byte-identical
      in both states. The radio is the label's immediate previous sibling, so `:checked + label`

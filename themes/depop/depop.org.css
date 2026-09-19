@@ -554,6 +554,21 @@
     color: #8b949e !important;
   }
 
+  /* Options with no matching results are natively #747474 and hover-inert; the
+     blanket label ink and the option hover above would make them read as live.
+     The trigger variant inks only its p/span/svg. */
+  [class*="filterOptionDisabled"],
+  [class*="filterOptionDisabled"] *,
+  [class*="searchFilterTriggerDisabled"] p,
+  [class*="searchFilterTriggerDisabled"] span,
+  [class*="searchFilterTriggerDisabled"] svg {
+    color: #8b949e !important;
+  }
+
+  [class*="filterOptionDisabled"]:hover {
+    background-color: transparent !important;
+  }
+
   /* Group headers paint a light hover fill, leaving the pale label
      light-on-light. */
   [class*="collapsibleRow"]:hover {

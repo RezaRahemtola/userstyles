@@ -431,6 +431,14 @@
   [data-comment-uuid] > div + div[class*="rpProduct_"]::before {
     background-color: var(--d-border-2) !important;
   }
+  /* The viewer's review column scrolls under a ::-webkit-scrollbar with a literal #fff
+     bar and track. `scrollbar-color` makes Chromium ignore every ::-webkit-scrollbar
+     rule, so it retones the pane without a pseudo selector; the thumb keeps its native
+     rgba(204,214,228,.6). */
+  .vue-portal-target div[class*="rpProduct_"] {
+    scrollbar-color: rgba(204, 214, 228, 0.6) transparent !important;
+    scrollbar-width: thin !important;
+  }
   /* The viewer's "Другие фото и видео" grid carries a sticky #fff
      back-to-top disc whose chevron takes the lifted --textPrimary. Disc and
      grid are the two children of one attribute-less wrapper under
@@ -1379,6 +1387,14 @@
   [data-widget="footer"] a:hover {
     color: var(--d-blue-hover) !important;
   }
+  /* The link component's muted variant (`ga5_` id, `-a6` modifier): the BUTTON form hovers
+     through --textActiveAction, the ANCHOR form (PDP "N отзывов" / "N вопросов") through a
+     literal navy #1344b8 on its label div and #0050e0 on its icon. */
+  a[class*="ga5_"][class*="-a6"]:hover,
+  a[class*="ga5_"][class*="-a6"]:hover div,
+  a[class*="ga5_"][class*="-a6"]:hover svg {
+    color: var(--d-blue-hover) !important;
+  }
 
   /* FOOTER */
   [data-widget="footer"],
@@ -1888,6 +1904,8 @@
     --ozi-graphic-quaternary-transparent: rgba(255, 255, 255, 0.16) !important;
     --ozi-graphic-tertiary-transparent: rgba(255, 255, 255, 0.32) !important;
     --ozi-graphic-secondary-transparent: rgba(255, 255, 255, 0.42) !important;
+    /* opaque hairline: the header's 2px bottom divider */
+    --ozi-graphic-quaternary: var(--d-border) !important;
   }
 
   /* Header and the tree side-nav are the two full-height surfaces the token

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Substack Dark
 @namespace      github.com/rezarahemtola/userstyles
-@version        1.0.15
+@version        1.0.16
 @description    A clean, comprehensive dark theme for Substack — the hub, discovery, and every publication and post — that keeps each newsletter's own accent color intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/rezarahemtola/userstyles
@@ -512,12 +512,18 @@
     filter: invert(1) hue-rotate(180deg) !important;
   }
 
+  /* Press logos are monochrome black inline SVGs drawn for white cards. */
+  #substack-home [class*="press-logo"] svg {
+    filter: invert(1) hue-rotate(180deg) !important;
+  }
+
   /* `heroCard` at a word boundary: `heroCardGrid-`/`heroCardBody-` are
      natively transparent over the green brand band, so a substring match darkens
-     the gutters. */
+     the gutters. Grid-scoped: /podcasts ships a `heroCard-` too, a transparent
+     ticker viewport whose gaps show the glow between its own cards. */
   #substack-home [class*="benefitCard"],
-  #substack-home [class^="heroCard-"],
-  #substack-home [class*=" heroCard-"],
+  #substack-home [class*="heroCardGrid"] > [class^="heroCard-"],
+  #substack-home [class*="heroCardGrid"] > [class*=" heroCard-"],
   #substack-home [class*="heroCreatorCard"],
   #substack-home [class*="compareTableScrollInn"],
   #substack-home [class*="startOptionCard"],
@@ -528,6 +534,11 @@
   #substack-home .resources-page .banner {
     background-color: #1c2128 !important;
     background-image: none !important;
+  }
+  /* Its 70%-white hairline was drawn to vanish on a white card. */
+  #substack-home [class*="heroCardGrid"] > [class^="heroCard-"],
+  #substack-home [class*="heroCardGrid"] > [class*=" heroCard-"] {
+    border-color: #2d333b !important;
   }
 
   /* www marketing footer */

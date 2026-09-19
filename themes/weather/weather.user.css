@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name           Weather.com Dark
 @namespace      github.com/RezaRahemtola/userstyles
-@version        1.0.27
-@description    A clean dark theme for weather.com. Darkens forecasts, charts, tables and menus while keeping radar maps, weather icons, alerts and temperature colors intact.
+@version        1.0.28
+@description    A clean dark theme for weather.com: forecasts, charts, tables and menus go dark while radar maps, weather icons, alerts and temperature colors stay intact.
 @author         Reza Rahemtola
 @homepageURL    https://github.com/RezaRahemtola/userstyles
 @supportURL     https://github.com/RezaRahemtola/userstyles/issues
@@ -135,6 +135,12 @@
      to that app's asset host: the footer's Weather Channel tile draws its own letters. */
   img[src*="wx-next-privacy"][src*="the-weather-channel-logo"] {
     background-color: #ffffff !important;
+  }
+  /* that app's page-title icons are single-ink #252422 SVGs loaded as <img>, so no fill
+     rule reaches them; inverting maps the ink to the light text tone and their white
+     cut-outs to dark. */
+  img[src*="wx-next-privacy/img/"] {
+    filter: invert(1) hue-rotate(180deg) !important;
   }
 
   /* left sidebar navigation rail */
@@ -447,6 +453,12 @@
   [class*="MemberLoginForm--separator"] {
     color: var(--wx-text-muted) !important;
   }
+  /* a cross-origin frame whose document is light-schemed: while its owner element
+     resolves `color-scheme: dark` from :root, Chromium paints the frame's canvas opaque
+     white, a square plate behind the rounded Google pill. */
+  iframe[src*="accounts.google.com/gsi"] {
+    color-scheme: light !important;
+  }
   /* an INVALID field is marked by a 2px #eb0000 rim on the <input> and the message under
      it; the generic `input` border pin greys the rim, and #eb0000 is 3.8:1 on the base.
      Rim and message take the same lifted red as the severe-alert text so the state stays
@@ -481,6 +493,14 @@
   }
   [class*="PromoFeaturePage--featuresTitle"] {
     color: var(--wx-text) !important;
+  }
+  /* the promo hero is its own navy band, never darkened: its copy and the outline
+     Sign In (white label AND rim) stay white. */
+  [class*="PromoFeaturePage--heroSummary"],
+  [class*="PromoFeaturePage--signInButton"],
+  [class*="PromoFeaturePage--signInButton"]:hover {
+    color: #ffffff !important;
+    border-color: #ffffff !important;
   }
   /* the ExpandableMenu rule lifts these inside the units panel; standalone (the
      /data-rights sections) nothing else reaches them. */
@@ -1069,6 +1089,24 @@
   .bg-primary.text-primary-foreground {
     color: var(--primary-foreground) !important;
     -webkit-text-fill-color: var(--primary-foreground) !important;
+  }
+
+  /* hub hero cards lay their copy OVER the photo only once the `hero-item` container is
+     36rem wide; narrower, the same nodes sit under it in grey / blue inks. The wide arm
+     is a container-query utility our unlayered text rules outrank, so it is restated
+     under the same query. */
+  @container hero-item (min-width: 36rem) {
+    [class*="@xl/hero-item:text-white"] {
+      color: #ffffff !important;
+    }
+    [class*="@xl/hero-item:text-blue-200"] {
+      color: #d8e6fe !important;
+    }
+  }
+  /* the feature hero's text panel is a white-ink block at every width (black plate
+     narrow, over the photo wide); its byline <p> inherits that white, which `p` greys. */
+  .text-white[class*="@xl/hero-item:bg-transparent"] p:not([class*="text-blue"]) {
+    color: #ffffff !important;
   }
 
   /* data tables (hourly / 10-day details) */

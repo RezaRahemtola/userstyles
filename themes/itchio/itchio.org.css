@@ -404,6 +404,11 @@
     background-color: #1a1f26 !important;
     color: #363c44 !important;
   }
+  /* Cover-less cell label; site keeps opacity .5 on it. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .index_game_cell_widget .missing_image {
+    background-color: #30363d !important;
+    color: #c4cdd6 !important;
+  }
   /* Browse layouts + image wrappers behind thumbnails */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .browse_columns,
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .browse_sidebar,
@@ -874,6 +879,14 @@
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .jam_page_base_page {
     background-color: #14181d !important;
     border-color: #2d333b !important;
+  }
+  /* /jam/<slug>/results: rank ink is --itchio_body_color, which stays unrebound. */
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .view_jam_results_page .game_rank .ordinal_rank {
+    color: #e6edf3 !important;
+  }
+  body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .view_jam_results_page .game_rank .thumb_wrapper .thumb_placeholder > span {
+    background-color: #1a1f26 !important;
+    color: #8b949e !important;
   }
   /* The 4px transparent bottom border is a spacer; the blanket reset stubs grey under every tab. */
   body:not(.game_layout_widget):not(.user_layout_widget):not(.jam_layout_widget):not(.widget_layout_widget) .header_tabs .header_tab { border-bottom-color: transparent !important; }

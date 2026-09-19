@@ -400,7 +400,7 @@
   .ui-widget-header .ui-state-focus,
   .ui-button:hover,
   .ui-button:focus,
-  .leaflet-container,
+  .leaflet-container:not([style*="background"]),
   .bd-anchor.bd-disabled,
   .bd-anchor.tickle.bd-disabled,
   .bd-anchor.bd-disabled:hover,
@@ -1890,8 +1890,17 @@
 
   /* ---------- leaflet (map chrome only; tiles stay untouched) ---------- */
 
-  .leaflet-container {
+  /* An inline background is the map's own ocean colour, visible along
+     tile seams and world-wrap edges. */
+  .leaflet-container:not([style*="background"]) {
     background-color: #14181d !important;
+  }
+
+  /* Marker counts inherit the page ink but sit on a pale translucent
+     disc over the untouched raster. */
+  .cl-marker-icon,
+  .cl-marker-icon-visited {
+    color: #222 !important;
   }
 
   /* Black raster glyphs that no colour property reaches, so the plate
